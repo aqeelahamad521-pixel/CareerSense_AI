@@ -1,0 +1,851 @@
+student_id,name,reg_no,degree,year,gpa,grade_programming,grade_math,grade_database,grade_networking,grade_systems,grade_design,interest_software,interest_data,interest_security,interest_cloud,interest_design,career_track,skill_oop,skill_dsa,skill_web_api,skill_testing,skill_git,skill_python_data,skill_ml,skill_visualization,skill_sql,skill_statistics,skill_network_sec,skill_cryptography,skill_linux,skill_vuln_assess,skill_secure_code,skill_docker,skill_cicd,skill_cloud_infra,skill_iac,skill_monitoring,skill_user_research,skill_figma,skill_design_principles,skill_frontend,skill_design_systems
+STU_1513,Hasitha Senaratne,D/IT/24/1513,BSc (Hons) in Information Technology,1,2.95,3.54,2.17,2.63,3.91,3.16,2.29,1,1,4,1,3,Cybersecurity,0,1,2,1,2,0,1,0,0,1,3,2,3,1,2,1,0,0,1,1,0,1,1,2,1
+STU_1358,Methmi Karunaratne,D/IT/24/1358,BSc (Hons) in Software Engineering,2,3.05,3.63,3.52,2.13,3.35,2.84,2.83,3,4,2,1,1,Data Science / AI,0,0,1,0,2,3,1,2,2,2,0,1,0,1,0,0,2,1,1,1,0,1,0,1,1
+STU_1111,Nimal Dissanayake,D/IT/24/1111,BSc (Hons) in Data Science & Business Analytics,2,2.88,2.7,3.87,2.94,2.95,2.41,2.41,5,1,3,2,1,Software Engineering,3,1,3,1,2,1,1,0,1,0,1,0,1,1,0,0,2,0,1,2,1,1,1,2,0
+STU_1685,Nuwan Tharumila,D/IT/24/1685,BSc (Hons) in Data Science & Business Analytics,2,2.77,3.05,2.32,2.08,2.81,3.75,2.6,1,3,3,5,2,Cloud / DevOps,2,2,1,0,0,1,1,0,0,2,1,1,3,1,2,3,3,2,0,1,1,1,0,0,2
+STU_1040,Nuwan Dissanayake,D/IT/24/1040,BSc (Hons) in Computer Science,3,2.87,4.0,3.56,3.4,2.02,2.68,1.57,5,2,2,1,1,Software Engineering,2,2,3,1,2,1,1,1,1,0,1,1,2,1,1,0,0,0,0,1,2,0,0,1,0
+STU_1067,Kavindi Tharumila,D/IT/24/1067,BSc (Hons) in Data Science & Business Analytics,2,2.93,3.39,2.66,3.06,3.38,2.86,2.25,4,1,1,2,1,Software Engineering,2,2,3,2,3,1,0,0,1,2,0,1,0,0,0,0,1,0,0,2,0,1,0,1,0
+STU_1757,Ravindu Silva,D/IT/24/1757,BSc (Hons) in Software Engineering,4,2.84,3.09,2.82,2.89,2.53,1.8,3.9,2,1,1,1,5,UI/UX Design,1,0,2,2,2,2,0,2,0,2,0,0,0,0,2,1,1,1,1,0,3,3,3,1,1
+STU_1261,Supun Silva,D/IT/24/1261,BSc (Hons) in Data Science & Business Analytics,3,2.92,3.76,3.89,2.71,4.0,1.0,2.17,1,5,1,1,2,Data Science / AI,2,0,1,0,0,3,3,2,2,3,1,1,0,1,0,0,1,1,0,0,1,0,0,0,0
+STU_1791,Chathuri Jayasinghe,D/IT/24/1791,BSc (Hons) in Computer Engineering,2,2.79,2.36,2.36,2.79,3.9,1.83,3.51,1,2,2,1,5,UI/UX Design,2,1,0,1,1,1,0,0,0,2,0,2,0,0,0,2,0,0,1,1,3,2,3,1,3
+STU_1468,Kavinda Alwis,D/IT/24/1468,BSc (Hons) in Software Engineering,2,2.89,4.0,3.12,1.83,4.0,3.0,1.36,3,2,5,1,2,Cybersecurity,2,1,1,0,1,2,0,0,0,2,2,3,3,1,1,0,2,0,0,0,0,1,0,1,0
+STU_1706,Supun Karunaratne,D/IT/24/1706,BSc (Hons) in Data Science & Business Analytics,1,3.03,2.43,3.57,3.22,4.0,3.1,1.85,2,3,2,5,1,Cloud / DevOps,1,0,2,1,0,0,1,0,0,0,1,1,3,1,2,2,3,3,0,1,0,1,2,0,0
+STU_1448,Tharindu Rajapaksha,D/IT/24/1448,BSc (Hons) in Data Science & Business Analytics,1,3.15,2.6,2.67,3.4,3.62,3.61,2.99,2,2,4,2,1,Cybersecurity,2,0,2,1,0,1,1,0,0,1,2,2,3,2,1,0,1,0,0,0,0,1,0,0,0
+STU_1707,Ishara Ahamad,D/IT/24/1707,BSc (Hons) in Information Technology,2,2.75,1.63,3.33,2.92,2.66,2.7,3.25,2,3,1,5,2,Cloud / DevOps,1,0,0,0,1,1,1,1,1,1,0,0,2,0,1,2,2,3,1,2,2,0,1,1,2
+STU_1634,Dilshan Rajapaksha,D/IT/24/1634,BSc (Hons) in Data Science & Business Analytics,2,2.63,1.84,2.5,2.98,3.78,3.44,1.23,3,1,3,5,2,Cloud / DevOps,2,2,0,0,0,0,0,1,1,0,0,1,3,0,1,3,2,3,1,2,0,0,1,2,1
+STU_1210,Akila Tharumila,D/IT/24/1210,BSc (Hons) in Information Systems,2,3.09,3.22,2.07,4.0,2.83,3.73,2.69,5,2,2,3,2,Software Engineering,3,2,2,1,2,1,2,0,0,1,1,0,0,0,1,1,2,1,1,0,0,0,1,0,1
+STU_1552,Kavinda Herath,D/IT/24/1552,BSc (Hons) in Computer Engineering,1,2.96,3.26,3.13,1.83,3.73,3.54,2.29,1,1,5,3,3,Cybersecurity,1,0,0,0,1,0,2,1,0,1,2,2,3,3,1,0,0,0,1,1,0,1,0,1,0
+STU_1293,Buddhika Gunawardena,D/IT/24/1293,BSc (Hons) in Computer Science,2,3.12,3.37,3.45,3.53,2.39,2.87,3.08,1,4,3,2,3,Data Science / AI,0,1,1,0,2,3,2,3,2,2,0,1,0,2,0,1,0,2,1,0,2,0,1,1,0
+STU_1068,Tharindu Fernando,D/IT/24/1068,BSc (Hons) in Computer Engineering,1,3.06,3.54,3.07,4.0,2.71,2.34,2.69,4,1,3,2,3,Software Engineering,2,1,1,2,2,2,0,0,1,1,0,2,1,1,2,1,0,1,0,1,0,1,0,0,0
+STU_1450,Methmi Bandara,D/IT/24/1450,BSc (Hons) in Information Technology,3,3.02,3.06,3.0,2.6,3.19,3.28,3.0,1,2,5,1,2,Cybersecurity,0,0,2,0,1,1,0,0,1,0,3,2,2,3,1,2,2,0,0,0,0,1,1,0,0
+STU_1529,Rashmi Dissanayake,D/IT/24/1529,BSc (Hons) in Computer Science,2,2.74,2.79,2.58,2.98,3.03,2.85,2.21,1,3,5,1,1,Cybersecurity,0,0,2,2,0,1,1,0,0,0,3,3,3,2,1,0,1,1,1,0,0,0,0,1,0
+STU_1301,Dulan Jayasinghe,D/IT/24/1301,BSc (Hons) in Computer Science,2,2.38,3.26,3.54,2.2,2.38,1.43,1.49,1,5,3,2,2,Data Science / AI,2,1,1,1,1,3,1,1,3,3,0,0,1,2,0,1,2,0,1,0,1,1,1,1,0
+STU_1351,Maleesha Fonseka,D/IT/24/1351,BSc (Hons) in Software Engineering,3,2.75,2.79,3.75,1.93,3.19,2.45,2.38,1,5,3,2,1,Data Science / AI,0,1,1,1,0,3,2,2,3,3,0,0,0,2,0,0,0,0,1,0,1,1,0,1,1
+STU_1245,Tharindu Ahamad,D/IT/24/1245,BSc (Hons) in Information Systems,2,2.9,2.98,3.81,1.85,2.74,2.45,3.57,2,5,3,3,2,Data Science / AI,0,0,1,1,0,3,3,2,3,3,0,0,0,0,0,1,0,1,0,0,2,1,2,2,0
+STU_1219,Sanduni Dissanayake,D/IT/24/1219,BSc (Hons) in Information Systems,4,3.06,3.57,2.58,3.74,2.53,2.91,2.99,5,2,1,3,1,Software Engineering,2,2,1,1,2,0,0,1,0,2,1,0,0,0,1,0,2,1,0,1,0,1,1,0,0
+STU_1435,Amal Bandara,D/IT/24/1435,BSc (Hons) in Computer Science,3,2.75,3.04,2.51,2.23,3.18,3.68,1.85,1,1,5,3,3,Cybersecurity,0,0,2,1,2,1,0,1,2,1,3,3,3,2,1,0,0,1,0,1,0,2,0,0,2
+STU_1637,Dilshan Rajapaksha,D/IT/24/1637,BSc (Hons) in Computer Engineering,4,2.86,2.32,2.31,3.24,4.0,2.71,2.56,2,2,3,5,1,Cloud / DevOps,0,1,0,0,0,2,1,2,1,0,0,2,2,2,0,3,3,3,0,1,1,0,0,1,0
+STU_1228,Ishara Herath,D/IT/24/1228,BSc (Hons) in Computer Science,1,2.59,3.46,2.08,3.78,2.63,1.84,1.77,5,2,1,2,3,Software Engineering,2,1,3,1,3,0,0,2,0,1,1,0,2,2,1,0,0,0,0,1,2,1,2,1,0
+STU_1534,Akila Herath,D/IT/24/1534,BSc (Hons) in Computer Science,2,3.03,3.74,2.39,2.24,3.86,4.0,1.96,1,2,5,2,1,Cybersecurity,2,2,0,0,2,1,0,1,1,2,3,2,2,2,1,2,1,2,2,0,0,1,0,1,0
+STU_1303,Amal Gunawardena,D/IT/24/1303,BSc (Hons) in Information Technology,3,2.72,2.92,3.52,2.5,2.66,2.65,2.05,3,4,1,1,2,Data Science / AI,0,1,1,0,0,3,3,3,3,2,1,0,1,1,1,1,2,0,2,1,1,0,0,1,1
+STU_1697,Nuwan Wickramasinghe,D/IT/24/1697,BSc (Hons) in Information Systems,3,2.45,1.45,2.69,1.89,2.65,3.09,2.93,1,2,2,4,1,Cloud / DevOps,1,2,0,0,1,0,2,0,0,1,1,1,3,0,2,3,1,3,1,2,0,1,0,1,0
+STU_1732,Praveen Silva,D/IT/24/1732,BSc (Hons) in Computer Engineering,4,2.73,2.81,3.15,2.7,2.44,1.97,3.29,3,3,2,1,5,UI/UX Design,0,1,1,1,1,1,1,0,0,1,0,0,1,2,0,1,0,1,2,1,2,2,3,2,2
+STU_1315,Sanduni Mendis,D/IT/24/1315,BSc (Hons) in Computer Engineering,1,2.67,3.31,2.95,2.81,1.54,2.88,2.51,1,5,1,2,3,Data Science / AI,2,1,1,0,2,3,2,2,3,2,2,0,0,0,0,1,1,1,1,0,0,2,1,1,0
+STU_1837,Sanduni Ahamad,D/IT/24/1837,BSc (Hons) in Software Engineering,3,2.66,3.14,1.95,2.62,2.66,2.4,3.2,2,2,2,1,5,UI/UX Design,1,0,2,1,0,0,1,1,0,0,1,0,1,0,1,0,1,2,1,1,3,2,3,1,2
+STU_1614,Shanika Fernando,D/IT/24/1614,BSc (Hons) in Information Technology,2,3.35,3.25,3.23,2.91,3.68,3.63,3.41,1,1,2,5,1,Cloud / DevOps,0,1,0,1,1,0,0,0,0,1,1,0,2,2,0,3,2,2,0,2,0,2,0,0,0
+STU_1236,Rashmi Gunawardena,D/IT/24/1236,BSc (Hons) in Information Technology,1,3.01,3.58,3.17,3.27,3.47,2.26,2.32,5,1,2,3,1,Software Engineering,3,3,3,0,3,1,1,2,2,1,0,0,0,0,1,1,0,1,0,0,1,0,0,0,0
+STU_1622,Chathuri Ahamad,D/IT/24/1622,BSc (Hons) in Information Systems,3,3.24,3.55,3.55,2.62,3.54,3.14,3.04,2,2,1,5,3,Cloud / DevOps,0,0,2,2,0,1,1,1,1,1,1,1,3,0,0,3,2,3,0,1,0,1,1,0,0
+STU_1478,Sanduni Rathnayake,D/IT/24/1478,BSc (Hons) in Computer Engineering,2,3.19,3.08,2.42,2.71,3.67,3.37,3.88,3,1,5,3,3,Cybersecurity,2,2,1,2,1,0,0,1,0,0,3,3,3,2,1,0,0,1,1,0,0,0,0,0,0
+STU_1746,Amal Jayasinghe,D/IT/24/1746,BSc (Hons) in Computer Science,2,3.12,2.9,2.53,2.8,2.82,3.68,4.0,3,2,3,3,5,UI/UX Design,1,1,1,0,1,1,0,1,1,2,0,1,2,0,1,2,1,2,1,0,3,2,3,1,3
+STU_1197,Kavindi Senaratne,D/IT/24/1197,BSc (Hons) in Data Science & Business Analytics,3,2.48,3.52,1.69,2.3,3.04,2.29,2.02,5,1,2,2,2,Software Engineering,3,3,2,1,2,0,2,1,2,1,2,0,0,2,0,0,1,1,0,2,1,1,1,0,0
+STU_1031,Sachini Alwis,D/IT/24/1031,BSc (Hons) in Computer Science,2,2.75,3.46,2.21,3.58,2.4,2.83,2.05,5,3,2,3,2,Software Engineering,3,2,3,1,2,0,1,2,1,2,1,1,1,0,0,1,0,2,2,1,0,0,0,1,1
+STU_1815,Sanduni Herath,D/IT/24/1815,BSc (Hons) in Computer Science,1,2.71,3.05,2.86,2.65,1.75,2.43,3.52,1,3,1,1,4,UI/UX Design,1,0,1,1,0,1,0,0,1,1,0,1,1,0,1,1,0,1,0,1,3,3,2,1,3
+STU_1079,Praveen Jayasinghe,D/IT/24/1079,BSc (Hons) in Information Systems,3,3.05,3.61,2.93,3.56,1.6,2.6,4.0,4,2,1,3,2,Software Engineering,2,2,1,2,3,1,0,0,0,1,0,2,1,2,2,0,0,0,0,1,0,0,0,2,0
+STU_1138,Sewwandi Jayasinghe,D/IT/24/1138,BSc (Hons) in Computer Science,3,2.91,3.01,2.59,3.41,2.56,2.76,3.11,5,1,2,3,3,Software Engineering,3,2,2,0,3,0,0,0,1,0,0,2,0,1,0,1,1,2,2,0,0,0,1,2,0
+STU_1209,Ravindu Rajapaksha,D/IT/24/1209,BSc (Hons) in Information Systems,1,2.74,3.24,3.3,3.04,2.37,2.61,1.91,5,2,3,2,1,Software Engineering,3,3,2,2,2,0,1,0,2,0,0,0,0,0,2,1,1,1,0,0,2,1,2,1,0
+STU_1742,Anushka Tharumila,D/IT/24/1742,BSc (Hons) in Software Engineering,1,2.95,3.66,2.97,2.0,3.27,2.12,3.66,1,3,1,1,5,UI/UX Design,0,1,0,1,2,1,0,1,2,0,0,0,0,0,0,0,0,1,0,2,3,3,3,2,1
+STU_1307,Amal Gunawardena,D/IT/24/1307,BSc (Hons) in Software Engineering,1,3.03,4.0,3.64,2.68,2.15,3.35,2.35,1,5,2,2,1,Data Science / AI,1,0,1,2,1,2,2,3,3,3,0,2,0,0,0,0,1,2,1,1,1,1,0,1,1
+STU_1596,Dinithi Herath,D/IT/24/1596,BSc (Hons) in Information Technology,3,2.94,2.56,2.21,3.04,3.57,2.96,3.32,1,2,1,5,2,Cloud / DevOps,0,0,0,0,2,0,0,0,1,2,0,0,3,1,0,2,1,2,2,2,0,1,1,0,2
+STU_1627,Ravindu Fernando,D/IT/24/1627,BSc (Hons) in Computer Science,3,2.5,1.8,2.23,1.93,2.94,3.38,2.73,3,3,1,5,1,Cloud / DevOps,0,0,0,1,0,0,2,0,0,1,2,0,3,1,1,3,1,3,0,1,0,0,0,0,0
+STU_1766,Buddhika Herath,D/IT/24/1766,BSc (Hons) in Information Systems,3,2.41,2.25,2.41,2.04,2.23,2.23,3.28,2,1,3,1,4,UI/UX Design,0,1,0,0,0,1,0,1,0,1,0,2,0,1,1,0,0,1,1,0,3,3,3,1,2
+STU_1768,Dilshan Rajapaksha,D/IT/24/1768,BSc (Hons) in Information Technology,2,2.8,2.89,2.37,2.61,2.57,2.43,3.95,3,1,2,3,5,UI/UX Design,2,0,1,1,1,2,0,0,0,1,0,0,0,1,0,0,0,0,1,0,3,3,2,2,2
+STU_1024,Kavinda Silva,D/IT/24/1024,BSc (Hons) in Information Systems,4,2.91,3.98,1.9,3.37,3.13,2.71,2.37,5,1,1,3,1,Software Engineering,3,2,2,2,3,0,2,2,2,1,1,1,0,0,0,0,1,0,0,0,1,0,2,0,0
+STU_1276,Praveen Alwis,D/IT/24/1276,BSc (Hons) in Computer Engineering,2,3.02,2.69,3.86,3.01,2.1,3.03,3.44,3,5,3,3,3,Data Science / AI,2,0,0,0,0,3,3,2,3,2,1,2,0,1,2,1,0,0,2,0,2,1,0,1,0
+STU_1758,Sewwandi Wickramasinghe,D/IT/24/1758,BSc (Hons) in Data Science & Business Analytics,3,2.6,2.7,3.26,2.36,1.75,2.5,3.01,1,2,2,2,5,UI/UX Design,0,0,2,0,0,2,0,1,1,0,1,1,0,0,2,1,1,2,0,1,2,2,3,2,2
+STU_1841,Ishara Alwis,D/IT/24/1841,BSc (Hons) in Software Engineering,4,3.21,3.55,3.28,2.68,3.39,2.81,3.52,2,3,2,3,5,UI/UX Design,1,0,0,1,1,0,1,1,1,0,0,0,0,2,2,1,0,0,1,1,2,3,3,1,3
+STU_1193,Ishara Herath,D/IT/24/1193,BSc (Hons) in Information Technology,3,2.98,2.78,2.81,3.19,2.99,3.3,2.83,5,2,1,3,2,Software Engineering,2,1,2,1,2,1,0,1,0,1,1,0,1,1,1,0,1,0,0,0,1,0,2,0,0
+STU_1666,Chamari Ahamad,D/IT/24/1666,BSc (Hons) in Computer Science,2,2.63,2.2,2.95,3.09,2.3,2.89,2.33,1,2,2,5,3,Cloud / DevOps,0,0,0,1,0,0,0,2,0,1,0,0,3,0,1,2,1,2,0,1,0,2,0,1,0
+STU_1507,Dilshan Gunawardena,D/IT/24/1507,BSc (Hons) in Information Technology,1,2.97,3.46,2.57,2.83,3.55,3.21,2.18,3,3,4,2,3,Cybersecurity,1,1,0,2,0,2,0,0,2,0,3,2,3,3,2,1,0,0,0,0,1,0,1,1,0
+STU_1418,Chathuri Karunaratne,D/IT/24/1418,BSc (Hons) in Software Engineering,1,2.93,3.68,3.32,2.65,2.61,2.18,3.16,2,4,2,3,3,Data Science / AI,0,0,1,0,0,3,3,2,3,2,0,0,0,0,0,0,0,1,2,1,1,0,1,0,0
+STU_1368,Chathuri Fonseka,D/IT/24/1368,BSc (Hons) in Information Systems,2,2.81,4.0,3.62,2.7,3.15,1.93,1.46,1,5,1,2,2,Data Science / AI,0,2,0,0,1,3,2,3,3,3,0,2,0,1,1,1,1,0,2,0,0,0,1,1,2
+STU_1673,Sanduni Ahamad,D/IT/24/1673,BSc (Hons) in Information Systems,1,3.26,3.7,3.1,3.11,3.35,4.0,2.31,2,3,2,5,2,Cloud / DevOps,0,0,0,2,0,1,1,1,1,1,1,0,3,1,0,3,1,3,0,1,0,0,1,1,1
+STU_1121,Praveen Alwis,D/IT/24/1121,BSc (Hons) in Information Technology,3,2.72,2.95,2.32,2.3,3.51,2.02,3.25,5,1,3,1,2,Software Engineering,3,2,1,0,2,0,0,2,0,2,0,1,0,1,1,0,1,0,0,1,0,1,1,1,0
+STU_1431,Rashmi Wickramasinghe,D/IT/24/1431,BSc (Hons) in Computer Engineering,2,3.05,2.98,2.97,2.6,4.0,2.95,2.8,1,2,5,1,2,Cybersecurity,0,0,2,1,2,0,1,2,1,0,3,2,3,2,1,2,1,0,0,0,0,1,0,0,0
+STU_1733,Tharindu Gunawardena,D/IT/24/1733,BSc (Hons) in Information Systems,1,2.54,2.65,2.33,2.15,2.03,2.86,3.21,3,3,3,3,4,UI/UX Design,0,0,1,0,0,0,0,1,0,0,2,2,2,0,0,0,0,0,2,2,2,3,3,2,2
+STU_1849,Dilshan Ahamad,D/IT/24/1849,BSc (Hons) in Information Technology,2,2.8,3.58,2.64,2.45,2.67,1.68,3.76,1,2,3,1,5,UI/UX Design,1,1,1,1,1,2,1,0,0,0,0,0,2,2,1,2,0,0,0,0,2,3,3,2,3
+STU_1553,Sachini Rathnayake,D/IT/24/1553,BSc (Hons) in Data Science & Business Analytics,1,2.99,3.61,2.65,2.48,3.41,3.02,2.78,1,3,5,1,1,Cybersecurity,0,0,2,2,0,1,1,0,1,2,2,1,3,3,2,0,1,1,0,0,1,1,0,0,1
+STU_1332,Kasun Dissanayake,D/IT/24/1332,BSc (Hons) in Information Technology,4,2.86,2.68,4.0,2.14,3.0,3.47,1.88,1,5,3,2,3,Data Science / AI,2,1,0,0,1,3,1,3,2,2,0,0,0,1,0,0,0,0,1,2,0,0,0,1,1
+STU_1381,Sachini Rajapaksha,D/IT/24/1381,BSc (Hons) in Information Systems,2,2.94,2.47,3.94,3.39,2.39,3.08,2.38,3,5,2,2,1,Data Science / AI,1,1,0,0,1,3,3,2,2,3,0,1,0,1,2,2,0,2,0,0,1,0,0,0,1
+STU_1650,Kavindi Mendis,D/IT/24/1650,BSc (Hons) in Information Technology,3,2.74,1.87,2.0,2.7,2.3,3.86,3.7,2,1,1,5,1,Cloud / DevOps,2,0,1,1,0,0,2,0,0,0,0,2,3,0,1,3,2,2,1,2,0,0,0,0,1
+STU_1266,Chathuri Jayasinghe,D/IT/24/1266,BSc (Hons) in Software Engineering,3,3.21,3.61,3.5,2.41,3.48,3.98,2.29,1,4,3,2,3,Data Science / AI,1,0,0,0,0,3,2,2,3,3,0,0,0,0,1,0,0,2,1,0,0,0,2,1,1
+STU_1212,Buddhika Karunaratne,D/IT/24/1212,BSc (Hons) in Computer Engineering,2,2.77,3.16,2.69,2.87,1.61,2.86,3.41,5,3,3,3,1,Software Engineering,2,3,2,1,3,0,0,1,1,0,0,0,1,0,0,1,1,1,1,2,2,1,1,0,2
+STU_1087,Methmi Herath,D/IT/24/1087,BSc (Hons) in Software Engineering,3,2.75,3.74,3.03,3.35,2.7,2.33,1.33,5,1,2,1,2,Software Engineering,3,2,3,0,2,1,0,0,1,2,0,2,1,1,1,0,0,1,0,2,0,0,1,0,1
+STU_1759,Kavindi Herath,D/IT/24/1759,BSc (Hons) in Computer Science,1,2.75,2.42,2.48,2.68,3.0,2.45,3.48,3,1,3,3,4,UI/UX Design,0,2,2,0,1,0,1,1,0,2,0,1,1,0,0,0,1,1,0,0,3,2,2,2,2
+STU_1064,Praveen Tharumila,D/IT/24/1064,BSc (Hons) in Data Science & Business Analytics,3,2.79,3.61,2.43,3.02,1.89,2.73,3.09,5,3,2,3,3,Software Engineering,3,3,2,2,3,0,0,0,0,0,2,0,2,1,0,0,0,0,1,0,0,0,2,1,1
+STU_1680,Sanduni Herath,D/IT/24/1680,BSc (Hons) in Information Systems,3,2.81,2.86,1.36,3.08,3.67,2.94,2.94,3,2,2,5,3,Cloud / DevOps,0,1,1,0,2,0,1,0,2,1,1,2,3,0,1,3,1,3,1,2,2,1,2,2,0
+STU_1618,Anushka Karunaratne,D/IT/24/1618,BSc (Hons) in Computer Science,4,2.61,2.08,2.43,2.92,2.32,2.7,3.24,2,1,2,5,3,Cloud / DevOps,0,1,0,0,1,2,0,1,1,2,0,0,3,0,0,3,2,3,0,1,1,0,1,0,0
+STU_1364,Praveen Perera,D/IT/24/1364,BSc (Hons) in Data Science & Business Analytics,3,3.2,3.42,3.56,3.73,3.19,2.6,2.72,1,5,1,1,2,Data Science / AI,0,0,1,1,0,3,2,3,2,2,1,2,1,0,1,1,1,0,1,0,0,1,0,1,2
+STU_1066,Sachini Bandara,D/IT/24/1066,BSc (Hons) in Software Engineering,2,3.19,3.77,3.03,3.94,3.38,2.0,3.02,5,1,2,2,3,Software Engineering,2,3,3,2,3,0,0,1,0,1,1,1,0,1,0,0,2,1,0,0,0,0,0,0,0
+STU_1486,Sachini Rathnayake,D/IT/24/1486,BSc (Hons) in Information Systems,4,2.85,2.01,2.72,2.53,3.2,3.75,2.88,2,3,5,3,2,Cybersecurity,1,0,0,2,1,1,0,1,0,1,3,3,2,2,1,2,0,1,1,1,2,1,2,0,1
+STU_1484,Chathuri Jayasinghe,D/IT/24/1484,BSc (Hons) in Computer Engineering,4,2.71,3.29,2.89,1.72,4.0,3.37,1.0,3,2,5,2,2,Cybersecurity,0,1,1,0,0,2,1,0,0,1,3,2,3,3,1,1,0,2,0,1,0,0,1,0,1
+STU_1267,Amal Ahamad,D/IT/24/1267,BSc (Hons) in Computer Engineering,4,2.75,3.6,3.77,2.95,1.69,1.26,3.2,2,5,3,2,2,Data Science / AI,2,0,0,0,0,2,2,2,2,3,1,0,1,0,2,1,1,0,0,0,0,0,1,0,1
+STU_1847,Ravindu Alwis,D/IT/24/1847,BSc (Hons) in Computer Science,4,2.71,2.75,2.75,2.57,2.29,1.91,3.97,2,1,3,3,5,UI/UX Design,0,2,1,0,0,1,2,0,0,0,2,2,0,0,2,1,2,2,0,1,3,3,2,1,1
+STU_1281,Sachini Tharumila,D/IT/24/1281,BSc (Hons) in Computer Engineering,4,2.93,3.44,3.3,2.42,2.41,2.63,3.37,2,5,2,2,2,Data Science / AI,0,2,2,0,0,3,2,1,3,3,0,0,2,0,2,1,1,0,1,1,1,1,1,2,0
+STU_1140,Hasitha Silva,D/IT/24/1140,BSc (Hons) in Data Science & Business Analytics,1,2.61,3.77,2.72,3.07,1.29,1.0,3.84,5,3,2,3,3,Software Engineering,2,2,3,1,3,1,0,0,1,1,0,0,0,1,1,0,1,1,1,1,0,0,1,1,1
+STU_1496,Supun Rathnayake,D/IT/24/1496,BSc (Hons) in Information Technology,2,2.54,2.63,1.4,2.27,3.31,3.46,2.19,2,1,5,1,2,Cybersecurity,1,0,0,0,1,1,2,0,1,1,2,3,2,2,1,2,1,0,0,0,0,0,0,2,1
+STU_1097,Chamari Senaratne,D/IT/24/1097,BSc (Hons) in Information Technology,3,3.09,4.0,3.36,3.61,2.59,2.0,3.0,5,3,3,2,1,Software Engineering,2,2,2,1,2,0,0,2,0,1,1,2,1,1,0,0,0,2,0,0,0,0,0,2,0
+STU_1540,Kavindi Rajapaksha,D/IT/24/1540,BSc (Hons) in Information Technology,2,2.48,1.77,2.14,2.41,3.01,2.86,2.67,1,1,5,1,3,Cybersecurity,0,0,1,0,0,1,0,0,2,0,2,2,3,3,1,1,1,0,0,1,0,0,0,0,0
+STU_1050,Praveen Tharumila,D/IT/24/1050,BSc (Hons) in Information Systems,3,2.66,3.43,2.01,2.82,2.82,2.99,1.88,5,3,2,1,3,Software Engineering,3,2,2,2,2,1,0,1,1,2,1,1,0,0,0,0,1,1,1,1,2,1,1,1,0
+STU_1830,Dinithi Dissanayake,D/IT/24/1830,BSc (Hons) in Data Science & Business Analytics,2,2.89,2.75,3.35,3.03,2.16,2.37,3.69,2,2,2,1,5,UI/UX Design,1,0,2,1,0,0,0,0,0,1,2,0,0,0,0,0,0,1,0,0,3,3,3,2,3
+STU_1803,Kavinda Wickramasinghe,D/IT/24/1803,BSc (Hons) in Information Technology,1,2.77,2.67,3.17,2.91,1.75,2.49,3.63,3,1,3,2,5,UI/UX Design,1,0,0,0,0,1,0,1,0,1,2,0,2,1,0,1,0,2,0,1,2,3,2,1,2
+STU_1698,Ishara Herath,D/IT/24/1698,BSc (Hons) in Software Engineering,3,3.01,3.5,2.13,2.97,3.22,3.49,2.74,1,3,2,5,1,Cloud / DevOps,2,0,2,2,0,0,0,0,2,0,2,0,3,0,1,2,2,3,0,1,1,0,1,1,1
+STU_1430,Ishara Rajapaksha,D/IT/24/1430,BSc (Hons) in Information Systems,2,2.97,2.28,2.12,2.84,3.65,3.44,3.49,1,2,5,2,1,Cybersecurity,0,0,2,2,1,1,0,1,1,0,3,3,2,3,2,1,1,0,1,0,1,0,0,0,0
+STU_1651,Chathuri Mendis,D/IT/24/1651,BSc (Hons) in Software Engineering,3,2.57,2.46,3.0,2.22,2.45,3.07,2.21,2,2,1,5,2,Cloud / DevOps,0,0,2,1,0,1,0,0,1,1,2,1,3,0,0,3,2,2,0,1,0,2,0,1,0
+STU_1846,Chamari Silva,D/IT/24/1846,BSc (Hons) in Software Engineering,2,2.31,1.36,2.57,2.33,2.92,1.27,3.38,3,3,3,1,5,UI/UX Design,1,2,2,0,2,0,0,1,1,2,0,0,0,0,1,0,0,0,1,0,3,3,3,2,3
+STU_1750,Kavindi Herath,D/IT/24/1750,BSc (Hons) in Data Science & Business Analytics,3,2.88,3.31,2.67,2.84,2.63,2.28,3.53,1,2,3,2,5,UI/UX Design,1,1,1,1,0,0,1,0,0,0,1,0,1,0,2,0,1,0,0,2,3,3,3,2,2
+STU_1034,Kasun Senaratne,D/IT/24/1034,BSc (Hons) in Data Science & Business Analytics,1,3.15,3.69,3.57,4.0,2.66,3.38,1.59,5,1,2,3,3,Software Engineering,2,2,3,1,3,2,0,0,1,1,0,0,0,2,0,0,0,0,0,1,0,1,0,1,2
+STU_1032,Rashmi Mendis,D/IT/24/1032,BSc (Hons) in Software Engineering,2,2.2,3.46,2.09,2.5,1.21,2.12,1.81,4,2,3,3,2,Software Engineering,2,2,2,1,3,1,2,1,0,0,1,0,0,0,1,1,1,1,1,0,2,0,2,1,0
+STU_1737,Sanduni Fonseka,D/IT/24/1737,BSc (Hons) in Information Systems,4,2.46,2.51,2.01,2.85,1.87,2.08,3.45,1,2,2,3,5,UI/UX Design,0,0,0,0,0,2,2,0,0,0,0,0,0,1,1,0,1,1,0,0,3,3,2,1,1
+STU_1339,Praveen Fonseka,D/IT/24/1339,BSc (Hons) in Computer Science,1,2.46,3.05,3.83,2.35,1.8,1.73,2.0,1,5,3,2,3,Data Science / AI,0,1,1,2,0,3,2,2,3,2,0,0,0,0,1,2,0,0,0,2,2,0,0,1,1
+STU_1363,Methmi Silva,D/IT/24/1363,BSc (Hons) in Computer Science,2,2.53,2.39,3.0,2.56,2.75,1.96,2.53,3,5,2,3,1,Data Science / AI,0,2,1,1,1,3,2,3,2,3,0,1,0,0,0,2,1,0,0,0,1,1,0,0,0
+STU_1077,Amal Perera,D/IT/24/1077,BSc (Hons) in Data Science & Business Analytics,3,3.01,3.26,3.82,3.43,2.16,2.32,3.04,5,3,1,3,1,Software Engineering,3,2,3,1,2,0,0,0,2,1,1,1,0,0,0,0,0,2,0,0,0,0,2,0,0
+STU_1683,Ishara Senaratne,D/IT/24/1683,BSc (Hons) in Information Technology,2,2.68,2.54,3.08,1.99,2.57,3.09,2.81,2,2,2,4,3,Cloud / DevOps,0,1,1,0,1,0,1,0,0,2,0,1,3,0,0,3,3,2,0,2,2,0,1,0,1
+STU_1717,Chamari Herath,D/IT/24/1717,BSc (Hons) in Computer Science,2,2.73,3.05,2.39,3.11,2.62,2.7,2.53,2,2,1,5,3,Cloud / DevOps,1,1,1,1,0,1,0,2,0,0,2,0,2,0,1,2,1,2,0,1,0,1,0,0,2
+STU_1519,Akila Rajapaksha,D/IT/24/1519,BSc (Hons) in Information Technology,3,3.11,2.84,3.48,2.0,3.86,4.0,2.47,2,1,4,3,1,Cybersecurity,0,0,0,0,0,2,0,1,2,2,3,2,3,2,1,1,0,1,1,2,1,0,0,0,1
+STU_1073,Sachini Silva,D/IT/24/1073,BSc (Hons) in Computer Engineering,2,2.91,3.29,3.26,3.28,3.17,2.52,1.93,5,3,3,1,1,Software Engineering,3,1,2,1,3,1,0,1,1,2,0,0,1,1,0,0,0,2,0,2,1,2,1,0,2
+STU_1078,Maleesha Tharumila,D/IT/24/1078,BSc (Hons) in Information Technology,1,2.92,3.33,1.93,3.98,2.63,2.51,3.13,4,1,3,2,1,Software Engineering,2,2,2,1,2,0,0,0,1,2,0,2,1,1,0,0,1,1,0,1,2,1,2,0,0
+STU_1743,Amal Wickramasinghe,D/IT/24/1743,BSc (Hons) in Computer Engineering,1,2.74,2.13,2.08,3.5,2.44,2.86,3.42,2,2,3,1,5,UI/UX Design,0,0,1,2,0,0,0,2,1,1,0,0,0,2,0,1,1,1,0,1,2,2,3,2,1
+STU_1693,Sahan Dissanayake,D/IT/24/1693,BSc (Hons) in Software Engineering,3,2.99,3.25,3.15,2.51,2.97,3.37,2.68,3,1,2,5,2,Cloud / DevOps,0,1,0,0,0,0,1,1,1,1,0,0,3,0,0,3,2,2,0,2,0,0,1,2,1
+STU_1834,Ishara Silva,D/IT/24/1834,BSc (Hons) in Software Engineering,4,2.68,2.63,2.01,2.77,2.79,2.26,3.6,3,1,3,2,5,UI/UX Design,1,1,2,0,0,0,0,0,0,0,1,1,0,0,1,0,0,1,0,0,3,3,2,1,1
+STU_1110,Praveen Tharumila,D/IT/24/1110,BSc (Hons) in Information Technology,2,2.77,2.92,3.48,2.94,2.53,2.46,2.3,5,1,1,1,2,Software Engineering,3,3,2,1,3,0,0,1,0,0,1,0,1,2,2,0,0,0,0,0,0,2,2,0,0
+STU_1694,Dulan Jayasinghe,D/IT/24/1694,BSc (Hons) in Software Engineering,3,2.71,2.38,2.4,3.06,2.32,3.97,2.12,2,3,2,4,2,Cloud / DevOps,1,0,1,2,0,1,1,0,0,0,0,1,2,0,0,2,2,2,1,2,1,0,0,0,0
+STU_1310,Nimal Rathnayake,D/IT/24/1310,BSc (Hons) in Computer Engineering,1,3.07,3.86,2.71,3.03,4.0,2.79,2.05,3,5,2,1,3,Data Science / AI,0,0,0,0,1,3,2,2,3,3,2,1,1,0,0,2,0,0,0,1,1,0,0,1,0
+STU_1291,Tharindu Perera,D/IT/24/1291,BSc (Hons) in Information Technology,2,2.53,2.66,3.6,2.66,1.48,2.0,2.8,2,5,1,1,3,Data Science / AI,0,0,0,0,0,2,2,3,2,3,1,2,1,0,1,0,1,0,0,0,0,1,0,1,0
+STU_1434,Supun Tharumila,D/IT/24/1434,BSc (Hons) in Information Technology,1,3.09,3.67,2.32,3.3,3.67,2.54,3.0,1,1,5,2,1,Cybersecurity,0,0,0,1,1,2,0,0,0,0,3,3,3,2,2,0,1,1,0,1,1,0,0,0,0
+STU_1669,Maleesha Gunawardena,D/IT/24/1669,BSc (Hons) in Software Engineering,3,2.66,2.55,2.48,2.6,2.3,3.53,2.48,2,1,3,5,1,Cloud / DevOps,0,0,1,2,0,1,0,0,1,0,1,2,3,0,1,3,1,3,2,2,2,1,0,0,0
+STU_1292,Chamari Karunaratne,D/IT/24/1292,BSc (Hons) in Computer Engineering,2,2.98,2.93,3.36,3.16,3.23,2.11,3.08,3,5,2,3,1,Data Science / AI,1,2,0,0,1,3,3,3,3,3,1,0,0,2,1,0,0,1,1,1,0,2,1,1,1
+STU_1260,Dulan Rajapaksha,D/IT/24/1260,BSc (Hons) in Data Science & Business Analytics,4,2.7,2.95,3.81,2.7,1.67,2.22,2.83,1,4,3,3,1,Data Science / AI,1,0,1,0,1,3,2,3,3,2,0,1,0,1,1,0,0,1,0,1,0,1,0,1,0
+STU_1169,Dulan Rathnayake,D/IT/24/1169,BSc (Hons) in Computer Engineering,3,2.81,3.25,2.29,3.62,2.38,2.2,3.1,5,3,1,2,2,Software Engineering,2,2,2,1,3,0,0,1,1,0,0,2,0,0,0,1,0,1,0,1,1,0,1,0,0
+STU_1437,Praveen Herath,D/IT/24/1437,BSc (Hons) in Data Science & Business Analytics,2,3.26,3.65,2.73,2.7,3.84,3.88,2.73,3,1,5,1,1,Cybersecurity,1,0,1,0,0,2,1,1,0,0,2,1,2,3,1,0,1,0,0,0,0,0,2,1,0
+STU_1356,Rashmi Rathnayake,D/IT/24/1356,BSc (Hons) in Information Technology,3,3.07,2.98,3.78,3.15,3.06,2.95,2.52,3,5,3,3,3,Data Science / AI,0,0,0,1,0,3,1,2,3,3,0,2,0,2,0,1,1,1,1,2,1,1,2,1,1
+STU_1287,Nuwan Bandara,D/IT/24/1287,BSc (Hons) in Information Systems,4,2.81,2.38,3.0,2.84,3.15,2.67,2.82,2,4,3,2,1,Data Science / AI,0,0,1,1,1,2,3,2,3,2,0,1,1,1,1,1,1,1,1,0,0,0,1,1,2
+STU_1642,Buddhika Fonseka,D/IT/24/1642,BSc (Hons) in Information Systems,1,3.06,2.92,2.84,2.88,2.75,3.42,3.55,2,2,1,5,3,Cloud / DevOps,0,2,0,2,1,1,0,0,1,1,0,0,3,0,0,2,1,3,2,1,1,1,1,1,1
+STU_1585,Nimal Wickramasinghe,D/IT/24/1585,BSc (Hons) in Computer Engineering,3,2.79,2.35,2.22,2.71,3.61,3.35,2.51,2,3,2,5,3,Cloud / DevOps,2,0,2,1,0,1,0,1,2,1,0,0,2,0,0,2,3,2,0,1,0,0,0,0,1
+STU_1006,Anushka Ahamad,D/IT/24/1006,BSc (Hons) in Information Technology,3,2.65,3.04,2.8,2.45,3.43,1.93,2.24,4,3,2,1,2,Software Engineering,3,1,2,1,2,2,0,1,2,1,1,1,0,0,1,1,2,2,1,1,1,1,1,1,2
+STU_1055,Sachini Tharumila,D/IT/24/1055,BSc (Hons) in Computer Science,1,2.99,3.92,2.8,4.0,2.88,1.8,2.56,4,1,3,3,2,Software Engineering,3,2,2,0,2,0,0,0,1,2,1,0,1,0,2,1,0,1,1,0,1,0,1,1,1
+STU_1576,Sachini Fernando,D/IT/24/1576,BSc (Hons) in Information Technology,2,2.77,2.26,2.82,2.49,3.46,3.26,2.33,1,1,5,1,2,Cybersecurity,1,1,2,1,1,0,2,0,0,0,3,2,3,3,1,1,1,1,0,2,0,0,0,1,1
+STU_1799,Tharindu Silva,D/IT/24/1799,BSc (Hons) in Computer Engineering,2,3.1,3.73,2.43,3.47,2.69,2.55,3.72,1,2,3,3,4,UI/UX Design,1,0,0,0,0,2,0,2,0,0,0,1,0,1,1,0,1,0,1,0,3,3,3,1,3
+STU_1255,Maleesha Bandara,D/IT/24/1255,BSc (Hons) in Data Science & Business Analytics,3,2.67,3.32,3.17,2.3,3.11,1.73,2.42,2,5,3,2,3,Data Science / AI,2,0,0,1,0,3,3,1,3,2,0,1,0,1,1,0,1,1,0,0,2,1,0,0,1
+STU_1214,Ravindu Jayasinghe,D/IT/24/1214,BSc (Hons) in Computer Science,2,3.18,2.7,3.93,3.13,2.0,3.49,3.85,5,1,2,3,1,Software Engineering,2,2,1,0,2,2,0,2,0,0,0,1,0,0,0,2,1,1,1,0,0,2,0,0,0
+STU_1595,Kasun Wickramasinghe,D/IT/24/1595,BSc (Hons) in Computer Engineering,3,2.74,2.65,2.48,2.79,2.3,2.97,3.26,1,1,1,5,2,Cloud / DevOps,0,0,0,1,1,2,0,0,1,1,0,0,3,1,0,2,2,2,0,2,1,1,0,1,1
+STU_1213,Dulan Fonseka,D/IT/24/1213,BSc (Hons) in Data Science & Business Analytics,3,2.96,3.68,3.58,3.05,2.94,2.16,2.32,5,3,2,1,3,Software Engineering,2,3,2,2,3,1,2,0,1,0,0,1,0,0,0,0,1,0,0,0,0,1,0,1,0
+STU_1098,Ravindu Mendis,D/IT/24/1098,BSc (Hons) in Data Science & Business Analytics,3,2.9,3.98,3.05,2.57,2.66,2.3,2.82,5,3,2,3,1,Software Engineering,3,3,2,2,2,1,2,0,2,2,1,0,1,2,1,0,1,1,1,0,0,1,2,0,2
+STU_1754,Sahan Senaratne,D/IT/24/1754,BSc (Hons) in Software Engineering,3,2.76,3.03,3.41,2.71,1.73,2.17,3.48,1,3,1,2,5,UI/UX Design,2,0,0,0,0,1,1,1,0,2,0,2,0,1,1,0,0,1,0,1,3,3,3,2,3
+STU_1814,Hasitha Bandara,D/IT/24/1814,BSc (Hons) in Software Engineering,2,2.75,3.25,2.81,2.64,2.24,2.49,3.09,3,2,3,3,4,UI/UX Design,1,1,1,0,2,0,0,1,2,1,2,0,1,0,1,0,0,0,0,0,3,3,3,1,2
+STU_1337,Buddhika Fonseka,D/IT/24/1337,BSc (Hons) in Software Engineering,2,2.97,3.44,4.0,2.69,2.81,2.1,2.8,2,5,3,2,2,Data Science / AI,1,1,0,2,0,3,3,2,3,2,0,1,1,0,0,2,0,2,0,1,2,0,1,1,1
+STU_1559,Dilshan Wickramasinghe,D/IT/24/1559,BSc (Hons) in Information Systems,3,2.86,2.42,2.08,2.93,3.65,3.49,2.56,1,1,5,3,2,Cybersecurity,0,1,0,0,0,2,1,0,0,0,3,2,3,1,2,1,0,0,1,0,1,2,2,0,0
+STU_1500,Chathuri Fonseka,D/IT/24/1500,BSc (Hons) in Information Systems,2,2.93,3.7,2.41,1.96,3.59,3.83,2.06,2,2,5,2,1,Cybersecurity,0,0,0,1,1,1,0,1,1,1,2,2,2,2,1,0,0,1,1,1,1,0,0,0,0
+STU_1085,Dilshan Alwis,D/IT/24/1085,BSc (Hons) in Information Systems,2,2.37,3.06,2.38,3.03,2.28,1.88,1.62,5,3,1,2,1,Software Engineering,2,2,2,0,3,0,0,1,0,0,0,1,0,1,0,2,2,0,0,0,0,1,1,1,1
+STU_1011,Kasun Silva,D/IT/24/1011,BSc (Hons) in Software Engineering,4,2.94,3.64,2.46,4.0,2.21,1.77,3.55,5,1,1,3,2,Software Engineering,3,2,2,1,2,0,0,2,0,1,2,0,2,1,0,0,1,0,2,0,1,0,1,1,0
+STU_1689,Kasun Wickramasinghe,D/IT/24/1689,BSc (Hons) in Software Engineering,2,2.54,2.91,1.0,1.75,3.98,2.73,2.87,3,1,2,5,2,Cloud / DevOps,0,2,0,1,0,0,1,0,0,0,0,0,2,0,0,2,1,3,0,1,1,1,1,0,0
+STU_1175,Kavindi Wickramasinghe,D/IT/24/1175,BSc (Hons) in Information Systems,2,2.79,3.3,3.51,3.03,2.45,1.83,2.59,5,1,2,3,3,Software Engineering,3,3,3,1,3,1,1,1,0,2,1,2,0,0,1,0,1,1,1,2,1,0,0,0,1
+STU_1352,Buddhika Bandara,D/IT/24/1352,BSc (Hons) in Information Technology,2,3.29,3.2,3.21,3.09,3.03,3.97,3.22,1,5,1,3,2,Data Science / AI,2,2,1,1,1,2,2,2,2,3,0,1,1,0,1,0,1,1,0,0,1,1,0,2,1
+STU_1119,Hasitha Silva,D/IT/24/1119,BSc (Hons) in Computer Science,3,2.88,2.99,3.04,3.37,3.16,2.4,2.32,4,3,1,1,3,Software Engineering,2,1,2,2,2,1,1,0,0,1,2,0,1,0,0,2,1,1,0,1,0,0,1,0,1
+STU_1251,Sahan Rajapaksha,D/IT/24/1251,BSc (Hons) in Information Systems,1,2.86,3.66,3.32,3.11,1.97,1.82,3.29,2,4,2,1,2,Data Science / AI,0,0,2,1,1,3,2,1,2,2,1,1,1,2,2,0,0,0,1,0,0,0,0,0,0
+STU_1804,Chamari Jayasinghe,D/IT/24/1804,BSc (Hons) in Computer Science,2,2.42,3.55,1.31,2.66,2.05,1.72,3.25,3,2,2,3,5,UI/UX Design,1,0,0,2,0,1,1,0,1,0,1,2,2,1,1,1,1,0,0,1,2,3,3,2,2
+STU_1030,Methmi Silva,D/IT/24/1030,BSc (Hons) in Data Science & Business Analytics,2,2.98,3.87,2.75,3.37,3.24,2.89,1.76,5,1,2,1,3,Software Engineering,3,2,2,0,2,1,2,0,0,0,0,1,2,0,0,0,2,0,1,0,0,2,2,0,2
+STU_1629,Nimal Herath,D/IT/24/1629,BSc (Hons) in Computer Engineering,2,2.91,3.03,2.47,3.04,3.0,3.41,2.52,1,2,2,5,3,Cloud / DevOps,0,2,2,0,0,1,1,1,1,2,0,0,2,2,0,2,1,3,1,1,1,0,2,0,1
+STU_1558,Dilshan Dissanayake,D/IT/24/1558,BSc (Hons) in Software Engineering,4,2.9,3.62,2.48,2.49,2.98,3.24,2.61,2,3,5,3,2,Cybersecurity,2,0,1,1,0,1,0,0,1,1,2,3,2,2,2,1,0,0,1,1,0,0,1,0,0
+STU_1440,Chamari Jayasinghe,D/IT/24/1440,BSc (Hons) in Information Technology,2,2.94,2.33,1.21,3.22,3.83,3.19,3.86,1,2,5,3,1,Cybersecurity,0,2,2,1,2,1,1,0,1,1,3,2,3,1,1,0,1,0,1,0,0,0,0,0,2
+STU_1345,Chathuri Ahamad,D/IT/24/1345,BSc (Hons) in Software Engineering,2,2.31,2.63,4.0,1.82,1.68,1.74,1.98,3,5,3,1,2,Data Science / AI,0,1,0,0,0,3,2,2,2,3,1,0,1,2,0,0,0,2,0,0,1,1,0,1,1
+STU_1082,Supun Ahamad,D/IT/24/1082,BSc (Hons) in Data Science & Business Analytics,3,2.86,3.15,3.25,2.64,2.04,3.43,2.64,5,3,1,3,3,Software Engineering,2,2,2,1,2,0,2,2,0,1,1,1,0,0,0,1,0,2,0,0,1,1,0,0,2
+STU_1199,Nimal Senaratne,D/IT/24/1199,BSc (Hons) in Computer Engineering,4,3.2,3.25,3.17,4.0,3.2,2.74,2.84,5,3,1,1,3,Software Engineering,3,2,2,1,2,0,0,0,1,0,2,0,1,1,0,0,1,2,0,0,0,0,1,1,0
+STU_1360,Supun Jayasinghe,D/IT/24/1360,BSc (Hons) in Information Systems,2,2.73,3.15,3.79,2.7,2.37,2.99,1.38,3,4,2,2,3,Data Science / AI,0,0,0,1,0,2,2,3,2,2,0,1,2,0,0,0,0,2,1,0,0,0,1,2,0
+STU_1536,Praveen Jayasinghe,D/IT/24/1536,BSc (Hons) in Software Engineering,4,3.0,2.98,2.06,2.94,3.54,4.0,2.45,2,1,5,1,1,Cybersecurity,0,1,0,0,0,0,0,0,0,2,3,2,3,3,1,0,1,0,1,0,1,1,0,1,1
+STU_1817,Akila Bandara,D/IT/24/1817,BSc (Hons) in Information Systems,1,2.69,3.45,2.06,2.76,2.27,1.78,3.83,3,1,2,2,5,UI/UX Design,0,1,0,0,0,0,2,0,0,0,0,1,1,1,1,0,0,1,1,1,3,3,3,2,2
+STU_1845,Sanduni Fernando,D/IT/24/1845,BSc (Hons) in Data Science & Business Analytics,2,2.75,1.64,2.07,2.91,3.36,2.53,4.0,1,3,3,3,5,UI/UX Design,0,0,1,0,1,1,0,1,2,0,0,1,1,1,0,0,2,0,1,1,3,2,2,2,2
+STU_1515,Buddhika Wickramasinghe,D/IT/24/1515,BSc (Hons) in Data Science & Business Analytics,2,2.6,2.76,1.64,2.66,3.22,3.06,2.29,2,1,5,2,2,Cybersecurity,0,1,1,0,1,2,0,1,1,0,3,1,3,3,2,1,1,1,1,0,1,2,2,0,1
+STU_1760,Maleesha Mendis,D/IT/24/1760,BSc (Hons) in Information Technology,2,3.09,2.79,3.0,2.59,3.49,3.12,3.52,3,2,1,2,5,UI/UX Design,0,0,1,2,1,1,0,0,0,0,1,2,1,0,1,0,0,0,1,1,2,3,2,2,3
+STU_1445,Buddhika Perera,D/IT/24/1445,BSc (Hons) in Computer Science,3,2.73,2.43,2.84,1.94,3.44,3.23,2.47,2,2,5,1,1,Cybersecurity,0,0,0,0,2,0,2,1,2,1,2,2,2,1,1,1,0,2,2,1,0,2,1,1,2
+STU_1686,Methmi Dissanayake,D/IT/24/1686,BSc (Hons) in Computer Engineering,3,2.98,2.59,2.87,3.61,3.33,3.26,2.22,3,1,3,5,3,Cloud / DevOps,1,1,1,1,0,0,1,0,0,0,0,1,2,2,1,2,2,3,1,1,0,0,1,1,1
+STU_1546,Nimal Herath,D/IT/24/1546,BSc (Hons) in Computer Engineering,2,2.92,2.78,3.0,2.75,3.31,3.55,2.13,3,2,4,2,3,Cybersecurity,0,1,0,1,1,0,1,2,1,0,3,2,2,1,1,0,0,0,0,2,1,2,1,0,0
+STU_1657,Tharindu Tharumila,D/IT/24/1657,BSc (Hons) in Computer Engineering,3,2.98,2.31,2.92,2.36,3.56,3.07,3.67,3,1,1,5,3,Cloud / DevOps,1,1,1,0,2,0,0,1,0,1,0,0,2,0,0,3,2,3,1,1,1,1,0,0,1
+STU_1550,Tharindu Senaratne,D/IT/24/1550,BSc (Hons) in Information Technology,4,3.22,2.86,2.73,2.89,4.0,3.62,3.2,2,1,4,1,2,Cybersecurity,0,0,0,2,1,0,1,2,1,1,3,2,3,1,1,2,1,0,0,0,0,1,0,1,1
+STU_1587,Akila Ahamad,D/IT/24/1587,BSc (Hons) in Data Science & Business Analytics,3,2.63,2.48,1.62,2.98,3.28,2.85,2.57,1,2,3,5,1,Cloud / DevOps,1,0,1,2,1,1,1,2,0,1,2,0,2,2,1,3,1,3,0,1,1,1,0,1,0
+STU_1600,Nuwan Fonseka,D/IT/24/1600,BSc (Hons) in Computer Engineering,2,2.79,2.93,2.76,2.59,3.26,3.51,1.69,1,1,3,5,1,Cloud / DevOps,0,0,1,0,1,1,0,0,0,2,1,1,3,1,0,2,1,2,1,2,1,0,0,0,1
+STU_1008,Chathuri Jayasinghe,D/IT/24/1008,BSc (Hons) in Information Systems,2,2.61,3.0,1.82,2.79,3.29,2.42,2.32,5,3,2,1,1,Software Engineering,3,2,3,0,3,1,1,1,1,0,1,1,1,1,1,0,0,0,0,0,1,0,1,0,1
+STU_1297,Sachini Alwis,D/IT/24/1297,BSc (Hons) in Computer Science,2,2.88,4.0,3.67,2.97,1.44,2.93,2.26,2,4,3,1,2,Data Science / AI,2,0,1,0,0,3,2,3,2,3,0,2,0,0,0,0,1,1,0,0,1,0,0,0,0
+STU_1156,Ishara Rathnayake,D/IT/24/1156,BSc (Hons) in Computer Science,2,2.65,3.87,1.2,2.47,2.7,2.68,3.0,4,2,2,1,1,Software Engineering,3,2,2,1,3,1,1,1,1,1,1,0,2,0,0,1,0,0,1,1,1,1,0,0,1
+STU_1327,Anushka Silva,D/IT/24/1327,BSc (Hons) in Software Engineering,3,2.64,2.89,3.37,1.73,2.45,3.17,2.27,1,4,1,3,3,Data Science / AI,2,1,0,1,0,3,1,2,3,2,0,2,1,2,0,0,1,0,1,1,1,2,0,0,1
+STU_1102,Buddhika Dissanayake,D/IT/24/1102,BSc (Hons) in Computer Science,1,2.52,3.41,1.96,2.52,2.2,2.27,2.77,5,3,1,2,3,Software Engineering,3,2,2,0,3,0,1,0,0,0,0,0,1,1,0,1,2,1,1,2,2,1,0,1,1
+STU_1362,Nimal Rajapaksha,D/IT/24/1362,BSc (Hons) in Computer Science,2,2.73,2.52,3.32,2.91,2.57,3.36,1.7,1,5,1,1,2,Data Science / AI,0,1,0,1,0,3,1,2,2,3,1,2,1,2,0,1,1,1,0,1,1,1,1,1,1
+STU_1333,Sanduni Rathnayake,D/IT/24/1333,BSc (Hons) in Information Systems,2,2.76,3.48,2.89,2.58,2.42,1.95,3.23,1,5,3,1,3,Data Science / AI,1,2,0,2,2,2,3,2,3,3,1,1,1,0,0,0,1,0,2,0,0,2,0,0,0
+STU_1384,Buddhika Gunawardena,D/IT/24/1384,BSc (Hons) in Information Systems,1,2.96,3.02,3.99,2.8,2.2,3.26,2.52,2,5,1,2,1,Data Science / AI,1,1,2,0,0,2,1,2,2,3,2,0,0,1,1,0,0,1,1,0,1,2,0,1,0
+STU_1282,Kavindi Wickramasinghe,D/IT/24/1282,BSc (Hons) in Software Engineering,2,2.72,2.97,3.72,2.14,2.76,2.39,2.31,2,5,1,3,1,Data Science / AI,1,0,0,0,2,3,3,2,3,2,1,2,0,1,0,0,0,0,2,0,0,2,2,1,2
+STU_1003,Rashmi Senaratne,D/IT/24/1003,BSc (Hons) in Information Systems,3,3.21,3.16,2.85,2.79,3.87,3.47,3.09,5,2,1,2,1,Software Engineering,3,1,3,0,3,0,0,0,2,0,1,0,0,0,0,1,0,1,0,0,0,0,1,0,0
+STU_1232,Sanduni Rathnayake,D/IT/24/1232,BSc (Hons) in Information Technology,3,3.18,3.45,3.32,3.81,3.04,2.62,2.87,4,3,2,3,3,Software Engineering,3,2,1,0,3,0,2,1,2,0,0,2,0,0,2,1,0,2,0,2,0,1,0,1,0
+STU_1458,Tharindu Herath,D/IT/24/1458,BSc (Hons) in Data Science & Business Analytics,3,3.14,2.97,2.35,2.39,4.0,3.45,3.65,1,1,5,3,1,Cybersecurity,0,0,2,0,0,0,0,0,0,0,2,2,2,2,2,0,1,2,2,0,1,0,0,0,0
+STU_1216,Praveen Perera,D/IT/24/1216,BSc (Hons) in Software Engineering,3,3.17,3.67,3.68,3.28,1.6,3.56,3.24,5,2,1,3,1,Software Engineering,2,2,2,1,3,0,0,0,2,0,1,2,0,1,0,0,0,2,0,1,1,2,0,1,1
+STU_1211,Rashmi Silva,D/IT/24/1211,BSc (Hons) in Data Science & Business Analytics,4,2.9,2.96,2.58,3.38,2.64,2.18,3.64,4,3,3,2,1,Software Engineering,3,3,2,2,3,0,0,1,1,1,0,0,1,0,1,0,2,1,1,2,1,0,0,1,0
+STU_1658,Akila Alwis,D/IT/24/1658,BSc (Hons) in Information Systems,4,3.19,3.05,1.95,3.72,3.79,3.48,3.18,1,3,2,4,3,Cloud / DevOps,0,0,1,0,1,2,0,0,2,1,1,1,3,0,0,3,2,2,2,2,0,0,1,0,1
+STU_1716,Kasun Wickramasinghe,D/IT/24/1716,BSc (Hons) in Software Engineering,1,2.87,2.42,2.88,2.43,3.68,3.09,2.72,1,1,3,4,1,Cloud / DevOps,1,1,0,1,2,1,1,0,1,2,0,0,3,2,0,3,2,2,1,1,0,1,2,0,1
+STU_1793,Kasun Herath,D/IT/24/1793,BSc (Hons) in Computer Science,1,2.81,3.08,2.92,2.51,1.99,2.53,3.85,1,2,3,1,5,UI/UX Design,1,1,0,1,1,1,1,0,1,0,2,0,0,0,1,0,1,2,0,0,2,3,3,2,1
+STU_1543,Kasun Herath,D/IT/24/1543,BSc (Hons) in Computer Science,2,2.85,3.65,1.14,3.08,3.19,2.73,3.3,1,1,5,2,3,Cybersecurity,0,1,0,0,2,2,1,1,0,2,3,2,3,1,2,2,2,2,1,0,0,1,0,1,0
+STU_1320,Tharindu Tharumila,D/IT/24/1320,BSc (Hons) in Information Systems,3,2.68,3.0,4.0,2.41,2.23,2.61,1.82,1,5,3,1,1,Data Science / AI,0,1,0,0,0,3,2,3,3,2,0,2,0,2,0,1,0,1,1,0,2,2,2,2,1
+STU_1831,Sahan Bandara,D/IT/24/1831,BSc (Hons) in Information Systems,3,3.1,2.61,3.26,3.15,4.0,2.43,3.13,3,3,1,1,4,UI/UX Design,1,1,1,0,2,0,0,0,0,0,1,0,2,1,0,0,0,0,0,0,2,3,2,1,2
+STU_1581,Kavindi Herath,D/IT/24/1581,BSc (Hons) in Software Engineering,3,3.06,3.54,1.75,2.0,4.0,3.58,3.51,1,3,1,4,3,Cloud / DevOps,1,2,0,0,1,0,0,0,1,1,1,0,3,0,2,3,2,2,0,2,1,0,1,0,0
+STU_1607,Rashmi Gunawardena,D/IT/24/1607,BSc (Hons) in Information Technology,1,2.78,3.18,2.38,1.72,3.97,2.7,2.75,2,3,3,5,3,Cloud / DevOps,1,2,2,1,2,1,0,0,0,2,1,1,2,0,0,3,2,3,0,2,0,0,1,0,1
+STU_1786,Hasitha Silva,D/IT/24/1786,BSc (Hons) in Data Science & Business Analytics,3,2.83,2.75,1.94,2.59,3.35,2.59,3.76,1,1,1,1,5,UI/UX Design,2,1,0,2,1,0,0,0,1,1,0,1,1,0,0,1,0,1,0,0,2,3,3,2,3
+STU_1488,Nuwan Bandara,D/IT/24/1488,BSc (Hons) in Data Science & Business Analytics,3,3.27,3.68,2.92,2.89,3.22,3.31,3.6,2,1,5,1,3,Cybersecurity,2,0,0,2,0,2,0,2,0,0,3,1,2,1,2,2,0,0,0,1,0,0,0,1,2
+STU_1410,Chamari Karunaratne,D/IT/24/1410,BSc (Hons) in Information Technology,3,3.2,2.76,3.39,2.89,3.55,3.52,3.11,2,4,3,1,1,Data Science / AI,2,0,0,0,1,2,2,1,3,3,1,2,0,0,2,1,1,0,0,0,0,0,0,1,0
+STU_1080,Tharindu Wickramasinghe,D/IT/24/1080,BSc (Hons) in Software Engineering,3,2.67,3.43,1.67,3.05,2.86,1.84,3.15,5,2,2,3,2,Software Engineering,2,1,2,0,3,0,1,2,0,1,1,1,0,0,0,0,0,1,0,2,1,1,0,1,2
+STU_1149,Supun Dissanayake,D/IT/24/1149,BSc (Hons) in Computer Engineering,2,2.71,3.31,3.04,2.64,1.11,3.18,2.99,5,3,1,2,2,Software Engineering,3,1,2,0,3,0,2,1,2,0,0,0,1,0,2,2,2,1,1,1,0,1,0,0,0
+STU_1389,Sachini Silva,D/IT/24/1389,BSc (Hons) in Data Science & Business Analytics,2,3.2,2.71,4.0,2.57,3.41,3.82,2.68,2,5,3,1,2,Data Science / AI,0,1,2,0,0,3,2,1,3,3,2,0,1,0,1,1,0,1,0,2,0,0,0,1,1
+STU_1838,Supun Dissanayake,D/IT/24/1838,BSc (Hons) in Information Systems,1,2.6,2.24,2.47,3.21,1.8,2.12,3.77,3,3,2,1,5,UI/UX Design,1,0,2,0,1,1,0,1,0,0,0,2,2,0,0,0,1,2,2,1,2,3,3,2,3
+STU_1328,Dinithi Mendis,D/IT/24/1328,BSc (Hons) in Computer Engineering,3,2.73,3.19,2.7,3.0,1.46,2.2,3.84,3,5,3,2,1,Data Science / AI,0,1,1,0,1,2,2,2,3,2,2,2,1,0,0,0,1,0,2,0,1,0,1,0,1
+STU_1378,Chathuri Perera,D/IT/24/1378,BSc (Hons) in Information Technology,4,3.18,3.66,3.82,3.41,2.61,2.31,3.27,3,5,2,3,3,Data Science / AI,1,0,1,1,0,3,2,3,3,3,0,1,0,1,0,0,2,1,0,0,2,0,1,1,1
+STU_1764,Chamari Mendis,D/IT/24/1764,BSc (Hons) in Information Systems,1,2.73,2.78,1.17,2.15,3.05,3.54,3.66,1,2,2,3,5,UI/UX Design,0,0,0,2,0,1,1,0,0,2,0,1,2,0,0,0,0,0,1,1,3,2,3,1,3
+STU_1343,Rashmi Rajapaksha,D/IT/24/1343,BSc (Hons) in Computer Engineering,2,2.7,3.85,3.24,1.88,2.93,2.27,2.0,1,4,3,3,2,Data Science / AI,0,1,1,0,0,2,2,3,2,3,0,2,0,1,0,2,1,0,0,1,2,0,1,0,2
+STU_1405,Dulan Jayasinghe,D/IT/24/1405,BSc (Hons) in Information Systems,1,2.54,2.48,3.83,2.59,2.3,1.92,2.14,2,5,1,3,1,Data Science / AI,0,0,0,2,0,3,3,1,2,3,2,1,0,2,0,0,0,1,0,1,2,0,1,0,0
+STU_1134,Hasitha Bandara,D/IT/24/1134,BSc (Hons) in Data Science & Business Analytics,3,3.06,3.52,2.02,3.34,2.67,3.61,3.18,5,2,3,1,1,Software Engineering,2,2,1,1,3,0,0,0,0,1,1,1,0,1,0,0,0,0,0,1,1,1,0,0,0
+STU_1441,Buddhika Dissanayake,D/IT/24/1441,BSc (Hons) in Information Technology,2,2.82,2.64,2.92,2.3,3.31,2.81,2.93,1,1,5,1,1,Cybersecurity,0,0,0,0,0,1,1,0,1,1,3,2,3,2,1,0,1,2,0,1,1,0,2,0,2
+STU_1248,Ravindu Mendis,D/IT/24/1248,BSc (Hons) in Information Systems,1,2.97,3.97,3.34,2.76,1.86,2.75,3.11,2,5,1,1,1,Data Science / AI,0,1,1,1,0,3,2,2,3,2,0,1,0,1,2,1,0,0,1,2,1,1,0,1,1
+STU_1522,Supun Bandara,D/IT/24/1522,BSc (Hons) in Software Engineering,3,2.69,2.1,1.73,2.83,3.43,3.21,2.86,1,2,4,1,3,Cybersecurity,0,1,0,1,0,1,0,0,2,0,3,1,3,2,2,1,0,0,0,1,1,0,0,0,0
+STU_1056,Nimal Karunaratne,D/IT/24/1056,BSc (Hons) in Software Engineering,3,2.66,3.5,2.61,2.71,1.88,1.98,3.28,5,1,1,3,3,Software Engineering,3,2,1,1,3,0,0,2,1,0,0,1,2,1,1,0,0,2,0,0,0,1,2,0,0
+STU_1695,Dinithi Silva,D/IT/24/1695,BSc (Hons) in Software Engineering,2,2.74,2.79,1.4,3.07,3.95,2.87,2.38,3,3,3,5,2,Cloud / DevOps,0,1,0,2,0,1,1,0,0,0,0,0,2,0,0,3,3,2,1,1,2,0,0,0,1
+STU_1641,Akila Ahamad,D/IT/24/1641,BSc (Hons) in Data Science & Business Analytics,4,2.99,2.58,2.3,3.32,3.1,3.79,2.88,1,1,2,5,2,Cloud / DevOps,0,0,0,0,1,0,1,1,0,0,0,0,2,1,1,2,3,3,0,1,2,0,1,0,0
+STU_1524,Nimal Fernando,D/IT/24/1524,BSc (Hons) in Computer Engineering,3,2.69,2.04,2.72,2.22,3.42,2.46,3.28,1,2,5,3,2,Cybersecurity,1,1,0,1,1,2,1,1,0,0,3,1,3,2,1,1,0,0,0,0,0,2,1,1,0
+STU_1312,Rashmi Wickramasinghe,D/IT/24/1312,BSc (Hons) in Information Systems,2,2.92,2.5,3.44,3.36,2.5,2.81,2.94,1,5,2,2,2,Data Science / AI,1,1,0,1,1,3,2,2,3,3,0,0,0,0,0,1,1,1,0,2,1,0,1,1,1
+STU_1784,Shanika Fonseka,D/IT/24/1784,BSc (Hons) in Information Technology,3,2.71,2.02,3.21,2.96,2.12,2.46,3.48,1,2,1,2,5,UI/UX Design,0,1,0,1,0,1,0,1,0,0,1,2,0,2,0,1,1,2,1,1,2,3,3,2,1
+STU_1205,Supun Karunaratne,D/IT/24/1205,BSc (Hons) in Information Technology,2,2.79,3.05,2.19,3.64,2.64,2.25,2.98,5,1,2,1,2,Software Engineering,3,2,1,2,2,0,1,1,0,2,1,0,0,0,0,1,0,1,1,1,1,0,0,1,0
+STU_1586,Supun Jayasinghe,D/IT/24/1586,BSc (Hons) in Information Systems,4,3.19,2.49,3.35,3.65,3.57,3.03,3.06,2,2,1,5,2,Cloud / DevOps,0,0,1,2,0,2,0,0,0,2,0,0,3,1,2,2,2,3,0,1,0,0,1,1,0
+STU_1602,Anushka Tharumila,D/IT/24/1602,BSc (Hons) in Computer Engineering,3,2.79,2.98,2.05,2.89,3.14,3.09,2.62,1,2,1,5,3,Cloud / DevOps,1,0,0,1,0,2,1,1,0,2,0,1,2,0,1,3,3,3,1,1,0,0,0,0,0
+STU_1425,Sewwandi Karunaratne,D/IT/24/1425,BSc (Hons) in Information Technology,1,2.7,3.24,3.08,3.4,2.24,1.99,2.25,2,4,3,1,1,Data Science / AI,2,0,2,0,1,3,2,3,3,2,1,2,0,0,1,2,1,2,0,0,0,1,0,0,0
+STU_1329,Nuwan Ahamad,D/IT/24/1329,BSc (Hons) in Information Technology,3,2.87,4.0,3.65,3.16,2.4,1.9,2.1,3,5,3,1,2,Data Science / AI,1,0,0,0,1,3,2,1,3,2,1,0,0,0,1,1,0,2,1,0,1,0,2,0,0
+STU_1421,Sewwandi Rajapaksha,D/IT/24/1421,BSc (Hons) in Data Science & Business Analytics,4,2.76,3.51,3.6,2.47,2.5,2.24,2.26,3,5,2,2,1,Data Science / AI,0,0,1,1,0,3,2,2,3,3,0,0,2,0,0,1,2,0,1,1,0,1,2,0,0
+STU_1061,Hasitha Rajapaksha,D/IT/24/1061,BSc (Hons) in Computer Engineering,2,2.71,2.94,3.14,2.73,2.94,2.51,2.03,5,1,1,1,2,Software Engineering,3,1,3,0,3,1,1,0,0,1,0,0,2,1,0,1,1,2,1,0,0,0,1,0,1
+STU_1200,Sachini Alwis,D/IT/24/1200,BSc (Hons) in Data Science & Business Analytics,3,2.63,3.18,1.6,2.95,3.49,2.38,2.19,5,3,3,2,1,Software Engineering,3,1,2,1,2,0,0,1,0,0,0,1,0,0,0,2,0,1,1,1,2,0,0,0,1
+STU_1656,Sanduni Tharumila,D/IT/24/1656,BSc (Hons) in Data Science & Business Analytics,2,3.1,2.81,2.99,2.8,3.5,3.62,2.87,2,3,2,4,1,Cloud / DevOps,0,1,1,1,0,0,1,1,1,0,0,1,3,0,0,2,3,3,0,1,0,0,0,1,1
+STU_1809,Shanika Mendis,D/IT/24/1809,BSc (Hons) in Data Science & Business Analytics,3,2.42,2.56,2.48,2.54,1.76,1.96,3.22,1,2,3,1,5,UI/UX Design,0,1,0,0,0,0,1,1,2,1,0,0,1,0,0,0,0,0,0,0,2,3,2,1,2
+STU_1429,Shanika Mendis,D/IT/24/1429,BSc (Hons) in Information Systems,2,2.83,2.75,3.54,2.33,2.88,3.72,1.78,2,1,5,3,3,Cybersecurity,0,1,1,1,1,0,1,2,2,0,2,1,2,1,1,1,1,0,0,0,2,0,0,1,1
+STU_1665,Dulan Gunawardena,D/IT/24/1665,BSc (Hons) in Software Engineering,2,2.92,2.49,2.12,3.55,3.39,3.16,2.78,2,1,3,5,2,Cloud / DevOps,0,1,0,0,0,0,1,1,2,0,2,1,3,0,1,2,1,2,0,1,0,0,1,2,0
+STU_1514,Akila Perera,D/IT/24/1514,BSc (Hons) in Software Engineering,2,2.99,3.1,1.6,3.53,3.84,3.5,2.4,1,2,5,2,1,Cybersecurity,1,1,0,2,0,0,0,2,2,0,2,1,3,3,1,0,0,0,1,0,2,1,1,0,2
+STU_1826,Dilshan Jayasinghe,D/IT/24/1826,BSc (Hons) in Computer Engineering,3,2.45,2.31,2.14,2.22,2.08,2.51,3.44,1,1,2,3,5,UI/UX Design,2,0,0,1,0,0,1,0,1,1,2,2,0,1,1,0,0,2,0,0,2,3,3,2,2
+STU_1832,Kavinda Dissanayake,D/IT/24/1832,BSc (Hons) in Data Science & Business Analytics,1,3.16,2.81,2.61,2.97,3.61,2.98,4.0,2,2,3,2,5,UI/UX Design,2,0,1,1,0,2,1,1,0,0,0,0,0,1,1,0,0,1,0,2,3,3,2,1,2
+STU_1361,Buddhika Mendis,D/IT/24/1361,BSc (Hons) in Information Technology,3,2.94,2.77,3.74,2.9,3.17,1.85,3.22,2,5,2,3,2,Data Science / AI,2,2,2,1,2,3,1,2,2,3,0,0,1,0,0,1,1,2,1,0,0,0,0,0,2
+STU_1295,Kavindi Silva,D/IT/24/1295,BSc (Hons) in Information Technology,3,2.85,3.09,3.26,3.14,3.15,2.06,2.42,3,4,3,3,3,Data Science / AI,2,0,1,0,0,3,1,2,3,3,0,0,0,1,2,0,1,1,0,0,1,0,0,0,1
+STU_1678,Shanika Dissanayake,D/IT/24/1678,BSc (Hons) in Data Science & Business Analytics,4,3.12,2.02,3.39,3.41,3.97,3.45,2.46,3,3,1,5,3,Cloud / DevOps,0,1,1,1,0,1,1,2,0,0,0,1,3,0,0,3,1,3,1,1,0,0,1,0,2
+STU_1765,Nuwan Mendis,D/IT/24/1765,BSc (Hons) in Information Systems,4,2.65,2.32,2.91,2.46,2.41,2.05,3.75,3,1,2,3,5,UI/UX Design,0,0,1,0,0,1,0,0,0,1,0,0,1,0,0,1,0,0,1,1,2,3,3,1,3
+STU_1091,Supun Ahamad,D/IT/24/1091,BSc (Hons) in Software Engineering,4,2.91,3.25,2.68,2.7,1.78,3.37,3.68,5,3,1,1,1,Software Engineering,3,2,2,0,3,0,0,0,0,0,0,1,1,1,0,0,2,1,2,0,1,1,0,0,1
+STU_1798,Tharindu Alwis,D/IT/24/1798,BSc (Hons) in Computer Science,3,2.79,2.21,3.28,2.86,2.85,1.51,4.0,3,2,1,2,4,UI/UX Design,0,0,0,1,1,0,1,1,2,1,0,2,0,1,1,0,0,0,0,0,2,2,2,2,1
+STU_1182,Dulan Herath,D/IT/24/1182,BSc (Hons) in Information Systems,2,2.68,3.97,2.73,3.39,2.47,1.62,1.93,5,1,2,2,3,Software Engineering,2,2,2,1,3,0,2,0,1,1,0,1,0,2,0,1,1,0,0,0,0,1,1,0,1
+STU_1452,Sachini Bandara,D/IT/24/1452,BSc (Hons) in Information Systems,2,2.87,1.86,2.25,2.93,3.55,3.85,2.8,2,1,4,1,2,Cybersecurity,1,0,0,1,0,0,1,0,0,0,3,3,3,2,2,0,1,0,1,2,0,1,0,0,0
+STU_1612,Amal Fonseka,D/IT/24/1612,BSc (Hons) in Computer Engineering,3,2.96,2.08,2.74,2.75,3.93,3.69,2.55,2,3,1,5,3,Cloud / DevOps,0,0,1,2,1,1,0,1,2,0,2,1,3,2,0,3,1,3,0,2,2,0,0,2,2
+STU_1795,Methmi Karunaratne,D/IT/24/1795,BSc (Hons) in Computer Science,3,2.27,1.29,2.53,3.01,2.19,1.4,3.2,2,2,1,2,5,UI/UX Design,1,0,1,0,1,0,0,0,0,0,0,0,0,2,0,2,1,0,0,2,3,3,3,1,2
+STU_1159,Chamari Jayasinghe,D/IT/24/1159,BSc (Hons) in Data Science & Business Analytics,4,2.5,3.48,2.75,3.48,1.57,1.23,2.51,4,1,2,1,3,Software Engineering,3,2,1,1,3,1,1,0,1,0,0,0,1,0,0,0,0,0,1,1,0,2,1,0,1
+STU_1070,Kavinda Bandara,D/IT/24/1070,BSc (Hons) in Computer Engineering,3,2.68,3.32,3.33,3.14,2.12,1.71,2.48,5,1,1,3,3,Software Engineering,3,2,3,2,2,0,0,0,0,1,1,1,2,0,1,2,0,2,0,0,0,1,1,1,0
+STU_1494,Ishara Perera,D/IT/24/1494,BSc (Hons) in Software Engineering,4,2.99,3.16,2.45,2.42,3.23,3.22,3.48,2,3,5,3,1,Cybersecurity,1,1,1,2,2,1,2,2,0,2,3,1,3,3,1,1,0,2,0,2,0,1,0,1,0
+STU_1132,Akila Gunawardena,D/IT/24/1132,BSc (Hons) in Computer Science,4,2.69,3.32,3.08,3.32,1.46,2.32,2.62,5,2,3,3,3,Software Engineering,2,2,1,1,3,1,0,1,2,1,0,0,1,1,1,2,2,2,0,1,1,1,1,0,1
+STU_1045,Supun Silva,D/IT/24/1045,BSc (Hons) in Data Science & Business Analytics,2,2.49,3.08,1.98,3.41,1.97,2.18,2.29,5,1,1,3,1,Software Engineering,3,1,1,1,3,1,0,2,2,0,2,0,0,0,2,1,0,0,1,0,2,1,1,2,0
+STU_1300,Praveen Tharumila,D/IT/24/1300,BSc (Hons) in Information Systems,4,3.07,3.44,4.0,2.52,2.64,3.28,2.55,3,5,2,2,2,Data Science / AI,1,0,0,2,1,3,3,1,3,3,0,0,0,1,1,1,1,1,1,1,0,0,2,0,0
+STU_1071,Ravindu Perera,D/IT/24/1071,BSc (Hons) in Computer Engineering,1,2.33,3.59,2.25,2.96,1.17,1.2,2.78,5,1,3,1,3,Software Engineering,3,2,3,0,3,1,2,1,1,1,2,1,1,0,0,1,0,0,0,0,0,0,2,1,0
+STU_1432,Shanika Karunaratne,D/IT/24/1432,BSc (Hons) in Information Technology,1,3.03,2.32,4.0,2.74,3.26,3.53,2.32,3,1,5,2,1,Cybersecurity,1,0,0,1,0,2,0,0,1,0,2,2,3,1,2,1,0,0,0,0,2,0,1,0,1
+STU_1394,Praveen Gunawardena,D/IT/24/1394,BSc (Hons) in Computer Engineering,3,3.05,3.36,3.6,3.03,2.61,3.1,2.6,3,5,2,3,1,Data Science / AI,0,1,0,1,2,3,2,3,3,3,1,0,1,0,0,1,0,0,0,1,1,0,0,0,0
+STU_1347,Shanika Rajapaksha,D/IT/24/1347,BSc (Hons) in Data Science & Business Analytics,3,2.65,2.89,4.0,2.63,1.97,2.01,2.39,2,4,3,2,3,Data Science / AI,1,1,0,0,0,3,3,1,2,3,0,1,0,2,1,0,2,1,0,0,1,1,1,1,1
+STU_1498,Maleesha Rathnayake,D/IT/24/1498,BSc (Hons) in Software Engineering,4,2.57,1.8,2.35,2.73,3.12,2.76,2.65,2,3,4,3,3,Cybersecurity,1,0,0,0,1,0,0,2,0,1,2,1,2,3,2,0,0,1,1,1,2,1,0,1,1
+STU_1240,Nuwan Perera,D/IT/24/1240,BSc (Hons) in Computer Science,2,2.83,3.09,3.69,2.26,3.28,3.02,1.61,2,5,3,3,2,Data Science / AI,0,0,1,1,1,3,2,3,2,3,0,0,2,0,1,1,0,1,1,0,0,0,0,0,0
+STU_1136,Kavindi Rajapaksha,D/IT/24/1136,BSc (Hons) in Information Systems,4,3.16,3.91,3.86,3.7,2.29,3.13,2.09,4,3,1,3,1,Software Engineering,3,1,1,2,3,0,2,0,0,1,0,1,0,1,0,0,1,0,0,0,1,1,0,2,2
+STU_1083,Methmi Ahamad,D/IT/24/1083,BSc (Hons) in Computer Science,1,2.86,3.68,3.41,2.62,2.42,2.65,2.38,4,2,2,3,2,Software Engineering,2,2,2,0,2,0,0,2,2,0,1,0,1,1,2,0,1,0,2,0,1,1,1,0,2
+STU_1166,Amal Senaratne,D/IT/24/1166,BSc (Hons) in Data Science & Business Analytics,4,3.31,4.0,3.77,4.0,2.05,2.75,3.3,5,2,2,3,1,Software Engineering,2,2,1,0,3,0,0,0,0,0,0,0,0,0,1,0,2,0,0,0,0,1,0,2,2
+STU_1165,Chamari Herath,D/IT/24/1165,BSc (Hons) in Information Technology,4,2.49,2.91,2.38,2.36,3.01,2.14,2.12,4,1,1,2,1,Software Engineering,3,1,2,1,2,1,0,0,1,0,0,0,1,1,1,0,1,2,1,1,1,2,2,0,0
+STU_1029,Chathuri Rathnayake,D/IT/24/1029,BSc (Hons) in Information Systems,3,3.24,3.92,3.55,3.05,4.0,2.25,2.65,4,2,3,2,2,Software Engineering,3,2,2,0,2,0,1,0,1,0,1,1,0,1,0,0,0,0,0,1,1,1,0,1,0
+STU_1451,Dulan Fonseka,D/IT/24/1451,BSc (Hons) in Software Engineering,2,2.86,1.98,2.7,2.42,3.28,3.37,3.43,3,1,5,1,1,Cybersecurity,1,1,1,1,1,0,2,0,0,1,2,2,3,2,2,1,1,0,0,0,0,0,0,0,1
+STU_1194,Ishara Senaratne,D/IT/24/1194,BSc (Hons) in Computer Engineering,3,3.26,4.0,3.29,4.0,2.25,2.22,3.79,5,1,1,1,1,Software Engineering,3,2,3,1,3,0,0,1,1,0,1,0,2,0,2,1,0,0,1,2,0,0,1,1,0
+STU_1797,Chamari Karunaratne,D/IT/24/1797,BSc (Hons) in Software Engineering,3,2.38,2.81,1.6,2.25,2.29,1.92,3.4,2,2,2,1,5,UI/UX Design,1,1,2,0,1,0,1,0,0,0,0,0,1,1,0,0,1,1,0,1,3,3,2,2,3
+STU_1606,Sahan Mendis,D/IT/24/1606,BSc (Hons) in Information Technology,2,3.2,3.11,3.17,3.13,3.53,4.0,2.26,2,2,1,5,2,Cloud / DevOps,1,1,2,0,2,0,0,1,2,0,0,1,2,2,1,3,3,2,1,1,1,0,0,2,1
+STU_1479,Rashmi Gunawardena,D/IT/24/1479,BSc (Hons) in Information Technology,2,3.24,2.85,3.44,2.98,2.94,3.22,4.0,1,3,4,1,3,Cybersecurity,0,2,1,2,0,1,0,0,1,0,2,2,2,1,2,0,1,1,0,1,0,0,0,1,0
+STU_1137,Kasun Wickramasinghe,D/IT/24/1137,BSc (Hons) in Computer Science,1,2.66,3.3,2.59,2.81,2.35,2.94,1.96,4,2,1,3,2,Software Engineering,3,2,2,1,3,2,1,0,0,1,1,1,1,1,1,1,1,1,0,0,2,0,0,0,1
+STU_1704,Ishara Fernando,D/IT/24/1704,BSc (Hons) in Information Technology,2,2.55,1.35,1.75,3.27,3.24,3.73,1.98,2,1,2,5,1,Cloud / DevOps,0,2,0,0,0,0,2,0,0,0,1,1,2,0,2,2,3,3,1,1,0,0,0,1,0
+STU_1426,Akila Dissanayake,D/IT/24/1426,BSc (Hons) in Computer Engineering,1,3.32,2.86,2.97,3.32,3.53,3.98,3.27,3,3,5,2,3,Cybersecurity,1,0,0,0,0,1,1,2,1,0,3,1,3,2,2,2,1,0,0,2,2,0,0,1,1
+STU_1141,Tharindu Karunaratne,D/IT/24/1141,BSc (Hons) in Computer Engineering,4,2.81,3.51,3.0,3.01,2.99,2.17,2.19,5,3,2,3,2,Software Engineering,3,2,2,0,3,0,1,0,0,2,0,1,0,1,2,0,1,1,1,1,2,0,0,2,1
+STU_1174,Methmi Jayasinghe,D/IT/24/1174,BSc (Hons) in Computer Engineering,4,2.82,2.99,3.42,4.0,2.1,2.2,2.2,5,1,2,3,1,Software Engineering,2,3,2,1,2,0,1,1,0,1,1,1,1,0,1,1,0,0,0,1,0,1,2,1,2
+STU_1007,Sahan Senaratne,D/IT/24/1007,BSc (Hons) in Information Systems,1,2.62,3.23,1.47,3.07,2.19,3.23,2.51,4,3,3,3,1,Software Engineering,2,3,1,0,3,1,0,0,0,0,1,0,2,0,0,0,0,2,1,1,1,0,1,0,1
+STU_1555,Praveen Jayasinghe,D/IT/24/1555,BSc (Hons) in Information Technology,2,2.99,3.65,2.45,3.0,3.52,2.8,2.53,2,2,5,3,3,Cybersecurity,1,0,1,0,1,1,2,1,0,0,3,3,2,3,1,1,0,1,0,0,2,0,1,1,1
+STU_1571,Kavinda Tharumila,D/IT/24/1571,BSc (Hons) in Software Engineering,2,2.91,2.84,2.13,2.92,3.71,3.31,2.53,2,3,4,3,3,Cybersecurity,0,1,0,1,0,0,1,0,0,1,3,2,2,1,1,1,1,0,0,0,1,0,1,1,0
+STU_1074,Kasun Mendis,D/IT/24/1074,BSc (Hons) in Information Systems,1,3.08,3.62,3.94,3.24,1.74,3.64,2.32,5,3,2,2,1,Software Engineering,3,1,2,0,3,1,0,0,0,0,0,1,2,2,1,0,2,2,0,1,0,1,2,0,2
+STU_1590,Kavindi Jayasinghe,D/IT/24/1590,BSc (Hons) in Computer Science,1,2.8,1.42,3.02,2.46,2.51,3.57,3.81,2,3,2,5,3,Cloud / DevOps,1,0,1,2,1,0,0,2,1,1,0,1,3,0,1,2,1,2,0,1,0,0,0,2,0
+STU_1713,Buddhika Wickramasinghe,D/IT/24/1713,BSc (Hons) in Computer Science,2,2.87,3.1,2.09,2.51,2.55,3.79,3.19,3,1,1,5,2,Cloud / DevOps,1,1,0,1,1,0,2,1,1,1,1,0,3,0,2,2,1,3,0,1,1,0,0,0,2
+STU_1827,Praveen Tharumila,D/IT/24/1827,BSc (Hons) in Information Technology,3,2.71,1.85,2.54,3.04,2.38,2.47,4.0,2,2,1,1,5,UI/UX Design,1,1,0,1,0,0,0,1,0,1,0,0,0,1,1,1,0,0,1,0,3,2,3,2,1
+STU_1146,Methmi Mendis,D/IT/24/1146,BSc (Hons) in Information Technology,4,3.19,4.0,2.46,3.52,3.37,2.8,2.99,5,2,3,2,2,Software Engineering,2,3,3,1,3,1,1,1,0,0,1,0,2,0,0,2,1,0,1,1,1,0,1,2,0
+STU_1235,Sanduni Ahamad,D/IT/24/1235,BSc (Hons) in Information Systems,2,2.56,2.81,1.87,3.83,2.15,1.88,2.81,4,3,2,3,3,Software Engineering,2,1,2,0,3,1,0,1,0,2,0,1,2,0,0,0,1,0,0,1,0,1,0,0,1
+STU_1221,Praveen Jayasinghe,D/IT/24/1221,BSc (Hons) in Data Science & Business Analytics,3,2.71,3.75,1.97,3.38,3.04,2.39,1.73,5,1,2,3,3,Software Engineering,2,2,3,0,3,0,1,0,1,1,1,0,0,1,1,1,0,1,1,0,1,1,0,0,1
+STU_1335,Ravindu Silva,D/IT/24/1335,BSc (Hons) in Data Science & Business Analytics,2,2.76,2.97,3.15,2.87,2.64,2.34,2.58,1,5,1,2,3,Data Science / AI,0,0,0,0,2,3,2,2,2,3,0,2,0,0,1,0,0,1,0,1,0,1,2,0,0
+STU_1353,Maleesha Herath,D/IT/24/1353,BSc (Hons) in Software Engineering,3,2.83,2.96,3.58,2.44,2.66,2.78,2.55,1,5,3,3,1,Data Science / AI,0,0,0,1,0,3,2,2,2,3,2,1,0,0,0,0,0,2,1,1,1,1,2,2,0
+STU_1133,Ravindu Mendis,D/IT/24/1133,BSc (Hons) in Data Science & Business Analytics,2,2.83,3.52,3.34,3.11,1.66,2.85,2.48,4,1,1,2,2,Software Engineering,3,2,1,1,3,1,1,1,0,0,0,0,0,1,0,0,1,2,1,2,1,0,1,1,0
+STU_1632,Sanduni Silva,D/IT/24/1632,BSc (Hons) in Information Systems,2,2.75,3.45,2.12,2.36,2.81,3.02,2.74,2,2,1,4,2,Cloud / DevOps,0,1,0,0,0,1,2,1,0,1,0,1,2,2,0,2,2,2,1,1,2,1,0,2,1
+STU_1483,Tharindu Karunaratne,D/IT/24/1483,BSc (Hons) in Computer Science,2,2.88,2.68,2.7,2.55,3.35,3.05,2.94,1,3,5,2,2,Cybersecurity,0,1,1,0,0,2,0,2,2,1,2,2,2,3,2,0,0,1,1,0,0,0,0,1,1
+STU_1482,Akila Gunawardena,D/IT/24/1482,BSc (Hons) in Information Systems,2,2.56,2.32,2.16,2.47,3.61,2.52,2.25,1,3,5,1,1,Cybersecurity,2,2,0,2,0,0,1,1,0,0,3,1,3,3,1,0,1,0,1,0,2,0,0,1,0
+STU_1042,Sewwandi Senaratne,D/IT/24/1042,BSc (Hons) in Software Engineering,1,2.67,2.7,1.78,3.12,2.85,3.62,1.95,5,3,3,2,3,Software Engineering,3,1,2,0,3,0,0,0,0,1,0,1,0,2,0,0,2,1,0,1,0,0,0,0,1
+STU_1527,Dinithi Dissanayake,D/IT/24/1527,BSc (Hons) in Data Science & Business Analytics,4,2.89,2.56,2.65,2.94,3.75,3.28,2.14,1,3,5,2,1,Cybersecurity,0,0,1,0,1,0,0,1,0,0,3,1,3,2,2,2,0,0,0,0,2,1,1,0,0
+STU_1109,Kavindi Alwis,D/IT/24/1109,BSc (Hons) in Software Engineering,1,2.38,2.88,2.48,3.13,1.74,1.86,2.18,5,2,2,3,2,Software Engineering,2,2,2,0,3,1,2,1,0,1,1,0,2,1,2,1,0,0,0,2,1,1,0,0,1
+STU_1383,Chamari Silva,D/IT/24/1383,BSc (Hons) in Computer Science,3,2.64,2.78,3.32,2.46,3.17,2.19,1.9,1,5,2,2,2,Data Science / AI,1,1,0,1,0,3,1,2,2,2,2,0,0,1,1,1,0,0,1,1,0,0,1,0,0
+STU_1057,Kavinda Jayasinghe,D/IT/24/1057,BSc (Hons) in Software Engineering,2,3.22,3.76,3.4,3.06,3.35,2.74,2.98,4,1,1,3,1,Software Engineering,3,3,1,1,3,2,0,1,0,1,0,0,1,1,1,1,0,1,0,2,1,1,2,0,1
+STU_1710,Dinithi Gunawardena,D/IT/24/1710,BSc (Hons) in Software Engineering,3,2.57,3.27,1.67,1.95,2.46,3.76,2.28,1,3,1,5,3,Cloud / DevOps,1,2,0,0,1,0,1,2,0,1,0,0,3,0,1,3,2,3,0,2,0,0,1,0,1
+STU_1828,Kavinda Silva,D/IT/24/1828,BSc (Hons) in Information Technology,3,2.83,3.25,3.81,2.13,2.38,1.42,4.0,1,2,3,1,5,UI/UX Design,1,1,0,0,0,0,0,2,1,0,1,1,0,0,1,0,1,0,1,1,2,2,3,1,2
+STU_1454,Amal Senaratne,D/IT/24/1454,BSc (Hons) in Computer Science,3,3.05,3.04,2.99,2.68,3.67,2.73,3.18,3,3,4,1,3,Cybersecurity,0,1,0,0,0,2,2,0,1,0,2,2,3,1,2,1,0,1,1,1,0,1,1,1,2
+STU_1025,Praveen Bandara,D/IT/24/1025,BSc (Hons) in Information Technology,4,3.3,3.81,2.9,3.54,3.2,3.33,2.99,4,1,3,1,2,Software Engineering,3,3,1,1,3,2,0,1,1,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0
+STU_1317,Ravindu Fonseka,D/IT/24/1317,BSc (Hons) in Information Technology,2,2.77,3.84,2.85,2.13,2.94,2.31,2.58,3,4,1,1,2,Data Science / AI,1,1,1,0,0,3,2,3,3,2,0,0,0,2,0,2,1,2,0,2,0,1,0,0,1
+STU_1775,Rashmi Bandara,D/IT/24/1775,BSc (Hons) in Information Systems,2,2.9,2.85,3.2,2.35,2.82,2.34,3.84,1,2,2,3,5,UI/UX Design,0,1,0,0,0,1,0,0,1,1,0,1,1,0,1,0,1,2,0,0,3,2,3,1,1
+STU_1395,Dilshan Alwis,D/IT/24/1395,BSc (Hons) in Information Systems,4,2.72,2.85,3.3,2.47,1.93,3.28,2.47,1,5,2,2,3,Data Science / AI,0,1,0,0,0,2,3,1,3,3,0,0,0,2,1,1,0,0,0,0,1,2,2,0,0
+STU_1052,Kavindi Fonseka,D/IT/24/1052,BSc (Hons) in Data Science & Business Analytics,4,2.43,3.62,1.73,2.61,2.23,1.84,2.58,5,1,1,2,1,Software Engineering,2,3,1,1,3,1,0,0,2,1,2,0,1,0,0,1,0,1,1,0,1,1,0,1,1
+STU_1369,Dulan Herath,D/IT/24/1369,BSc (Hons) in Software Engineering,3,2.75,3.27,3.03,3.03,1.73,1.82,3.64,3,5,1,3,1,Data Science / AI,0,0,1,0,1,2,3,3,3,3,0,0,1,1,0,0,0,1,0,1,1,1,1,2,2
+STU_1780,Hasitha Dissanayake,D/IT/24/1780,BSc (Hons) in Computer Science,3,2.44,1.95,3.34,2.45,1.79,2.09,3.0,1,2,3,2,5,UI/UX Design,0,0,0,0,0,1,1,2,2,2,0,0,0,1,1,1,0,0,1,0,2,2,3,2,1
+STU_1548,Maleesha Fernando,D/IT/24/1548,BSc (Hons) in Computer Science,4,3.11,4.0,2.47,3.05,3.52,3.34,2.29,2,3,5,2,2,Cybersecurity,1,0,1,1,1,1,0,2,1,1,2,2,2,2,1,0,1,1,2,0,0,0,1,2,1
+STU_1265,Hasitha Mendis,D/IT/24/1265,BSc (Hons) in Data Science & Business Analytics,1,2.63,3.04,3.38,2.72,2.19,2.0,2.46,1,4,3,2,3,Data Science / AI,0,1,1,1,1,3,2,3,3,3,0,0,0,1,1,1,0,1,0,0,0,1,1,2,1
+STU_1397,Kasun Ahamad,D/IT/24/1397,BSc (Hons) in Information Systems,2,2.93,3.24,2.84,3.5,3.14,1.83,3.01,3,5,3,2,1,Data Science / AI,0,1,1,0,1,3,3,2,3,3,1,0,1,1,1,0,0,0,0,2,0,0,0,1,1
+STU_1589,Anushka Silva,D/IT/24/1589,BSc (Hons) in Data Science & Business Analytics,2,2.8,2.72,3.15,2.67,3.01,3.07,2.15,1,2,3,4,2,Cloud / DevOps,0,0,1,1,1,0,0,1,2,1,0,1,2,1,2,3,2,3,1,1,1,1,2,0,1
+STU_1446,Sachini Tharumila,D/IT/24/1446,BSc (Hons) in Information Technology,1,3.42,3.44,3.18,3.49,3.42,4.0,2.96,2,2,5,3,1,Cybersecurity,0,2,0,1,0,0,1,0,1,1,3,2,2,2,1,0,1,2,1,0,1,0,0,1,1
+STU_1423,Ishara Mendis,D/IT/24/1423,BSc (Hons) in Information Technology,3,2.67,2.52,3.43,3.11,2.39,3.19,1.36,3,5,1,3,1,Data Science / AI,0,0,1,0,0,2,2,2,3,3,1,0,0,1,1,1,2,0,0,2,0,0,0,1,0
+STU_1019,Praveen Jayasinghe,D/IT/24/1019,BSc (Hons) in Information Technology,2,2.5,3.0,1.8,2.79,2.46,2.79,2.14,5,1,1,3,3,Software Engineering,3,2,2,1,3,0,1,0,0,0,1,2,1,0,1,0,0,2,0,0,0,0,0,1,0
+STU_1616,Kasun Ahamad,D/IT/24/1616,BSc (Hons) in Information Technology,3,2.52,1.61,3.17,2.58,3.42,3.09,1.26,1,3,3,5,1,Cloud / DevOps,0,0,1,2,1,1,2,0,0,1,0,0,3,1,0,2,1,3,2,1,1,2,0,1,0
+STU_1463,Hasitha Mendis,D/IT/24/1463,BSc (Hons) in Software Engineering,2,3.15,3.65,2.56,2.42,3.06,3.47,3.72,1,1,5,2,1,Cybersecurity,0,1,2,2,0,2,0,0,1,2,3,2,2,1,2,1,0,0,1,0,0,0,1,0,0
+STU_1084,Shanika Mendis,D/IT/24/1084,BSc (Hons) in Software Engineering,3,2.75,3.25,3.27,3.23,2.16,2.15,2.47,5,3,1,1,2,Software Engineering,3,3,1,0,3,0,0,0,1,0,0,1,0,1,0,0,1,0,2,1,0,1,0,2,0
+STU_1062,Akila Herath,D/IT/24/1062,BSc (Hons) in Information Systems,2,2.68,4.0,3.23,3.39,1.5,2.91,1.06,4,1,2,3,3,Software Engineering,3,2,3,0,2,2,0,1,1,1,0,0,0,1,1,0,0,2,1,2,1,0,1,1,0
+STU_1623,Dilshan Mendis,D/IT/24/1623,BSc (Hons) in Computer Science,2,2.85,2.25,3.31,3.46,2.83,3.26,2.0,1,3,2,5,3,Cloud / DevOps,0,2,1,0,1,0,1,1,1,0,0,1,3,2,0,3,2,2,1,2,0,0,1,1,1
+STU_1286,Supun Ahamad,D/IT/24/1286,BSc (Hons) in Information Technology,2,3.0,3.44,2.89,3.17,1.72,3.12,3.64,3,5,2,1,3,Data Science / AI,0,1,2,0,0,3,2,3,3,3,2,0,0,0,1,1,0,0,1,1,0,2,0,1,2
+STU_1324,Methmi Dissanayake,D/IT/24/1324,BSc (Hons) in Computer Engineering,2,3.01,4.0,3.33,3.43,2.5,1.78,3.01,2,4,3,2,3,Data Science / AI,0,0,1,1,2,3,1,3,2,3,0,0,0,1,0,1,2,1,1,0,2,0,1,2,1
+STU_1580,Shanika Senaratne,D/IT/24/1580,BSc (Hons) in Information Systems,2,2.85,1.71,3.02,3.53,2.94,3.02,2.86,2,3,2,5,2,Cloud / DevOps,0,1,2,0,0,1,0,0,0,0,0,0,2,1,0,3,1,2,0,1,0,2,1,0,1
+STU_1495,Dinithi Bandara,D/IT/24/1495,BSc (Hons) in Computer Science,2,2.96,2.6,3.23,2.58,3.48,3.27,2.64,3,2,5,3,1,Cybersecurity,0,1,2,0,2,2,0,0,1,1,3,2,2,3,1,0,0,2,2,0,1,1,0,0,1
+STU_1183,Rashmi Bandara,D/IT/24/1183,BSc (Hons) in Information Systems,2,2.78,2.81,3.01,3.6,2.84,2.41,2.02,4,2,2,1,2,Software Engineering,2,1,2,1,2,1,1,0,0,1,2,0,0,0,0,0,0,1,1,0,0,1,0,1,0
+STU_1399,Praveen Gunawardena,D/IT/24/1399,BSc (Hons) in Data Science & Business Analytics,2,2.57,3.11,3.54,2.85,1.0,2.99,1.94,3,5,1,3,2,Data Science / AI,1,1,0,0,2,3,2,3,2,2,2,0,0,0,0,0,2,1,1,0,0,0,0,1,0
+STU_1532,Ravindu Karunaratne,D/IT/24/1532,BSc (Hons) in Information Technology,3,3.01,3.45,2.37,2.26,3.75,3.22,3.0,3,2,5,1,2,Cybersecurity,2,0,1,0,0,0,1,1,0,1,3,2,2,2,2,1,1,1,0,0,1,0,1,1,1
+STU_1224,Nimal Karunaratne,D/IT/24/1224,BSc (Hons) in Computer Engineering,4,3.12,3.59,2.79,3.78,2.44,3.28,2.84,5,2,1,3,2,Software Engineering,3,2,2,1,3,1,1,0,1,1,1,0,0,0,2,0,1,1,0,1,2,0,2,0,0
+STU_1469,Chathuri Tharumila,D/IT/24/1469,BSc (Hons) in Data Science & Business Analytics,3,2.87,2.71,1.74,3.22,3.44,2.83,3.28,3,1,4,3,2,Cybersecurity,1,0,0,1,2,2,2,0,2,2,3,2,3,3,2,0,0,0,0,1,0,2,2,2,1
+STU_1603,Nuwan Bandara,D/IT/24/1603,BSc (Hons) in Data Science & Business Analytics,4,3.17,2.16,2.74,3.57,4.0,3.65,2.88,1,1,3,5,1,Cloud / DevOps,1,0,1,1,2,2,0,0,1,1,1,0,3,0,0,2,2,3,2,2,0,1,0,1,0
+STU_1443,Shanika Gunawardena,D/IT/24/1443,BSc (Hons) in Software Engineering,2,3.0,2.33,1.73,3.44,4.0,3.12,3.38,3,1,5,1,2,Cybersecurity,0,0,0,0,0,0,1,0,0,2,2,2,3,1,1,2,2,0,1,1,0,0,0,2,0
+STU_1366,Amal Ahamad,D/IT/24/1366,BSc (Hons) in Software Engineering,3,3.0,3.38,3.13,2.47,3.89,2.08,3.05,1,4,2,2,1,Data Science / AI,0,0,0,0,0,3,2,1,3,2,1,1,0,0,0,2,0,1,1,0,0,1,0,0,0
+STU_1491,Rashmi Perera,D/IT/24/1491,BSc (Hons) in Information Technology,2,2.89,2.31,2.65,2.93,3.44,3.34,2.65,2,2,4,2,1,Cybersecurity,2,1,0,2,2,2,0,1,1,0,3,2,3,2,2,0,0,2,0,1,1,2,0,1,2
+STU_1526,Sanduni Jayasinghe,D/IT/24/1526,BSc (Hons) in Data Science & Business Analytics,1,3.1,2.1,2.7,2.29,4.0,4.0,3.49,3,1,5,2,2,Cybersecurity,1,0,0,2,2,1,0,0,2,0,3,1,3,1,1,1,2,2,1,1,1,1,2,0,1
+STU_1177,Ishara Dissanayake,D/IT/24/1177,BSc (Hons) in Computer Engineering,2,3.03,3.3,3.21,3.78,3.29,2.07,2.55,5,3,2,1,3,Software Engineering,3,3,2,2,3,0,0,0,1,0,1,1,1,1,0,0,2,1,2,1,0,0,1,0,0
+STU_1577,Rashmi Gunawardena,D/IT/24/1577,BSc (Hons) in Computer Science,3,2.68,2.02,2.38,3.07,3.74,3.19,1.71,2,2,4,1,3,Cybersecurity,1,1,1,1,2,0,0,0,1,0,3,2,3,1,1,2,0,0,0,1,0,1,1,0,0
+STU_1769,Dulan Karunaratne,D/IT/24/1769,BSc (Hons) in Computer Science,2,2.63,2.11,2.16,2.62,2.86,2.32,3.73,2,3,1,3,5,UI/UX Design,0,0,1,0,0,1,0,1,0,0,0,1,1,1,1,0,0,0,1,1,3,3,3,2,1
+STU_1164,Sahan Rajapaksha,D/IT/24/1164,BSc (Hons) in Software Engineering,2,3.21,3.49,2.46,3.54,3.1,3.63,3.03,5,1,2,2,2,Software Engineering,3,1,2,1,2,1,1,0,0,0,1,1,1,0,0,0,0,0,1,2,1,0,0,2,0
+STU_1249,Shanika Ahamad,D/IT/24/1249,BSc (Hons) in Information Technology,2,2.5,2.49,3.81,2.21,1.74,2.47,2.26,2,5,2,2,2,Data Science / AI,1,1,2,1,1,3,2,2,3,3,1,0,1,0,2,2,2,0,1,2,2,1,0,1,1
+STU_1549,Ishara Jayasinghe,D/IT/24/1549,BSc (Hons) in Data Science & Business Analytics,3,3.1,3.23,2.08,3.54,3.74,2.83,3.16,2,1,5,2,3,Cybersecurity,0,0,1,2,0,0,0,0,0,1,3,2,2,2,2,1,0,0,0,2,0,0,0,0,0
+STU_1751,Hasitha Jayasinghe,D/IT/24/1751,BSc (Hons) in Information Technology,2,2.3,2.19,1.81,2.93,2.21,1.29,3.38,2,2,2,1,4,UI/UX Design,1,0,0,0,1,0,1,2,0,1,0,0,0,1,2,2,2,2,0,0,3,3,3,2,2
+STU_1075,Hasitha Senaratne,D/IT/24/1075,BSc (Hons) in Computer Science,4,2.55,3.22,2.15,3.7,1.57,2.21,2.43,5,1,3,1,2,Software Engineering,2,1,3,1,3,1,0,0,1,0,0,0,2,0,2,1,0,2,0,0,1,1,1,0,0
+STU_1114,Chathuri Jayasinghe,D/IT/24/1114,BSc (Hons) in Software Engineering,4,2.62,3.11,2.42,3.05,2.34,1.99,2.83,4,3,3,3,1,Software Engineering,3,3,1,1,3,1,1,0,1,0,1,0,0,0,0,1,1,0,1,1,2,0,0,2,1
+STU_1466,Buddhika Tharumila,D/IT/24/1466,BSc (Hons) in Computer Science,2,2.9,2.87,1.88,2.65,3.29,3.39,3.33,2,1,5,1,1,Cybersecurity,0,2,0,0,1,2,0,0,0,2,2,2,3,2,1,0,1,0,0,1,0,0,0,0,1
+STU_1449,Chathuri Bandara,D/IT/24/1449,BSc (Hons) in Information Systems,3,3.07,2.63,2.41,2.25,3.85,3.32,3.99,2,2,4,2,2,Cybersecurity,2,0,0,0,0,0,2,0,2,0,3,2,3,3,2,1,1,2,1,0,1,0,0,0,0
+STU_1105,Tharindu Perera,D/IT/24/1105,BSc (Hons) in Software Engineering,4,3.16,4.0,2.84,3.31,3.14,3.19,2.47,4,1,2,3,2,Software Engineering,3,1,1,0,2,0,1,0,1,0,1,0,1,1,0,0,1,0,0,2,1,2,0,0,2
+STU_1115,Anushka Fernando,D/IT/24/1115,BSc (Hons) in Information Systems,2,2.63,3.98,2.14,2.44,2.24,2.75,2.24,5,2,1,2,2,Software Engineering,2,2,1,0,3,2,0,1,1,1,0,1,0,1,1,0,1,0,1,0,0,0,2,0,0
+STU_1334,Anushka Ahamad,D/IT/24/1334,BSc (Hons) in Data Science & Business Analytics,2,2.58,3.54,2.96,2.29,1.44,1.85,3.41,1,4,1,3,1,Data Science / AI,0,0,0,0,0,3,2,2,2,2,1,0,1,1,0,0,1,0,0,2,0,1,0,0,0
+STU_1093,Sachini Rathnayake,D/IT/24/1093,BSc (Hons) in Computer Engineering,3,2.61,2.84,2.68,3.26,2.64,1.77,2.47,5,2,1,3,3,Software Engineering,3,2,3,0,2,1,0,1,0,0,1,1,2,1,2,0,0,0,0,1,1,0,2,1,0
+STU_1785,Shanika Ahamad,D/IT/24/1785,BSc (Hons) in Computer Science,2,2.68,2.69,2.33,2.61,2.67,2.21,3.54,3,3,1,2,5,UI/UX Design,1,0,0,0,0,0,0,0,1,2,0,0,2,1,2,0,0,2,0,1,3,3,3,1,2
+STU_1090,Supun Ahamad,D/IT/24/1090,BSc (Hons) in Software Engineering,3,2.37,3.04,2.94,2.36,1.69,1.68,2.51,4,2,2,3,3,Software Engineering,3,2,2,1,3,1,0,1,0,1,0,0,2,0,0,1,2,0,0,0,1,0,1,2,0
+STU_1811,Nimal Fonseka,D/IT/24/1811,BSc (Hons) in Data Science & Business Analytics,4,2.75,2.07,2.74,2.7,2.59,2.52,3.88,2,2,2,1,5,UI/UX Design,0,1,2,0,1,1,1,2,1,1,1,0,1,2,1,0,0,1,1,0,2,3,2,2,2
+STU_1781,Kavindi Karunaratne,D/IT/24/1781,BSc (Hons) in Data Science & Business Analytics,3,3.0,3.01,3.32,2.7,3.11,2.81,3.07,3,3,1,3,5,UI/UX Design,0,1,0,0,1,2,0,1,0,1,2,1,1,0,0,0,0,1,0,0,3,3,2,1,2
+STU_1792,Chamari Mendis,D/IT/24/1792,BSc (Hons) in Data Science & Business Analytics,4,3.12,2.82,2.55,2.68,3.31,4.0,3.34,1,1,2,1,4,UI/UX Design,2,1,1,0,2,0,0,0,0,2,1,1,0,2,0,2,2,0,1,1,2,3,3,1,3
+STU_1523,Nuwan Silva,D/IT/24/1523,BSc (Hons) in Computer Science,2,2.93,1.95,2.94,1.78,3.85,3.53,3.54,1,2,5,2,2,Cybersecurity,1,1,1,0,2,0,1,2,1,0,3,3,3,2,1,0,0,0,2,2,1,0,0,1,0
+STU_1528,Ishara Tharumila,D/IT/24/1528,BSc (Hons) in Information Technology,4,3.24,3.0,3.83,3.65,3.47,3.4,2.07,2,3,4,3,3,Cybersecurity,0,0,2,2,2,2,0,0,0,2,3,1,3,1,1,0,0,0,0,1,0,1,0,2,1
+STU_1095,Tharindu Perera,D/IT/24/1095,BSc (Hons) in Information Technology,2,3.34,3.77,3.52,3.93,2.56,3.27,2.98,5,2,3,3,2,Software Engineering,2,2,2,1,3,1,0,0,0,1,1,0,0,1,1,0,1,0,0,1,1,0,1,1,1
+STU_1012,Chathuri Fonseka,D/IT/24/1012,BSc (Hons) in Software Engineering,1,2.61,2.82,2.91,3.17,1.83,1.58,3.37,5,2,2,2,2,Software Engineering,3,2,2,1,2,2,0,0,0,1,1,1,0,0,0,0,1,0,0,2,0,1,1,0,1
+STU_1789,Chamari Alwis,D/IT/24/1789,BSc (Hons) in Data Science & Business Analytics,3,2.61,1.86,2.82,2.0,3.01,2.51,3.49,3,2,3,3,5,UI/UX Design,0,0,0,2,1,0,2,2,0,0,0,1,0,1,0,1,1,1,0,2,3,3,3,1,2
+STU_1044,Amal Bandara,D/IT/24/1044,BSc (Hons) in Software Engineering,4,3.03,3.63,1.76,3.18,2.63,3.8,3.16,5,2,2,1,2,Software Engineering,2,1,2,2,3,0,1,1,0,1,1,0,0,1,0,0,0,0,1,1,0,2,2,2,0
+STU_1043,Akila Fernando,D/IT/24/1043,BSc (Hons) in Computer Engineering,1,2.74,3.62,2.48,3.13,2.0,2.36,2.82,5,3,2,1,1,Software Engineering,2,1,2,1,2,1,0,0,1,0,0,1,1,0,2,0,1,1,1,0,2,0,1,0,0
+STU_1330,Shanika Karunaratne,D/IT/24/1330,BSc (Hons) in Data Science & Business Analytics,4,3.11,3.95,3.25,2.45,2.02,3.06,3.9,1,4,2,2,2,Data Science / AI,0,1,2,1,1,3,1,2,2,3,0,0,0,0,1,1,0,2,0,2,0,2,0,1,0
+STU_1168,Dulan Gunawardena,D/IT/24/1168,BSc (Hons) in Software Engineering,1,3.17,3.08,3.31,3.41,2.42,3.68,3.1,5,1,1,1,1,Software Engineering,3,1,3,1,3,0,1,0,2,1,1,1,0,0,2,0,0,0,1,0,0,0,0,2,2
+STU_1744,Amal Jayasinghe,D/IT/24/1744,BSc (Hons) in Information Technology,2,2.84,3.23,1.15,3.38,2.69,2.84,3.77,2,2,2,2,5,UI/UX Design,0,1,0,0,0,1,1,1,0,1,2,1,1,0,1,0,0,0,0,1,2,3,3,2,2
+STU_1517,Kavinda Rajapaksha,D/IT/24/1517,BSc (Hons) in Data Science & Business Analytics,4,3.15,3.34,2.62,3.04,3.85,3.44,2.6,1,3,4,2,3,Cybersecurity,2,2,1,0,0,0,0,0,1,1,3,2,3,2,1,1,2,0,1,2,0,2,1,0,0
+STU_1661,Tharindu Perera,D/IT/24/1661,BSc (Hons) in Software Engineering,2,3.24,3.38,2.27,3.36,3.58,4.0,2.84,1,1,1,5,3,Cloud / DevOps,0,0,2,0,0,0,2,1,0,0,2,0,3,1,0,3,1,2,1,1,1,2,2,0,0
+STU_1663,Chathuri Dissanayake,D/IT/24/1663,BSc (Hons) in Information Technology,2,2.62,3.12,1.36,3.41,2.6,3.64,1.62,3,3,2,4,3,Cloud / DevOps,2,0,0,0,0,2,0,2,0,2,1,1,2,1,1,3,1,2,0,1,1,0,0,2,1
+STU_1179,Dinithi Silva,D/IT/24/1179,BSc (Hons) in Software Engineering,2,3.08,3.0,3.27,3.31,3.46,2.76,2.68,5,3,3,3,3,Software Engineering,3,2,2,2,2,0,2,1,0,1,1,2,0,0,2,2,1,1,0,1,0,0,1,0,0
+STU_1816,Dilshan Perera,D/IT/24/1816,BSc (Hons) in Information Technology,3,2.66,3.05,2.63,3.08,1.89,2.07,3.27,1,1,2,3,5,UI/UX Design,0,0,1,2,0,0,2,0,1,1,0,0,2,0,0,1,0,1,2,2,3,3,2,2,2
+STU_1570,Maleesha Alwis,D/IT/24/1570,BSc (Hons) in Computer Engineering,3,2.81,2.81,3.38,2.57,2.99,3.34,1.75,1,1,5,2,2,Cybersecurity,1,0,1,1,1,0,0,1,0,0,2,2,2,1,2,0,0,1,1,0,1,0,1,1,1
+STU_1178,Dilshan Rajapaksha,D/IT/24/1178,BSc (Hons) in Information Systems,2,2.78,3.6,2.58,3.03,1.27,2.72,3.47,5,3,1,2,2,Software Engineering,2,2,2,2,2,0,0,0,1,0,2,2,0,0,0,1,0,0,0,1,0,0,1,1,2
+STU_1584,Praveen Mendis,D/IT/24/1584,BSc (Hons) in Software Engineering,2,3.08,3.05,2.92,3.23,3.5,3.47,2.31,1,3,1,5,3,Cloud / DevOps,2,0,2,2,1,2,1,1,1,1,0,0,3,0,2,3,2,2,0,1,0,2,0,1,0
+STU_1679,Rashmi Rajapaksha,D/IT/24/1679,BSc (Hons) in Computer Engineering,2,3.15,3.48,3.27,3.59,3.02,2.81,2.71,2,3,2,5,3,Cloud / DevOps,2,0,0,0,0,0,0,1,0,2,0,0,3,1,0,3,1,2,2,1,2,1,2,2,1
+STU_1591,Nimal Wickramasinghe,D/IT/24/1591,BSc (Hons) in Information Technology,1,2.88,2.9,3.08,2.46,3.21,3.6,2.04,3,2,3,5,3,Cloud / DevOps,1,2,1,1,0,0,1,2,0,0,0,2,3,0,0,3,2,3,0,1,2,2,0,0,2
+STU_1258,Chamari Herath,D/IT/24/1258,BSc (Hons) in Information Systems,1,3.02,3.79,3.68,2.71,3.13,2.62,2.16,3,5,1,3,1,Data Science / AI,0,0,0,1,0,3,2,3,3,3,0,0,1,0,0,0,1,1,1,0,1,2,0,0,2
+STU_1568,Dinithi Senaratne,D/IT/24/1568,BSc (Hons) in Information Technology,4,2.97,2.24,2.19,3.7,4.0,2.6,3.09,1,1,4,2,1,Cybersecurity,1,0,0,0,1,0,0,0,0,0,3,2,3,3,1,0,1,0,1,1,1,0,0,1,0
+STU_1336,Dulan Perera,D/IT/24/1336,BSc (Hons) in Computer Science,2,2.93,4.0,3.6,2.32,3.02,3.02,1.62,2,4,2,2,1,Data Science / AI,0,2,0,0,0,2,1,3,2,3,1,1,0,0,1,1,1,0,1,1,2,0,1,1,2
+STU_1531,Kavinda Wickramasinghe,D/IT/24/1531,BSc (Hons) in Information Systems,2,3.07,3.14,2.52,3.27,3.53,2.88,3.07,3,1,5,3,1,Cybersecurity,0,0,0,0,1,0,0,2,1,0,3,3,3,3,1,1,2,0,0,0,0,0,0,1,0
+STU_1016,Chathuri Rathnayake,D/IT/24/1016,BSc (Hons) in Computer Engineering,2,2.86,3.36,2.75,3.61,1.48,2.2,3.74,5,3,1,2,1,Software Engineering,2,3,1,1,3,1,2,1,0,2,1,0,0,1,1,1,2,1,0,0,0,1,0,1,1
+STU_1004,Ravindu Rathnayake,D/IT/24/1004,BSc (Hons) in Software Engineering,3,2.88,3.59,3.78,3.85,1.34,2.04,2.7,5,1,3,2,1,Software Engineering,2,1,3,2,3,0,0,0,1,1,0,1,0,1,0,1,0,2,0,0,0,2,2,0,1
+STU_1406,Anushka Senaratne,D/IT/24/1406,BSc (Hons) in Information Technology,4,2.89,3.01,3.98,2.81,3.19,2.32,2.02,1,5,3,1,1,Data Science / AI,0,1,0,0,0,3,3,1,2,2,1,1,1,0,1,1,1,1,0,1,0,1,1,2,0
+STU_1257,Hasitha Tharumila,D/IT/24/1257,BSc (Hons) in Information Systems,4,2.72,2.72,3.29,2.7,2.8,2.8,1.98,1,4,3,3,1,Data Science / AI,2,2,1,1,0,2,2,3,3,3,0,1,1,0,0,0,0,0,0,0,0,0,2,0,0
+STU_1412,Shanika Karunaratne,D/IT/24/1412,BSc (Hons) in Information Technology,3,2.4,2.66,3.04,1.87,2.52,1.75,2.55,3,4,1,1,2,Data Science / AI,2,0,0,0,2,3,2,2,3,3,0,1,1,0,0,2,1,1,1,2,0,0,0,0,0
+STU_1433,Maleesha Herath,D/IT/24/1433,BSc (Hons) in Software Engineering,1,2.72,2.58,1.87,2.97,3.45,2.84,2.58,1,2,5,3,3,Cybersecurity,0,0,0,0,1,0,2,1,2,0,3,2,2,2,1,0,0,0,1,2,0,0,2,0,1
+STU_1376,Chamari Fonseka,D/IT/24/1376,BSc (Hons) in Data Science & Business Analytics,3,2.54,3.37,2.7,2.31,2.22,2.36,2.31,3,4,1,1,3,Data Science / AI,2,2,0,1,1,3,3,3,3,2,1,0,1,0,1,0,1,1,1,0,1,2,1,0,1
+STU_1223,Maleesha Gunawardena,D/IT/24/1223,BSc (Hons) in Information Technology,2,2.73,3.18,3.02,3.31,2.58,1.16,3.14,5,2,2,2,3,Software Engineering,2,2,2,2,3,2,0,1,0,2,0,1,1,0,0,2,1,0,1,1,0,0,2,1,1
+STU_1714,Dilshan Bandara,D/IT/24/1714,BSc (Hons) in Computer Science,3,2.9,2.44,2.28,3.28,3.28,3.47,2.67,2,1,2,5,3,Cloud / DevOps,0,1,1,0,0,0,2,2,0,0,0,2,3,0,0,3,2,3,1,1,0,1,0,0,1
+STU_1413,Supun Gunawardena,D/IT/24/1413,BSc (Hons) in Computer Science,1,2.83,2.64,2.7,2.16,2.98,3.67,2.82,3,5,2,1,1,Data Science / AI,0,0,0,1,1,3,1,2,2,2,1,1,1,0,0,1,1,0,2,1,0,1,2,0,1
+STU_1382,Akila Senaratne,D/IT/24/1382,BSc (Hons) in Software Engineering,1,3.04,2.45,3.67,3.3,3.03,2.83,2.97,2,5,3,1,1,Data Science / AI,0,0,1,2,0,3,3,3,3,3,1,0,2,0,0,0,0,0,0,1,0,2,0,1,0
+STU_1325,Anushka Fonseka,D/IT/24/1325,BSc (Hons) in Information Systems,3,2.96,3.24,3.83,4.0,2.34,2.1,2.25,3,5,1,1,3,Data Science / AI,2,1,1,2,0,3,2,2,3,3,1,1,0,2,0,0,1,0,0,0,0,0,0,0,0
+STU_1676,Hasitha Fernando,D/IT/24/1676,BSc (Hons) in Computer Science,2,2.88,1.64,3.53,3.01,3.49,3.01,2.6,3,1,1,5,3,Cloud / DevOps,1,0,1,1,1,1,1,0,0,1,0,0,3,0,0,3,3,2,0,2,0,2,0,1,0
+STU_1010,Methmi Wickramasinghe,D/IT/24/1010,BSc (Hons) in Software Engineering,1,2.52,3.59,2.3,3.21,2.64,1.63,1.76,4,3,3,1,1,Software Engineering,3,3,2,1,3,0,2,0,0,0,0,0,0,0,1,1,1,2,0,0,2,0,2,0,2
+STU_1250,Akila Perera,D/IT/24/1250,BSc (Hons) in Computer Engineering,3,3.0,3.96,3.45,3.26,1.6,2.31,3.4,1,5,1,2,1,Data Science / AI,0,0,0,1,0,2,3,3,2,3,0,0,0,0,0,0,2,1,0,0,2,1,0,1,1
+STU_1023,Sachini Rajapaksha,D/IT/24/1023,BSc (Hons) in Information Technology,1,2.46,3.45,2.21,2.95,1.59,2.34,2.2,4,1,2,1,3,Software Engineering,3,3,3,1,2,0,2,0,0,0,0,2,1,0,1,2,2,1,2,2,1,0,0,1,0
+STU_1357,Tharindu Tharumila,D/IT/24/1357,BSc (Hons) in Computer Science,3,2.77,3.69,4.0,3.09,1.99,1.38,2.46,2,5,1,3,3,Data Science / AI,1,0,0,0,2,2,1,3,3,3,0,0,0,1,0,2,0,0,0,1,1,2,0,0,1
+STU_1222,Dulan Jayasinghe,D/IT/24/1222,BSc (Hons) in Software Engineering,2,3.39,2.79,3.91,4.0,3.12,3.68,2.83,4,3,1,2,2,Software Engineering,3,1,2,1,2,1,2,0,0,1,0,0,2,1,1,1,0,0,0,0,1,1,0,0,0
+STU_1807,Nuwan Perera,D/IT/24/1807,BSc (Hons) in Software Engineering,1,2.39,2.25,2.39,2.36,1.36,2.5,3.46,3,3,3,2,4,UI/UX Design,0,1,1,1,0,0,2,0,0,1,1,0,0,2,2,0,1,0,1,0,3,3,3,2,3
+STU_1731,Maleesha Wickramasinghe,D/IT/24/1731,BSc (Hons) in Data Science & Business Analytics,2,2.61,2.25,2.12,2.47,2.58,2.64,3.58,3,2,2,2,5,UI/UX Design,1,0,1,0,0,0,0,0,2,0,1,0,2,0,2,0,0,1,1,0,2,2,3,1,3
+STU_1835,Sewwandi Rajapaksha,D/IT/24/1835,BSc (Hons) in Computer Engineering,3,3.26,2.75,2.9,3.21,3.35,3.41,3.91,3,1,2,3,5,UI/UX Design,1,0,0,0,0,2,2,1,1,1,1,1,0,0,1,2,1,2,1,1,3,3,3,2,2
+STU_1638,Dulan Ahamad,D/IT/24/1638,BSc (Hons) in Computer Engineering,2,3.32,3.53,3.25,2.75,3.78,3.78,2.85,2,2,2,5,3,Cloud / DevOps,0,0,0,1,0,2,1,1,1,1,1,1,3,0,1,3,3,3,0,1,2,0,0,0,0
+STU_1341,Dulan Gunawardena,D/IT/24/1341,BSc (Hons) in Data Science & Business Analytics,3,2.8,3.52,3.95,2.27,2.04,3.43,1.6,1,5,3,2,3,Data Science / AI,1,0,1,2,1,3,1,2,2,3,2,0,0,2,1,2,1,0,1,0,0,1,1,2,2
+STU_1711,Nimal Senaratne,D/IT/24/1711,BSc (Hons) in Information Technology,3,3.01,2.88,2.59,3.22,3.18,3.35,2.84,3,3,3,4,1,Cloud / DevOps,1,0,0,1,1,0,0,0,0,0,1,2,3,0,1,3,2,2,0,1,1,2,1,2,0
+STU_1204,Ravindu Jayasinghe,D/IT/24/1204,BSc (Hons) in Computer Science,4,2.62,4.0,1.68,2.3,3.04,1.94,2.75,4,1,3,1,2,Software Engineering,3,2,3,1,2,0,1,2,0,1,0,1,0,0,1,1,0,0,0,0,1,2,0,0,1
+STU_1238,Kavindi Tharumila,D/IT/24/1238,BSc (Hons) in Computer Engineering,2,2.65,3.16,2.84,3.39,3.02,2.06,1.43,5,3,2,1,1,Software Engineering,3,3,1,1,2,1,0,0,0,0,0,1,1,0,0,2,2,0,1,1,0,0,0,1,1
+STU_1094,Anushka Rajapaksha,D/IT/24/1094,BSc (Hons) in Information Technology,1,2.69,3.26,3.43,3.61,1.0,2.28,2.56,5,2,1,2,3,Software Engineering,2,2,1,0,3,0,0,1,0,1,0,0,1,0,1,1,1,0,1,2,1,0,1,1,1
+STU_1457,Sanduni Bandara,D/IT/24/1457,BSc (Hons) in Information Systems,1,3.15,3.6,3.05,2.59,3.76,3.19,2.68,1,1,5,2,3,Cybersecurity,0,1,1,0,0,2,0,1,0,1,3,2,3,2,1,0,2,1,0,0,1,2,1,0,0
+STU_1778,Buddhika Fernando,D/IT/24/1778,BSc (Hons) in Information Systems,2,2.59,3.19,2.55,2.36,1.9,2.12,3.42,2,2,1,1,5,UI/UX Design,0,2,1,1,2,0,1,0,1,0,0,2,0,0,0,0,0,0,1,1,2,3,2,2,3
+STU_1539,Supun Bandara,D/IT/24/1539,BSc (Hons) in Software Engineering,2,3.24,4.0,2.2,3.43,3.49,3.32,2.99,1,3,5,3,1,Cybersecurity,2,0,0,1,0,0,0,2,1,0,3,2,3,3,1,0,1,2,1,2,0,1,1,1,1
+STU_1285,Shanika Herath,D/IT/24/1285,BSc (Hons) in Data Science & Business Analytics,4,2.73,2.31,4.0,2.62,2.26,2.49,2.69,1,5,2,1,3,Data Science / AI,0,2,0,0,0,3,2,2,3,3,2,1,0,2,2,0,0,1,1,2,0,0,1,1,0
+STU_1185,Tharindu Fonseka,D/IT/24/1185,BSc (Hons) in Data Science & Business Analytics,2,3.02,3.93,2.97,2.56,2.48,3.11,3.11,5,1,2,3,2,Software Engineering,3,2,2,0,3,0,1,1,2,0,1,1,0,0,0,0,0,1,0,2,0,2,0,1,0
+STU_1688,Nimal Ahamad,D/IT/24/1688,BSc (Hons) in Software Engineering,1,2.94,2.23,3.76,3.55,2.3,3.21,2.62,1,2,2,5,2,Cloud / DevOps,1,2,0,1,0,0,0,0,1,0,2,1,3,2,2,3,2,3,0,2,0,1,0,0,0
+STU_1630,Nuwan Bandara,D/IT/24/1630,BSc (Hons) in Computer Engineering,3,3.05,3.22,2.51,3.13,3.64,2.95,2.86,3,3,1,5,3,Cloud / DevOps,1,0,1,1,0,0,0,0,1,0,0,0,3,1,0,3,3,3,0,2,0,1,1,1,0
+STU_1154,Dulan Rathnayake,D/IT/24/1154,BSc (Hons) in Computer Science,4,2.69,3.85,2.63,2.71,2.39,2.16,2.43,5,1,3,1,2,Software Engineering,3,1,2,1,2,2,2,2,1,0,2,1,0,1,1,2,1,0,2,1,1,0,0,1,0
+STU_1076,Methmi Herath,D/IT/24/1076,BSc (Hons) in Computer Engineering,2,2.97,3.54,2.41,3.29,2.99,2.79,2.82,4,3,3,3,3,Software Engineering,2,3,1,2,3,0,1,1,1,1,0,1,0,1,0,1,2,2,1,1,1,1,2,0,2
+STU_1501,Kavindi Fonseka,D/IT/24/1501,BSc (Hons) in Data Science & Business Analytics,4,3.04,3.17,2.11,2.88,3.06,4.0,3.03,2,1,4,3,2,Cybersecurity,0,1,1,0,1,0,1,1,1,0,2,1,3,1,2,0,0,1,0,0,0,0,0,0,0
+STU_1530,Rashmi Wickramasinghe,D/IT/24/1530,BSc (Hons) in Computer Engineering,3,3.11,3.2,3.27,3.11,3.15,3.73,2.21,1,2,5,1,2,Cybersecurity,0,1,0,2,1,1,0,1,1,0,3,2,3,1,1,0,0,1,0,0,0,1,0,2,0
+STU_1278,Tharindu Ahamad,D/IT/24/1278,BSc (Hons) in Data Science & Business Analytics,4,2.77,3.03,2.89,2.76,2.05,3.19,2.72,3,5,1,3,3,Data Science / AI,0,0,1,1,1,3,1,2,2,2,2,1,0,0,2,0,0,0,1,1,0,0,2,1,2
+STU_1069,Methmi Mendis,D/IT/24/1069,BSc (Hons) in Information Systems,3,2.66,3.67,2.4,3.63,2.19,2.01,2.06,5,3,2,3,1,Software Engineering,3,2,2,2,3,1,0,0,1,1,0,2,1,0,2,0,2,1,0,1,1,1,2,1,1
+STU_1544,Anushka Bandara,D/IT/24/1544,BSc (Hons) in Computer Engineering,2,2.91,2.83,2.75,2.4,3.76,2.62,3.08,3,2,5,3,1,Cybersecurity,0,0,1,2,2,1,1,2,1,0,2,2,3,3,2,0,0,1,2,0,0,0,1,1,0
+STU_1189,Maleesha Gunawardena,D/IT/24/1189,BSc (Hons) in Computer Engineering,3,2.46,2.73,2.19,3.51,2.15,1.99,2.18,5,3,1,2,1,Software Engineering,3,2,3,1,3,0,1,2,1,2,0,1,0,0,1,1,1,1,1,0,0,1,0,0,0
+STU_1272,Chathuri Rathnayake,D/IT/24/1272,BSc (Hons) in Data Science & Business Analytics,1,3.12,3.49,3.62,2.97,2.86,2.58,3.18,1,5,2,1,2,Data Science / AI,0,1,0,1,2,3,2,2,3,2,1,0,0,0,0,1,2,1,1,0,0,0,1,0,1
+STU_1636,Ishara Alwis,D/IT/24/1636,BSc (Hons) in Software Engineering,3,2.65,1.9,1.17,3.7,3.13,3.74,2.29,2,1,3,5,2,Cloud / DevOps,2,0,0,0,0,0,1,0,1,0,0,0,2,0,0,2,2,2,0,2,1,0,0,1,0
+STU_1535,Supun Dissanayake,D/IT/24/1535,BSc (Hons) in Information Systems,4,3.07,2.65,2.5,2.84,3.54,3.56,3.32,3,3,5,3,1,Cybersecurity,0,2,0,0,1,1,0,1,1,1,3,2,2,1,1,1,0,0,1,0,0,1,1,0,0
+STU_1237,Methmi Senaratne,D/IT/24/1237,BSc (Hons) in Software Engineering,1,3.02,3.94,2.88,2.49,3.16,2.44,3.23,5,2,3,2,1,Software Engineering,3,3,3,1,2,2,0,0,1,2,2,1,0,2,1,0,1,0,0,1,1,0,0,1,0
+STU_1089,Sahan Alwis,D/IT/24/1089,BSc (Hons) in Information Technology,4,2.81,3.2,2.36,3.18,2.35,3.19,2.58,4,3,1,3,3,Software Engineering,2,3,2,0,2,0,2,0,1,1,1,0,0,1,0,0,1,1,0,0,0,1,1,1,2
+STU_1722,Tharindu Alwis,D/IT/24/1722,BSc (Hons) in Computer Science,1,2.82,2.09,3.7,2.43,3.45,2.84,2.43,2,3,1,5,3,Cloud / DevOps,0,1,1,0,0,0,1,0,1,1,1,2,2,0,0,2,2,2,1,1,0,0,2,2,0
+STU_1118,Sachini Jayasinghe,D/IT/24/1118,BSc (Hons) in Computer Science,4,2.33,3.08,2.01,2.3,1.0,2.93,2.67,5,1,2,3,3,Software Engineering,3,2,2,0,3,1,1,1,2,2,0,1,1,1,0,1,2,2,0,0,0,1,1,0,0
+STU_1126,Nuwan Rathnayake,D/IT/24/1126,BSc (Hons) in Information Technology,2,2.89,4.0,3.04,2.96,3.44,1.8,2.13,5,2,3,3,2,Software Engineering,3,3,1,2,3,0,2,2,0,0,0,1,1,0,0,1,1,0,1,0,0,1,1,0,2
+STU_1699,Nuwan Bandara,D/IT/24/1699,BSc (Hons) in Data Science & Business Analytics,2,2.94,2.47,2.43,2.4,3.56,4.0,2.77,2,1,3,4,1,Cloud / DevOps,0,0,1,1,1,1,0,2,0,0,0,2,3,1,0,2,3,2,2,2,0,1,0,0,1
+STU_1290,Kavinda Perera,D/IT/24/1290,BSc (Hons) in Software Engineering,2,2.94,3.14,4.0,2.47,2.49,2.01,3.52,1,4,2,3,1,Data Science / AI,2,2,0,1,1,3,2,3,2,2,0,0,1,0,1,1,0,0,1,1,2,2,2,1,2
+STU_1239,Nimal Perera,D/IT/24/1239,BSc (Hons) in Information Technology,2,2.74,2.88,3.79,1.79,2.88,2.67,2.45,3,5,2,2,3,Data Science / AI,0,2,2,0,0,3,2,2,3,3,1,0,0,2,1,1,1,0,1,0,0,1,0,2,0
+STU_1001,Rashmi Mendis,D/IT/24/1001,BSc (Hons) in Information Technology,3,2.9,3.26,3.88,4.0,1.94,1.97,2.35,4,2,1,2,2,Software Engineering,3,1,3,0,3,0,0,1,0,0,0,0,1,0,1,1,0,1,0,0,2,2,1,0,0
+STU_1842,Supun Bandara,D/IT/24/1842,BSc (Hons) in Data Science & Business Analytics,4,2.81,3.36,2.86,2.3,2.32,2.03,4.0,2,1,2,3,5,UI/UX Design,0,0,1,1,1,2,1,0,0,0,1,0,0,0,2,1,0,0,0,0,3,3,3,2,2
+STU_1427,Ishara Dissanayake,D/IT/24/1427,BSc (Hons) in Information Systems,1,2.97,3.71,3.06,2.08,3.96,2.3,2.69,2,2,4,3,3,Cybersecurity,0,0,0,2,1,0,0,1,0,1,3,3,2,2,1,0,0,0,2,1,1,0,0,0,1
+STU_1741,Sanduni Dissanayake,D/IT/24/1741,BSc (Hons) in Information Systems,3,3.35,3.99,3.17,3.34,2.32,3.28,4.0,2,2,3,1,5,UI/UX Design,1,0,0,1,0,0,1,0,0,1,1,0,1,1,0,0,0,1,1,1,2,2,3,2,2
+STU_1396,Sewwandi Fonseka,D/IT/24/1396,BSc (Hons) in Software Engineering,2,2.89,3.49,3.2,1.72,2.62,3.12,3.17,1,4,1,1,1,Data Science / AI,0,2,0,2,2,3,1,2,2,3,1,2,1,2,0,0,0,0,1,0,2,0,0,0,1
+STU_1508,Ishara Alwis,D/IT/24/1508,BSc (Hons) in Information Technology,4,3.06,2.84,3.28,3.33,3.38,3.0,2.54,3,3,4,3,1,Cybersecurity,2,0,1,2,0,0,1,1,0,0,3,2,2,2,1,1,2,2,1,2,2,1,1,1,1
+STU_1127,Nuwan Perera,D/IT/24/1127,BSc (Hons) in Data Science & Business Analytics,3,3.12,3.75,3.06,3.29,1.79,3.62,3.19,4,3,3,3,3,Software Engineering,3,3,2,1,3,0,2,2,1,1,1,0,1,0,0,1,1,2,0,1,0,1,1,1,0
+STU_1279,Nimal Dissanayake,D/IT/24/1279,BSc (Hons) in Information Technology,3,2.56,2.45,3.0,2.11,3.25,2.68,1.88,3,5,3,3,3,Data Science / AI,2,2,1,0,2,3,3,2,2,3,0,0,1,0,1,2,0,1,2,0,0,2,2,1,0
+STU_1660,Dinithi Alwis,D/IT/24/1660,BSc (Hons) in Computer Science,3,2.77,2.88,2.64,2.15,2.3,4.0,2.66,1,2,2,4,3,Cloud / DevOps,2,1,1,0,1,1,0,1,0,1,2,0,2,0,1,2,1,3,1,2,0,0,0,0,1
+STU_1117,Ishara Tharumila,D/IT/24/1117,BSc (Hons) in Computer Engineering,2,2.47,3.01,1.79,3.63,1.99,1.84,2.54,5,1,3,2,1,Software Engineering,3,1,2,1,2,0,0,0,1,0,1,0,1,0,2,0,0,0,0,2,0,0,1,0,1
+STU_1229,Nimal Mendis,D/IT/24/1229,BSc (Hons) in Data Science & Business Analytics,3,2.78,3.79,2.59,3.83,1.93,2.15,2.41,4,3,3,2,2,Software Engineering,3,2,1,1,3,0,0,1,1,0,1,2,2,1,1,0,1,0,2,0,0,1,0,0,1
+STU_1598,Anushka Herath,D/IT/24/1598,BSc (Hons) in Information Technology,2,2.9,3.04,2.39,2.56,3.08,3.43,2.87,1,2,1,5,2,Cloud / DevOps,0,0,0,2,0,0,0,1,0,1,0,1,3,0,2,3,2,2,0,1,1,0,0,0,0
+STU_1465,Nuwan Gunawardena,D/IT/24/1465,BSc (Hons) in Information Systems,3,2.91,2.62,3.0,2.63,3.38,3.23,2.61,3,2,5,2,1,Cybersecurity,0,0,0,2,0,0,0,1,1,0,3,1,2,2,1,1,0,1,1,2,0,1,0,0,0
+STU_1480,Dulan Mendis,D/IT/24/1480,BSc (Hons) in Information Technology,3,3.07,2.58,1.82,3.57,3.49,3.65,3.34,3,2,4,1,1,Cybersecurity,1,0,0,0,0,0,0,1,2,1,3,1,3,2,1,1,0,0,0,0,0,0,1,2,0
+STU_1275,Dulan Rajapaksha,D/IT/24/1275,BSc (Hons) in Data Science & Business Analytics,4,2.58,3.0,3.0,2.43,2.56,1.54,2.97,3,5,1,1,2,Data Science / AI,1,0,0,2,0,2,1,1,3,3,0,2,0,1,2,1,1,1,1,2,0,0,0,1,0
+STU_1319,Sanduni Rajapaksha,D/IT/24/1319,BSc (Hons) in Computer Science,1,3.05,3.67,3.81,3.71,2.53,2.85,1.73,1,4,2,1,3,Data Science / AI,0,1,0,0,0,2,2,3,3,2,2,0,1,1,2,0,0,1,1,1,0,0,1,0,0
+STU_1582,Dulan Ahamad,D/IT/24/1582,BSc (Hons) in Data Science & Business Analytics,1,2.68,4.0,2.92,1.9,2.42,2.7,2.11,2,2,2,4,1,Cloud / DevOps,1,2,1,0,1,1,1,0,0,1,0,2,3,0,1,3,2,3,0,2,0,0,0,1,0
+STU_1145,Chathuri Wickramasinghe,D/IT/24/1145,BSc (Hons) in Computer Science,4,2.49,2.97,1.98,3.15,2.73,2.29,1.82,5,1,2,2,2,Software Engineering,3,1,1,0,3,1,1,2,1,0,0,2,1,0,0,1,0,0,0,0,0,1,0,0,0
+STU_1619,Nuwan Rajapaksha,D/IT/24/1619,BSc (Hons) in Computer Science,1,3.18,3.49,2.92,2.5,3.62,3.52,3.06,3,1,1,5,2,Cloud / DevOps,0,0,0,0,0,1,1,0,0,1,0,0,3,1,1,3,2,3,0,1,1,1,0,0,1
+STU_1538,Dulan Rathnayake,D/IT/24/1538,BSc (Hons) in Computer Science,1,2.94,3.62,2.54,2.53,3.66,2.35,2.94,2,3,5,2,3,Cybersecurity,1,0,2,1,0,0,0,1,0,2,3,2,3,3,2,0,1,0,1,1,2,1,1,0,0
+STU_1773,Shanika Senaratne,D/IT/24/1773,BSc (Hons) in Data Science & Business Analytics,3,3.13,3.86,1.69,3.21,3.01,3.44,3.59,2,2,3,1,5,UI/UX Design,1,0,0,0,0,0,1,1,0,0,0,1,2,2,1,0,1,0,1,0,2,3,2,2,2
+STU_1617,Sahan Dissanayake,D/IT/24/1617,BSc (Hons) in Computer Science,4,3.0,3.56,3.08,2.98,3.04,3.1,2.27,1,1,3,5,2,Cloud / DevOps,0,1,0,0,0,0,1,0,2,1,1,2,3,1,0,3,1,3,2,2,0,0,1,0,0
+STU_1370,Kavinda Bandara,D/IT/24/1370,BSc (Hons) in Software Engineering,1,2.55,2.98,3.45,2.76,2.35,1.11,2.61,1,5,3,2,1,Data Science / AI,0,1,1,0,1,3,2,2,3,2,1,0,0,1,1,0,1,0,1,0,0,0,0,0,0
+STU_1269,Praveen Bandara,D/IT/24/1269,BSc (Hons) in Computer Engineering,3,2.57,3.09,4.0,1.86,2.2,1.97,2.3,3,5,1,3,3,Data Science / AI,0,0,0,0,0,3,1,3,2,3,0,0,1,1,0,2,0,0,0,0,1,2,0,2,1
+STU_1599,Sahan Alwis,D/IT/24/1599,BSc (Hons) in Software Engineering,2,2.91,2.8,1.63,2.77,3.74,3.48,3.01,1,1,2,4,2,Cloud / DevOps,1,0,0,1,0,1,0,2,1,0,1,1,3,0,0,2,2,2,0,1,0,2,1,1,1
+STU_1308,Ravindu Tharumila,D/IT/24/1308,BSc (Hons) in Information Systems,2,2.63,3.07,2.7,2.04,3.15,2.84,1.97,1,4,2,1,3,Data Science / AI,2,0,0,1,0,2,3,3,2,3,0,1,0,0,2,0,0,2,1,0,0,1,0,0,0
+STU_1424,Dulan Tharumila,D/IT/24/1424,BSc (Hons) in Software Engineering,3,2.72,2.3,3.39,1.98,2.39,3.34,2.95,1,4,3,2,2,Data Science / AI,0,0,2,0,0,3,2,2,3,3,0,0,0,0,1,0,0,1,1,1,0,1,1,0,1
+STU_1311,Dilshan Fonseka,D/IT/24/1311,BSc (Hons) in Software Engineering,2,2.93,3.69,3.7,2.26,3.04,2.49,2.38,1,5,3,3,1,Data Science / AI,2,1,0,1,1,2,2,2,2,3,1,1,0,1,0,0,0,1,2,1,2,0,0,1,0
+STU_1736,Sachini Herath,D/IT/24/1736,BSc (Hons) in Information Technology,3,2.17,2.24,1.94,2.05,2.25,1.55,3.0,2,1,1,1,4,UI/UX Design,0,1,0,1,0,1,2,0,0,1,0,2,0,0,1,0,0,1,1,1,3,3,3,1,3
+STU_1047,Sanduni Mendis,D/IT/24/1047,BSc (Hons) in Computer Engineering,1,2.59,2.91,1.81,3.07,2.9,1.77,3.1,4,2,3,3,3,Software Engineering,2,2,1,1,2,0,0,1,0,0,0,0,2,0,1,2,1,1,1,2,1,1,1,1,1
+STU_1350,Akila Senaratne,D/IT/24/1350,BSc (Hons) in Data Science & Business Analytics,3,3.1,4.0,3.56,2.57,3.98,2.37,2.11,2,5,1,2,3,Data Science / AI,2,1,2,0,0,3,3,2,3,3,0,2,2,1,1,1,1,0,1,0,1,0,1,1,1
+STU_1372,Chathuri Senaratne,D/IT/24/1372,BSc (Hons) in Software Engineering,2,3.17,3.91,3.33,3.38,2.61,3.01,2.8,1,5,3,3,2,Data Science / AI,1,0,1,1,1,3,1,1,2,3,1,1,0,0,2,0,0,1,0,1,1,2,1,0,0
+STU_1705,Shanika Tharumila,D/IT/24/1705,BSc (Hons) in Information Technology,3,2.96,2.81,2.36,2.41,3.51,3.52,3.15,3,2,3,5,2,Cloud / DevOps,0,0,0,0,1,0,0,0,1,1,1,1,2,1,0,3,2,3,0,2,1,0,2,0,1
+STU_1262,Methmi Rathnayake,D/IT/24/1262,BSc (Hons) in Information Systems,3,2.69,3.74,2.81,2.78,3.09,1.26,2.48,2,5,2,1,2,Data Science / AI,0,1,0,1,0,3,2,3,2,2,1,0,1,1,1,0,0,1,2,2,2,1,1,1,0
+STU_1196,Maleesha Gunawardena,D/IT/24/1196,BSc (Hons) in Computer Engineering,3,3.12,3.3,3.12,3.79,2.53,2.76,3.21,5,3,2,1,1,Software Engineering,3,2,3,1,3,2,1,2,0,0,0,1,1,1,0,0,1,0,0,0,0,1,0,1,0
+STU_1850,Anushka Wickramasinghe,D/IT/24/1850,BSc (Hons) in Software Engineering,3,2.8,2.94,2.97,3.11,1.69,2.85,3.27,3,2,1,3,4,UI/UX Design,0,1,2,1,0,1,1,1,0,0,2,0,0,0,0,1,2,1,1,1,3,3,3,2,2
+STU_1712,Sachini Wickramasinghe,D/IT/24/1712,BSc (Hons) in Computer Science,3,2.92,3.2,1.51,2.9,2.5,4.0,3.43,3,3,2,5,2,Cloud / DevOps,0,2,0,1,2,1,1,2,2,2,0,0,3,1,0,3,2,2,1,1,1,0,0,2,1
+STU_1108,Maleesha Ahamad,D/IT/24/1108,BSc (Hons) in Information Technology,1,2.79,3.78,2.88,4.0,2.86,1.0,2.22,4,2,3,2,2,Software Engineering,3,3,2,0,2,0,0,0,1,1,2,0,0,0,1,2,0,1,0,1,2,0,0,2,2
+STU_1060,Buddhika Perera,D/IT/24/1060,BSc (Hons) in Software Engineering,4,3.03,2.7,2.61,4.0,2.79,3.58,2.49,5,2,1,3,3,Software Engineering,2,1,1,1,2,1,1,0,1,1,0,1,0,1,1,0,0,0,2,0,2,0,2,2,0
+STU_1667,Dulan Wickramasinghe,D/IT/24/1667,BSc (Hons) in Information Technology,4,2.86,2.06,2.44,3.62,2.98,3.57,2.52,3,2,3,5,3,Cloud / DevOps,0,0,1,0,0,0,2,0,1,0,0,1,3,0,0,2,2,2,0,2,0,0,2,2,2
+STU_1487,Maleesha Wickramasinghe,D/IT/24/1487,BSc (Hons) in Information Systems,2,2.59,2.58,2.37,2.8,2.77,2.85,2.16,1,1,4,3,2,Cybersecurity,0,0,0,0,1,1,0,1,0,2,2,1,3,2,1,0,1,0,0,1,0,0,0,1,0
+STU_1101,Akila Fernando,D/IT/24/1101,BSc (Hons) in Information Systems,2,2.84,2.96,2.47,3.28,2.97,2.67,2.7,5,2,3,2,2,Software Engineering,2,2,2,1,3,1,1,2,1,1,0,1,0,1,0,1,0,1,2,0,2,0,1,2,0
+STU_1444,Ishara Dissanayake,D/IT/24/1444,BSc (Hons) in Computer Science,3,2.79,2.43,2.72,3.37,3.5,2.97,1.74,3,2,5,1,3,Cybersecurity,0,0,0,0,0,0,0,0,2,0,3,1,2,2,2,1,0,2,0,0,0,0,1,0,1
+STU_1583,Anushka Jayasinghe,D/IT/24/1583,BSc (Hons) in Data Science & Business Analytics,1,3.12,2.97,4.0,3.32,2.3,3.48,2.65,1,3,3,5,2,Cloud / DevOps,2,1,1,1,0,0,0,0,2,0,1,0,2,0,0,3,2,2,1,2,2,1,0,0,0
+STU_1763,Sahan Tharumila,D/IT/24/1763,BSc (Hons) in Information Technology,1,2.82,2.86,2.0,2.39,3.32,2.52,3.84,2,3,1,3,5,UI/UX Design,0,2,2,1,1,1,0,0,1,2,2,0,0,2,1,0,1,0,2,1,3,3,3,2,3
+STU_1843,Kavinda Herath,D/IT/24/1843,BSc (Hons) in Software Engineering,2,2.47,2.47,1.81,2.56,1.93,2.55,3.53,2,1,2,2,5,UI/UX Design,2,0,1,0,1,0,0,2,2,0,2,1,0,0,0,1,2,1,1,1,3,2,2,2,2
+STU_1502,Praveen Wickramasinghe,D/IT/24/1502,BSc (Hons) in Information Systems,3,2.97,3.5,2.33,3.63,2.7,3.44,2.2,3,1,5,1,2,Cybersecurity,2,1,2,0,0,0,0,1,1,1,2,1,3,1,1,0,0,1,1,0,1,1,0,0,2
+STU_1180,Kavindi Ahamad,D/IT/24/1180,BSc (Hons) in Computer Engineering,1,2.56,3.7,2.55,3.46,2.41,2.2,1.05,5,3,1,1,3,Software Engineering,2,3,3,1,2,1,1,0,1,2,0,0,0,1,0,0,0,2,1,1,1,0,2,1,0
+STU_1305,Maleesha Mendis,D/IT/24/1305,BSc (Hons) in Information Systems,3,2.54,3.37,3.39,2.35,2.15,1.75,2.19,2,5,3,1,1,Data Science / AI,0,1,0,0,0,3,2,2,3,2,0,2,0,2,1,2,1,0,0,0,0,0,0,2,0
+STU_1542,Nuwan Jayasinghe,D/IT/24/1542,BSc (Hons) in Computer Engineering,4,3.12,3.24,2.81,2.08,4.0,3.34,3.24,3,1,5,2,2,Cybersecurity,1,0,0,1,0,1,1,0,1,0,2,3,2,1,1,0,0,1,0,1,0,1,1,2,0
+STU_1058,Sewwandi Alwis,D/IT/24/1058,BSc (Hons) in Software Engineering,3,2.65,3.83,2.72,3.33,2.05,1.2,2.75,5,3,1,1,3,Software Engineering,2,2,3,1,3,0,0,0,2,1,2,1,0,0,1,1,2,0,1,1,1,1,1,0,1
+STU_1820,Tharindu Mendis,D/IT/24/1820,BSc (Hons) in Information Systems,1,2.88,2.99,2.74,1.85,3.38,2.59,3.74,3,1,1,3,5,UI/UX Design,1,0,0,0,1,0,1,0,1,2,1,2,0,0,2,0,0,0,1,1,2,3,2,1,3
+STU_1150,Kasun Senaratne,D/IT/24/1150,BSc (Hons) in Computer Science,3,2.94,3.76,2.17,4.0,1.0,3.21,3.52,5,2,1,3,1,Software Engineering,2,2,3,1,3,1,0,0,2,0,0,2,1,0,0,0,0,2,0,1,2,0,0,1,2
+STU_1125,Ravindu Bandara,D/IT/24/1125,BSc (Hons) in Information Technology,2,2.93,3.37,2.56,3.16,3.29,2.5,2.71,5,1,2,2,1,Software Engineering,2,2,2,1,2,1,0,0,0,1,0,0,2,1,2,0,0,2,0,0,0,0,0,2,2
+STU_1672,Anushka Gunawardena,D/IT/24/1672,BSc (Hons) in Computer Science,2,3.04,3.14,2.81,2.64,3.93,3.67,2.04,2,1,2,4,2,Cloud / DevOps,2,2,1,0,1,0,0,1,1,1,1,0,3,0,0,3,1,2,0,2,1,0,1,0,0
+STU_1738,Tharindu Tharumila,D/IT/24/1738,BSc (Hons) in Data Science & Business Analytics,3,2.96,4.0,2.97,2.24,2.24,2.69,3.64,1,2,1,3,4,UI/UX Design,1,0,1,0,1,1,1,0,0,0,2,0,0,0,2,0,2,1,2,0,2,3,3,2,1
+STU_1186,Dilshan Alwis,D/IT/24/1186,BSc (Hons) in Software Engineering,3,2.91,3.24,3.38,3.26,2.55,2.78,2.24,5,3,2,2,2,Software Engineering,2,3,2,1,2,1,1,0,0,1,0,0,1,0,0,0,1,0,2,1,0,0,0,1,1
+STU_1597,Chathuri Fernando,D/IT/24/1597,BSc (Hons) in Data Science & Business Analytics,2,2.57,2.46,2.93,2.69,2.3,3.05,1.95,2,2,3,5,3,Cloud / DevOps,1,2,0,0,0,1,1,1,1,1,2,0,2,2,0,2,1,3,1,1,0,2,0,0,1
+STU_1051,Chathuri Karunaratne,D/IT/24/1051,BSc (Hons) in Computer Science,2,2.7,4.0,2.12,2.97,3.13,2.16,1.8,4,3,1,3,3,Software Engineering,3,1,2,2,2,1,0,0,0,0,2,0,0,0,1,1,0,0,0,0,1,1,0,0,2
+STU_1342,Kavindi Herath,D/IT/24/1342,BSc (Hons) in Software Engineering,2,3.13,3.58,3.85,3.41,2.32,2.6,3.04,3,4,2,3,2,Data Science / AI,1,0,2,1,0,3,1,2,3,2,1,2,1,1,2,1,1,1,1,1,2,1,1,0,1
+STU_1447,Chamari Fernando,D/IT/24/1447,BSc (Hons) in Data Science & Business Analytics,3,3.17,3.04,4.0,2.97,3.11,3.06,2.82,1,3,5,1,2,Cybersecurity,1,1,0,1,1,0,1,1,1,0,3,2,2,2,2,0,1,0,0,1,1,1,1,0,2
+STU_1840,Chamari Herath,D/IT/24/1840,BSc (Hons) in Data Science & Business Analytics,1,2.54,2.67,2.35,2.05,2.71,1.7,3.76,3,3,3,1,5,UI/UX Design,1,1,0,0,0,1,0,0,1,2,0,0,0,0,1,0,1,1,0,1,3,3,2,2,3
+STU_1545,Amal Alwis,D/IT/24/1545,BSc (Hons) in Computer Engineering,3,2.94,3.78,2.43,2.09,3.63,3.82,1.93,3,3,5,3,3,Cybersecurity,0,0,1,0,1,1,0,0,2,0,3,1,2,3,2,0,0,1,0,2,1,0,0,1,0
+STU_1322,Dulan Mendis,D/IT/24/1322,BSc (Hons) in Information Technology,4,2.58,2.75,2.73,3.47,1.79,2.61,2.17,2,5,2,2,1,Data Science / AI,1,0,1,0,0,3,1,3,2,2,1,0,0,2,2,0,1,0,0,0,1,0,2,0,0
+STU_1354,Shanika Wickramasinghe,D/IT/24/1354,BSc (Hons) in Information Technology,3,2.74,3.61,3.28,2.55,2.36,2.0,2.61,2,5,2,3,3,Data Science / AI,0,1,1,1,0,3,2,2,3,3,2,1,1,1,1,1,1,0,0,2,0,1,2,1,2
+STU_1787,Sewwandi Ahamad,D/IT/24/1787,BSc (Hons) in Software Engineering,3,2.78,2.91,2.78,2.28,2.87,2.05,3.81,3,2,3,3,4,UI/UX Design,0,0,2,0,1,2,2,0,1,1,0,0,1,0,1,1,0,0,1,0,2,2,3,1,2
+STU_1143,Maleesha Perera,D/IT/24/1143,BSc (Hons) in Software Engineering,3,3.08,3.9,3.32,2.75,2.9,2.4,3.2,5,3,3,1,1,Software Engineering,3,1,2,1,3,0,1,1,2,0,0,0,0,0,1,2,2,0,2,0,0,2,1,0,0
+STU_1471,Sanduni Jayasinghe,D/IT/24/1471,BSc (Hons) in Information Systems,4,3.22,3.34,3.76,2.48,3.65,3.17,2.92,1,2,5,1,1,Cybersecurity,1,1,2,1,0,0,0,0,0,1,3,2,3,1,1,1,1,0,1,0,1,0,1,0,1
+STU_1371,Methmi Alwis,D/IT/24/1371,BSc (Hons) in Computer Science,1,2.99,3.14,3.3,2.7,2.67,3.79,2.32,2,4,2,1,3,Data Science / AI,0,1,0,1,0,3,1,3,2,3,1,0,0,0,0,0,2,0,0,1,0,1,0,0,1
+STU_1560,Sanduni Silva,D/IT/24/1560,BSc (Hons) in Software Engineering,2,2.64,1.79,2.15,2.77,2.86,3.11,3.13,1,2,4,3,3,Cybersecurity,2,1,0,0,0,0,2,1,2,0,3,1,2,2,1,1,0,1,1,1,2,0,0,1,1
+STU_1142,Methmi Fonseka,D/IT/24/1142,BSc (Hons) in Information Systems,3,3.24,3.43,3.41,3.89,3.23,3.17,2.29,4,1,2,3,3,Software Engineering,3,2,1,1,3,1,1,2,0,0,1,1,2,0,0,0,0,0,1,0,1,0,1,0,0
+STU_1400,Hasitha Herath,D/IT/24/1400,BSc (Hons) in Information Systems,1,2.99,3.55,3.59,3.04,2.58,3.29,1.92,1,5,3,1,2,Data Science / AI,2,1,2,0,0,3,2,1,2,2,1,0,0,1,1,0,0,0,0,0,0,0,2,2,0
+STU_1264,Dulan Fonseka,D/IT/24/1264,BSc (Hons) in Information Technology,4,2.76,3.89,3.25,2.14,2.05,2.7,2.53,1,5,3,2,1,Data Science / AI,0,0,1,1,0,3,3,2,3,3,0,1,0,0,0,1,0,1,0,2,0,1,1,1,0
+STU_1321,Ishara Mendis,D/IT/24/1321,BSc (Hons) in Information Systems,1,3.05,2.97,3.91,3.05,3.27,2.8,2.28,3,5,1,2,1,Data Science / AI,0,1,0,0,1,3,2,2,3,3,1,0,0,0,1,0,2,2,1,2,0,1,1,1,2
+STU_1020,Nimal Wickramasinghe,D/IT/24/1020,BSc (Hons) in Information Technology,4,3.06,4.0,2.84,3.09,3.16,2.57,2.69,5,2,3,1,2,Software Engineering,3,3,2,1,3,0,0,2,1,1,1,1,1,0,0,0,0,1,0,0,0,0,1,0,1
+STU_1173,Hasitha Dissanayake,D/IT/24/1173,BSc (Hons) in Software Engineering,2,3.02,3.76,2.51,3.13,3.6,2.81,2.3,5,2,3,3,3,Software Engineering,3,2,1,0,2,0,0,0,0,2,0,0,0,2,1,0,2,0,0,0,0,0,1,0,1
+STU_1692,Anushka Herath,D/IT/24/1692,BSc (Hons) in Computer Engineering,3,3.05,3.17,3.6,2.28,3.6,3.83,1.82,3,2,3,4,1,Cloud / DevOps,0,0,0,0,2,0,1,2,1,0,1,1,2,2,1,3,3,3,1,2,1,1,0,1,1
+STU_1313,Amal Tharumila,D/IT/24/1313,BSc (Hons) in Computer Engineering,3,2.49,2.92,3.42,2.59,1.9,2.28,1.82,1,4,3,1,3,Data Science / AI,1,0,0,1,1,3,1,2,3,2,0,2,0,0,0,1,0,0,2,0,0,0,1,2,0
+STU_1391,Dinithi Tharumila,D/IT/24/1391,BSc (Hons) in Computer Engineering,2,2.92,2.92,2.99,2.35,2.85,3.06,3.33,3,5,3,3,1,Data Science / AI,1,1,2,0,0,3,2,3,3,3,1,0,1,1,0,2,1,2,0,1,0,1,1,0,2
+STU_1794,Kavindi Fonseka,D/IT/24/1794,BSc (Hons) in Software Engineering,2,2.59,2.11,1.35,2.87,2.11,3.12,4.0,3,3,2,1,5,UI/UX Design,0,0,1,1,1,0,2,1,1,0,2,1,1,2,2,0,2,1,0,0,3,3,3,2,1
+STU_1013,Buddhika Mendis,D/IT/24/1013,BSc (Hons) in Software Engineering,2,3.17,4.0,3.5,3.04,2.84,2.05,3.6,5,3,1,2,1,Software Engineering,3,3,1,0,3,0,0,0,0,0,1,1,0,1,1,0,2,2,0,0,1,1,0,0,0
+STU_1408,Amal Fernando,D/IT/24/1408,BSc (Hons) in Computer Engineering,1,2.68,3.25,2.95,1.48,3.15,2.81,2.43,1,5,1,2,3,Data Science / AI,2,0,0,0,0,3,2,2,3,3,0,0,0,1,0,0,1,2,1,1,0,0,0,0,2
+STU_1409,Nuwan Bandara,D/IT/24/1409,BSc (Hons) in Software Engineering,1,3.13,3.68,3.27,3.28,2.09,2.97,3.51,2,5,1,1,1,Data Science / AI,0,0,0,0,2,2,3,2,3,3,0,0,2,0,0,1,2,0,0,2,0,1,0,2,2
+STU_1306,Supun Jayasinghe,D/IT/24/1306,BSc (Hons) in Software Engineering,1,2.77,3.64,3.04,2.87,1.86,2.82,2.38,1,5,1,3,2,Data Science / AI,0,0,1,0,1,3,3,2,3,3,2,1,2,1,0,1,0,0,0,1,1,1,0,0,0
+STU_1355,Kavindi Jayasinghe,D/IT/24/1355,BSc (Hons) in Computer Engineering,3,3.09,3.83,3.61,3.87,2.74,2.42,2.09,1,4,3,3,3,Data Science / AI,1,1,1,0,0,3,1,1,2,3,2,1,0,1,1,1,1,1,0,0,1,0,2,0,0
+STU_1026,Amal Bandara,D/IT/24/1026,BSc (Hons) in Data Science & Business Analytics,3,3.07,3.47,2.83,3.76,2.46,2.17,3.73,5,2,1,1,3,Software Engineering,2,3,3,1,3,0,1,1,0,2,0,0,2,0,1,0,0,2,0,2,0,0,0,1,0
+STU_1631,Sanduni Jayasinghe,D/IT/24/1631,BSc (Hons) in Data Science & Business Analytics,3,2.89,2.88,2.56,1.75,3.39,3.72,3.04,3,3,3,4,1,Cloud / DevOps,0,0,1,0,2,1,2,0,2,0,0,0,2,0,1,3,3,3,0,2,1,2,0,2,1
+STU_1170,Buddhika Fonseka,D/IT/24/1170,BSc (Hons) in Computer Science,3,2.62,3.43,1.67,2.69,3.17,1.73,3.03,5,1,3,1,2,Software Engineering,3,1,1,0,3,0,2,2,0,1,1,0,0,1,0,0,1,2,1,1,0,0,1,0,2
+STU_1537,Sewwandi Perera,D/IT/24/1537,BSc (Hons) in Information Systems,3,2.91,2.88,2.98,2.85,3.34,3.29,2.12,2,1,5,1,1,Cybersecurity,0,0,0,2,1,1,1,2,0,0,3,1,2,2,2,1,0,1,1,2,1,1,1,0,0
+STU_1039,Dilshan Rathnayake,D/IT/24/1039,BSc (Hons) in Data Science & Business Analytics,3,2.76,3.58,2.17,3.46,1.99,2.6,2.75,5,1,2,3,2,Software Engineering,2,3,2,1,3,0,2,0,0,0,0,0,2,1,1,0,0,0,1,0,0,1,0,0,0
+STU_1176,Kavindi Rajapaksha,D/IT/24/1176,BSc (Hons) in Computer Science,1,3.08,4.0,3.54,2.97,2.26,2.87,2.86,5,3,1,2,1,Software Engineering,2,3,2,0,2,2,0,1,1,1,0,1,0,2,0,0,1,1,1,0,0,2,1,1,0
+STU_1246,Supun Senaratne,D/IT/24/1246,BSc (Hons) in Information Technology,1,2.74,2.84,3.64,1.77,3.15,2.88,2.14,1,5,3,1,2,Data Science / AI,0,1,0,1,0,2,2,2,3,2,0,2,2,0,0,0,0,0,0,1,2,2,0,1,2
+STU_1299,Tharindu Karunaratne,D/IT/24/1299,BSc (Hons) in Information Technology,3,2.61,2.91,3.62,1.95,2.64,2.64,1.93,2,4,3,2,2,Data Science / AI,1,0,2,2,0,3,3,2,3,3,0,0,0,0,0,1,2,0,1,1,1,1,0,0,0
+STU_1708,Tharindu Gunawardena,D/IT/24/1708,BSc (Hons) in Information Systems,2,2.93,2.53,2.63,1.9,3.13,3.73,3.67,1,3,1,5,1,Cloud / DevOps,1,2,1,1,1,1,0,1,0,0,1,0,2,1,1,3,2,3,0,1,0,1,1,2,1
+STU_1417,Anushka Karunaratne,D/IT/24/1417,BSc (Hons) in Computer Engineering,2,2.96,3.12,3.97,3.53,1.7,2.16,3.28,1,5,1,3,1,Data Science / AI,1,0,2,0,1,2,2,2,3,2,0,1,1,1,0,1,0,2,2,1,1,0,0,1,0
+STU_1579,Nuwan Senaratne,D/IT/24/1579,BSc (Hons) in Software Engineering,2,2.82,2.57,2.62,2.82,3.36,3.63,1.94,3,1,2,5,2,Cloud / DevOps,1,1,1,2,1,0,1,1,0,0,2,0,3,0,0,3,2,2,0,2,2,1,1,1,2
+STU_1273,Sachini Tharumila,D/IT/24/1273,BSc (Hons) in Information Technology,3,3.05,3.65,3.52,2.96,3.49,1.07,3.62,1,4,2,2,2,Data Science / AI,0,0,1,1,0,2,2,3,3,3,1,0,0,0,1,0,1,0,2,0,2,2,0,0,0
+STU_1474,Maleesha Gunawardena,D/IT/24/1474,BSc (Hons) in Software Engineering,3,2.79,3.15,3.05,2.72,3.63,2.96,1.24,1,2,5,1,3,Cybersecurity,0,2,1,0,1,0,1,1,1,0,3,1,3,3,2,2,1,0,1,0,0,0,0,1,0
+STU_1800,Ravindu Tharumila,D/IT/24/1800,BSc (Hons) in Software Engineering,2,2.78,2.95,3.23,2.82,2.09,1.82,3.78,3,1,3,3,5,UI/UX Design,1,0,0,0,1,1,2,0,2,1,0,1,0,0,0,0,1,2,0,0,3,2,3,2,2
+STU_1729,Hasitha Fonseka,D/IT/24/1729,BSc (Hons) in Software Engineering,3,2.8,2.46,1.82,2.33,3.61,2.59,4.0,2,3,1,3,5,UI/UX Design,1,0,1,1,1,1,0,2,0,2,2,0,2,2,1,1,2,0,2,1,2,3,3,1,1
+STU_1155,Supun Ahamad,D/IT/24/1155,BSc (Hons) in Computer Engineering,4,2.69,3.59,2.76,2.93,2.26,2.83,1.77,4,3,2,3,3,Software Engineering,3,3,1,0,3,1,0,0,0,2,1,2,0,2,0,1,1,0,0,0,0,1,1,1,1
+STU_1288,Methmi Herath,D/IT/24/1288,BSc (Hons) in Information Technology,3,2.94,3.65,3.18,3.12,2.98,1.93,2.78,1,5,1,3,2,Data Science / AI,0,1,0,1,0,3,2,3,2,3,2,0,0,2,1,0,0,1,0,0,1,0,2,0,1
+STU_1520,Buddhika Alwis,D/IT/24/1520,BSc (Hons) in Computer Science,4,2.72,2.7,2.43,2.87,3.3,2.96,2.04,1,3,4,1,3,Cybersecurity,1,2,0,1,0,2,0,0,1,0,3,2,3,2,2,1,1,1,1,0,0,0,0,1,0
+STU_1018,Kavinda Silva,D/IT/24/1018,BSc (Hons) in Information Systems,3,2.61,3.92,2.98,2.7,2.01,1.6,2.44,5,3,2,1,3,Software Engineering,3,2,2,1,2,0,0,1,2,0,1,2,1,0,0,0,0,0,1,0,0,1,0,1,1
+STU_1128,Supun Wickramasinghe,D/IT/24/1128,BSc (Hons) in Computer Engineering,4,2.59,2.82,2.36,2.71,2.68,1.6,3.37,5,3,1,3,1,Software Engineering,3,2,3,1,2,1,0,0,0,1,1,0,1,1,2,1,2,1,0,1,0,0,0,1,1
+STU_1323,Dulan Jayasinghe,D/IT/24/1323,BSc (Hons) in Computer Science,2,3.05,2.51,4.0,2.6,2.93,2.81,3.45,3,5,2,1,2,Data Science / AI,1,0,1,1,2,3,1,2,2,3,0,0,1,0,1,1,0,0,2,0,1,1,2,1,1
+STU_1256,Hasitha Gunawardena,D/IT/24/1256,BSc (Hons) in Software Engineering,3,2.82,3.73,3.9,2.41,2.88,2.63,1.38,3,5,2,2,2,Data Science / AI,0,1,1,0,0,3,2,3,2,3,0,2,0,2,1,1,0,1,0,0,0,2,1,0,0
+STU_1569,Tharindu Ahamad,D/IT/24/1569,BSc (Hons) in Computer Engineering,3,2.88,2.91,1.94,3.08,3.05,3.14,3.18,3,2,5,1,3,Cybersecurity,1,0,0,1,0,0,0,0,2,1,3,1,3,2,2,2,2,2,1,2,0,2,2,2,1
+STU_1818,Tharindu Fernando,D/IT/24/1818,BSc (Hons) in Computer Science,4,2.88,2.69,2.65,3.6,2.66,1.99,3.67,1,2,1,1,5,UI/UX Design,0,2,0,1,0,0,2,2,0,0,0,0,1,0,1,1,0,1,1,1,3,3,2,2,2
+STU_1191,Maleesha Dissanayake,D/IT/24/1191,BSc (Hons) in Computer Engineering,2,2.89,3.62,2.79,3.44,2.92,2.22,2.37,5,2,2,2,1,Software Engineering,3,2,2,1,3,1,1,0,0,1,2,2,0,0,0,2,2,1,0,1,0,0,1,0,0
+STU_1116,Methmi Dissanayake,D/IT/24/1116,BSc (Hons) in Information Technology,3,2.75,2.7,3.21,3.04,2.19,1.97,3.42,5,1,2,2,1,Software Engineering,3,2,2,1,2,0,0,0,1,1,0,1,0,0,1,1,2,0,1,1,2,0,1,1,0
+STU_1533,Sachini Fernando,D/IT/24/1533,BSc (Hons) in Computer Science,2,3.04,2.66,3.9,3.1,3.89,2.72,1.97,2,2,5,1,3,Cybersecurity,2,0,1,2,1,1,2,0,1,0,3,2,2,3,2,0,0,1,0,1,1,0,2,2,0
+STU_1181,Dulan Fonseka,D/IT/24/1181,BSc (Hons) in Computer Science,3,3.08,3.76,2.19,3.95,2.81,2.99,2.8,5,3,3,1,2,Software Engineering,2,3,1,1,3,0,0,0,2,0,0,1,0,0,0,0,0,0,1,0,1,1,1,0,0
+STU_1302,Sewwandi Alwis,D/IT/24/1302,BSc (Hons) in Information Technology,4,2.51,3.56,2.83,2.45,1.82,2.42,1.96,2,4,3,1,3,Data Science / AI,2,0,2,1,2,3,3,2,3,3,2,1,2,1,2,1,1,1,2,1,1,1,0,0,2
+STU_1652,Sahan Herath,D/IT/24/1652,BSc (Hons) in Software Engineering,2,2.88,2.89,2.16,3.3,3.0,3.12,2.8,3,2,3,5,2,Cloud / DevOps,0,1,0,1,1,0,1,0,0,1,1,0,3,0,0,3,3,2,2,1,0,1,0,1,0
+STU_1644,Maleesha Wickramasinghe,D/IT/24/1644,BSc (Hons) in Computer Science,3,2.99,3.23,3.59,2.22,3.03,2.91,2.99,2,1,1,5,1,Cloud / DevOps,0,0,1,1,1,0,0,2,0,0,0,1,3,0,1,2,3,3,1,2,0,0,1,1,0
+STU_1624,Nuwan Dissanayake,D/IT/24/1624,BSc (Hons) in Computer Science,3,2.6,2.36,2.84,2.08,2.79,3.68,1.82,2,2,2,5,2,Cloud / DevOps,1,0,0,1,0,2,1,0,2,0,0,0,3,1,1,3,1,3,0,2,0,2,1,1,0
+STU_1592,Dinithi Dissanayake,D/IT/24/1592,BSc (Hons) in Information Technology,3,2.72,3.06,2.77,2.17,2.76,3.03,2.51,2,1,3,5,1,Cloud / DevOps,0,1,0,0,0,2,0,0,0,0,0,1,2,1,0,3,2,3,0,2,0,1,1,1,0
+STU_1573,Kavinda Wickramasinghe,D/IT/24/1573,BSc (Hons) in Software Engineering,4,2.77,2.91,2.14,3.34,3.42,2.85,1.96,3,1,4,3,3,Cybersecurity,0,0,2,1,1,0,0,1,1,0,3,2,3,3,2,0,0,1,0,0,0,2,2,1,2
+STU_1518,Chamari Fonseka,D/IT/24/1518,BSc (Hons) in Computer Engineering,3,3.0,3.09,2.1,2.52,3.61,3.25,3.44,2,3,5,1,3,Cybersecurity,1,1,0,2,1,2,1,0,0,2,3,3,3,2,1,1,1,0,2,1,2,1,0,1,1
+STU_1836,Sewwandi Herath,D/IT/24/1836,BSc (Hons) in Computer Science,2,2.77,1.86,3.14,2.98,2.44,2.6,3.6,3,3,1,3,5,UI/UX Design,1,1,1,0,1,0,0,0,1,0,1,1,0,0,0,2,1,0,2,0,3,3,2,1,3
+STU_1046,Dinithi Perera,D/IT/24/1046,BSc (Hons) in Computer Science,1,3.12,3.61,2.96,3.07,2.68,3.58,2.81,4,3,2,3,1,Software Engineering,3,2,2,1,3,1,1,0,0,0,0,0,1,1,1,0,1,0,2,1,0,1,0,1,0
+STU_1771,Tharindu Perera,D/IT/24/1771,BSc (Hons) in Information Systems,2,3.03,3.56,2.11,3.28,2.9,2.58,3.73,2,3,3,2,5,UI/UX Design,0,1,1,2,2,1,0,0,2,1,1,0,0,0,0,1,1,0,1,2,3,3,2,1,1
+STU_1158,Sewwandi Silva,D/IT/24/1158,BSc (Hons) in Software Engineering,4,2.96,3.76,3.25,2.65,2.6,2.7,2.8,5,1,1,1,1,Software Engineering,3,1,1,1,3,1,0,2,0,0,0,0,0,0,1,0,2,1,1,0,0,0,1,2,0
+STU_1639,Ishara Fonseka,D/IT/24/1639,BSc (Hons) in Software Engineering,3,2.57,2.62,2.64,2.06,2.76,3.67,1.67,2,1,1,4,2,Cloud / DevOps,0,1,2,0,0,1,1,1,1,2,0,0,2,1,1,2,2,3,0,1,1,0,0,2,2
+STU_1172,Anushka Fernando,D/IT/24/1172,BSc (Hons) in Information Technology,3,2.83,3.5,2.28,4.0,2.76,2.05,2.41,5,2,1,1,3,Software Engineering,2,2,2,1,3,0,0,1,1,0,2,0,0,0,1,1,0,0,1,0,0,1,0,2,0
+STU_1017,Dilshan Mendis,D/IT/24/1017,BSc (Hons) in Information Systems,3,3.03,3.52,3.41,3.75,3.63,2.04,1.85,5,2,2,2,2,Software Engineering,2,1,2,2,2,1,1,0,2,2,1,1,2,1,0,1,1,0,1,2,2,0,0,2,1
+STU_1512,Akila Silva,D/IT/24/1512,BSc (Hons) in Data Science & Business Analytics,1,2.89,3.5,2.76,2.46,2.9,3.03,2.71,2,1,5,1,3,Cybersecurity,1,0,2,0,1,1,1,1,2,2,2,3,3,3,1,0,0,0,0,0,2,1,0,0,1
+STU_1049,Amal Wickramasinghe,D/IT/24/1049,BSc (Hons) in Computer Science,2,2.7,4.0,2.59,3.17,1.57,2.56,2.32,5,3,2,1,1,Software Engineering,2,2,2,1,3,0,1,0,0,0,0,0,0,1,1,1,0,2,0,0,1,0,0,1,2
+STU_1824,Praveen Dissanayake,D/IT/24/1824,BSc (Hons) in Information Technology,4,2.75,2.73,3.6,2.32,1.9,2.53,3.44,1,1,2,3,5,UI/UX Design,0,0,0,0,1,1,0,0,1,0,2,0,0,0,0,2,0,1,0,1,3,3,2,1,3
+STU_1516,Amal Herath,D/IT/24/1516,BSc (Hons) in Information Systems,3,2.26,1.83,1.59,2.14,2.71,2.3,2.97,2,3,5,2,1,Cybersecurity,0,0,1,0,0,2,0,1,0,0,3,3,3,1,1,1,0,1,1,1,0,0,1,0,1
+STU_1735,Akila Rathnayake,D/IT/24/1735,BSc (Hons) in Information Technology,3,3.01,2.77,2.43,2.75,3.93,2.34,3.85,2,3,3,2,4,UI/UX Design,1,0,0,0,0,1,0,0,1,2,2,2,1,1,1,2,2,0,0,0,2,3,2,1,2
+STU_1481,Praveen Jayasinghe,D/IT/24/1481,BSc (Hons) in Computer Engineering,3,2.9,3.27,1.94,2.28,3.56,3.6,2.73,3,1,5,2,3,Cybersecurity,1,0,0,0,1,0,1,1,2,2,2,3,2,2,1,0,0,0,0,0,1,0,1,0,2
+STU_1284,Rashmi Herath,D/IT/24/1284,BSc (Hons) in Software Engineering,1,2.77,2.95,3.33,3.23,2.38,2.03,2.74,1,5,3,3,2,Data Science / AI,0,0,2,0,1,2,3,1,3,3,1,2,1,0,1,0,1,1,1,2,1,0,0,2,0
+STU_1805,Buddhika Jayasinghe,D/IT/24/1805,BSc (Hons) in Information Technology,3,2.9,2.42,2.43,2.27,2.65,3.65,4.0,3,3,3,2,5,UI/UX Design,1,0,1,0,1,0,0,1,2,0,2,0,1,2,0,0,0,0,1,1,3,3,3,1,2
+STU_1226,Sanduni Rajapaksha,D/IT/24/1226,BSc (Hons) in Computer Science,4,2.68,2.81,1.85,3.26,2.85,2.79,2.51,5,1,2,1,2,Software Engineering,2,3,2,1,2,2,1,0,1,0,1,2,0,1,0,0,0,1,0,1,0,1,0,1,0
+STU_1027,Supun Jayasinghe,D/IT/24/1027,BSc (Hons) in Information Technology,3,2.76,3.15,2.45,3.22,3.4,2.72,1.65,5,3,2,2,1,Software Engineering,2,1,2,0,3,0,0,0,1,0,1,2,1,0,0,0,0,2,0,0,1,1,1,0,0
+STU_1668,Supun Jayasinghe,D/IT/24/1668,BSc (Hons) in Data Science & Business Analytics,3,3.23,2.65,3.19,3.53,3.21,3.7,3.07,1,3,3,4,1,Cloud / DevOps,1,0,1,2,1,1,1,2,0,0,0,0,2,1,0,3,2,2,1,1,0,0,1,1,2
+STU_1438,Amal Rajapaksha,D/IT/24/1438,BSc (Hons) in Computer Engineering,2,2.92,2.86,2.34,2.06,3.51,3.84,2.87,2,1,5,2,2,Cybersecurity,1,0,2,0,2,2,2,1,0,1,3,1,3,1,1,2,0,1,0,2,1,0,0,0,2
+STU_1365,Akila Wickramasinghe,D/IT/24/1365,BSc (Hons) in Data Science & Business Analytics,3,3.02,3.65,3.04,3.46,3.05,2.91,1.98,1,5,1,1,3,Data Science / AI,1,0,1,1,1,3,2,3,2,3,1,1,1,0,2,0,1,2,1,2,1,0,0,0,0
+STU_1230,Akila Alwis,D/IT/24/1230,BSc (Hons) in Information Systems,2,3.06,3.36,2.14,3.93,2.75,2.87,3.28,4,1,1,3,1,Software Engineering,3,1,1,0,3,2,2,0,0,0,1,0,1,1,0,0,1,0,1,0,1,2,2,0,0
+STU_1038,Chamari Perera,D/IT/24/1038,BSc (Hons) in Information Systems,2,2.99,3.18,2.92,3.85,2.69,2.8,2.53,4,1,1,1,1,Software Engineering,2,3,2,0,2,2,0,1,1,2,1,1,0,1,0,1,1,1,0,0,1,0,0,0,2
+STU_1819,Tharindu Wickramasinghe,D/IT/24/1819,BSc (Hons) in Computer Engineering,3,2.93,3.18,2.34,3.15,2.74,3.0,3.17,1,1,1,2,5,UI/UX Design,0,1,1,1,1,0,1,0,0,0,0,1,1,0,0,0,1,0,0,1,3,3,3,2,2
+STU_1375,Methmi Senaratne,D/IT/24/1375,BSc (Hons) in Computer Science,2,2.6,2.99,2.7,2.99,2.29,2.91,1.7,1,5,1,2,1,Data Science / AI,0,1,0,1,0,3,2,2,3,3,1,0,0,0,0,0,0,0,0,1,1,2,0,2,0
+STU_1470,Sewwandi Alwis,D/IT/24/1470,BSc (Hons) in Information Technology,1,3.09,2.87,3.21,3.25,3.37,3.08,2.8,2,3,5,1,1,Cybersecurity,0,2,0,2,1,2,0,0,1,1,3,3,2,3,1,0,0,0,0,0,0,0,1,2,0
+STU_1821,Sahan Gunawardena,D/IT/24/1821,BSc (Hons) in Computer Engineering,2,2.25,2.5,2.0,2.11,1.28,2.18,3.44,1,1,1,1,5,UI/UX Design,1,1,0,0,1,1,0,1,0,0,0,1,1,1,2,0,2,1,0,2,2,3,3,2,1
+STU_1723,Kasun Rajapaksha,D/IT/24/1723,BSc (Hons) in Software Engineering,4,2.8,3.4,3.43,2.06,1.6,2.79,3.5,1,1,3,2,5,UI/UX Design,2,1,0,0,0,0,0,0,0,0,0,1,0,0,1,1,0,2,0,0,3,3,2,2,3
+STU_1626,Kavindi Fonseka,D/IT/24/1626,BSc (Hons) in Computer Science,3,2.82,2.4,2.61,3.21,2.79,2.86,3.04,1,1,1,5,2,Cloud / DevOps,0,2,1,2,0,1,1,1,1,0,0,0,2,1,0,3,1,2,0,1,1,0,1,0,0
+STU_1195,Chamari Bandara,D/IT/24/1195,BSc (Hons) in Computer Engineering,2,2.43,2.75,2.46,2.84,2.08,1.87,2.56,4,3,2,3,2,Software Engineering,3,3,2,2,2,1,1,0,0,0,0,0,1,1,0,1,2,0,1,1,0,2,0,0,1
+STU_1756,Sahan Bandara,D/IT/24/1756,BSc (Hons) in Information Technology,1,2.68,2.64,2.14,2.39,3.18,2.76,3.0,1,3,2,1,5,UI/UX Design,0,0,0,0,0,0,2,0,1,1,0,0,0,1,1,0,1,1,0,1,3,2,2,1,1
+STU_1734,Ravindu Mendis,D/IT/24/1734,BSc (Hons) in Software Engineering,2,2.96,2.99,2.09,3.45,2.87,2.64,3.74,2,2,3,2,5,UI/UX Design,1,1,1,0,1,1,0,2,0,1,1,0,0,1,0,0,1,1,1,2,3,3,3,2,2
+STU_1504,Akila Silva,D/IT/24/1504,BSc (Hons) in Computer Science,3,2.78,2.67,2.25,3.11,3.72,2.98,1.92,1,3,5,3,1,Cybersecurity,0,0,2,0,2,0,0,0,1,1,2,2,3,3,2,1,0,0,0,0,1,0,1,2,0
+STU_1823,Maleesha Dissanayake,D/IT/24/1823,BSc (Hons) in Data Science & Business Analytics,1,2.87,4.0,1.99,2.76,2.63,1.93,3.92,3,1,1,1,5,UI/UX Design,0,0,0,0,0,0,0,1,0,0,1,0,0,0,2,1,0,1,0,0,3,3,3,2,3
+STU_1709,Anushka Tharumila,D/IT/24/1709,BSc (Hons) in Data Science & Business Analytics,2,3.01,3.09,2.09,3.49,2.88,3.84,2.67,3,3,3,5,2,Cloud / DevOps,2,1,1,0,0,0,2,0,2,0,1,2,2,1,0,2,2,3,0,1,2,0,0,2,0
+STU_1822,Chamari Ahamad,D/IT/24/1822,BSc (Hons) in Data Science & Business Analytics,2,2.74,2.28,4.0,3.07,1.81,2.17,3.14,2,1,1,1,5,UI/UX Design,0,0,1,2,0,1,1,1,2,2,0,1,1,0,1,2,1,2,1,0,2,3,3,1,2
+STU_1163,Tharindu Fernando,D/IT/24/1163,BSc (Hons) in Information Technology,4,3.28,3.59,3.64,2.84,3.28,2.94,3.37,5,3,3,3,2,Software Engineering,2,2,1,1,2,0,0,0,2,0,2,0,2,1,2,0,1,2,0,0,0,2,1,1,0
+STU_1605,Sachini Wickramasinghe,D/IT/24/1605,BSc (Hons) in Data Science & Business Analytics,4,2.72,2.77,2.24,1.76,3.27,3.21,3.09,2,1,3,5,3,Cloud / DevOps,0,1,2,0,0,0,1,2,2,0,0,0,2,1,0,3,2,3,1,2,0,0,0,0,1
+STU_1153,Kavindi Karunaratne,D/IT/24/1153,BSc (Hons) in Computer Engineering,3,2.73,3.73,2.15,2.68,2.87,2.48,2.47,4,1,3,3,1,Software Engineering,3,1,1,1,3,2,0,1,0,0,1,2,0,1,2,2,0,2,0,1,0,0,1,0,0
+STU_1588,Chamari Fonseka,D/IT/24/1588,BSc (Hons) in Information Technology,2,2.94,3.59,3.21,2.53,2.86,2.95,2.52,3,3,3,5,2,Cloud / DevOps,1,0,2,0,1,0,0,1,0,2,1,1,3,0,1,3,1,3,0,2,1,2,2,1,0
+STU_1604,Hasitha Jayasinghe,D/IT/24/1604,BSc (Hons) in Data Science & Business Analytics,3,3.2,3.74,4.0,2.32,3.17,3.79,2.19,1,2,1,5,1,Cloud / DevOps,0,2,1,0,0,0,0,1,0,2,0,0,3,0,1,3,2,3,1,2,1,1,1,0,0
+STU_1740,Akila Karunaratne,D/IT/24/1740,BSc (Hons) in Computer Engineering,4,2.63,3.15,2.16,2.14,2.9,1.54,3.9,2,2,3,1,4,UI/UX Design,1,2,2,1,0,1,0,0,0,0,0,0,0,0,0,1,1,1,0,1,3,3,3,1,2
+STU_1112,Sewwandi Fernando,D/IT/24/1112,BSc (Hons) in Information Systems,2,3.09,3.77,3.36,3.13,2.57,3.19,2.54,5,1,2,2,2,Software Engineering,2,2,1,1,3,0,0,1,0,0,0,0,0,0,0,1,1,0,2,1,1,0,0,0,0
+STU_1227,Anushka Senaratne,D/IT/24/1227,BSc (Hons) in Data Science & Business Analytics,1,2.93,3.74,2.16,2.68,2.12,3.22,3.67,4,2,2,2,3,Software Engineering,2,2,2,1,3,0,1,1,0,0,0,0,0,0,0,1,1,0,2,2,1,0,0,1,1
+STU_1594,Nimal Alwis,D/IT/24/1594,BSc (Hons) in Computer Science,2,2.79,2.37,2.78,2.43,3.02,3.15,3.01,1,2,2,5,1,Cloud / DevOps,0,0,0,1,1,0,0,1,2,0,0,1,3,0,1,3,3,2,0,1,1,0,1,1,2
+STU_1104,Dulan Bandara,D/IT/24/1104,BSc (Hons) in Information Technology,1,2.73,3.66,2.95,3.04,2.38,2.23,2.13,4,1,1,2,1,Software Engineering,3,2,2,1,3,1,1,0,0,0,0,2,1,0,1,0,2,0,0,1,1,1,0,0,0
+STU_1422,Dilshan Gunawardena,D/IT/24/1422,BSc (Hons) in Computer Engineering,2,2.83,3.36,3.12,2.65,1.78,3.09,2.98,2,5,2,1,1,Data Science / AI,0,1,1,0,1,3,2,3,3,3,0,1,1,1,0,1,1,0,1,2,0,2,0,0,0
+STU_1420,Chathuri Senaratne,D/IT/24/1420,BSc (Hons) in Information Technology,4,2.83,2.56,3.05,3.52,2.63,3.11,2.12,1,5,2,3,2,Data Science / AI,0,2,1,1,0,3,3,2,2,3,0,0,1,0,0,1,0,1,2,0,1,0,0,0,0
+STU_1120,Ravindu Alwis,D/IT/24/1120,BSc (Hons) in Data Science & Business Analytics,2,2.96,3.72,2.89,2.56,2.2,3.09,3.28,4,3,2,1,3,Software Engineering,3,1,3,2,2,1,0,0,1,0,1,0,1,1,1,0,2,0,0,0,0,2,0,1,1
+STU_1054,Supun Tharumila,D/IT/24/1054,BSc (Hons) in Software Engineering,3,2.66,4.0,2.12,2.85,1.99,2.93,2.08,4,2,1,2,3,Software Engineering,3,1,2,1,3,0,1,1,1,2,0,2,0,0,0,0,1,0,0,2,1,1,2,1,0
+STU_1152,Ishara Wickramasinghe,D/IT/24/1152,BSc (Hons) in Information Technology,2,2.93,3.32,2.75,3.95,2.49,2.08,3.0,5,1,1,1,1,Software Engineering,3,3,1,2,3,0,0,2,0,1,1,1,2,0,0,0,0,1,1,2,0,2,0,0,0
+STU_1404,Sanduni Silva,D/IT/24/1404,BSc (Hons) in Information Systems,2,2.58,4.0,3.29,1.58,1.83,2.43,2.37,2,5,1,2,3,Data Science / AI,0,2,1,1,1,3,1,2,3,3,0,1,1,1,0,1,0,1,2,1,1,1,0,1,1
+STU_1802,Kavinda Fernando,D/IT/24/1802,BSc (Hons) in Software Engineering,4,2.47,2.01,1.7,2.69,2.18,2.51,3.73,3,1,2,2,5,UI/UX Design,0,1,2,2,2,0,0,1,0,0,1,0,0,0,2,0,0,2,0,0,2,3,3,1,1
+STU_1208,Nuwan Bandara,D/IT/24/1208,BSc (Hons) in Computer Engineering,3,2.85,3.79,1.55,3.36,2.53,3.14,2.73,5,1,2,2,3,Software Engineering,2,2,2,0,3,1,1,0,0,0,2,0,0,1,0,0,1,0,0,0,1,1,0,1,0
+STU_1718,Sanduni Perera,D/IT/24/1718,BSc (Hons) in Software Engineering,3,2.98,3.99,3.17,2.77,3.4,3.12,1.45,3,3,1,4,3,Cloud / DevOps,0,1,0,1,1,0,0,0,1,0,1,0,3,1,0,3,2,3,1,2,1,0,2,0,1
+STU_1654,Amal Fonseka,D/IT/24/1654,BSc (Hons) in Computer Science,3,2.97,2.52,2.94,2.83,3.27,3.54,2.72,3,1,2,4,3,Cloud / DevOps,2,0,2,1,0,1,0,1,1,0,2,0,3,0,1,3,1,3,2,2,0,0,1,0,1
+STU_1009,Dinithi Fernando,D/IT/24/1009,BSc (Hons) in Computer Science,2,2.87,3.22,3.61,3.2,2.73,2.8,1.68,5,2,1,1,3,Software Engineering,3,3,2,0,2,1,0,2,0,0,2,0,0,2,2,1,1,0,0,0,1,1,1,1,0
+STU_1690,Shanika Herath,D/IT/24/1690,BSc (Hons) in Computer Science,1,2.72,2.77,1.92,3.0,2.32,2.93,3.35,3,2,3,5,1,Cloud / DevOps,0,2,1,0,1,2,1,0,2,0,1,0,2,0,1,2,1,2,2,1,0,0,0,1,1
+STU_1037,Methmi Perera,D/IT/24/1037,BSc (Hons) in Data Science & Business Analytics,4,2.78,3.49,2.4,3.49,2.32,2.27,2.7,4,1,1,3,1,Software Engineering,3,2,3,0,3,0,0,0,0,1,1,1,0,0,0,0,0,1,0,1,0,0,0,2,1
+STU_1453,Akila Fernando,D/IT/24/1453,BSc (Hons) in Computer Engineering,4,2.67,2.86,1.34,2.34,3.93,3.23,2.35,2,2,4,2,1,Cybersecurity,0,2,0,1,0,0,2,0,1,0,3,1,3,2,1,1,0,0,2,0,0,1,1,1,2
+STU_1254,Ravindu Bandara,D/IT/24/1254,BSc (Hons) in Information Systems,1,3.15,3.41,3.75,2.88,3.32,2.85,2.72,2,5,3,2,2,Data Science / AI,1,2,0,0,0,3,3,1,3,2,1,0,1,1,0,0,1,0,0,0,0,1,1,1,0
+STU_1304,Maleesha Karunaratne,D/IT/24/1304,BSc (Hons) in Information Technology,2,2.47,2.3,3.71,2.32,1.42,2.64,2.45,1,5,1,3,2,Data Science / AI,0,1,2,2,0,3,2,2,2,2,0,1,1,2,1,0,0,2,0,0,2,1,0,2,2
+STU_1677,Hasitha Rathnayake,D/IT/24/1677,BSc (Hons) in Computer Engineering,3,2.95,3.46,2.53,2.6,3.68,3.81,1.64,2,3,2,5,3,Cloud / DevOps,2,1,1,0,1,0,0,0,1,0,0,0,3,1,1,3,1,3,0,2,0,0,0,0,0
+STU_1572,Ishara Rajapaksha,D/IT/24/1572,BSc (Hons) in Information Systems,4,3.36,3.39,3.59,3.66,3.43,3.09,3.02,2,2,5,3,2,Cybersecurity,0,1,2,0,0,1,0,1,0,0,3,1,3,2,2,0,0,0,1,1,0,0,1,1,0
+STU_1611,Sanduni Karunaratne,D/IT/24/1611,BSc (Hons) in Computer Science,2,2.55,3.24,1.29,2.49,2.92,3.17,2.17,3,2,2,5,3,Cloud / DevOps,1,2,0,2,0,0,2,1,0,0,1,1,3,1,2,3,1,2,0,1,0,1,0,0,0
+STU_1681,Sahan Rajapaksha,D/IT/24/1681,BSc (Hons) in Computer Engineering,1,2.95,2.49,2.95,3.55,3.3,2.96,2.45,1,2,3,5,1,Cloud / DevOps,1,1,1,2,1,0,2,2,0,1,1,1,3,1,0,2,2,3,2,1,1,1,0,1,1
+STU_1263,Kavinda Fernando,D/IT/24/1263,BSc (Hons) in Software Engineering,2,2.93,3.24,4.0,2.5,2.8,2.55,2.51,2,5,2,3,2,Data Science / AI,0,1,1,0,0,3,3,1,3,3,1,1,1,0,0,1,0,2,1,2,0,2,0,2,0
+STU_1298,Akila Dissanayake,D/IT/24/1298,BSc (Hons) in Information Technology,4,3.08,3.56,3.24,3.03,2.81,2.66,3.16,2,5,3,1,3,Data Science / AI,1,0,1,2,0,3,1,2,3,2,1,2,1,2,0,0,1,1,0,2,1,2,0,0,1
+STU_1415,Hasitha Tharumila,D/IT/24/1415,BSc (Hons) in Information Systems,2,2.92,3.32,3.19,2.85,2.84,2.55,2.76,3,5,2,2,1,Data Science / AI,2,0,0,1,1,2,1,2,3,3,0,0,0,0,1,0,2,2,0,2,1,1,0,1,0
+STU_1151,Shanika Senaratne,D/IT/24/1151,BSc (Hons) in Software Engineering,2,2.52,2.7,2.7,3.19,2.23,2.47,1.85,5,3,1,1,1,Software Engineering,3,1,3,0,3,1,0,1,1,2,1,0,0,1,0,0,1,1,1,0,1,0,1,0,2
+STU_1674,Sewwandi Wickramasinghe,D/IT/24/1674,BSc (Hons) in Software Engineering,1,2.68,3.59,1.87,2.52,2.77,2.71,2.63,2,1,1,5,3,Cloud / DevOps,1,0,0,0,1,0,1,0,2,1,1,1,3,1,1,3,1,3,0,1,1,0,1,0,0
+STU_1753,Ravindu Silva,D/IT/24/1753,BSc (Hons) in Information Technology,2,2.43,2.6,1.73,2.81,2.25,1.24,3.95,2,3,3,1,4,UI/UX Design,1,0,1,0,1,1,2,0,0,0,2,1,1,0,0,0,0,1,0,1,3,2,2,1,2
+STU_1551,Dulan Senaratne,D/IT/24/1551,BSc (Hons) in Computer Science,1,2.99,2.96,3.37,3.08,3.21,3.28,2.04,3,1,5,3,3,Cybersecurity,0,0,0,0,0,2,2,0,1,1,3,2,2,3,1,1,1,1,1,2,1,0,1,1,1
+STU_1489,Dinithi Herath,D/IT/24/1489,BSc (Hons) in Software Engineering,2,3.03,2.91,2.56,2.88,3.58,3.54,2.73,2,3,5,3,2,Cybersecurity,2,0,1,1,2,0,1,0,0,0,3,2,3,2,1,0,2,0,0,1,0,1,0,0,0
+STU_1148,Nimal Bandara,D/IT/24/1148,BSc (Hons) in Software Engineering,3,2.74,3.44,3.11,4.0,1.0,2.36,2.51,4,2,3,1,2,Software Engineering,3,2,1,1,2,1,1,0,0,1,0,0,0,0,1,0,0,1,2,0,0,0,1,1,1
+STU_1147,Sahan Senaratne,D/IT/24/1147,BSc (Hons) in Computer Engineering,1,3.3,3.45,3.3,2.87,3.13,3.07,4.0,5,1,1,2,2,Software Engineering,3,3,3,1,2,0,0,1,0,1,1,1,2,1,0,2,1,0,0,1,0,1,0,0,1
+STU_1621,Dulan Senaratne,D/IT/24/1621,BSc (Hons) in Computer Engineering,3,2.83,3.49,2.59,2.81,2.45,3.0,2.62,3,2,2,5,1,Cloud / DevOps,1,0,0,0,0,0,0,0,1,0,2,1,3,0,1,3,2,2,1,1,1,2,2,2,1
+STU_1790,Anushka Herath,D/IT/24/1790,BSc (Hons) in Information Technology,3,3.06,3.49,2.61,2.85,3.22,2.65,3.53,2,2,3,1,5,UI/UX Design,0,0,0,0,0,0,1,1,0,0,0,1,1,0,0,2,0,0,0,0,2,3,3,1,3
+STU_1635,Kasun Karunaratne,D/IT/24/1635,BSc (Hons) in Software Engineering,1,2.57,2.03,2.57,2.26,3.39,3.27,1.88,1,2,1,4,2,Cloud / DevOps,0,0,0,1,1,1,0,0,0,1,1,2,3,1,1,3,2,2,0,2,0,0,0,2,0
+STU_1349,Rashmi Herath,D/IT/24/1349,BSc (Hons) in Computer Engineering,3,2.65,3.61,3.03,2.45,2.05,2.42,2.35,3,5,1,3,1,Data Science / AI,1,1,0,2,1,2,1,1,3,2,0,0,1,0,0,0,2,0,0,1,0,0,0,1,1
+STU_1464,Chathuri Jayasinghe,D/IT/24/1464,BSc (Hons) in Computer Engineering,1,3.07,3.19,2.73,3.04,3.33,3.41,2.74,1,3,5,2,3,Cybersecurity,1,0,2,1,1,0,0,1,0,2,2,2,3,1,1,0,2,1,1,1,1,0,0,1,0
+STU_1326,Dulan Tharumila,D/IT/24/1326,BSc (Hons) in Computer Engineering,2,2.84,3.07,3.68,2.78,2.07,2.32,3.11,2,5,3,2,3,Data Science / AI,0,0,1,2,1,3,2,2,3,3,1,0,2,0,1,1,0,1,1,1,1,0,1,2,0
+STU_1187,Praveen Senaratne,D/IT/24/1187,BSc (Hons) in Software Engineering,3,3.0,3.66,2.95,2.99,2.57,2.05,3.77,5,2,1,1,2,Software Engineering,3,3,2,1,2,0,1,0,0,0,1,1,1,1,1,0,0,1,1,1,0,0,2,1,0
+STU_1124,Sewwandi Silva,D/IT/24/1124,BSc (Hons) in Computer Engineering,1,2.57,3.04,2.82,2.99,1.54,1.91,3.1,5,2,2,1,2,Software Engineering,3,1,2,1,3,1,2,2,0,1,1,0,0,1,2,1,0,1,0,1,1,0,2,0,2
+STU_1724,Supun Gunawardena,D/IT/24/1724,BSc (Hons) in Information Technology,2,2.78,3.16,2.31,2.46,2.43,2.57,3.74,1,2,3,3,5,UI/UX Design,2,2,0,0,1,2,0,1,0,0,1,1,1,2,0,0,2,1,0,1,2,3,3,1,2
+STU_1609,Sachini Wickramasinghe,D/IT/24/1609,BSc (Hons) in Data Science & Business Analytics,4,2.94,2.62,2.57,2.94,3.55,3.76,2.19,1,3,3,5,1,Cloud / DevOps,0,2,0,0,0,0,1,1,0,1,0,0,3,1,0,3,2,2,1,2,0,0,1,0,0
+STU_1144,Chamari Herath,D/IT/24/1144,BSc (Hons) in Software Engineering,4,2.8,3.74,3.26,2.92,1.94,1.84,3.12,4,3,1,3,1,Software Engineering,2,2,2,2,2,0,1,1,0,0,0,1,0,0,1,0,0,0,2,2,1,0,1,2,2
+STU_1813,Methmi Ahamad,D/IT/24/1813,BSc (Hons) in Data Science & Business Analytics,3,3.07,2.49,3.18,3.08,3.16,2.49,4.0,3,1,1,3,5,UI/UX Design,0,1,0,0,0,0,1,0,0,2,1,1,1,1,0,0,1,0,0,0,3,3,2,2,2
+STU_1198,Dulan Gunawardena,D/IT/24/1198,BSc (Hons) in Computer Engineering,3,3.05,3.75,2.41,3.04,2.63,2.98,3.5,5,3,3,1,2,Software Engineering,3,1,3,0,2,1,0,1,1,0,1,0,0,1,0,0,0,0,0,0,1,0,1,0,0
+STU_1610,Buddhika Wickramasinghe,D/IT/24/1610,BSc (Hons) in Information Systems,3,2.92,4.0,3.1,2.0,3.96,3.31,1.14,1,1,2,5,2,Cloud / DevOps,0,1,0,1,0,2,1,0,0,1,0,1,3,0,0,2,3,3,1,1,0,0,0,0,1
+STU_1280,Kasun Perera,D/IT/24/1280,BSc (Hons) in Computer Science,4,2.72,3.17,2.74,2.79,2.19,2.37,3.05,2,5,2,1,1,Data Science / AI,0,1,1,1,1,3,1,3,3,2,0,0,1,1,0,0,0,2,1,1,0,1,0,1,0
+STU_1294,Praveen Bandara,D/IT/24/1294,BSc (Hons) in Data Science & Business Analytics,1,2.75,3.02,3.88,2.05,1.98,2.92,2.68,1,5,3,3,2,Data Science / AI,1,1,0,1,1,3,2,1,3,2,0,0,0,1,0,0,2,0,0,0,0,0,0,1,0
+STU_1401,Nimal Ahamad,D/IT/24/1401,BSc (Hons) in Information Systems,1,2.52,2.53,3.13,2.49,1.26,3.65,2.04,2,4,1,3,2,Data Science / AI,1,1,0,1,2,3,2,2,3,3,0,1,0,0,1,0,1,1,0,1,2,0,1,0,0
+STU_1123,Rashmi Alwis,D/IT/24/1123,BSc (Hons) in Information Technology,3,2.59,4.0,1.64,2.97,2.76,2.09,2.09,5,1,1,2,1,Software Engineering,2,2,2,0,2,0,0,1,0,0,0,2,1,0,0,2,1,0,0,0,0,1,2,0,1
+STU_1184,Kavindi Herath,D/IT/24/1184,BSc (Hons) in Data Science & Business Analytics,3,2.61,3.67,2.89,3.2,1.9,1.83,2.15,4,1,1,3,3,Software Engineering,3,2,1,1,2,1,1,1,0,0,0,2,1,1,1,1,2,1,1,1,0,1,0,0,1
+STU_1203,Sachini Karunaratne,D/IT/24/1203,BSc (Hons) in Information Technology,4,2.64,3.24,3.08,2.75,2.64,2.35,1.8,4,3,1,1,1,Software Engineering,2,2,2,1,3,0,0,1,0,1,0,0,2,0,0,0,0,1,0,0,0,1,1,1,1
+STU_1439,Sahan Fernando,D/IT/24/1439,BSc (Hons) in Computer Engineering,2,3.14,2.38,3.65,2.51,4.0,3.77,2.53,1,3,5,2,2,Cybersecurity,1,1,0,2,0,0,1,0,0,1,3,1,3,2,1,2,1,1,0,0,1,2,1,0,0
+STU_1247,Chamari Wickramasinghe,D/IT/24/1247,BSc (Hons) in Computer Science,3,2.72,3.25,4.0,1.88,2.76,2.49,1.94,3,4,1,1,2,Data Science / AI,0,1,1,1,1,3,2,2,3,3,1,0,0,0,0,0,1,2,1,0,0,1,1,1,2
+STU_1416,Supun Gunawardena,D/IT/24/1416,BSc (Hons) in Information Technology,3,3.01,3.99,3.11,2.34,2.5,3.24,2.86,3,5,3,3,3,Data Science / AI,0,0,0,1,1,3,1,3,2,3,0,2,0,1,0,0,1,0,2,0,0,1,0,0,2
+STU_1752,Chathuri Rathnayake,D/IT/24/1752,BSc (Hons) in Data Science & Business Analytics,2,2.64,2.92,2.35,3.12,1.91,1.78,3.78,3,1,2,3,5,UI/UX Design,0,0,1,1,1,0,1,0,0,1,1,1,2,1,0,2,0,1,0,0,3,3,3,1,2
+STU_1130,Anushka Rajapaksha,D/IT/24/1130,BSc (Hons) in Computer Engineering,3,2.72,3.85,1.89,3.67,2.87,1.35,2.66,4,3,3,1,1,Software Engineering,3,1,2,0,2,0,2,1,1,0,0,0,2,1,0,1,0,1,2,1,1,0,0,0,0
+STU_1403,Rashmi Gunawardena,D/IT/24/1403,BSc (Hons) in Information Technology,2,3.03,3.0,4.0,3.03,3.08,3.03,2.04,3,5,3,1,2,Data Science / AI,1,1,0,2,2,3,2,3,2,3,1,1,2,1,0,1,2,0,0,1,0,0,0,2,0
+STU_1670,Kavindi Rathnayake,D/IT/24/1670,BSc (Hons) in Computer Science,3,2.7,2.79,2.35,2.91,3.34,2.88,1.92,2,3,2,5,2,Cloud / DevOps,0,0,0,0,0,0,1,0,0,1,1,2,3,1,0,3,1,2,0,1,1,0,1,0,1
+STU_1659,Ravindu Wickramasinghe,D/IT/24/1659,BSc (Hons) in Data Science & Business Analytics,1,2.72,2.95,2.29,2.41,2.95,3.65,2.09,1,3,1,5,3,Cloud / DevOps,1,0,1,1,0,0,1,2,1,0,2,0,3,0,0,3,2,3,1,2,1,0,1,0,0
+STU_1774,Kavinda Rathnayake,D/IT/24/1774,BSc (Hons) in Software Engineering,1,2.88,2.27,2.41,3.43,2.95,2.4,3.82,3,3,3,3,5,UI/UX Design,0,2,0,0,0,1,1,1,0,2,2,0,1,2,0,0,2,0,0,1,3,3,3,1,2
+STU_1220,Sewwandi Mendis,D/IT/24/1220,BSc (Hons) in Information Systems,3,2.73,3.09,1.8,2.74,3.08,2.83,2.87,4,3,3,2,1,Software Engineering,3,1,2,1,2,1,1,0,0,0,1,2,1,0,0,0,0,1,2,0,0,1,0,2,0
+STU_1782,Chathuri Alwis,D/IT/24/1782,BSc (Hons) in Computer Science,4,2.67,1.97,2.91,2.57,2.78,2.28,3.53,2,1,1,1,5,UI/UX Design,2,0,0,0,1,1,2,1,0,0,1,1,2,2,0,1,1,0,0,2,3,3,3,1,3
+STU_1645,Praveen Rathnayake,D/IT/24/1645,BSc (Hons) in Information Systems,2,3.03,2.91,2.94,2.92,3.33,3.45,2.6,3,1,3,5,3,Cloud / DevOps,0,2,1,1,2,0,0,1,0,1,2,0,3,2,0,3,2,2,0,2,0,1,1,0,1
+STU_1779,Praveen Fonseka,D/IT/24/1779,BSc (Hons) in Computer Science,1,2.28,2.55,1.8,1.6,2.64,1.41,3.65,1,1,2,2,5,UI/UX Design,0,2,0,0,1,1,1,1,1,2,1,0,2,1,0,0,1,0,0,2,3,3,3,2,2
+STU_1625,Kavinda Alwis,D/IT/24/1625,BSc (Hons) in Computer Science,2,3.11,2.82,3.0,3.02,3.14,3.96,2.73,2,2,3,5,2,Cloud / DevOps,2,0,0,0,0,0,0,1,0,1,1,1,3,1,1,2,2,3,1,2,2,0,0,0,0
+STU_1715,Anushka Fernando,D/IT/24/1715,BSc (Hons) in Information Systems,1,2.83,2.21,2.74,2.78,2.91,2.98,3.35,1,1,2,4,2,Cloud / DevOps,0,2,0,0,1,0,0,2,0,0,0,1,2,1,0,3,2,3,0,1,0,2,0,1,1
+STU_1653,Chamari Rathnayake,D/IT/24/1653,BSc (Hons) in Information Technology,1,2.95,3.28,3.22,2.98,2.88,3.32,2.03,1,3,3,5,3,Cloud / DevOps,1,0,1,0,1,1,0,0,1,1,2,0,3,1,1,2,2,2,1,1,0,1,0,0,1
+STU_1387,Buddhika Rathnayake,D/IT/24/1387,BSc (Hons) in Information Technology,2,2.6,2.48,2.93,2.44,2.65,3.17,1.92,2,4,2,3,3,Data Science / AI,2,1,0,0,2,3,3,3,3,2,2,2,2,2,0,1,1,2,1,0,1,1,0,0,1
+STU_1825,Anushka Wickramasinghe,D/IT/24/1825,BSc (Hons) in Computer Engineering,3,2.86,2.81,2.14,2.77,3.38,2.38,3.67,2,1,2,3,5,UI/UX Design,0,1,0,0,0,1,0,0,0,0,0,1,0,0,1,1,1,0,1,0,3,3,3,2,2
+STU_1510,Nimal Jayasinghe,D/IT/24/1510,BSc (Hons) in Software Engineering,1,2.74,3.74,2.35,2.08,4.0,2.5,1.8,1,3,5,2,1,Cybersecurity,0,0,1,0,0,1,0,1,2,0,3,2,3,2,2,0,1,0,0,2,0,1,0,2,0
+STU_1268,Dulan Herath,D/IT/24/1268,BSc (Hons) in Data Science & Business Analytics,1,2.72,3.09,3.42,2.57,2.57,2.0,2.67,1,4,3,3,1,Data Science / AI,1,1,1,0,0,3,3,2,3,2,0,1,2,1,1,1,0,0,2,0,0,1,0,0,0
+STU_1810,Hasitha Fonseka,D/IT/24/1810,BSc (Hons) in Computer Engineering,4,2.99,3.74,2.95,2.96,1.51,2.76,4.0,3,1,1,1,4,UI/UX Design,0,1,2,2,1,1,0,2,0,0,2,0,1,0,1,0,1,0,0,1,3,2,3,2,2
+STU_1442,Ravindu Ahamad,D/IT/24/1442,BSc (Hons) in Information Technology,3,2.99,2.35,2.82,2.62,3.62,2.84,3.7,3,3,5,1,3,Cybersecurity,0,1,0,0,1,2,1,1,0,1,3,2,3,3,1,0,2,0,0,0,2,2,0,0,2
+STU_1497,Buddhika Senaratne,D/IT/24/1497,BSc (Hons) in Software Engineering,2,2.9,3.55,2.29,1.49,4.0,3.28,2.79,1,3,5,1,2,Cybersecurity,0,1,0,1,1,2,1,0,0,0,3,1,3,2,2,0,0,0,0,0,0,1,0,0,1
+STU_1113,Ishara Senaratne,D/IT/24/1113,BSc (Hons) in Information Systems,2,3.0,3.52,2.45,3.48,2.94,2.91,2.71,4,3,2,2,1,Software Engineering,2,2,2,1,3,0,2,0,1,0,0,0,1,0,0,0,0,2,2,0,1,2,0,1,2
+STU_1233,Nuwan Tharumila,D/IT/24/1233,BSc (Hons) in Information Systems,2,2.8,2.7,3.94,3.61,2.81,1.35,2.36,4,1,2,3,1,Software Engineering,2,3,3,1,2,0,1,2,0,1,1,0,2,1,0,0,0,0,1,1,0,2,0,0,0
+STU_1739,Sahan Tharumila,D/IT/24/1739,BSc (Hons) in Software Engineering,2,3.01,3.32,2.22,3.0,3.49,2.04,4.0,3,2,2,2,5,UI/UX Design,0,0,1,0,0,2,1,1,0,2,0,2,2,1,1,1,0,1,2,0,2,3,3,2,2
+STU_1608,Dulan Rajapaksha,D/IT/24/1608,BSc (Hons) in Data Science & Business Analytics,3,2.8,3.39,3.39,2.17,2.54,3.42,1.86,2,1,1,4,3,Cloud / DevOps,1,0,1,0,0,1,1,0,1,0,2,0,3,1,1,2,3,2,1,1,1,2,0,1,1
+STU_1374,Amal Tharumila,D/IT/24/1374,BSc (Hons) in Software Engineering,1,3.07,2.7,4.0,2.86,2.69,3.37,2.81,2,5,3,3,2,Data Science / AI,1,1,1,0,0,3,3,2,2,3,1,0,1,0,0,0,0,0,1,0,0,2,0,0,1
+STU_1234,Kavinda Tharumila,D/IT/24/1234,BSc (Hons) in Data Science & Business Analytics,2,2.89,3.81,3.13,3.46,2.08,2.44,2.44,5,3,3,2,1,Software Engineering,3,3,3,0,2,0,1,0,1,1,0,1,1,0,0,0,1,2,2,1,1,0,1,0,0
+STU_1671,Hasitha Fonseka,D/IT/24/1671,BSc (Hons) in Information Technology,1,2.69,2.12,2.4,2.44,3.06,3.35,2.76,2,2,3,5,2,Cloud / DevOps,0,2,1,2,0,1,2,2,2,0,0,0,3,0,1,3,2,2,0,1,0,0,0,2,2
+STU_1318,Dilshan Jayasinghe,D/IT/24/1318,BSc (Hons) in Data Science & Business Analytics,2,2.9,3.63,3.73,3.57,1.49,2.75,2.26,2,5,3,2,2,Data Science / AI,0,1,1,2,0,3,2,3,3,3,0,0,1,0,2,0,0,2,2,0,1,0,0,0,0
+STU_1649,Kavinda Alwis,D/IT/24/1649,BSc (Hons) in Data Science & Business Analytics,2,2.85,2.65,2.67,1.96,3.42,3.14,3.24,2,1,1,5,1,Cloud / DevOps,2,1,0,2,1,0,0,1,2,2,1,0,3,1,0,2,3,2,1,2,0,2,1,0,1
+STU_1411,Rashmi Fernando,D/IT/24/1411,BSc (Hons) in Computer Engineering,3,2.95,3.06,3.39,2.64,2.82,3.02,2.75,1,4,3,2,3,Data Science / AI,0,1,0,1,0,3,2,3,3,3,1,0,0,0,1,0,1,1,0,1,1,2,1,1,1
+STU_1762,Chamari Ahamad,D/IT/24/1762,BSc (Hons) in Information Systems,3,2.63,1.95,2.06,2.76,2.29,3.16,3.55,3,1,1,3,5,UI/UX Design,0,0,0,0,0,0,1,0,1,1,1,2,0,0,0,0,0,1,1,0,3,3,2,2,2
+STU_1359,Nimal Bandara,D/IT/24/1359,BSc (Hons) in Computer Engineering,4,2.95,3.58,3.17,3.05,1.84,2.66,3.39,3,5,1,2,2,Data Science / AI,2,0,1,1,0,2,3,2,3,3,2,0,1,0,2,1,1,1,0,1,2,0,1,2,0
+STU_1259,Nuwan Fernando,D/IT/24/1259,BSc (Hons) in Computer Science,3,3.0,3.3,3.26,2.59,3.05,3.01,2.76,2,5,2,3,1,Data Science / AI,0,0,2,0,0,3,2,1,2,3,0,0,1,0,1,2,2,0,0,0,0,0,2,2,2
+STU_1628,Sewwandi Fernando,D/IT/24/1628,BSc (Hons) in Data Science & Business Analytics,2,3.07,3.31,3.84,2.38,2.76,3.88,2.28,1,1,1,4,3,Cloud / DevOps,2,1,0,1,0,1,0,0,1,2,1,1,3,0,1,3,1,3,0,2,0,0,1,1,1
+STU_1633,Kavindi Fonseka,D/IT/24/1633,BSc (Hons) in Data Science & Business Analytics,1,2.86,3.15,2.0,2.75,3.34,3.55,2.36,3,1,1,5,2,Cloud / DevOps,1,2,0,0,1,0,1,1,1,2,2,2,3,2,0,3,3,3,0,2,0,0,0,0,1
+STU_1283,Dinithi Herath,D/IT/24/1283,BSc (Hons) in Data Science & Business Analytics,2,2.62,4.0,3.87,2.03,2.29,2.39,1.14,2,5,2,1,1,Data Science / AI,0,1,2,1,0,2,2,2,3,2,1,1,2,0,0,1,0,0,2,0,2,0,0,1,1
+STU_1377,Amal Bandara,D/IT/24/1377,BSc (Hons) in Computer Science,1,2.64,3.42,3.54,3.17,1.84,2.87,1.0,3,5,1,3,1,Data Science / AI,1,0,0,0,1,3,2,3,2,3,1,0,0,1,1,1,1,0,1,0,0,1,2,1,1
+STU_1385,Praveen Herath,D/IT/24/1385,BSc (Hons) in Software Engineering,4,2.9,3.36,4.0,2.13,2.8,2.58,2.52,1,5,1,2,2,Data Science / AI,2,1,1,0,0,3,2,1,2,3,1,1,0,1,0,0,0,0,1,2,0,0,0,1,0
+STU_1225,Sahan Herath,D/IT/24/1225,BSc (Hons) in Software Engineering,4,2.4,3.58,1.81,2.77,1.89,2.12,2.23,5,3,3,3,3,Software Engineering,3,2,1,1,2,0,1,0,0,0,0,1,0,1,0,2,0,2,1,2,0,1,0,0,0
+STU_1808,Dinithi Perera,D/IT/24/1808,BSc (Hons) in Data Science & Business Analytics,4,3.05,3.41,2.54,3.24,2.43,3.03,3.69,3,3,2,3,5,UI/UX Design,1,1,1,0,0,1,0,0,2,2,2,2,2,1,0,2,2,0,0,0,3,3,2,2,1
+STU_1696,Supun Alwis,D/IT/24/1696,BSc (Hons) in Computer Engineering,1,3.09,2.76,3.19,2.64,3.42,3.62,2.9,2,1,2,4,2,Cloud / DevOps,0,0,0,2,0,2,2,0,0,2,0,0,3,2,1,2,3,2,0,1,1,1,0,1,0
+STU_1473,Dinithi Dissanayake,D/IT/24/1473,BSc (Hons) in Information Systems,4,2.86,2.4,3.48,2.51,3.87,3.02,1.88,3,2,5,3,3,Cybersecurity,1,0,1,1,1,0,0,0,0,0,2,3,3,1,2,2,1,1,2,2,0,1,0,1,2
+STU_1348,Hasitha Herath,D/IT/24/1348,BSc (Hons) in Data Science & Business Analytics,3,3.2,3.34,3.31,3.49,2.32,3.73,2.97,2,5,2,1,3,Data Science / AI,0,0,0,0,0,3,3,2,3,2,1,1,0,1,1,1,2,2,1,1,2,0,0,0,2
+STU_1506,Dinithi Gunawardena,D/IT/24/1506,BSc (Hons) in Information Systems,3,2.88,2.91,2.26,3.15,3.76,3.18,1.99,2,3,5,1,3,Cybersecurity,2,1,1,0,0,2,1,1,2,1,3,1,2,3,1,1,0,0,0,0,2,0,1,0,0
+STU_1640,Rashmi Alwis,D/IT/24/1640,BSc (Hons) in Information Systems,3,3.22,3.28,3.17,3.3,4.0,3.05,2.51,2,2,1,5,2,Cloud / DevOps,0,2,1,1,1,2,0,0,1,1,1,0,3,0,1,3,2,2,0,2,1,0,0,0,2
+STU_1839,Chathuri Herath,D/IT/24/1839,BSc (Hons) in Data Science & Business Analytics,2,2.81,1.95,1.85,3.09,3.95,3.03,3.0,2,2,2,2,5,UI/UX Design,1,0,0,0,0,0,0,1,0,1,1,0,1,0,1,0,0,1,0,0,3,3,3,2,1
+STU_1788,Hasitha Fonseka,D/IT/24/1788,BSc (Hons) in Computer Engineering,3,2.93,2.21,3.27,3.61,2.63,2.44,3.42,2,3,1,1,5,UI/UX Design,0,1,1,0,2,0,1,0,0,0,1,0,1,2,1,0,0,0,0,2,3,3,3,2,1
+STU_1767,Methmi Silva,D/IT/24/1767,BSc (Hons) in Information Technology,2,2.59,2.76,2.33,2.22,2.26,2.95,3.0,2,3,2,1,4,UI/UX Design,2,0,2,0,1,1,0,0,2,0,0,1,0,1,0,2,2,1,1,1,3,3,3,2,3
+STU_1620,Akila Mendis,D/IT/24/1620,BSc (Hons) in Information Technology,2,3.13,3.08,3.02,2.28,3.12,3.6,3.7,3,2,1,5,1,Cloud / DevOps,0,0,1,1,2,0,0,2,0,1,0,0,3,2,0,3,2,3,2,1,1,0,0,1,0
+STU_1726,Amal Jayasinghe,D/IT/24/1726,BSc (Hons) in Computer Engineering,3,2.98,3.84,2.67,2.65,2.63,2.63,3.47,3,3,3,3,5,UI/UX Design,0,0,0,0,1,1,1,0,0,0,1,1,2,0,2,0,1,0,0,2,3,3,2,1,1
+STU_1646,Dilshan Perera,D/IT/24/1646,BSc (Hons) in Software Engineering,2,2.69,2.4,2.91,1.94,2.6,3.65,2.62,3,3,3,4,3,Cloud / DevOps,2,2,0,1,0,1,0,2,1,0,1,0,3,0,1,2,2,3,1,2,0,0,0,1,2
+STU_1719,Tharindu Fernando,D/IT/24/1719,BSc (Hons) in Information Systems,4,2.72,3.3,2.51,2.35,3.83,2.7,1.63,1,1,1,5,2,Cloud / DevOps,1,1,0,0,0,0,2,2,1,1,0,0,2,1,1,3,1,2,1,1,1,0,0,0,1
+STU_1557,Methmi Perera,D/IT/24/1557,BSc (Hons) in Data Science & Business Analytics,4,2.83,2.65,2.89,2.72,3.44,2.63,2.65,2,1,5,1,3,Cybersecurity,1,1,2,0,0,0,2,1,1,2,3,3,3,2,2,1,1,2,1,0,1,1,1,0,0
+STU_1812,Dulan Alwis,D/IT/24/1812,BSc (Hons) in Information Technology,3,2.77,2.54,3.13,2.81,2.44,1.7,4.0,1,1,1,1,5,UI/UX Design,1,2,0,0,1,0,0,2,1,0,0,0,1,0,2,1,0,0,1,0,2,2,3,1,3
+STU_1578,Dinithi Rajapaksha,D/IT/24/1578,BSc (Hons) in Computer Engineering,3,2.77,2.8,3.13,1.29,3.3,3.67,2.39,3,3,5,2,1,Cybersecurity,1,1,0,0,1,0,1,0,2,1,3,2,3,1,2,1,0,0,0,1,1,1,1,1,0
+STU_1086,Methmi Jayasinghe,D/IT/24/1086,BSc (Hons) in Information Systems,4,2.93,3.86,3.27,4.0,2.63,2.33,1.5,5,3,2,2,2,Software Engineering,3,2,2,0,3,1,1,1,1,0,1,0,2,2,0,0,1,0,2,0,0,2,1,1,0
+STU_1243,Rashmi Fernando,D/IT/24/1243,BSc (Hons) in Computer Engineering,3,2.76,3.26,3.45,2.76,2.06,2.24,2.77,3,5,1,2,2,Data Science / AI,2,0,0,2,2,3,2,3,3,3,1,0,0,0,1,2,1,2,0,1,1,1,1,1,2
+STU_1160,Praveen Senaratne,D/IT/24/1160,BSc (Hons) in Computer Engineering,2,2.9,3.67,1.77,3.0,2.58,3.01,3.33,5,1,3,3,1,Software Engineering,3,1,3,0,2,0,1,0,1,0,0,1,1,2,1,1,0,0,0,1,1,0,1,1,0
+STU_1525,Buddhika Alwis,D/IT/24/1525,BSc (Hons) in Software Engineering,4,2.83,3.52,2.06,2.81,2.92,3.44,2.23,3,3,5,1,1,Cybersecurity,0,0,2,1,1,0,0,1,2,1,3,3,3,2,1,0,0,0,0,2,0,0,1,1,1
+STU_1036,Maleesha Tharumila,D/IT/24/1036,BSc (Hons) in Information Technology,3,2.79,3.61,2.76,2.8,2.23,2.17,3.19,4,2,3,2,3,Software Engineering,3,2,1,0,3,2,2,0,1,1,0,1,0,0,0,0,0,0,2,1,2,0,0,1,0
+STU_1541,Maleesha Jayasinghe,D/IT/24/1541,BSc (Hons) in Information Technology,2,3.01,3.56,2.47,2.37,3.82,2.8,3.06,2,2,5,1,2,Cybersecurity,1,1,1,0,1,0,1,0,1,1,3,2,2,1,1,2,0,0,2,2,2,0,1,1,1
+STU_1171,Supun Perera,D/IT/24/1171,BSc (Hons) in Information Technology,2,3.35,3.47,3.27,3.45,2.91,3.33,3.67,4,2,1,1,3,Software Engineering,3,2,1,1,2,1,0,2,0,0,0,0,1,0,0,2,0,1,0,0,1,1,0,2,2
+STU_1655,Sewwandi Bandara,D/IT/24/1655,BSc (Hons) in Information Systems,2,2.77,2.57,2.59,3.22,3.44,2.97,1.86,2,1,2,5,2,Cloud / DevOps,1,0,0,1,2,2,0,2,1,1,0,1,3,1,0,2,2,2,0,2,0,1,1,0,2
+STU_1728,Dilshan Rathnayake,D/IT/24/1728,BSc (Hons) in Information Systems,3,2.95,2.4,2.53,2.86,3.62,2.36,3.94,2,1,1,1,5,UI/UX Design,2,1,0,0,0,2,0,2,2,1,0,0,1,1,2,0,1,1,0,1,3,3,3,1,3
+STU_1755,Shanika Tharumila,D/IT/24/1755,BSc (Hons) in Computer Engineering,4,2.38,3.35,1.63,2.75,1.59,1.74,3.22,3,2,2,2,5,UI/UX Design,1,2,0,1,0,1,1,0,1,0,0,2,2,0,1,0,0,2,0,0,3,3,2,1,1
+STU_1801,Dulan Bandara,D/IT/24/1801,BSc (Hons) in Information Technology,1,2.51,1.81,2.37,2.23,2.36,2.67,3.61,2,1,2,2,5,UI/UX Design,1,0,0,1,0,0,0,1,0,0,1,2,0,0,1,0,1,1,0,0,2,3,2,2,3
+STU_1096,Dinithi Rajapaksha,D/IT/24/1096,BSc (Hons) in Software Engineering,2,2.47,3.22,2.06,2.74,2.28,1.97,2.56,5,1,1,1,3,Software Engineering,3,1,2,1,3,2,1,1,0,1,2,1,0,0,0,0,0,1,1,0,1,0,0,0,1
+STU_1564,Ravindu Dissanayake,D/IT/24/1564,BSc (Hons) in Computer Science,3,2.57,2.45,1.89,3.01,2.82,3.42,1.85,3,3,5,2,1,Cybersecurity,0,1,1,1,0,1,1,0,0,1,3,2,3,1,1,1,1,0,0,1,0,1,1,0,1
+STU_1241,Supun Ahamad,D/IT/24/1241,BSc (Hons) in Computer Science,1,2.66,3.46,3.35,2.19,3.37,1.33,2.25,1,4,1,2,1,Data Science / AI,1,1,0,2,2,3,2,1,2,3,0,1,2,0,0,2,0,1,0,0,2,0,0,0,2
+STU_1575,Chathuri Gunawardena,D/IT/24/1575,BSc (Hons) in Software Engineering,3,3.13,3.04,3.18,2.51,3.79,3.55,2.74,2,1,5,1,1,Cybersecurity,2,1,1,2,1,2,0,2,1,0,2,2,3,2,1,2,1,1,0,1,1,1,1,1,0
+STU_1691,Kavinda Karunaratne,D/IT/24/1691,BSc (Hons) in Information Systems,3,3.06,4.0,2.94,2.55,3.07,3.78,2.03,2,3,1,5,1,Cloud / DevOps,0,0,0,1,0,2,0,0,1,0,2,1,2,2,0,3,1,2,0,2,0,1,0,0,0
+STU_1461,Dulan Senaratne,D/IT/24/1461,BSc (Hons) in Software Engineering,2,2.9,1.71,2.52,3.01,4.0,3.18,3.0,1,1,5,1,2,Cybersecurity,1,0,1,1,0,1,0,2,1,1,3,1,3,3,2,1,0,2,1,1,2,0,0,0,1
+STU_1554,Sahan Alwis,D/IT/24/1554,BSc (Hons) in Computer Engineering,3,2.83,2.35,2.47,2.34,2.7,3.52,3.58,3,1,5,2,2,Cybersecurity,0,0,1,1,0,1,1,1,1,2,3,1,2,1,1,0,1,0,1,0,2,1,1,2,2
+STU_1745,Dilshan Tharumila,D/IT/24/1745,BSc (Hons) in Information Systems,1,2.65,2.58,2.78,2.65,1.71,2.3,3.87,3,2,1,2,5,UI/UX Design,0,1,0,1,0,1,1,0,1,1,1,0,2,1,0,0,0,0,2,0,3,3,3,2,1
+STU_1207,Sanduni Bandara,D/IT/24/1207,BSc (Hons) in Information Systems,3,2.84,3.38,2.52,3.42,2.86,2.73,2.11,5,2,3,3,3,Software Engineering,3,3,3,0,3,0,1,2,1,1,0,0,0,1,1,1,0,0,1,0,1,1,1,0,2
+STU_1393,Hasitha Ahamad,D/IT/24/1393,BSc (Hons) in Information Technology,4,3.08,3.14,3.67,2.44,2.79,2.97,3.48,3,5,1,3,3,Data Science / AI,2,0,0,1,2,2,1,3,2,2,0,0,1,0,1,0,1,2,1,0,1,0,2,0,1
+STU_1398,Kavindi Tharumila,D/IT/24/1398,BSc (Hons) in Data Science & Business Analytics,4,2.55,2.3,4.0,2.56,2.57,2.05,1.83,2,4,3,2,3,Data Science / AI,1,1,0,1,0,3,1,3,2,3,2,2,0,0,0,1,2,0,1,1,0,0,0,0,1
+STU_1721,Sewwandi Karunaratne,D/IT/24/1721,BSc (Hons) in Software Engineering,2,3.08,3.42,2.9,3.22,2.38,3.16,3.4,2,2,2,5,2,Cloud / DevOps,1,1,1,0,0,1,1,0,0,1,1,1,3,0,0,3,1,3,0,2,0,1,0,0,1
+STU_1218,Hasitha Fonseka,D/IT/24/1218,BSc (Hons) in Data Science & Business Analytics,2,2.04,2.88,1.5,2.67,1.59,1.69,1.89,5,3,3,1,2,Software Engineering,2,2,3,0,3,2,0,1,2,2,0,0,0,1,0,0,1,0,0,1,1,1,0,1,1
+STU_1005,Kavinda Dissanayake,D/IT/24/1005,BSc (Hons) in Information Technology,3,3.07,3.84,2.66,3.4,2.36,2.89,3.26,4,3,2,1,3,Software Engineering,3,2,3,0,3,2,0,0,0,0,0,1,1,0,1,1,1,0,1,2,0,2,0,0,1
+STU_1643,Anushka Senaratne,D/IT/24/1643,BSc (Hons) in Software Engineering,4,2.98,2.78,3.07,3.09,2.45,3.54,2.96,1,1,1,4,1,Cloud / DevOps,1,0,1,1,0,0,0,2,1,0,0,1,3,1,0,3,1,3,0,2,2,1,1,0,0
+STU_1761,Sachini Gunawardena,D/IT/24/1761,BSc (Hons) in Computer Engineering,1,2.35,1.55,2.77,1.84,1.37,2.75,3.82,2,2,2,1,5,UI/UX Design,0,0,0,1,1,0,1,0,0,2,2,2,1,0,1,1,0,0,0,0,3,3,3,2,2
+STU_1613,Sewwandi Jayasinghe,D/IT/24/1613,BSc (Hons) in Data Science & Business Analytics,4,2.69,2.71,3.22,2.3,2.76,3.36,1.8,1,3,3,5,2,Cloud / DevOps,0,0,0,1,1,0,1,0,0,1,0,0,2,0,0,3,3,3,0,1,0,1,0,1,0
+STU_1547,Chamari Senaratne,D/IT/24/1547,BSc (Hons) in Computer Science,3,2.77,3.27,2.34,2.44,2.79,2.84,2.92,1,3,4,1,1,Cybersecurity,2,0,0,0,1,0,1,0,0,1,3,2,2,2,1,2,2,0,0,0,2,1,0,2,1
+STU_1684,Shanika Bandara,D/IT/24/1684,BSc (Hons) in Computer Engineering,3,3.18,3.82,4.0,2.8,2.88,3.09,2.51,2,3,3,5,3,Cloud / DevOps,1,1,0,2,0,1,2,0,2,2,2,0,3,1,0,3,2,3,0,2,1,2,0,0,1
+STU_1099,Kasun Gunawardena,D/IT/24/1099,BSc (Hons) in Data Science & Business Analytics,2,2.94,3.44,2.64,3.35,2.41,3.22,2.55,5,1,3,3,2,Software Engineering,2,1,1,1,3,0,1,1,1,0,1,1,1,0,2,1,0,0,2,0,2,1,1,0,0
+STU_1574,Hasitha Herath,D/IT/24/1574,BSc (Hons) in Computer Engineering,3,2.63,2.79,2.25,2.84,3.39,2.77,1.78,1,2,4,3,1,Cybersecurity,0,0,1,0,1,1,1,0,1,1,2,1,3,3,1,0,0,2,1,1,2,1,1,0,1
+STU_1407,Sewwandi Jayasinghe,D/IT/24/1407,BSc (Hons) in Computer Engineering,4,2.93,3.2,4.0,2.99,2.83,2.18,2.35,3,5,3,3,2,Data Science / AI,1,1,0,1,1,3,2,2,2,2,0,1,0,0,2,1,0,1,2,1,1,1,0,0,1
+STU_1503,Hasitha Alwis,D/IT/24/1503,BSc (Hons) in Data Science & Business Analytics,1,2.72,3.2,1.54,1.9,3.53,3.92,2.21,1,3,5,2,1,Cybersecurity,1,1,0,0,0,0,1,2,0,0,3,3,3,1,1,1,0,2,1,0,0,1,0,1,0
+STU_1048,Anushka Karunaratne,D/IT/24/1048,BSc (Hons) in Computer Engineering,2,3.15,3.99,2.08,4.0,3.04,3.04,2.73,5,3,3,1,2,Software Engineering,2,2,1,1,3,1,0,1,1,0,0,2,1,1,2,1,1,0,0,0,1,1,2,0,1
+STU_1033,Ravindu Silva,D/IT/24/1033,BSc (Hons) in Computer Science,3,2.96,3.91,3.16,3.48,2.37,2.83,2.02,5,3,1,3,3,Software Engineering,2,2,1,0,3,0,1,0,1,0,0,1,1,1,1,1,0,0,2,1,1,0,0,1,2
+STU_1201,Methmi Alwis,D/IT/24/1201,BSc (Hons) in Computer Science,3,2.65,3.79,2.03,2.56,2.59,2.17,2.73,4,2,1,1,1,Software Engineering,3,3,3,2,3,0,1,1,1,0,0,0,0,1,0,0,0,0,0,1,0,1,0,0,2
+STU_1135,Shanika Gunawardena,D/IT/24/1135,BSc (Hons) in Software Engineering,2,2.57,3.11,2.84,3.38,2.06,2.39,1.64,5,2,3,3,3,Software Engineering,3,3,2,2,3,1,1,1,1,1,2,0,0,0,1,1,2,1,1,2,0,1,0,1,1
+STU_1028,Anushka Rajapaksha,D/IT/24/1028,BSc (Hons) in Computer Science,1,2.84,3.16,2.68,3.19,3.33,1.58,3.12,5,2,2,3,3,Software Engineering,2,2,1,2,2,0,0,0,0,1,1,1,0,1,0,0,1,2,0,0,0,0,1,0,1
+STU_1747,Kavindi Jayasinghe,D/IT/24/1747,BSc (Hons) in Data Science & Business Analytics,3,2.65,2.72,3.02,2.21,2.42,1.78,3.77,1,1,2,3,5,UI/UX Design,1,0,1,0,1,0,0,1,1,1,0,1,0,1,0,0,0,0,0,1,3,3,3,2,2
+STU_1231,Anushka Dissanayake,D/IT/24/1231,BSc (Hons) in Information Technology,4,2.65,2.79,3.23,3.47,2.02,1.7,2.72,5,3,3,1,3,Software Engineering,3,3,1,1,2,1,2,2,0,0,2,0,1,0,0,0,0,2,0,2,2,0,1,0,1
+STU_1490,Kavindi Wickramasinghe,D/IT/24/1490,BSc (Hons) in Computer Engineering,2,3.32,3.24,2.93,3.37,3.6,3.87,2.93,3,3,5,1,2,Cybersecurity,0,1,0,1,1,1,1,0,0,0,2,2,3,1,2,0,0,0,0,0,0,1,1,1,0
+STU_1379,Sewwandi Bandara,D/IT/24/1379,BSc (Hons) in Computer Science,2,2.78,3.12,3.67,2.96,1.89,2.02,3.0,1,5,2,3,1,Data Science / AI,0,2,0,0,0,3,2,3,2,3,1,1,1,1,0,0,1,0,0,2,0,1,0,1,0
+STU_1289,Sachini Dissanayake,D/IT/24/1289,BSc (Hons) in Software Engineering,2,2.7,2.54,3.63,2.56,3.12,2.52,1.83,3,5,2,2,2,Data Science / AI,0,0,0,2,1,3,1,2,2,3,2,0,0,1,1,0,0,2,1,1,0,0,0,0,0
+STU_1419,Sewwandi Perera,D/IT/24/1419,BSc (Hons) in Information Technology,2,2.84,3.39,2.83,3.3,2.28,3.0,2.23,2,4,1,2,2,Data Science / AI,1,1,0,2,0,3,2,2,3,2,1,0,0,1,0,1,1,1,1,1,2,0,1,0,0
+STU_1675,Shanika Wickramasinghe,D/IT/24/1675,BSc (Hons) in Computer Science,2,2.51,2.21,2.59,2.61,2.63,3.31,1.74,3,1,3,4,2,Cloud / DevOps,1,1,1,0,0,0,0,2,2,0,1,0,3,1,0,2,1,2,0,2,1,1,0,0,1
+STU_1392,Kavinda Gunawardena,D/IT/24/1392,BSc (Hons) in Data Science & Business Analytics,2,2.94,3.61,4.0,2.11,1.84,3.01,3.11,1,5,3,2,2,Data Science / AI,2,1,0,0,1,3,3,2,3,2,0,0,2,1,1,1,1,1,1,2,0,2,0,1,0
+STU_1593,Sewwandi Ahamad,D/IT/24/1593,BSc (Hons) in Computer Science,1,2.69,2.99,1.23,2.72,2.43,4.0,2.78,2,2,1,5,2,Cloud / DevOps,1,0,2,0,0,1,2,2,0,1,0,0,2,0,0,3,2,2,0,1,0,1,1,1,0
+STU_1499,Methmi Jayasinghe,D/IT/24/1499,BSc (Hons) in Information Systems,3,2.89,2.15,2.19,2.81,3.86,3.64,2.68,2,3,5,3,2,Cybersecurity,0,1,0,1,2,0,0,0,0,1,3,1,2,1,1,1,1,0,1,1,0,1,1,1,1
+STU_1139,Buddhika Ahamad,D/IT/24/1139,BSc (Hons) in Computer Science,3,2.79,4.0,3.27,2.74,2.41,2.76,1.55,4,1,1,2,1,Software Engineering,2,2,1,1,3,1,0,1,0,1,1,0,0,1,2,1,0,0,2,1,1,2,2,1,0
+STU_1063,Chamari Alwis,D/IT/24/1063,BSc (Hons) in Information Systems,3,2.81,3.52,1.96,4.0,3.08,1.78,2.49,5,3,3,2,1,Software Engineering,3,2,2,1,3,0,0,0,1,0,0,1,1,0,1,0,0,1,0,2,0,1,0,1,1
+STU_1472,Sewwandi Dissanayake,D/IT/24/1472,BSc (Hons) in Information Systems,1,2.8,3.32,1.81,2.8,3.13,3.17,2.55,3,1,5,3,1,Cybersecurity,1,2,1,0,1,1,1,0,0,0,2,2,3,2,1,0,0,2,1,1,0,1,2,0,1
+STU_1648,Ishara Ahamad,D/IT/24/1648,BSc (Hons) in Computer Engineering,2,3.03,2.76,2.64,2.43,3.87,3.33,3.12,3,1,2,5,2,Cloud / DevOps,2,1,1,2,1,2,0,1,0,1,2,0,2,1,0,2,2,3,0,1,0,0,0,0,0
+STU_1129,Chamari Herath,D/IT/24/1129,BSc (Hons) in Computer Science,3,2.53,2.87,2.41,3.26,1.75,2.9,1.99,4,2,2,3,1,Software Engineering,2,2,2,1,2,0,1,0,1,0,0,0,1,2,2,1,0,1,1,0,1,0,0,0,0
+STU_1829,Chamari Herath,D/IT/24/1829,BSc (Hons) in Computer Engineering,4,2.75,3.15,3.29,3.2,1.86,1.0,4.0,1,1,1,3,5,UI/UX Design,0,1,2,2,2,1,0,1,0,1,0,1,0,0,1,1,0,2,0,2,3,3,3,2,2
+STU_1521,Shanika Ahamad,D/IT/24/1521,BSc (Hons) in Computer Science,4,2.91,2.96,2.33,2.96,3.29,3.41,2.51,2,1,5,1,1,Cybersecurity,1,0,0,1,2,1,0,0,1,1,2,1,2,1,1,1,0,0,0,1,0,1,0,0,0
+STU_1065,Praveen Herath,D/IT/24/1065,BSc (Hons) in Software Engineering,1,2.75,4.0,2.62,2.71,2.64,1.69,2.82,4,3,3,3,2,Software Engineering,3,1,3,1,2,0,1,0,2,0,0,1,0,0,1,1,1,0,1,0,1,1,1,0,0
+STU_1015,Ishara Gunawardena,D/IT/24/1015,BSc (Hons) in Computer Science,2,2.53,3.53,2.94,3.12,1.42,1.52,2.63,5,1,2,2,2,Software Engineering,3,1,3,0,2,0,0,0,2,0,1,0,1,1,1,0,0,0,2,1,2,0,1,2,0
+STU_1157,Akila Senaratne,D/IT/24/1157,BSc (Hons) in Computer Science,2,2.51,3.64,1.27,3.03,1.82,2.25,3.05,4,2,3,1,2,Software Engineering,3,2,2,1,2,0,2,1,0,0,0,1,1,1,2,0,0,2,1,0,1,2,1,1,1
+STU_1041,Sahan Wickramasinghe,D/IT/24/1041,BSc (Hons) in Software Engineering,1,3.05,3.68,3.08,2.79,2.97,2.44,3.33,5,1,2,3,1,Software Engineering,3,2,3,1,2,0,0,0,0,0,0,0,2,1,1,0,0,1,0,0,1,1,0,0,1
+STU_1493,Shanika Mendis,D/IT/24/1493,BSc (Hons) in Software Engineering,2,3.33,2.61,2.9,3.75,3.85,3.67,3.23,1,1,4,2,1,Cybersecurity,0,0,1,0,1,1,2,0,0,0,2,3,3,2,1,2,0,2,0,1,1,1,0,1,2
+STU_1380,Supun Gunawardena,D/IT/24/1380,BSc (Hons) in Computer Engineering,4,2.55,2.3,3.26,2.29,2.43,2.04,2.99,3,5,1,1,1,Data Science / AI,1,0,1,2,0,3,2,2,3,2,0,0,2,0,0,2,0,1,0,1,2,0,1,2,2
+STU_1188,Sanduni Wickramasinghe,D/IT/24/1188,BSc (Hons) in Software Engineering,2,2.74,3.94,2.3,3.35,2.5,2.25,2.1,5,1,3,1,3,Software Engineering,2,2,2,0,2,1,2,1,0,0,0,0,0,1,0,1,0,2,1,1,0,2,1,1,1
+STU_1217,Ravindu Herath,D/IT/24/1217,BSc (Hons) in Information Technology,4,2.53,3.54,2.38,3.09,3.14,1.34,1.71,5,3,1,2,1,Software Engineering,3,2,2,0,3,0,1,0,0,1,0,2,2,0,0,1,2,1,0,2,0,1,2,0,2
+STU_1053,Maleesha Gunawardena,D/IT/24/1053,BSc (Hons) in Data Science & Business Analytics,3,2.98,3.48,2.9,3.34,2.44,4.0,1.7,5,3,3,1,2,Software Engineering,3,2,3,0,2,0,1,0,2,2,0,0,2,0,2,1,0,0,0,1,0,1,0,1,2
+STU_1338,Nuwan Senaratne,D/IT/24/1338,BSc (Hons) in Software Engineering,3,3.01,2.6,3.54,3.72,3.06,2.47,2.66,2,5,3,3,2,Data Science / AI,1,2,0,1,1,3,1,2,2,3,2,2,0,0,0,1,1,2,1,2,1,0,1,0,0
+STU_1749,Dinithi Alwis,D/IT/24/1749,BSc (Hons) in Software Engineering,3,2.72,3.83,2.42,2.28,2.36,1.84,3.61,3,3,2,2,4,UI/UX Design,0,1,1,2,0,1,1,2,0,0,0,0,1,1,0,0,0,0,2,2,3,2,2,2,2
+STU_1720,Sewwandi Rajapaksha,D/IT/24/1720,BSc (Hons) in Information Systems,1,2.74,1.97,3.32,2.15,3.75,3.77,1.46,3,3,3,5,2,Cloud / DevOps,0,1,0,2,2,1,0,0,0,0,0,0,3,0,2,3,1,2,2,2,0,0,1,0,1
+STU_1725,Ravindu Perera,D/IT/24/1725,BSc (Hons) in Computer Science,2,2.75,2.27,2.86,2.9,2.32,2.49,3.63,2,2,2,2,4,UI/UX Design,1,0,2,2,2,1,0,1,0,0,0,0,1,0,0,0,1,1,0,1,3,3,2,1,3
+STU_1296,Kasun Jayasinghe,D/IT/24/1296,BSc (Hons) in Data Science & Business Analytics,3,2.68,3.01,3.19,2.81,2.47,1.0,3.56,1,5,2,3,1,Data Science / AI,0,0,1,0,2,3,2,2,3,3,0,1,0,1,0,2,1,0,1,1,0,0,0,1,1
+STU_1702,Anushka Tharumila,D/IT/24/1702,BSc (Hons) in Information Technology,2,3.09,3.02,2.86,2.84,2.93,3.69,3.2,1,3,3,5,3,Cloud / DevOps,0,1,0,0,0,1,2,1,1,1,0,1,3,0,0,3,1,3,0,2,0,2,1,0,0
+STU_1252,Kasun Fernando,D/IT/24/1252,BSc (Hons) in Information Technology,3,2.72,2.54,3.94,2.57,2.23,2.28,2.74,2,4,3,1,3,Data Science / AI,0,2,0,2,0,2,3,2,3,3,0,1,0,0,1,2,0,0,2,0,2,0,2,0,2
+STU_1727,Rashmi Karunaratne,D/IT/24/1727,BSc (Hons) in Computer Science,2,2.65,2.54,1.96,2.28,2.23,3.08,3.79,3,2,3,3,5,UI/UX Design,0,0,1,1,2,2,1,1,1,1,0,0,0,1,1,0,1,0,2,1,3,3,3,1,2
+STU_1462,Sachini Herath,D/IT/24/1462,BSc (Hons) in Data Science & Business Analytics,3,3.04,1.84,2.28,3.29,3.74,4.0,3.08,2,1,4,1,3,Cybersecurity,2,0,0,1,1,0,0,0,0,0,3,2,3,2,2,0,0,1,1,0,1,2,1,1,2
+STU_1456,Ravindu Mendis,D/IT/24/1456,BSc (Hons) in Computer Science,3,2.91,3.62,2.22,2.29,3.98,2.66,2.68,1,1,4,3,2,Cybersecurity,0,1,0,1,0,0,0,0,1,1,2,1,2,2,1,1,2,1,0,1,2,0,2,1,0
+STU_1848,Nimal Silva,D/IT/24/1848,BSc (Hons) in Software Engineering,2,2.9,2.77,2.78,2.21,3.19,3.14,3.28,1,1,1,2,5,UI/UX Design,2,1,0,0,0,0,2,0,0,1,2,0,0,0,0,0,1,0,0,0,3,2,3,2,3
+STU_1270,Sewwandi Ahamad,D/IT/24/1270,BSc (Hons) in Information Technology,2,2.77,3.16,3.57,1.88,2.95,2.57,2.5,3,5,2,3,2,Data Science / AI,0,1,0,1,2,2,2,3,3,2,0,0,0,0,0,1,2,0,0,0,2,1,0,0,0
+STU_1202,Nuwan Wickramasinghe,D/IT/24/1202,BSc (Hons) in Computer Science,3,2.84,3.48,3.19,2.42,3.22,2.42,2.28,5,2,2,3,1,Software Engineering,3,1,1,0,3,0,0,0,0,1,0,1,1,0,0,1,1,0,2,0,0,0,2,1,1
+STU_1162,Hasitha Fernando,D/IT/24/1162,BSc (Hons) in Software Engineering,2,2.97,2.79,2.69,3.2,2.94,3.0,3.18,4,3,1,1,3,Software Engineering,3,3,2,1,2,1,0,1,1,0,1,0,0,2,2,1,2,1,0,0,2,0,1,1,1
+STU_1556,Anushka Rajapaksha,D/IT/24/1556,BSc (Hons) in Data Science & Business Analytics,2,2.82,3.33,1.87,2.63,3.62,3.35,2.1,2,2,5,1,2,Cybersecurity,0,0,1,0,0,0,0,2,1,0,3,2,3,3,1,0,1,1,1,0,1,0,0,1,1
+STU_1730,Sanduni Fernando,D/IT/24/1730,BSc (Hons) in Information Systems,3,2.68,2.43,2.46,1.86,1.95,3.41,4.0,1,1,3,1,4,UI/UX Design,2,1,0,2,0,1,0,0,1,0,0,2,0,1,0,2,2,0,1,1,2,3,3,1,2
+STU_1402,Buddhika Perera,D/IT/24/1402,BSc (Hons) in Computer Engineering,2,2.99,2.89,3.13,3.3,2.62,2.71,3.31,1,4,3,3,2,Data Science / AI,0,0,1,0,1,2,2,1,3,3,2,2,1,1,1,0,0,0,2,0,2,1,1,0,0
+STU_1703,Maleesha Jayasinghe,D/IT/24/1703,BSc (Hons) in Computer Engineering,4,3.15,2.85,2.92,3.11,3.12,3.25,3.67,2,2,2,5,1,Cloud / DevOps,0,0,0,1,1,0,0,1,0,0,1,0,2,1,0,2,2,2,1,1,1,1,2,2,1
+STU_1477,Shanika Mendis,D/IT/24/1477,BSc (Hons) in Software Engineering,1,3.14,3.71,1.96,3.23,2.96,3.34,3.62,2,3,5,2,3,Cybersecurity,1,1,0,1,0,2,0,1,0,2,3,3,3,2,1,0,1,0,1,1,1,1,0,1,1
+STU_1772,Amal Fernando,D/IT/24/1772,BSc (Hons) in Information Systems,3,2.88,3.09,2.58,2.46,2.66,2.75,3.72,2,2,1,2,5,UI/UX Design,1,1,0,0,0,2,2,0,0,1,0,2,1,0,0,1,0,1,0,0,3,3,2,2,2
+STU_1106,Kavinda Mendis,D/IT/24/1106,BSc (Hons) in Computer Engineering,3,3.13,3.66,3.33,3.3,2.07,3.41,3.0,5,2,3,2,1,Software Engineering,2,2,2,0,2,1,0,0,1,1,0,2,0,0,1,0,1,1,1,0,0,0,1,1,1
+STU_1566,Anushka Gunawardena,D/IT/24/1566,BSc (Hons) in Information Technology,3,2.94,3.44,3.01,2.02,3.46,3.28,2.43,3,3,5,1,2,Cybersecurity,1,1,0,0,2,1,0,0,0,0,2,3,3,1,2,0,1,1,1,1,1,2,0,2,0
+STU_1390,Dulan Bandara,D/IT/24/1390,BSc (Hons) in Computer Science,2,2.96,3.21,3.02,2.75,3.61,3.12,2.05,3,5,1,2,1,Data Science / AI,0,1,0,0,2,2,2,2,3,2,0,2,0,1,1,2,1,1,0,0,0,2,1,1,1
+STU_1002,Nimal Ahamad,D/IT/24/1002,BSc (Hons) in Data Science & Business Analytics,3,2.92,3.64,3.13,3.97,1.55,2.96,2.28,5,1,1,1,1,Software Engineering,3,2,2,0,2,0,1,1,1,1,0,0,0,2,1,0,0,0,0,1,1,2,0,0,1
+STU_1796,Sewwandi Jayasinghe,D/IT/24/1796,BSc (Hons) in Software Engineering,2,2.69,2.17,2.12,3.52,2.45,2.24,3.66,1,3,2,3,5,UI/UX Design,1,1,0,0,0,1,1,1,0,0,2,0,0,1,0,2,1,2,1,1,2,3,2,2,1
+STU_1562,Nimal Fernando,D/IT/24/1562,BSc (Hons) in Software Engineering,3,2.78,3.69,1.77,3.05,3.95,2.78,1.42,2,1,5,2,1,Cybersecurity,0,0,0,0,1,1,0,1,2,1,2,2,2,1,1,0,1,1,1,0,1,0,0,1,0
+STU_1081,Dilshan Dissanayake,D/IT/24/1081,BSc (Hons) in Information Technology,3,3.13,3.66,3.85,3.11,2.85,2.46,2.87,4,2,3,3,1,Software Engineering,3,2,2,0,3,1,0,1,1,0,0,0,1,0,0,0,0,0,1,0,0,1,1,0,0
+STU_1206,Chamari Perera,D/IT/24/1206,BSc (Hons) in Information Technology,3,2.64,3.5,2.62,2.46,2.41,2.62,2.24,4,1,3,3,1,Software Engineering,2,2,1,0,3,1,2,0,1,0,0,0,1,0,1,2,0,1,0,0,1,2,1,1,0
+STU_1035,Nimal Gunawardena,D/IT/24/1035,BSc (Hons) in Data Science & Business Analytics,3,3.07,3.83,2.98,3.22,2.55,3.45,2.42,5,3,2,1,3,Software Engineering,3,3,1,2,2,1,1,1,0,1,0,1,1,1,0,0,0,0,0,2,1,0,0,0,1
+STU_1776,Ravindu Rajapaksha,D/IT/24/1776,BSc (Hons) in Data Science & Business Analytics,2,2.78,2.27,2.87,2.43,2.56,2.77,3.76,1,2,2,1,4,UI/UX Design,0,0,1,0,0,2,1,2,2,0,0,0,1,1,0,0,0,0,0,2,3,3,3,2,1
+STU_1509,Tharindu Mendis,D/IT/24/1509,BSc (Hons) in Information Technology,4,2.93,3.39,2.69,1.81,3.4,3.7,2.61,3,2,4,3,1,Cybersecurity,0,0,2,0,1,1,1,0,2,0,3,3,3,2,2,0,2,0,0,0,1,1,2,1,0
+STU_1428,Maleesha Mendis,D/IT/24/1428,BSc (Hons) in Software Engineering,1,2.85,1.96,2.91,3.0,3.81,3.37,2.05,2,1,4,3,1,Cybersecurity,0,2,0,1,2,1,0,0,0,0,3,1,2,3,1,2,0,1,1,0,0,0,1,0,2
+STU_1455,Sanduni Rathnayake,D/IT/24/1455,BSc (Hons) in Information Technology,3,3.18,2.05,3.86,3.85,3.02,2.95,3.33,3,3,5,2,3,Cybersecurity,2,1,0,0,0,1,0,1,2,1,3,2,3,2,1,1,0,2,0,0,1,0,1,1,1
+STU_1367,Nuwan Rathnayake,D/IT/24/1367,BSc (Hons) in Computer Science,3,3.04,2.9,4.0,3.08,2.13,3.0,3.11,3,5,2,1,3,Data Science / AI,0,0,0,1,0,3,2,2,2,2,0,1,2,0,0,0,0,0,1,0,0,1,0,0,2
+STU_1092,Sahan Tharumila,D/IT/24/1092,BSc (Hons) in Data Science & Business Analytics,3,2.92,2.89,2.3,4.0,2.82,2.61,2.88,5,2,1,2,2,Software Engineering,3,2,1,1,3,0,0,1,0,0,1,2,0,0,0,0,1,1,1,0,1,1,1,1,1
+STU_1340,Buddhika Rathnayake,D/IT/24/1340,BSc (Hons) in Data Science & Business Analytics,2,3.01,3.3,3.51,2.02,3.19,2.78,3.26,1,5,2,2,2,Data Science / AI,1,0,1,2,2,2,2,3,3,3,0,2,2,0,0,0,1,0,2,1,1,1,0,2,1
+STU_1565,Kavinda Dissanayake,D/IT/24/1565,BSc (Hons) in Computer Science,2,2.83,2.38,2.92,2.49,3.91,3.75,1.54,2,2,5,3,3,Cybersecurity,1,2,1,1,1,1,1,0,1,1,3,3,2,1,1,0,0,0,0,1,2,0,1,0,0
+STU_1346,Rashmi Herath,D/IT/24/1346,BSc (Hons) in Computer Science,4,2.4,2.3,3.18,2.65,2.05,2.23,2.0,3,5,1,2,3,Data Science / AI,0,1,0,2,1,3,3,2,3,2,0,1,0,0,0,0,1,0,0,1,0,0,1,0,0
+STU_1777,Methmi Ahamad,D/IT/24/1777,BSc (Hons) in Computer Science,3,2.69,3.06,2.75,3.07,1.13,2.45,3.66,2,3,1,3,5,UI/UX Design,1,0,1,0,2,0,1,0,0,1,1,1,1,0,2,1,0,1,2,1,2,3,2,1,2
+STU_1242,Sewwandi Herath,D/IT/24/1242,BSc (Hons) in Data Science & Business Analytics,4,3.16,3.23,4.0,3.45,2.93,3.05,2.29,3,4,2,1,3,Data Science / AI,1,2,1,0,1,3,2,2,2,2,0,0,2,0,0,0,1,2,0,1,2,0,0,2,0
+STU_1014,Dulan Fonseka,D/IT/24/1014,BSc (Hons) in Information Technology,3,2.59,3.82,2.03,3.27,2.62,2.05,1.75,4,3,1,1,3,Software Engineering,3,2,2,2,3,0,1,0,1,1,1,1,1,0,0,2,1,0,0,0,2,0,0,0,0
+STU_1316,Ravindu Tharumila,D/IT/24/1316,BSc (Hons) in Computer Engineering,4,2.73,2.72,3.73,1.88,2.69,2.67,2.66,1,4,3,3,3,Data Science / AI,0,0,0,1,1,3,2,2,3,3,2,0,1,0,0,1,0,2,0,1,1,1,2,0,0
+STU_1601,Akila Ahamad,D/IT/24/1601,BSc (Hons) in Information Technology,2,3.01,4.0,1.43,1.98,3.19,4.0,3.43,3,3,3,4,3,Cloud / DevOps,1,0,1,0,1,1,2,0,1,0,0,0,3,1,1,3,2,3,1,2,1,0,1,0,1
+STU_1388,Rashmi Alwis,D/IT/24/1388,BSc (Hons) in Software Engineering,3,2.68,3.42,3.26,2.13,2.35,2.07,2.86,3,5,1,1,1,Data Science / AI,2,0,0,1,1,3,2,3,3,3,0,1,2,0,2,0,0,2,2,0,0,1,2,1,1
+STU_1274,Sachini Dissanayake,D/IT/24/1274,BSc (Hons) in Computer Science,3,3.11,3.42,3.93,2.94,2.3,2.76,3.3,1,5,1,3,2,Data Science / AI,0,2,1,1,1,3,3,2,3,3,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0
+STU_1167,Hasitha Silva,D/IT/24/1167,BSc (Hons) in Computer Engineering,3,2.56,4.0,1.82,3.66,1.52,2.51,1.88,4,3,1,2,3,Software Engineering,2,3,2,2,3,1,0,0,1,0,2,0,1,0,0,2,0,1,0,0,0,1,0,0,0
+STU_1844,Kavindi Ahamad,D/IT/24/1844,BSc (Hons) in Information Systems,4,2.77,1.8,3.5,2.84,1.74,3.08,3.67,3,2,3,2,5,UI/UX Design,0,1,1,0,2,2,0,1,0,1,0,0,0,0,0,1,0,0,0,0,3,3,2,1,3
+STU_1647,Amal Alwis,D/IT/24/1647,BSc (Hons) in Computer Science,3,3.31,3.12,2.62,3.3,3.88,3.71,3.26,1,3,1,5,1,Cloud / DevOps,0,1,0,0,2,0,2,0,1,1,0,1,3,0,1,3,1,2,0,1,0,2,0,1,0
+STU_1485,Akila Dissanayake,D/IT/24/1485,BSc (Hons) in Data Science & Business Analytics,2,3.19,3.5,2.42,3.58,4.0,3.25,2.37,3,2,4,1,2,Cybersecurity,0,0,0,1,2,1,0,0,2,0,3,2,3,1,2,1,1,1,0,1,0,1,1,0,0
+STU_1833,Hasitha Wickramasinghe,D/IT/24/1833,BSc (Hons) in Data Science & Business Analytics,3,2.51,1.73,2.19,2.81,1.74,2.72,3.89,2,1,3,3,5,UI/UX Design,0,0,2,1,0,0,1,0,2,0,1,1,1,0,2,1,1,0,0,0,3,3,3,2,3
+STU_1505,Akila Gunawardena,D/IT/24/1505,BSc (Hons) in Information Systems,2,2.87,3.49,2.11,2.2,3.71,3.3,2.39,1,2,4,3,2,Cybersecurity,0,0,0,1,0,0,0,0,1,0,3,1,3,1,1,0,1,1,1,1,0,1,0,0,2
+STU_1244,Methmi Silva,D/IT/24/1244,BSc (Hons) in Software Engineering,2,2.52,3.13,3.35,2.49,1.48,2.35,2.31,3,5,3,2,1,Data Science / AI,2,1,0,0,1,3,2,1,2,3,0,2,1,1,2,0,0,1,1,0,0,1,0,2,0
+STU_1567,Chamari Herath,D/IT/24/1567,BSc (Hons) in Information Technology,4,2.98,1.95,2.92,3.22,3.58,3.56,2.67,3,2,5,1,3,Cybersecurity,1,0,0,1,0,0,0,2,0,1,2,1,2,1,2,0,1,2,2,1,2,2,1,0,0
+STU_1563,Chathuri Perera,D/IT/24/1563,BSc (Hons) in Computer Engineering,2,3.26,3.15,2.87,3.45,3.73,3.41,2.91,2,3,5,3,2,Cybersecurity,0,0,1,0,1,0,0,1,0,1,3,3,2,1,1,0,2,0,1,1,2,1,2,1,0
+STU_1687,Sewwandi Mendis,D/IT/24/1687,BSc (Hons) in Software Engineering,1,2.87,3.6,3.39,2.63,2.66,3.06,1.88,2,2,2,5,3,Cloud / DevOps,0,0,1,0,2,2,1,1,0,0,1,0,2,1,0,3,1,3,0,2,1,0,0,2,0
+STU_1190,Ishara Wickramasinghe,D/IT/24/1190,BSc (Hons) in Information Systems,3,3.1,2.73,3.14,3.13,3.05,3.33,3.26,5,3,1,1,1,Software Engineering,2,2,1,2,3,1,0,1,0,0,1,0,1,0,0,0,0,0,0,0,1,0,1,0,2
+STU_1783,Methmi Silva,D/IT/24/1783,BSc (Hons) in Computer Science,2,2.98,3.58,2.24,1.8,3.39,3.31,3.53,1,1,1,3,5,UI/UX Design,1,1,0,1,1,0,1,0,1,0,0,0,0,1,2,1,0,0,0,0,2,2,3,2,1
+STU_1700,Hasitha Rathnayake,D/IT/24/1700,BSc (Hons) in Information Systems,2,3.22,2.95,2.97,2.65,3.71,4.0,3.03,1,2,3,5,3,Cloud / DevOps,0,0,0,1,1,1,0,1,0,1,0,0,3,0,0,2,2,2,1,1,2,2,0,0,0
+STU_1476,Dilshan Bandara,D/IT/24/1476,BSc (Hons) in Computer Science,4,2.68,2.33,1.84,2.51,4.0,3.22,2.2,3,3,5,2,1,Cybersecurity,1,0,1,2,0,0,2,1,0,1,3,3,3,3,1,1,2,0,1,0,0,2,0,0,0
+STU_1682,Dulan Fonseka,D/IT/24/1682,BSc (Hons) in Information Systems,2,2.74,2.33,2.07,2.38,3.1,3.31,3.28,2,3,2,5,1,Cloud / DevOps,0,0,1,1,1,0,1,0,0,0,0,1,3,0,0,2,3,2,1,1,1,0,0,0,1
+STU_1511,Amal Rathnayake,D/IT/24/1511,BSc (Hons) in Computer Engineering,3,3.02,2.11,2.46,3.38,3.64,3.53,2.98,3,2,5,2,1,Cybersecurity,2,1,0,2,0,2,0,1,0,2,3,2,3,3,2,1,1,0,2,2,0,0,0,0,1
+STU_1059,Ravindu Karunaratne,D/IT/24/1059,BSc (Hons) in Information Technology,3,2.94,2.86,2.85,3.43,3.55,2.6,2.37,5,1,2,1,1,Software Engineering,3,1,2,2,2,1,1,0,0,1,0,1,0,0,0,0,0,0,1,2,1,2,0,2,0
+STU_1475,Akila Rajapaksha,D/IT/24/1475,BSc (Hons) in Computer Science,2,2.5,2.67,1.7,2.59,3.06,3.81,1.16,2,2,5,2,3,Cybersecurity,1,1,1,0,2,0,0,1,1,0,3,2,3,2,1,0,0,0,0,0,1,0,1,0,2
+STU_1561,Anushka Tharumila,D/IT/24/1561,BSc (Hons) in Information Technology,3,3.27,3.01,2.84,3.12,4.0,3.3,3.39,2,2,5,1,1,Cybersecurity,1,2,2,0,0,1,1,0,1,1,3,2,2,2,1,1,1,2,1,0,1,1,0,0,1
+STU_1748,Sanduni Mendis,D/IT/24/1748,BSc (Hons) in Information Systems,3,3.2,3.5,4.0,2.91,1.77,3.4,3.63,1,1,3,2,5,UI/UX Design,0,2,1,0,1,1,0,0,0,1,0,1,0,0,0,0,2,2,0,0,3,3,2,2,1
+STU_1253,Nimal Rathnayake,D/IT/24/1253,BSc (Hons) in Information Technology,1,2.67,3.07,3.35,2.29,2.1,2.75,2.46,2,5,2,3,2,Data Science / AI,1,1,0,1,1,3,3,2,3,3,0,2,0,0,0,1,1,0,0,1,0,1,0,1,1
+STU_1022,Sanduni Gunawardena,D/IT/24/1022,BSc (Hons) in Software Engineering,4,2.92,3.85,3.22,3.34,2.27,2.56,2.28,5,3,2,1,2,Software Engineering,2,1,3,0,3,2,2,0,2,1,0,1,0,1,0,0,0,1,0,1,0,0,1,1,0
+STU_1314,Chathuri Fonseka,D/IT/24/1314,BSc (Hons) in Information Systems,4,2.92,3.3,4.0,3.25,2.1,2.97,1.9,1,5,1,2,3,Data Science / AI,1,0,0,1,0,3,1,2,3,3,2,0,2,1,2,1,1,0,0,0,2,2,1,2,2
+STU_1460,Rashmi Fernando,D/IT/24/1460,BSc (Hons) in Software Engineering,3,2.79,3.27,2.67,2.2,3.51,2.99,2.12,3,3,4,1,3,Cybersecurity,1,0,1,1,0,1,0,2,2,0,3,2,3,3,2,2,0,0,0,1,2,1,0,0,0
+STU_1161,Dinithi Rathnayake,D/IT/24/1161,BSc (Hons) in Information Technology,2,2.56,3.56,2.7,2.67,1.77,2.78,1.9,5,1,3,2,3,Software Engineering,3,1,2,0,3,1,0,2,2,0,1,0,1,0,1,0,0,0,0,1,0,1,2,1,2
+STU_1277,Sanduni Jayasinghe,D/IT/24/1277,BSc (Hons) in Data Science & Business Analytics,3,2.71,3.17,3.14,2.5,1.87,2.83,2.73,3,4,1,3,2,Data Science / AI,0,0,0,0,2,2,1,2,3,3,0,0,0,0,1,1,1,0,0,1,0,1,1,0,0
+STU_1192,Kasun Tharumila,D/IT/24/1192,BSc (Hons) in Data Science & Business Analytics,2,2.9,3.79,2.13,4.0,2.26,2.66,2.57,4,1,2,1,2,Software Engineering,2,2,3,2,3,1,1,1,1,0,0,0,0,2,1,0,0,0,1,1,0,0,1,1,0
+STU_1386,Sachini Alwis,D/IT/24/1386,BSc (Hons) in Software Engineering,3,2.97,3.05,3.5,3.1,2.93,2.82,2.41,1,4,1,2,2,Data Science / AI,1,1,2,0,0,3,2,3,2,2,0,0,1,1,0,0,1,1,0,0,0,2,0,1,1
+STU_1806,Chamari Jayasinghe,D/IT/24/1806,BSc (Hons) in Software Engineering,2,2.86,2.58,2.8,3.23,3.17,1.46,3.93,1,1,1,2,5,UI/UX Design,1,0,0,1,2,0,1,0,0,0,1,1,0,0,0,1,1,1,0,0,2,2,3,1,2
+STU_1414,Anushka Mendis,D/IT/24/1414,BSc (Hons) in Software Engineering,3,2.72,2.87,3.29,3.52,3.03,1.27,2.35,2,5,2,1,2,Data Science / AI,1,1,1,1,1,2,2,2,3,3,0,0,1,0,1,0,0,2,0,2,0,0,0,1,1
+STU_1492,Kavindi Herath,D/IT/24/1492,BSc (Hons) in Software Engineering,1,2.73,1.99,2.5,2.84,3.4,3.73,1.94,1,1,5,2,2,Cybersecurity,2,2,0,0,1,1,0,1,0,2,2,2,3,1,1,1,1,0,0,0,0,0,0,0,1
+STU_1344,Rashmi Rajapaksha,D/IT/24/1344,BSc (Hons) in Computer Engineering,1,2.87,3.38,3.39,2.77,2.37,2.72,2.61,2,4,2,2,3,Data Science / AI,1,0,0,2,0,3,2,2,2,2,0,1,1,0,0,0,0,0,0,1,2,0,1,1,1
+STU_1770,Supun Dissanayake,D/IT/24/1770,BSc (Hons) in Computer Engineering,3,2.31,2.0,2.17,2.44,2.85,1.12,3.29,2,2,2,2,5,UI/UX Design,1,1,0,0,0,1,0,1,0,1,2,0,1,1,0,1,0,0,0,2,3,3,3,2,1
+STU_1309,Ravindu Fernando,D/IT/24/1309,BSc (Hons) in Computer Engineering,3,2.8,3.14,3.26,3.2,2.35,2.25,2.61,1,5,2,2,2,Data Science / AI,0,0,1,2,0,3,2,3,3,2,0,0,0,0,1,2,0,1,1,2,1,1,0,0,0
+STU_1662,Ishara Alwis,D/IT/24/1662,BSc (Hons) in Data Science & Business Analytics,3,3.2,3.19,3.54,2.73,3.6,4.0,2.14,3,2,2,5,1,Cloud / DevOps,2,2,0,0,1,1,2,1,0,0,0,2,3,0,1,3,3,3,1,1,0,0,0,0,0
+STU_1131,Chamari Fonseka,D/IT/24/1131,BSc (Hons) in Software Engineering,2,2.53,3.8,3.12,3.11,1.38,2.0,1.76,5,2,2,2,2,Software Engineering,2,3,2,1,3,0,0,2,0,1,1,0,0,0,1,1,1,2,1,0,0,1,0,0,1
+STU_1664,Ravindu Tharumila,D/IT/24/1664,BSc (Hons) in Computer Engineering,3,2.52,3.31,1.38,2.61,3.06,3.16,1.6,2,3,1,5,2,Cloud / DevOps,2,1,1,0,1,1,0,0,1,1,1,0,2,0,0,2,1,3,2,2,1,0,0,0,2
+STU_1100,Dulan Wickramasinghe,D/IT/24/1100,BSc (Hons) in Data Science & Business Analytics,2,2.99,3.69,3.17,3.54,3.13,1.82,2.61,4,2,2,1,1,Software Engineering,2,1,2,2,3,0,1,1,0,0,0,1,1,0,1,2,0,2,0,0,0,0,0,0,2
+STU_1373,Dulan Silva,D/IT/24/1373,BSc (Hons) in Data Science & Business Analytics,2,2.85,2.83,4.0,2.91,2.68,2.24,2.45,1,5,2,3,1,Data Science / AI,1,2,0,0,1,3,2,3,2,2,1,0,1,0,0,0,0,0,1,1,0,0,2,0,0
+STU_1088,Kavindi Alwis,D/IT/24/1088,BSc (Hons) in Information Technology,4,2.82,3.37,2.37,3.09,2.46,2.88,2.77,5,2,1,3,2,Software Engineering,2,1,3,1,3,0,0,1,1,0,0,1,0,0,0,1,2,2,1,1,0,1,0,1,0
+STU_1459,Buddhika Jayasinghe,D/IT/24/1459,BSc (Hons) in Information Technology,1,3.19,3.01,3.84,2.45,3.92,3.7,2.25,2,1,5,1,1,Cybersecurity,0,0,0,2,0,0,0,2,1,2,3,3,3,3,1,0,1,2,0,2,0,0,0,0,0
+STU_1331,Hasitha Silva,D/IT/24/1331,BSc (Hons) in Data Science & Business Analytics,2,2.63,3.06,3.4,2.6,2.91,1.14,2.66,2,5,2,3,2,Data Science / AI,0,0,1,2,1,3,2,1,3,2,0,0,1,0,0,2,1,1,0,0,0,0,0,1,0
+STU_1215,Maleesha Jayasinghe,D/IT/24/1215,BSc (Hons) in Computer Science,2,2.53,3.51,1.39,4.0,1.09,2.78,2.42,4,3,3,3,3,Software Engineering,3,2,2,0,3,0,0,1,2,1,0,1,1,0,2,0,2,1,1,1,0,1,2,1,2
+STU_1467,Supun Ahamad,D/IT/24/1467,BSc (Hons) in Information Systems,4,2.78,3.31,2.08,2.78,3.16,3.17,2.19,2,2,5,2,3,Cybersecurity,0,0,0,2,0,1,2,2,1,0,3,2,2,1,2,0,1,1,2,0,2,0,1,1,0
+STU_1122,Shanika Dissanayake,D/IT/24/1122,BSc (Hons) in Computer Science,3,2.83,3.32,3.29,2.7,2.96,2.47,2.27,5,3,1,3,2,Software Engineering,3,2,2,1,2,0,0,2,0,0,2,1,0,0,0,0,1,0,0,2,2,0,1,0,2
+STU_1615,Amal Tharumila,D/IT/24/1615,BSc (Hons) in Computer Engineering,3,2.5,2.76,1.46,2.69,2.61,2.92,2.58,3,2,3,5,1,Cloud / DevOps,1,1,1,0,2,0,1,0,0,0,2,0,3,1,0,2,3,2,0,2,0,0,0,2,1
+STU_1021,Kasun Fernando,D/IT/24/1021,BSc (Hons) in Information Technology,2,2.42,2.97,2.12,3.09,1.97,2.84,1.55,5,3,3,2,2,Software Engineering,3,3,3,1,3,0,0,1,0,1,0,0,1,0,1,0,0,1,1,1,0,1,0,0,2
+STU_1701,Sanduni Fernando,D/IT/24/1701,BSc (Hons) in Computer Science,2,2.67,2.79,3.1,2.29,2.67,3.07,2.11,1,3,2,5,3,Cloud / DevOps,0,1,0,1,1,0,1,2,0,1,1,0,2,2,1,3,2,3,0,1,1,0,1,1,1
+STU_1072,Dulan Silva,D/IT/24/1072,BSc (Hons) in Data Science & Business Analytics,3,2.72,3.22,1.68,3.26,3.27,3.04,1.83,4,2,2,3,1,Software Engineering,3,2,2,2,3,1,0,0,0,0,0,2,0,1,0,1,0,2,2,0,2,2,1,1,0
+STU_1107,Nimal Dissanayake,D/IT/24/1107,BSc (Hons) in Computer Science,3,2.8,3.97,2.18,2.77,3.25,1.81,2.81,4,1,2,1,2,Software Engineering,3,2,3,0,3,1,1,1,0,1,0,1,0,1,0,0,0,1,0,0,1,0,2,2,1
+STU_1271,Tharindu Karunaratne,D/IT/24/1271,BSc (Hons) in Data Science & Business Analytics,2,2.74,2.87,4.0,1.95,2.4,2.67,2.54,1,5,3,3,1,Data Science / AI,1,1,1,0,0,3,2,2,3,3,2,1,0,0,1,2,1,2,0,0,0,1,0,0,1
+STU_1436,Supun Alwis,D/IT/24/1436,BSc (Hons) in Information Systems,2,2.83,1.69,2.72,3.16,3.14,3.44,2.8,2,3,5,3,2,Cybersecurity,0,0,0,2,1,0,1,1,0,1,3,2,3,2,2,0,1,0,0,2,1,1,0,0,0
+STU_1103,Buddhika Rajapaksha,D/IT/24/1103,BSc (Hons) in Data Science & Business Analytics,2,2.71,3.94,2.53,2.97,1.79,2.26,2.76,4,2,3,2,1,Software Engineering,3,3,1,0,3,2,2,1,1,0,0,0,1,0,0,1,1,0,0,0,0,0,1,1,1

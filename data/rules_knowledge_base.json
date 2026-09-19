@@ -1,0 +1,122 @@
+{
+  "academic_prerequisite_rules": [
+    {
+      "id": "RULE_ACAD_SE_PROG",
+      "target_track": "Software Engineering",
+      "subject": "Programming",
+      "minimum_grade": "B-",
+      "minimum_points": 2.7,
+      "severity": "High",
+      "message": "Foundational programming proficiency is critical for Software Engineering roles.",
+      "remedy": "Strengthen core programming paradigms (OOP, memory management, and recursion) through supplementary coding practice."
+    },
+    {
+      "id": "RULE_ACAD_DS_MATH",
+      "target_track": "Data Science / AI",
+      "subject": "Mathematics & Statistics",
+      "minimum_grade": "B-",
+      "minimum_points": 2.7,
+      "severity": "High",
+      "message": "Mathematical foundation (Linear Algebra, Calculus, and Probability) is essential for machine learning algorithms.",
+      "remedy": "Review applied statistics and linear algebra concepts through targeted academic tutorials."
+    },
+    {
+      "id": "RULE_ACAD_SEC_NET",
+      "target_track": "Cybersecurity",
+      "subject": "Networking",
+      "minimum_grade": "B-",
+      "minimum_points": 2.7,
+      "severity": "High",
+      "message": "Understanding TCP/IP, OSI layers, routing, and DNS is mandatory before mastering penetration testing and threat defense.",
+      "remedy": "Complete hands-on Wireshark packet capture labs and revise network protocol fundamentals."
+    },
+    {
+      "id": "RULE_ACAD_CLOUD_OS",
+      "target_track": "Cloud / DevOps",
+      "subject": "Operating Systems & Architecture",
+      "minimum_grade": "B-",
+      "minimum_points": 2.7,
+      "severity": "High",
+      "message": "Operating systems fundamentals (processes, threads, POSIX, memory management) underpin containerization and virtualization.",
+      "remedy": "Engage in Linux kernel/bash scripting and process management exercises."
+    },
+    {
+      "id": "RULE_ACAD_UI_HCI",
+      "target_track": "UI/UX Design",
+      "subject": "Human Computer Interaction & Design",
+      "minimum_grade": "B-",
+      "minimum_points": 2.7,
+      "severity": "High",
+      "message": "HCI heuristics, cognitive load principles, and usability standards are foundational for product design.",
+      "remedy": "Revisit Nielsen Norman Group heuristics and conduct structured usability walkthroughs."
+    }
+  ],
+  "competency_dependency_rules": [
+    {
+      "id": "DEP_TESTING_PROG",
+      "skill": "Automated Testing & QA",
+      "prerequisite_skill": "Object-Oriented Programming",
+      "min_prereq_level": "Beginner",
+      "message": "Writing automated unit and integration tests requires foundational OOP knowledge.",
+      "priority": "High"
+    },
+    {
+      "id": "DEP_CICD_DOCKER",
+      "skill": "CI/CD Pipelines",
+      "prerequisite_skill": "Containerization (Docker)",
+      "min_prereq_level": "Beginner",
+      "message": "Building automated CI/CD deployment pipelines requires understanding container builds and Dockerfiles.",
+      "priority": "High"
+    },
+    {
+      "id": "DEP_ML_PYTHON",
+      "skill": "Machine Learning & Modeling",
+      "prerequisite_skill": "Python Data Stack (Pandas/NumPy)",
+      "min_prereq_level": "Intermediate",
+      "message": "Feature engineering and data preparation in Pandas/NumPy are required before training scikit-learn models.",
+      "priority": "High"
+    },
+    {
+      "id": "DEP_VULN_LINUX",
+      "skill": "Vulnerability Assessment",
+      "prerequisite_skill": "Linux Systems Administration",
+      "min_prereq_level": "Beginner",
+      "message": "Security auditing tools and exploits execute primarily in Linux environments (Kali Linux, Bash).",
+      "priority": "High"
+    },
+    {
+      "id": "DEP_PROTOTYPING_RESEARCH",
+      "skill": "Wireframing & Prototyping (Figma)",
+      "prerequisite_skill": "User Research & Usability Testing",
+      "min_prereq_level": "Beginner",
+      "message": "Effective high-fidelity prototyping requires user journey mapping and empathy research inputs.",
+      "priority": "Medium"
+    }
+  ],
+  "portfolio_and_readiness_rules": [
+    {
+      "id": "PORTFOLIO_CHECK",
+      "condition": "projects_count == 0",
+      "type": "Portfolio Gap",
+      "severity": "Medium",
+      "message": "No practical projects recorded in portfolio. Industry hiring heavily favors concrete project evidence.",
+      "recommendation": "Build at least 2 hands-on projects aligned with your target career track."
+    },
+    {
+      "id": "CV_CHECK",
+      "condition": "cv_uploaded == False",
+      "type": "Document Gap",
+      "severity": "Low",
+      "message": "Curriculum Vitae (CV) has not yet been uploaded for profile verification.",
+      "recommendation": "Upload an up-to-date CV in the Document Management portal to validate credentials."
+    },
+    {
+      "id": "WORKLOAD_FEASIBILITY",
+      "condition": "weekly_hours < 8 and gap_count > 3",
+      "type": "Time Constraint",
+      "severity": "Medium",
+      "message": "Current weekly study allocation is limited relative to the identified skill gaps.",
+      "recommendation": "Consider allocating at least 10–12 hours weekly, or extend your roadmap target horizon across multiple academic semesters."
+    }
+  ]
+}

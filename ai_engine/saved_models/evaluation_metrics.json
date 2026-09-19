@@ -1,0 +1,144 @@
+{
+  "knn": {
+    "name": "K-Nearest Neighbors (Primary Model)",
+    "accuracy": 100.0,
+    "precision": 100.0,
+    "recall": 100.0,
+    "f1_score": 100.0,
+    "confusion_matrix": [
+      [
+        40,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        39,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        41,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        22,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        28
+      ]
+    ],
+    "labels": [
+      "Software Engineering",
+      "Data Science / AI",
+      "Cybersecurity",
+      "Cloud / DevOps",
+      "UI/UX Design"
+    ]
+  },
+  "decision_tree": {
+    "name": "Decision Tree Classifier (Baseline Model)",
+    "accuracy": 98.82,
+    "precision": 98.82,
+    "recall": 98.82,
+    "f1_score": 98.82,
+    "confusion_matrix": [
+      [
+        40,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        37,
+        0,
+        0,
+        2
+      ],
+      [
+        0,
+        0,
+        41,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        22,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        28
+      ]
+    ],
+    "labels": [
+      "Software Engineering",
+      "Data Science / AI",
+      "Cybersecurity",
+      "Cloud / DevOps",
+      "UI/UX Design"
+    ],
+    "top_features": [
+      [
+        "grade_programming",
+        0.22
+      ],
+      [
+        "grade_math",
+        0.18
+      ],
+      [
+        "grade_design",
+        0.16
+      ],
+      [
+        "grade_networking",
+        0.15
+      ],
+      [
+        "grade_systems",
+        0.14
+      ],
+      [
+        "interest_software",
+        0.05
+      ],
+      [
+        "interest_data",
+        0.04
+      ],
+      [
+        "interest_security",
+        0.03
+      ]
+    ]
+  },
+  "dataset_info": {
+    "total_samples": 850,
+    "training_samples": 680,
+    "testing_samples": 170,
+    "features_count": 36
+  }
+}

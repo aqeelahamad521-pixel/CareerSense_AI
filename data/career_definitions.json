@@ -1,0 +1,101 @@
+{
+  "Software Engineering": {
+    "id": "software_engineering",
+    "name": "Software Engineering",
+    "description": "Designing, developing, testing, and maintaining scalable software applications, APIs, and modern architectures.",
+    "typical_roles": ["Associate Software Engineer", "Backend Developer", "Full-Stack Developer", "Systems Engineer"],
+    "required_academic_min": {
+      "Programming": "B-",
+      "Databases": "C+",
+      "Mathematics & Statistics": "C"
+    },
+    "required_competencies": [
+      {"skill": "Object-Oriented Programming", "target_level": "Intermediate", "priority": "High"},
+      {"skill": "Data Structures & Algorithms", "target_level": "Intermediate", "priority": "High"},
+      {"skill": "REST APIs & Web Services", "target_level": "Intermediate", "priority": "High"},
+      {"skill": "Automated Testing & QA", "target_level": "Intermediate", "priority": "High"},
+      {"skill": "Version Control (Git)", "target_level": "Intermediate", "priority": "High"},
+      {"skill": "SQL & Data Querying", "target_level": "Intermediate", "priority": "Medium"},
+      {"skill": "Containerization (Docker)", "target_level": "Beginner", "priority": "Medium"}
+    ],
+    "recommended_projects": ["Full-Stack CRUD Application with REST API", "Automated Testing Suite for Web Service", "Microservice with Docker containerization"]
+  },
+  "Data Science / AI": {
+    "id": "data_science_ai",
+    "name": "Data Science / AI",
+    "description": "Extracting insights from complex datasets, building predictive machine learning models, and deploying intelligent systems.",
+    "typical_roles": ["Junior Data Scientist", "Machine Learning Engineer", "AI Associate", "Data Analyst"],
+    "required_academic_min": {
+      "Mathematics & Statistics": "B-",
+      "Programming": "B-",
+      "Databases": "C+"
+    },
+    "required_competencies": [
+      {"skill": "Python Data Stack (Pandas/NumPy)", "target_level": "Intermediate", "priority": "High"},
+      {"skill": "Machine Learning & Modeling", "target_level": "Intermediate", "priority": "High"},
+      {"skill": "Statistical Analysis", "target_level": "Intermediate", "priority": "High"},
+      {"skill": "SQL & Data Querying", "target_level": "Intermediate", "priority": "High"},
+      {"skill": "Data Visualization", "target_level": "Intermediate", "priority": "Medium"},
+      {"skill": "Object-Oriented Programming", "target_level": "Beginner", "priority": "Medium"}
+    ],
+    "recommended_projects": ["End-to-end Predictive ML Pipeline", "Exploratory Data Analysis & Dashboard", "NLP or Computer Vision Classification Project"]
+  },
+  "Cybersecurity": {
+    "id": "cybersecurity",
+    "name": "Cybersecurity",
+    "description": "Protecting computer systems, networks, and sensitive data from digital attacks, vulnerabilities, and unauthorized access.",
+    "typical_roles": ["Junior SOC Analyst", "Information Security Associate", "Junior Penetration Tester", "Network Security Engineer"],
+    "required_academic_min": {
+      "Networking": "B-",
+      "Operating Systems & Architecture": "B-",
+      "Programming": "C+"
+    },
+    "required_competencies": [
+      {"skill": "Network Security & Protocols", "target_level": "Intermediate", "priority": "High"},
+      {"skill": "Linux Systems Administration", "target_level": "Intermediate", "priority": "High"},
+      {"skill": "Cryptography Fundamentals", "target_level": "Intermediate", "priority": "High"},
+      {"skill": "Vulnerability Assessment", "target_level": "Intermediate", "priority": "High"},
+      {"skill": "Secure Coding Practices", "target_level": "Beginner", "priority": "Medium"},
+      {"skill": "System Monitoring & Logging", "target_level": "Beginner", "priority": "Medium"}
+    ],
+    "recommended_projects": ["Network Traffic Analysis & Snort IDS Setup", "Vulnerability Assessment Report of a Vulnerable VM", "Basic Cryptographic Key Management Tool"]
+  },
+  "Cloud / DevOps": {
+    "id": "cloud_devops",
+    "name": "Cloud / DevOps",
+    "description": "Automating software delivery, managing scalable cloud infrastructure, and establishing continuous deployment pipelines.",
+    "typical_roles": ["Junior DevOps Engineer", "Cloud Associate", "Site Reliability Engineer (SRE)", "Infrastructure Engineer"],
+    "required_academic_min": {
+      "Operating Systems & Architecture": "B-",
+      "Networking": "C+",
+      "Programming": "C+"
+    },
+    "required_competencies": [
+      {"skill": "Linux Systems Administration", "target_level": "Intermediate", "priority": "High"},
+      {"skill": "Containerization (Docker)", "target_level": "Intermediate", "priority": "High"},
+      {"skill": "CI/CD Pipelines", "target_level": "Intermediate", "priority": "High"},
+      {"skill": "Cloud Computing (AWS/GCP/Azure)", "target_level": "Intermediate", "priority": "High"},
+      {"skill": "Infrastructure as Code", "target_level": "Beginner", "priority": "Medium"},
+      {"skill": "System Monitoring & Logging", "target_level": "Beginner", "priority": "Medium"}
+    ],
+    "recommended_projects": ["Multi-stage Docker CI/CD Pipeline on GitHub Actions", "AWS/GCP Terraform Cloud Architecture", "Kubernetes Cluster Deployment with Prometheus"]
+  },
+  "UI/UX Design": {
+    "id": "ui_ux_design",
+    "name": "UI/UX Design",
+    "description": "Crafting intuitive, engaging, user-centered digital interfaces, interaction patterns, design systems, and wireframes.",
+    "typical_roles": ["UI/UX Designer", "Product Designer", "Interaction Designer", "Design Systems Specialist"],
+    "required_academic_min": {
+      "Human Computer Interaction & Design": "B-",
+      "Programming": "C"
+    },
+    "required_competencies": [
+      {"skill": "User Research & Usability Testing", "target_level": "Intermediate", "priority": "High"},
+      {"skill": "Wireframing & Prototyping (Figma)", "target_level": "Advanced", "priority": "High"},
+      {"skill": "Design Principles & Typography", "target_level": "Intermediate", "priority": "High"},
+      {"skill": "Design Systems & Component Design", "target_level": "Intermediate", "priority": "High"},
+      {"skill": "Frontend Framework Awareness", "target_level": "Beginner", "priority": "Medium"}
+    ],
+    "recommended_projects": ["End-to-end Mobile App UX Case Study & Prototype", "Comprehensive Web Design System in Figma", "Heuristic Evaluation & Redesign of an E-commerce Platform"]
+  }
+}
