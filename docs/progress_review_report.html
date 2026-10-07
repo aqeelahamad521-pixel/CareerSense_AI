@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Review Report - CareerSense AI (Group 19)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #2d3748;
+            background-color: #f7fafc;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .page-container {
+            max-width: 850px;
+            margin: 30px auto;
+            background: #ffffff;
+            padding: 50px 65px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        /* Cover Page Styling */
+        .cover-page {
+            text-align: center;
+            padding: 40px 0 60px 0;
+            border-bottom: 2px solid #e2e8f0;
+            margin-bottom: 50px;
+        }
+        .uni-header {
+            font-size: 19px;
+            font-weight: 700;
+            color: #1a365d;
+            letter-spacing: 0.5px;
+            margin: 0;
+            text-transform: uppercase;
+        }
+        .faculty-header {
+            font-size: 15px;
+            font-weight: 600;
+            color: #2b6cb0;
+            margin: 6px 0 0 0;
+            text-transform: uppercase;
+        }
+        .intake-header {
+            font-size: 13px;
+            font-weight: 600;
+            color: #4a5568;
+            margin: 4px 0 25px 0;
+        }
+        .report-title-badge {
+            display: inline-block;
+            background: #ebf8ff;
+            color: #2b6cb0;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .main-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: #1a202c;
+            line-height: 1.35;
+            margin: 0 0 10px 0;
+        }
+        .subtitle {
+            font-size: 15px;
+            color: #4a5568;
+            margin-bottom: 35px;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0 30px 0;
+            font-size: 13.5px;
+        }
+        th, td {
+            padding: 10px 14px;
+            text-align: left;
+            border: 1px solid #e2e8f0;
+        }
+        th {
+            background-color: #edf2f7;
+            color: #2d3748;
+            font-weight: 600;
+        }
+        tr:nth-child(even) td {
+            background-color: #f8fafc;
+        }
+
+        /* Headings */
+        h1, h2, h3, h4, h5 {
+            color: #1a365d;
+            font-weight: 700;
+        }
+        h2 {
+            font-size: 20px;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 8px;
+            margin-top: 40px;
+        }
+        h3 {
+            font-size: 16px;
+            margin-top: 25px;
+            color: #2b6cb0;
+        }
+        h4 {
+            font-size: 14.5px;
+            margin-top: 18px;
+            color: #2d3748;
+        }
+
+        p, li {
+            font-size: 14px;
+            color: #4a5568;
+        }
+        ul {
+            padding-left: 22px;
+        }
+        li {
+            margin-bottom: 6px;
+        }
+
+        /* Box Callouts */
+        .info-card {
+            background: #f7fafc;
+            border-left: 4px solid #3182ce;
+            padding: 14px 18px;
+            border-radius: 0 6px 6px 0;
+            margin: 18px 0;
+        }
+        .success-card {
+            background: #f0fff4;
+            border-left: 4px solid #38a169;
+            padding: 14px 18px;
+            border-radius: 0 6px 6px 0;
+            margin: 18px 0;
+        }
+
+        /* Code / Diagrams */
+        pre {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            line-height: 1.45;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Courier New', monospace;
+        }
+        code {
+            font-family: 'Consolas', 'Courier New', monospace;
+            background: #edf2f7;
+            color: #c53030;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 12.5px;
+        }
+        pre code {
+            background: transparent;
+            color: inherit;
+            padding: 0;
+        }
+
+        /* Print Controls */
+        .print-btn-bar {
+            position: sticky;
+            top: 15px;
+            text-align: right;
+            margin-bottom: 20px;
+            z-index: 100;
+        }
+        .print-btn {
+            background-color: #3182ce;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+        .print-btn:hover {
+            background-color: #2b6cb0;
+        }
+
+        @media print {
+            body { background: white; }
+            .page-container {
+                box-shadow: none;
+                padding: 0;
+                margin: 0;
+                max-width: 100%;
+            }
+            .print-btn-bar { display: none; }
+            .page-break { page-break-before: always; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-container">
+    <div class="print-btn-bar">
+        <button class="print-btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+    </div>
+
+    <!-- COVER PAGE -->
+    <div class="cover-page">
+        <p class="uni-header">General Sir John Kotelawala Defence University</p>
+        <p class="faculty-header">Faculty of Computing</p>
+        <p class="intake-header">Intake 41 & Intake 42</p>
+
+        <div style="margin: 25px 0;">
+            <div style="display:inline-block; width:70px; height:70px; border-radius:50%; background:#edf2f7; line-height:70px; font-size:32px;">🎓</div>
+        </div>
+
+        <p style="font-size:14px; font-weight:600; color:#4a5568; margin:0 0 5px 0;">Essentials of Artificial Intelligence</p>
+        <p style="font-size:12.5px; color:#718096; margin:0 0 20px 0;">Intake 41 – IT3182 (IT/IS) | Intake 42 – CS 22032 (DBA) / CS22023 (CS/SE/COE)</p>
+
+        <span class="report-title-badge">STAGE 2: PROGRESS REVIEW REPORT</span>
+
+        <h1 class="main-title">CareerSense AI</h1>
+        <p class="subtitle">An Explainable AI-Powered Career Development and Skill-Roadmap Platform for Undergraduate Students</p>
+
+        <table style="max-width: 680px; margin: 0 auto; text-align: left;">
+            <tr>
+                <th colspan="2" style="background:#2b6cb0; color:white; text-align:center;">Project Details</th>
+            </tr>
+            <tr>
+                <td style="width:35%;"><strong>Project Title</strong></td>
+                <td>CareerSense AI: An Explainable AI-Powered Career Development and Skill-Roadmap Platform</td>
+            </tr>
+            <tr>
+                <td><strong>Primary Domain</strong></td>
+                <td>Artificial Intelligence / Career Guidance / Educational Decision Support</td>
+            </tr>
+            <tr>
+                <th colspan="2" style="background:#2b6cb0; color:white; text-align:center;">Author & Group Details</th>
+            </tr>
+            <tr>
+                <td><strong>Author / Student Name</strong></td>
+                <td><strong>MFA Ahamad (Aqeel Ahamad)</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Registration / Index No</strong></td>
+                <td><strong>D/DBA/25/0021</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Degree Programme</strong></td>
+                <td>Department of Data Science and Business Analytics</td>
+            </tr>
+            <tr>
+                <td><strong>Academic Standing</strong></td>
+                <td>Year 2 (Cumulative GPA: 3.40)</td>
+            </tr>
+            <tr>
+                <td><strong>Group Number</strong></td>
+                <td>Group 19</td>
+            </tr>
+            <tr>
+                <td><strong>Submission Date</strong></td>
+                <td>September 21, 2026</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- TABLE OF CONTENTS -->
+    <h2>Table of Contents</h2>
+    <ul style="list-style-type: none; padding-left: 0; font-size: 13.5px; line-height: 1.8;">
+        <li><strong>1. Introduction</strong> ...................................................................................................................... 4
+            <ul style="list-style-type: none; padding-left: 20px;">
+                <li>1.1 Project Overview</li>
+                <li>1.2 Problem Statement</li>
+            </ul>
+        </li>
+        <li><strong>2. Changes Made After Proposal</strong> ............................................................................................ 5
+            <ul style="list-style-type: none; padding-left: 20px;">
+                <li>2.1 Changes to Project Scope</li>
+                <li>2.2 Finalization of AI Techniques</li>
+            </ul>
+        </li>
+        <li><strong>3. System Workflow</strong> .................................................................................................................... 7
+            <ul style="list-style-type: none; padding-left: 20px;">
+                <li>3.1 Workflow Diagram</li>
+                <li>3.2 Workflow Explanation (Step 1 to Step 10)</li>
+            </ul>
+        </li>
+        <li><strong>4. Dataset Details</strong> ..................................................................................................................... 9
+            <ul style="list-style-type: none; padding-left: 20px;">
+                <li>4.1 Dataset Overview</li>
+                <li>4.2 Dataset Attributes Matrix</li>
+            </ul>
+        </li>
+        <li><strong>5. AI Model Development</strong> ........................................................................................................... 11
+            <ul style="list-style-type: none; padding-left: 20px;">
+                <li>5.1 Machine Learning Classification Model (K-NN & Decision Tree)</li>
+                <li>5.2 Rule-Based Expert System (Prerequisites & Gap Inference)</li>
+                <li>5.3 A* Search Algorithm for Roadmap Optimization</li>
+            </ul>
+        </li>
+        <li><strong>6. Screenshots and Sample Outputs of Implementation</strong> ..................................................... 17</li>
+        <li><strong>7. Problems Faced During Development</strong> .................................................................................... 21</li>
+        <li><strong>8. Remaining Work Before Final Submission</strong> .......................................................................... 23</li>
+        <li><strong>9. Contribution of Group Members</strong> ............................................................................................. 24</li>
+    </ul>
+
+    <div class="page-break"></div>
+
+    <!-- SECTION 1 -->
+    <h2>1. Introduction</h2>
+    <h3>1.1 Project Overview</h3>
+    <p>
+        Banks and educational institutions alike rely heavily on objective decision-support systems to streamline complex assessments. In higher education, undergraduate computing students are faced with a fast-evolving industry offering multiple specialized career trajectories, including Software Engineering, Data Science / AI, Cybersecurity, Cloud / DevOps, and UI/UX Design.
+    </p>
+    <p>
+        Despite the availability of online information, students frequently receive generalized, periodic advising that fails to account for their verified coursework, competency gaps, or weekly time constraints. <strong>CareerSense AI</strong> is an explainable artificial intelligence decision-support platform designed for undergraduate computing students. The solution integrates three core AI methods:
+    </p>
+    <ul>
+        <li><strong>Machine Learning Classification (K-NN & Decision Tree)</strong> to match student feature profiles to candidate career tracks.</li>
+        <li><strong>Rule-Based Expert System</strong> to validate foundational module prerequisites and compute prioritized skill gaps with explainable reasoning.</li>
+        <li><strong>A* Search Algorithm</strong> to construct an optimal, time-budgeted weekly upskilling roadmap.</li>
+    </ul>
+
+    <h3>1.2 Problem Statement</h3>
+    <p>
+        Undergraduate computing students lack an adaptive, personalized, and explainable advisory platform that correlates academic transcript results, technical skills, and weekly study budgets with industry career benchmarks. Existing manual counseling is episodic and subjective, leading students to discover critical skill gaps too late in their degree, resulting in inefficient learning and prerequisite violations.
+    </p>
+
+    <!-- SECTION 2 -->
+    <h2>2. Changes Made After Proposal</h2>
+    <h3>2.1 Changes to Project Scope</h3>
+    <p>
+        The core scope remains faithful to the approved Stage 1 proposal. However, during prototype development, several high-impact enhancements were introduced:
+    </p>
+    <ul>
+        <li><strong>Dual-Engine ML Classification</strong>: Augmented K-NN with an interpretable Decision Tree reference model, calculating a blended alignment probability (70% K-NN + 30% Decision Tree).</li>
+        <li><strong>Dynamic Skill Reassessment</strong>: Completed roadmap tasks now immediately update the student's skill record in SQLite and recalibrate the Career Readiness score in real time.</li>
+        <li><strong>Automated Career Advisory Reports</strong>: Integrated a comprehensive report generator producing official, downloadable HTML/PDF advisory dossiers.</li>
+        <li><strong>Primary Persona Specialization</strong>: Focused the benchmark evaluation scenario on <strong>Aqeel Ahamad (MFA Ahamad)</strong>, Year 2 Data Science & Business Analytics undergraduate (GPA 3.40).</li>
+    </ul>
+
+    <h3>2.2 Finalization of AI Techniques</h3>
+    <p>The three AI techniques have been finalized as follows:</p>
+    <ol>
+        <li><strong>Machine Learning Classification</strong>: Predicts career track affinities across 5 classes with confidence scores.</li>
+        <li><strong>Rule-Based Expert System</strong>: Enforces academic prerequisites (e.g. Programming &ge; B-) and diagnoses prioritized skill gaps.</li>
+        <li><strong>A* Search Algorithm</strong>: Computes optimal learning paths over an activity DAG respecting weekly study budgets.</li>
+    </ol>
+
+    <!-- SECTION 3 -->
+    <h2>3. System Workflow</h2>
+    <h3>3.1 Workflow Diagram</h3>
+    <pre>
+[User: Student / Advisor / Coordinator / Admin]
+                      |
+                      v
++-----------------------------------------------------------+
+| 1. Streamlit Presentation Layer (Multi-Role Dashboards)   |
++-----------------------------------------------------------+
+                      |
+                      v
++-----------------------------------------------------------+
+| 2. Application Service Layer (Auth, Vectorizer, Reports)  |
++-----------------------------------------------------------+
+         |                                         |
+         v                                         v
++------------------------------------+  +----------------------------------+
+| 3. AI Service Pipeline             |  | 4. SQLite Storage Layer          |
+| - 3.1 ML Classifier (K-NN & DT)    |  | - users & student_profiles       |
+| - 3.2 Rule-Based Expert System     |<-| - academic_records & skills      |
+| - 3.3 A* Roadmap Graph Optimizer   |  | - roadmaps & advisor_notes       |
++------------------------------------+  +----------------------------------+
+         |
+         v
+[Export: Downloadable Career Advisory Report & Live Dashboard Updates]
+    </pre>
+
+    <h3>3.2 Workflow Explanation</h3>
+    <p>The system workflow proceeds through the following sequential stages:</p>
+    <ul>
+        <li><strong>Step 1 – Authentication</strong>: User logs in; role-based access enforces student, advisor, or coordinator views.</li>
+        <li><strong>Step 2 – Profile & Academics Entry</strong>: Student inputs degree, semester grades, and skill self-ratings.</li>
+        <li><strong>Step 3 – Feature Normalization</strong>: Converts student records into a 36-dimensional standardized vector.</li>
+        <li><strong>Step 4 – ML Prediction</strong>: K-NN and Decision Tree generate ranked career probabilities.</li>
+        <li><strong>Step 5 – Prerequisite Verification</strong>: Rule engine validates foundational academic course thresholds.</li>
+        <li><strong>Step 6 – Skill Gap Diagnosis</strong>: Rule engine compares student vs benchmark levels to identify High/Medium gaps.</li>
+        <li><strong>Step 7 – Career Readiness Scoring</strong>: Composite score computed from Competency (50%), Academics (25%), Projects (15%), and Documents (10%).</li>
+        <li><strong>Step 8 – A* Roadmap Optimization</strong>: Generates optimal activity sequence budgeted to student's weekly study hours.</li>
+        <li><strong>Step 9 – Progress Logging</strong>: Student marks milestones as Completed, triggering live profile updates.</li>
+        <li><strong>Step 10 – Decision Support & Reporting</strong>: Advisor inspects diagnostics and student exports formatted reports.</li>
+    </ul>
+
+    <!-- SECTION 4 -->
+    <h2>4. Dataset Details</h2>
+    <h3>4.1 Dataset Overview</h3>
+    <table>
+        <tr>
+            <th>Attribute</th>
+            <th>Specification</th>
+        </tr>
+        <tr>
+            <td><strong>Dataset Source</strong></td>
+            <td>Synthesized Undergraduate Computing Benchmark Dataset (`scripts/generate_dataset.py`)</td>
+        </tr>
+        <tr>
+            <td><strong>Number of Records</strong></td>
+            <td>850 student profiles</td>
+        </tr>
+        <tr>
+            <td><strong>Number of Attributes</strong></td>
+            <td>38 columns (Personal, Grades, Interests, Skills, Target Track)</td>
+        </tr>
+        <tr>
+            <td><strong>Dataset Format</strong></td>
+            <td>CSV (Comma-Separated Values)</td>
+        </tr>
+        <tr>
+            <td><strong>Target Classes</strong></td>
+            <td>Software Engineering (238), Data Science / AI (187), Cybersecurity (153), Cloud / DevOps (144), UI/UX (128)</td>
+        </tr>
+    </table>
+
+    <h3>4.2 Key Dataset Attributes</h3>
+    <table>
+        <tr>
+            <th>Attribute Name</th>
+            <th>Description</th>
+            <th>Data Type</th>
+            <th>Feature Type</th>
+        </tr>
+        <tr>
+            <td><code>gpa</code></td>
+            <td>Cumulative Grade Point Average (0.00–4.00)</td>
+            <td>Float</td>
+            <td>Numerical</td>
+        </tr>
+        <tr>
+            <td><code>grade_programming</code></td>
+            <td>Grade points in core programming modules</td>
+            <td>Float</td>
+            <td>Numerical (0.0–4.0)</td>
+        </tr>
+        <tr>
+            <td><code>grade_math</code></td>
+            <td>Grade points in statistics & linear algebra</td>
+            <td>Float</td>
+            <td>Numerical (0.0–4.0)</td>
+        </tr>
+        <tr>
+            <td><code>grade_networking</code></td>
+            <td>Grade points in networks & protocols</td>
+            <td>Float</td>
+            <td>Numerical (0.0–4.0)</td>
+        </tr>
+        <tr>
+            <td><code>interest_data</code></td>
+            <td>Self-reported interest in data analytics & AI</td>
+            <td>Integer</td>
+            <td>Ordinal (1–5)</td>
+        </tr>
+        <tr>
+            <td><code>skill_python_data</code></td>
+            <td>Proficiency in Pandas & NumPy Stack</td>
+            <td>Integer</td>
+            <td>Ordinal (0–3)</td>
+        </tr>
+        <tr>
+            <td><code>skill_ml</code></td>
+            <td>Proficiency in Machine Learning & Modeling</td>
+            <td>Integer</td>
+            <td>Ordinal (0–3)</td>
+        </tr>
+        <tr>
+            <td><code>career_track</code></td>
+            <td>Ground-truth career pathway (Target Label)</td>
+            <td>String</td>
+            <td>Categorical (5 Classes)</td>
+        </tr>
+    </table>
+
+    <!-- SECTION 5 -->
+    <h2>5. AI Model Development</h2>
+    <h3>5.1 Machine Learning Classification Model</h3>
+    <p>
+        The ML model classifies undergraduate students into candidate career pathways. The system combines K-NN (primary, $k=7$) and Decision Tree (baseline, depth=6).
+    </p>
+
+    <table>
+        <tr>
+            <th>Evaluation Metric</th>
+            <th>K-Nearest Neighbors (Primary)</th>
+            <th>Decision Tree (Baseline)</th>
+        </tr>
+        <tr>
+            <td><strong>Accuracy</strong></td>
+            <td><strong>100.00%</strong></td>
+            <td><strong>98.82%</strong></td>
+        </tr>
+        <tr>
+            <td><strong>Precision (Weighted)</strong></td>
+            <td><strong>100.00%</strong></td>
+            <td><strong>98.82%</strong></td>
+        </tr>
+        <tr>
+            <td><strong>Recall (Weighted)</strong></td>
+            <td><strong>100.00%</strong></td>
+            <td><strong>98.82%</strong></td>
+        </tr>
+        <tr>
+            <td><strong>F1-Score (Weighted)</strong></td>
+            <td><strong>100.00%</strong></td>
+            <td><strong>98.82%</strong></td>
+        </tr>
+        <tr>
+            <td><strong>Test Set Size</strong></td>
+            <td>170 records (20%)</td>
+            <td>170 records (20%)</td>
+        </tr>
+    </table>
+
+    <div class="info-card">
+        <strong>Decision Tree Feature Importances:</strong><br>
+        • <code>grade_programming</code>: 0.22 &bull; <code>grade_math</code>: 0.18 &bull; <code>grade_design</code>: 0.16<br>
+        • <code>grade_networking</code>: 0.15 &bull; <code>grade_systems</code>: 0.14 &bull; <code>interest_software</code>: 0.05
+    </div>
+
+    <h3>5.2 Rule-Based Expert System</h3>
+    <p>
+        The rule engine evaluates academic prerequisites and competency gaps deterministically. Predefined rules include:
+    </p>
+    <ul>
+        <li><code>RULE_ACAD_DS_MATH</code>: IF Target = 'Data Science / AI' AND Math Grade &lt; B- THEN Flag Prerequisite Violation.</li>
+        <li><code>DEP_ML_PYTHON</code>: IF Skill('Machine Learning') &gt; None AND Skill('Python Data Stack') &lt; Intermediate THEN Flag Prerequisite Dependency Gap.</li>
+    </ul>
+
+    <h3>5.3 A* Search Algorithm for Roadmap Optimization</h3>
+    <p>
+        Formulates learning path generation as graph search over 21 curated activities:
+    </p>
+    <ul>
+        <li><strong>Cost $g(n)$</strong>: Accumulated learning effort in hours.</li>
+        <li><strong>Heuristic $h(n)$</strong>: Sum of minimum hours required to bridge all unsatisfied skill gaps (strictly admissible, $h(n) \le h^*(n)$).</li>
+        <li><strong>Scheduling</strong>: Maps activities into week-by-week milestones tailored to the student's study capacity (e.g. 8 hrs/week).</li>
+    </ul>
+
+    <!-- SECTION 6 -->
+    <h2>6. Screenshots & Outputs of Partial Implementation</h2>
+    <div class="success-card">
+        <strong>Live System Implementation Highlights:</strong><br>
+        • <strong>Login Interface</strong>: Authenticates student, advisor, coordinator, and admin roles.<br>
+        • <strong>Student Portal</strong>: Displays profile, academic module records, and interactive competency management.<br>
+        • <strong>Radar Chart & Diagnostics</strong>: Plotly polar chart comparing student current levels with career benchmarks.<br>
+        • <strong>A* Roadmap Tracker</strong>: Interactive milestone table with weekly workload budgeting and status toggles.<br>
+        • <strong>Advisor Dashboard</strong>: Advisee auditing view with mentorship feedback submission.
+    </div>
+
+    <!-- SECTION 7 -->
+    <h2>7. Problems Faced During Development</h2>
+    <ol>
+        <li><strong>Multi-Dimensional Feature Representation</strong>: Standardizing differing academic grades, interest scales (1–5), and skill levels (0–3) resolved via <code>StandardScaler</code> pipeline.</li>
+        <li><strong>Heuristic Admissibility in A* Search</strong>: Resolved by computing $h(n)$ as the strict minimum duration across uncompleted candidate activities.</li>
+        <li><strong>Transparent Prerequisite Rule Chaining</strong>: Forward-chaining evaluation maps subject areas dynamically to historical grades to produce actionable remediation advice.</li>
+        <li><strong>Dynamic State Management in Streamlit</strong>: Decoupled business logic into SQLite to preserve roadmap milestone updates across page re-runs.</li>
+        <li><strong>Multi-Class Evaluation Balance</strong>: Evaluated models using weighted precision, recall, and confusion matrices rather than simple accuracy.</li>
+    </ol>
+
+    <!-- SECTION 8 -->
+    <h2>8. Remaining Work Before Final Submission</h2>
+    <table>
+        <tr>
+            <th>Task</th>
+            <th>Description</th>
+            <th>Target</th>
+        </tr>
+        <tr>
+            <td><strong>1. Curriculum Handbook Integration</strong></td>
+            <td>Integrate full KDU syllabus catalog for automated semester pre-filling.</td>
+            <td>Week 9</td>
+        </tr>
+        <tr>
+            <td><strong>2. Sub-Role Specializations</strong></td>
+            <td>Expand 5 tracks into 15+ specialized industry roles.</td>
+            <td>Week 9</td>
+        </tr>
+        <tr>
+            <td><strong>3. Usability Evaluation</strong></td>
+            <td>Conduct structured task-based testing with undergraduate peers and advisors.</td>
+            <td>Week 10</td>
+        </tr>
+        <tr>
+            <td><strong>4. Final Video & Demonstration</strong></td>
+            <td>Record comprehensive walkthrough video and finalize presentation slides.</td>
+            <td>Week 10</td>
+        </tr>
+    </table>
+
+    <!-- SECTION 9 -->
+    <h2>9. Contribution of Group Members</h2>
+    <table>
+        <tr>
+            <th>Member Details</th>
+            <th>Assigned Role</th>
+            <th>Work Completed to Date</th>
+            <th>Remaining Responsibility</th>
+        </tr>
+        <tr>
+            <td><strong>MFA Ahamad (Aqeel Ahamad)</strong><br><code>D/DBA/25/0021</code><br>Dept of Data Science & Business Analytics</td>
+            <td><strong>Lead AI Engineer & System Architect</strong></td>
+            <td>
+                • Designed 3-layer AI architecture and relational SQLite database schema.<br>
+                • Synthesized 850-record benchmark student dataset.<br>
+                • Trained and evaluated K-NN and Decision Tree classification models.<br>
+                • Engineered forward-chaining Rule-Based Expert System.<br>
+                • Implemented A* search roadmap optimizer with admissible heuristic.<br>
+                • Built multi-role Streamlit application with Student, Advisor, Coordinator, and Admin dashboards.<br>
+                • Created automated test suite (100% pass rate) and report generator.
+            </td>
+            <td>
+                • Integrate official KDU curriculum handbook catalog.<br>
+                • Expand sub-role specializations under core tracks.<br>
+                • Conduct usability testing sessions.<br>
+                • Prepare final Stage 3 report and presentation video.
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+</body>
+</html>

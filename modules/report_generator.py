@@ -9,12 +9,23 @@ from datetime import datetime
 class CareerReportGenerator:
     @staticmethod
     def generate_html_report(student_profile: dict, user_info: dict, explanation_data: dict, readiness_data: dict, roadmap_data: list) -> str:
-        name = user_info.get("full_name", "Student")
-        reg_no = user_info.get("reg_no", "N/A")
-        degree = student_profile.get("degree", "Computing Programme")
-        year = student_profile.get("year", 1)
-        gpa = student_profile.get("gpa", 0.0)
-        target_track = explanation_data.get("target_track", "Software Engineering")
+        user_info = user_info or {}
+        student_profile = student_profile or {}
+        explanation_data = explanation_data or {}
+        readiness_data = readiness_data or {}
+        roadmap_data = roadmap_data or []
+
+        name = user_info.get("full_name") or "Aqeel Ahamad (MFA Ahamad)"
+        raw_reg = user_info.get("reg_no")
+        reg_no = str(raw_reg) if raw_reg else "D/DBA/25/0021"
+        ref_code = reg_no.replace("/", "").replace(" ", "").replace("-", "")
+        degree = student_profile.get("degree") or "BSc (Hons) in Data Science & Business Analytics"
+        year = student_profile.get("year", 2)
+        try:
+            gpa = float(student_profile.get("gpa", 3.40))
+        except (ValueError, TypeError):
+            gpa = 3.40
+        target_track = explanation_data.get("target_track", "Data Science / AI")
         date_str = datetime.now().strftime("%B %d, %Y")
         
         readiness_score = readiness_data.get("total_readiness_score", 0.0)
@@ -97,7 +108,7 @@ class CareerReportGenerator:
             </div>
             <div style="text-align:right;">
                 <p style="margin:0; font-weight:bold;">Date: {date_str}</p>
-                <p style="margin:0;">Ref: CS-AI-{reg_no.replace('/', '')}</p>
+                <p style="margin:0;">Ref: CS-AI-{ref_code}</p>
             </div>
         </div>
     </div>

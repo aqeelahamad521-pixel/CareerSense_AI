@@ -8,7 +8,7 @@ Provides capabilities for:
 """
 import streamlit as st
 import pandas as pd
-import plotly.figure_factory as ff
+import plotly.express as px
 from config import DATASET_PATH
 from scripts.train_models import main as run_train_models
 
@@ -62,13 +62,15 @@ def render_admin_view(db, rule_engine, a_star, ml_classifier):
                 labels = knn.get("labels", [])
                 cm_data = knn.get("confusion_matrix", [])
                 if cm_data and labels:
-                    fig_cm = ff.create_annotated_heatmap(
-                        z=cm_data,
+                    fig_cm = px.imshow(
+                        cm_data,
                         x=labels,
                         y=labels,
-                        colorscale="Blues"
+                        color_continuous_scale="Blues",
+                        text_auto=True,
+                        labels=dict(x="Predicted Track", y="Actual Track", color="Count")
                     )
-                    fig_cm.update_layout(margin=dict(l=10, r=10, t=10, b=10), height=300)
+                    fig_cm.update_layout(margin=dict(l=10, r=10, t=10, b=10), height=320, coloraxis_showscale=False)
                     st.plotly_chart(fig_cm, use_container_width=True)
 
             with col_m2:

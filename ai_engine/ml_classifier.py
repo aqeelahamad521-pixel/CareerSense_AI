@@ -21,7 +21,8 @@ sys.path.append(str(BASE_DIR))
 
 from config import (
     DATASET_PATH, MODELS_DIR, CAREER_TRACKS,
-    ML_FEATURE_COLUMNS, GRADE_POINTS, SKILL_LEVELS
+    ML_FEATURE_COLUMNS, GRADE_POINTS, SKILL_LEVELS,
+    DEGREE_CAREER_ALIGNMENT
 )
 
 class NumpyStandardScaler:
@@ -111,15 +112,17 @@ class InterpretableDecisionTree:
         X = np.array(X).flatten()
         # Compute alignment score per track based on feature splits
         scores = {
-            "Software Engineering": (X[0] * 2.0) + (X[6] * 1.5) + (X[11] * 2.0), # prog + int_se + oop
-            "Data Science / AI": (X[1] * 2.0) + (X[7] * 1.5) + (X[16] * 2.0),    # math + int_ds + python_data
-            "Cybersecurity": (X[3] * 2.0) + (X[8] * 1.5) + (X[21] * 2.0),        # net + int_sec + net_sec
-            "Cloud / DevOps": (X[4] * 2.0) + (X[9] * 1.5) + (X[26] * 2.0),       # sys + int_cld + docker
-            "UI/UX Design": (X[5] * 2.5) + (X[10] * 2.0) + (X[32] * 2.0)         # des + int_ui + figma
+            "Software Engineering": (X[0] * 1.5) + (X[6] * 1.2) + (X[11] * 1.5) + (X[12] * 1.2),
+            "Data Science / AI": (X[1] * 1.5) + (X[7] * 1.2) + (X[16] * 1.5) + (X[17] * 1.2),
+            "Cybersecurity": (X[3] * 1.5) + (X[8] * 1.2) + (X[21] * 1.5) + (X[22] * 1.2),
+            "Cloud / DevOps": (X[4] * 1.5) + (X[9] * 1.2) + (X[26] * 1.5) + (X[27] * 1.2),
+            "UI/UX Design": (X[5] * 1.5) + (X[10] * 1.2) + (X[31] * 1.5) + (X[32] * 1.2)
         }
-        total = sum(np.exp(list(scores.values())))
-        probs = [np.exp(scores[c]) / total for c in self.classes_]
-        return np.array([probs])
+        vals = np.array(list(scores.values()))
+        exp_vals = np.exp(vals - np.max(vals))
+        probs = exp_vals / np.sum(exp_vals)
+        prob_map = dict(zip(scores.keys(), probs))
+        return np.array([[prob_map.get(c, 0.2) for c in self.classes_]])
 
     def predict(self, X):
         probs = self.predict_proba(X)[0]
@@ -171,32 +174,74 @@ class CareerClassifier:
             "interest_design": interests.get("UI/UX Design & User Experience", 3)
         }
 
+        # Harmonize skills with completed academic modules
+        combined_skills = dict(skills) if skills else {}
+        module_skill_inferences = {
+            "Structured Programming": ("Object-Oriented Programming", "Beginner"),
+            "Object-Oriented": ("Object-Oriented Programming", "Intermediate"),
+            "Algorithms": ("Data Structures & Algorithms", "Intermediate"),
+            "Data Structures": ("Data Structures & Algorithms", "Intermediate"),
+            "Quality Assurance": ("Automated Testing & QA", "Intermediate"),
+            "Testing": ("Automated Testing & QA", "Intermediate"),
+            "Architecture": ("REST APIs & Web Services", "Intermediate"),
+            "Web Technologies": ("Frontend Framework Awareness", "Intermediate"),
+            "Database": ("SQL & Data Querying", "Intermediate"),
+            "Big Data": ("SQL & Data Querying", "Intermediate"),
+            "Python": ("Python Data Stack (Pandas/NumPy)", "Intermediate"),
+            "Statistics": ("Statistical Analysis", "Intermediate"),
+            "Probability": ("Statistical Analysis", "Intermediate"),
+            "Machine Learning": ("Machine Learning & Modeling", "Intermediate"),
+            "Visualization": ("Data Visualization", "Intermediate"),
+            "Networks": ("Network Security & Protocols", "Intermediate"),
+            "Routing": ("Network Security & Protocols", "Intermediate"),
+            "Linux": ("Linux Systems Administration", "Intermediate"),
+            "System Administration": ("Linux Systems Administration", "Intermediate"),
+            "Cloud": ("Cloud Computing (AWS/GCP/Azure)", "Intermediate"),
+            "DevOps": ("Containerization (Docker)", "Intermediate"),
+            "Cyber Defense": ("Vulnerability Assessment", "Intermediate"),
+            "Hardware Security": ("Cryptography Fundamentals", "Intermediate"),
+            "Microprocessor": ("Linux Systems Administration", "Intermediate"),
+            "Business Intelligence": ("SQL & Data Querying", "Intermediate"),
+            "Business Process": ("User Research & Usability Testing", "Intermediate"),
+            "Digital Design": ("Wireframing & Prototyping (Figma)", "Intermediate"),
+            "E-Commerce": ("Design Principles & Typography", "Intermediate")
+        }
+        for rec in academic_records:
+            m_title = rec.get("module_name", "")
+            g_pt = rec.get("grade_points", GRADE_POINTS.get(rec.get("grade", "C"), 2.0))
+            if g_pt >= 2.0:
+                for phrase, (sk_name, base_lvl) in module_skill_inferences.items():
+                    if phrase.lower() in m_title.lower():
+                        cur_lvl = combined_skills.get(sk_name, "None")
+                        if SKILL_LEVELS.get(cur_lvl, 0) < SKILL_LEVELS.get(base_lvl, 1):
+                            combined_skills[sk_name] = base_lvl
+
         skill_attr_map = {
-            "skill_oop": skills.get("Object-Oriented Programming", "None"),
-            "skill_dsa": skills.get("Data Structures & Algorithms", "None"),
-            "skill_web_api": skills.get("REST APIs & Web Services", "None"),
-            "skill_testing": skills.get("Automated Testing & QA", "None"),
-            "skill_git": skills.get("Version Control (Git)", "None"),
-            "skill_python_data": skills.get("Python Data Stack (Pandas/NumPy)", "None"),
-            "skill_ml": skills.get("Machine Learning & Modeling", "None"),
-            "skill_visualization": skills.get("Data Visualization", "None"),
-            "skill_sql": skills.get("SQL & Data Querying", "None"),
-            "skill_statistics": skills.get("Statistical Analysis", "None"),
-            "skill_network_sec": skills.get("Network Security & Protocols", "None"),
-            "skill_cryptography": skills.get("Cryptography Fundamentals", "None"),
-            "skill_linux": skills.get("Linux Systems Administration", "None"),
-            "skill_vuln_assess": skills.get("Vulnerability Assessment", "None"),
-            "skill_secure_code": skills.get("Secure Coding Practices", "None"),
-            "skill_docker": skills.get("Containerization (Docker)", "None"),
-            "skill_cicd": skills.get("CI/CD Pipelines", "None"),
-            "skill_cloud_infra": skills.get("Cloud Computing (AWS/GCP/Azure)", "None"),
-            "skill_iac": skills.get("Infrastructure as Code", "None"),
-            "skill_monitoring": skills.get("System Monitoring & Logging", "None"),
-            "skill_user_research": skills.get("User Research & Usability Testing", "None"),
-            "skill_figma": skills.get("Wireframing & Prototyping (Figma)", "None"),
-            "skill_design_principles": skills.get("Design Principles & Typography", "None"),
-            "skill_frontend": skills.get("Frontend Framework Awareness", "None"),
-            "skill_design_systems": skills.get("Design Systems & Component Design", "None")
+            "skill_oop": combined_skills.get("Object-Oriented Programming", "None"),
+            "skill_dsa": combined_skills.get("Data Structures & Algorithms", "None"),
+            "skill_web_api": combined_skills.get("REST APIs & Web Services", "None"),
+            "skill_testing": combined_skills.get("Automated Testing & QA", "None"),
+            "skill_git": combined_skills.get("Version Control (Git)", "None"),
+            "skill_python_data": combined_skills.get("Python Data Stack (Pandas/NumPy)", "None"),
+            "skill_ml": combined_skills.get("Machine Learning & Modeling", "None"),
+            "skill_visualization": combined_skills.get("Data Visualization", "None"),
+            "skill_sql": combined_skills.get("SQL & Data Querying", "None"),
+            "skill_statistics": combined_skills.get("Statistical Analysis", "None"),
+            "skill_network_sec": combined_skills.get("Network Security & Protocols", "None"),
+            "skill_cryptography": combined_skills.get("Cryptography Fundamentals", "None"),
+            "skill_linux": combined_skills.get("Linux Systems Administration", "None"),
+            "skill_vuln_assess": combined_skills.get("Vulnerability Assessment", "None"),
+            "skill_secure_code": combined_skills.get("Secure Coding Practices", "None"),
+            "skill_docker": combined_skills.get("Containerization (Docker)", "None"),
+            "skill_cicd": combined_skills.get("CI/CD Pipelines", "None"),
+            "skill_cloud_infra": combined_skills.get("Cloud Computing (AWS/GCP/Azure)", "None"),
+            "skill_iac": combined_skills.get("Infrastructure as Code", "None"),
+            "skill_monitoring": combined_skills.get("System Monitoring & Logging", "None"),
+            "skill_user_research": combined_skills.get("User Research & Usability Testing", "None"),
+            "skill_figma": combined_skills.get("Wireframing & Prototyping (Figma)", "None"),
+            "skill_design_principles": combined_skills.get("Design Principles & Typography", "None"),
+            "skill_frontend": combined_skills.get("Frontend Framework Awareness", "None"),
+            "skill_design_systems": combined_skills.get("Design Systems & Component Design", "None")
         }
 
         vec = []
@@ -356,7 +401,7 @@ class CareerClassifier:
         else:
             self.is_trained = False
 
-    def predict_career_matches(self, academic_records: list, interests: dict, skills: dict) -> dict:
+    def predict_career_matches(self, academic_records: list, interests: dict, skills: dict, degree: str = None, target_career: str = None) -> dict:
         if not self.is_trained:
             return {"ranked_matches": [], "model_used": "None"}
 
@@ -369,26 +414,87 @@ class CareerClassifier:
         dt_probs = self.dt_model.predict_proba(X_raw)[0]
         dt_classes = list(self.dt_model.classes_)
 
+        # Degree Alignment Prior
+        prior = DEGREE_CAREER_ALIGNMENT.get(degree, {t: 0.20 for t in self.classes_})
+
+        # Map domain interests to career tracks
+        category_to_track = {
+            "Software Development & Systems": "Software Engineering",
+            "Data Analysis & AI Research": "Data Science / AI",
+            "Cybersecurity & Threat Defense": "Cybersecurity",
+            "Cloud Infrastructure & Automation": "Cloud / DevOps",
+            "UI/UX Design & User Experience": "UI/UX Design"
+        }
+        interest_scores = {}
+        for cat, trk in category_to_track.items():
+            interest_scores[trk] = float(interests.get(cat, 3)) if interests else 3.0
+        sum_int = sum(interest_scores.values()) or 1.0
+        interest_dist = {trk: val / sum_int for trk, val in interest_scores.items()}
+
+        # Assess profile completeness and balance weights
+        has_academic_data = len(academic_records) > 0
+        has_skill_data = any(lvl != "None" and lvl != 0 for lvl in skills.values()) if skills else False
+
+        if target_career and target_career in self.classes_:
+            if has_academic_data:
+                # 40% Current Academic/Skill Competency, 30% Target Aspiration, 15% Domain Interest, 15% Degree Prior
+                w_ml, w_target, w_interest, w_prior = 0.40, 0.30, 0.15, 0.15
+            elif has_skill_data:
+                w_ml, w_target, w_interest, w_prior = 0.35, 0.35, 0.15, 0.15
+            else:
+                # Cold start: high weight on target aspiration and domain interest
+                w_ml, w_target, w_interest, w_prior = 0.15, 0.45, 0.20, 0.20
+            target_dist = {t: (1.0 if t == target_career else 0.0) for t in self.classes_}
+        else:
+            w_target = 0.0
+            target_dist = {t: 0.0 for t in self.classes_}
+            if has_academic_data:
+                w_ml, w_interest, w_prior = 0.65, 0.15, 0.20
+            elif has_skill_data:
+                w_ml, w_interest, w_prior = 0.55, 0.20, 0.25
+            else:
+                w_ml, w_interest, w_prior = 0.20, 0.30, 0.50
+
         ranked = []
         for track in self.classes_:
             knn_p = knn_probs[knn_classes.index(track)] if track in knn_classes else 0.0
             dt_p = dt_probs[dt_classes.index(track)] if track in dt_classes else 0.0
-            combined_p = (0.70 * knn_p) + (0.30 * dt_p)
+            ml_p = (0.70 * knn_p) + (0.30 * dt_p)
+            tgt_p = target_dist.get(track, 0.0)
+            int_p = interest_dist.get(track, 0.20)
+            pri_p = prior.get(track, 0.20)
+
+            combined_p = (w_ml * ml_p) + (w_target * tgt_p) + (w_interest * int_p) + (w_prior * pri_p)
             
             ranked.append({
                 "track": track,
                 "probability": round(float(combined_p) * 100, 1),
+                "competency_prob": round(float(ml_p) * 100, 1),
                 "knn_prob": round(float(knn_p) * 100, 1),
-                "dt_prob": round(float(dt_p) * 100, 1)
+                "dt_prob": round(float(dt_p) * 100, 1),
+                "interest_prob": round(float(int_p) * 100, 1),
+                "prior_prob": round(float(pri_p) * 100, 1),
+                "is_target": (track == target_career)
             })
+
+        # Normalize to ensure probabilities sum to 100%
+        total_p = sum(r["probability"] for r in ranked)
+        if total_p > 0:
+            for r in ranked:
+                r["probability"] = round((r["probability"] / total_p) * 100, 1)
 
         ranked.sort(key=lambda x: -x["probability"])
 
         distances, indices = self.knn_model.kneighbors(X_scaled, n_neighbors=5)
         
+        weights_desc = f"ML Competency ({int(w_ml*100)}%)"
+        if w_target > 0:
+            weights_desc += f" + Target Aspiration ({int(w_target*100)}%)"
+        weights_desc += f" + Interests ({int(w_interest*100)}%) + Degree Prior ({int(w_prior*100)}%)"
+
         return {
             "ranked_matches": ranked,
             "top_track": ranked[0]["track"] if ranked else "Software Engineering",
-            "model_used": "K-NN (Primary 70%) + Decision Tree (Baseline 30%)",
+            "model_used": weights_desc,
             "nearest_neighbor_distances": [round(float(d), 3) for d in distances[0]]
         }

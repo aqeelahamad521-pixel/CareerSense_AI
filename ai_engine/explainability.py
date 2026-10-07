@@ -20,8 +20,17 @@ class ExplainabilityEngine:
         Generates a comprehensive explainability bundle for a student.
         """
         # 1. Run ML classification (if available) or fallback to rule heuristic
+        degree = None
+        if student_profile:
+            if hasattr(student_profile, "get"):
+                degree = student_profile.get("degree")
+            elif "degree" in student_profile:
+                degree = student_profile["degree"]
+
         if self.ml_classifier and self.ml_classifier.is_trained:
-            ml_results = self.ml_classifier.predict_career_matches(academic_records, student_interests, student_skills)
+            ml_results = self.ml_classifier.predict_career_matches(
+                academic_records, student_interests, student_skills, degree=degree, target_career=target_track
+            )
         else:
             ml_results = self._heuristic_career_ranking(academic_records, student_interests, student_skills)
 
@@ -38,7 +47,7 @@ class ExplainabilityEngine:
         dep_alerts = self.rule_engine.verify_skill_dependencies(student_skills)
 
         # 5. Influential Factor Attribution
-        influential_factors = self._extract_influential_factors(chosen_track, academic_records, student_interests, student_skills)
+        influential_factors = self._extract_influential_factors(chosen_track, academic_records, student_interests, student_skills, skill_gaps)
 
         # 6. Radar Chart Comparison Data
         radar_data = self._generate_radar_comparison_data(chosen_track, student_skills)
@@ -76,38 +85,54 @@ class ExplainabilityEngine:
         matches.sort(key=lambda x: -x["probability"])
         return {"ranked_matches": matches, "model_used": "Knowledge-Based Heuristic"}
 
-    def _extract_influential_factors(self, track: str, academics: list, interests: dict, skills: dict) -> dict:
+    def _extract_influential_factors(self, track: str, academics: list, interests: dict, skills: dict, skill_gaps: list = None) -> dict:
         """
         Extracts positive drivers and constraining factors influencing the career recommendation.
         """
         positive_drivers = []
         growth_areas = []
 
-        # Analyze relevant grades
+        # Analyze relevant grades by subject area
+        subj_grades = {}
         for rec in academics:
             subj = rec.get("subject_area", "")
             grade = rec.get("grade", "C")
             pts = rec.get("grade_points", 2.0)
-            if pts >= 3.3: # B+ or higher
-                positive_drivers.append(f"Strong academic performance in {subj} (Grade: {grade}) provides solid foundations.")
-            elif pts < 2.0:
-                growth_areas.append(f"Lower score in {subj} (Grade: {grade}) requires revision for technical interviews.")
+            if subj not in subj_grades:
+                subj_grades[subj] = []
+            subj_grades[subj].append((grade, pts))
+
+        for subj, items in subj_grades.items():
+            max_pts = max(p for g, p in items)
+            best_grades = [g for g, p in items if p == max_pts]
+            if max_pts >= 3.7:
+                positive_drivers.append(f"Excellent coursework mastery in {subj} (Grade {best_grades[0]}) establishes a robust core competency.")
+            elif max_pts >= 3.0:
+                positive_drivers.append(f"Consistent academic performance in {subj} (Grade {best_grades[0]}) satisfies degree prerequisite requirements.")
+            elif max_pts < 2.0:
+                growth_areas.append(f"Lower score in {subj} (Grade {best_grades[0]}) suggests reviewing foundational principles before technical screenings.")
 
         # Analyze domain interests
         for category, rating in interests.items():
             if rating >= 4:
-                positive_drivers.append(f"High self-reported affinity ({rating}/5) for '{category}'.")
+                positive_drivers.append(f"High self-reported career affinity ({rating}/5) for '{category}'.")
             elif rating <= 2 and track.lower() in category.lower():
-                growth_areas.append(f"Moderate interest ({rating}/5) logged in primary discipline '{category}'.")
+                growth_areas.append(f"Lower affinity rating ({rating}/5) logged for primary discipline '{category}'.")
 
-        # Analyze core skills
+        # Analyze core demonstrated skills
         advanced_skills = [k for k, v in skills.items() if v in ("Intermediate", "Advanced")]
         if advanced_skills:
-            positive_drivers.append(f"Demonstrated competency in key tools: {', '.join(advanced_skills[:4])}.")
+            positive_drivers.append(f"Demonstrated technical proficiency in: {', '.join(advanced_skills[:4])}.")
+
+        # Analyze critical skill gaps for target track
+        if skill_gaps:
+            critical = [g["skill"] for g in skill_gaps if g["priority"] == "High"]
+            if critical:
+                growth_areas.append(f"Target track requires advancing competency in: {', '.join(critical[:3])} (see Tab 2 A* Roadmap).")
 
         return {
-            "strengths": positive_drivers if positive_drivers else ["Consistent overall academic baseline across general computing modules."],
-            "limitations": growth_areas if growth_areas else ["No critical academic deficiencies detected; focus on targeted practical portfolio building."]
+            "strengths": positive_drivers if positive_drivers else ["Consistent overall academic baseline across computing modules."],
+            "limitations": growth_areas if growth_areas else ["No critical academic deficiencies detected; focus on practical project milestones."]
         }
 
     def _generate_radar_comparison_data(self, track: str, student_skills: dict) -> dict:

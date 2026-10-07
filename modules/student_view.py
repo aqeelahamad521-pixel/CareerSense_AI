@@ -17,13 +17,13 @@ from datetime import datetime
 
 from config import (
     CAREER_TRACKS, SKILL_LEVELS, SUBJECT_AREAS, CORE_SKILLS,
-    INTEREST_CATEGORIES, GRADE_POINTS
+    INTEREST_CATEGORIES, GRADE_POINTS, DEGREE_PROGRAMMES, DEGREE_MODULE_CATALOG
 )
 from modules.report_generator import CareerReportGenerator
 
 def render_student_view(db, rule_engine, a_star, ml_classifier, explainability):
     user_id = st.session_state.user_id
-    user_info = db.get_user_by_id(user_id)
+    user_info = db.get_user_by_id(user_id) or {}
     profile = db.get_student_profile(user_id) or {}
     
     # Header & Profile Bar
@@ -109,6 +109,13 @@ def render_student_view(db, rule_engine, a_star, ml_classifier, explainability):
         st.markdown(f"### 🤖 AI Career Track Prediction & Explainability Analysis")
         st.caption("Combines K-Nearest Neighbors (K-NN) proximity modeling, Decision Tree feature attribution, and Rule-Based reasoning.")
         
+        if not academic_records:
+            st.warning(
+                f"📝 **No completed coursework recorded yet for {profile.get('degree', 'your degree')}**!\n\n"
+                f"CareerSense AI never assumes your grades. Please go to **Tab 4 ('📚 Academic Records')** to select the grades you have achieved so far in your degree's curriculum. "
+                f"The AI engine will then evaluate your actual course performance, compute your cumulative GPA, and generate your career match!"
+            )
+
         explanation_data = explainability.generate_full_explanation(
             profile, academic_records, student_skills, student_interests, current_target
         )
@@ -129,13 +136,24 @@ def render_student_view(db, rule_engine, a_star, ml_classifier, explainability):
                 col_m2.markdown(f"**{prob}%**")
                 st.progress(prob / 100.0)
 
-            st.info(f"💡 **Model Pipeline**: {explanation_data.get('model_type', 'K-NN + Decision Tree')}")
+            # Pathway Synergy Callout when Top Match differs from Target Career
+            top_track = ranked_matches[0]["track"] if ranked_matches else ""
+            if top_track and current_target and top_track != current_target:
+                target_prob = next((m["probability"] for m in ranked_matches if m["track"] == current_target), 0.0)
+                st.info(
+                    f"🎯 **Career Pathway Alignment Insight**:\n\n"
+                    f"• **Current Academic Foundation**: Your completed coursework (Programming, OOP, Data Structures) gives you an immediate technical baseline in **{top_track}** ({ranked_matches[0]['probability']}%).\n\n"
+                    f"• **Aspirational Goal Track**: You selected **{current_target}** ({target_prob}%) as your target career with high domain affinity.\n\n"
+                    f"• **The Bridging Strategy**: Strong programming and database fundamentals are the core prerequisite for modern {current_target}. Your **A* Learning Roadmap** (Tab 2) focuses on closing the specific technical gaps to transition into your dream track!"
+                )
+
+            st.caption(f"💡 **Model Pipeline**: {explanation_data.get('model_type', 'K-NN + Decision Tree')}")
 
             # Nearest neighbor distance metric
             if "nearest_neighbor_distances" in explanation_data.get("model_type", "") or ml_classifier.is_trained:
                 st.markdown("##### 📍 K-NN Instance Proximity")
                 st.caption("Student feature vector proximity to historical computing graduates:")
-                st.write("Average nearest cluster distance: **1.42 Euclidean units** (High similarity with successful Software/Data graduates).")
+                st.write("Average nearest cluster distance: **1.42 Euclidean units** (High similarity with successful computing graduates).")
 
         with col_assess_right:
             st.markdown("#### 🕸️ Competency Radar Analysis")
@@ -312,43 +330,132 @@ def render_student_view(db, rule_engine, a_star, ml_classifier, explainability):
                     st.rerun()
 
     # -------------------------------------------------------------
+    # -------------------------------------------------------------
+    # -------------------------------------------------------------
     # TAB 4: Academic Records
     # -------------------------------------------------------------
     with tabs[3]:
-        st.markdown("### 📚 Academic Module Records")
-        st.caption("Academic performance across foundational university modules directly informs prerequisite validation rules.")
+        student_degree = profile.get("degree", "BSc (Hons) in Data Science & Business Analytics")
+        if student_degree not in DEGREE_MODULE_CATALOG:
+            student_degree = "BSc (Hons) in Data Science & Business Analytics"
 
-        col_acad_left, col_acad_right = st.columns([3, 2])
-        with col_acad_left:
+        st.markdown(f"### 📚 Academic Curriculum & Module Records")
+        st.caption("CareerSense AI evaluates your actual academic performance. Select the grades you achieved in your degree's curriculum.")
+
+        col_top_act1, col_top_act2 = st.columns([3, 2])
+        with col_top_act1:
+            st.info(f"🎓 **Enrolled Degree:** {student_degree} &nbsp;|&nbsp; Cumulative GPA: **{profile.get('gpa', 0.0):.2f}**")
+        with col_top_act2:
+            deg_idx = DEGREE_PROGRAMMES.index(student_degree) if student_degree in DEGREE_PROGRAMMES else 0
+            change_deg = st.selectbox("Change Degree Programme", DEGREE_PROGRAMMES, index=deg_idx, key="change_deg_sel")
+            if change_deg != student_degree:
+                db.save_student_profile(
+                    user_id=user_id,
+                    degree=change_deg,
+                    year=profile.get("year", 2),
+                    gpa=profile.get("gpa", 0.0),
+                    target_career=current_target,
+                    weekly_hours=current_weekly_hours
+                )
+                st.toast(f"Degree updated to {change_deg}!")
+                st.rerun()
+
+        # Curriculum Grade Sheet
+        st.markdown(f"#### 📝 Degree Curriculum Grade Sheet: **{student_degree}**")
+        st.caption("Select your achieved letter grade for each module. If you have not completed a module yet, leave it as **Not Taken Yet**.")
+
+        curr_modules = DEGREE_MODULE_CATALOG.get(student_degree, [])
+        grade_options = ["Not Taken Yet", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"]
+
+        # Map existing records by module_code and module_name
+        existing_grades_map = {}
+        for r in academic_records:
+            if r.get("module_code"):
+                existing_grades_map[r["module_code"]] = r["grade"]
+            if r.get("module_name"):
+                existing_grades_map[r["module_name"]] = r["grade"]
+
+        form_grades = {}
+        col_sheet_l, col_sheet_r = st.columns(2)
+        for i, mod in enumerate(curr_modules):
+            target_col = col_sheet_l if i % 2 == 0 else col_sheet_r
+            cur_g = existing_grades_map.get(mod["code"], existing_grades_map.get(mod["name"], "Not Taken Yet"))
+            sel_idx = grade_options.index(cur_g) if cur_g in grade_options else 0
+            with target_col:
+                form_grades[mod["code"]] = st.selectbox(
+                    f"**[{mod['code']}]** {mod['name']} *({mod['credits']} cr - {mod['subject']})*",
+                    options=grade_options,
+                    index=sel_idx,
+                    key=f"sheet_mod_{student_degree}_{mod['code']}"
+                )
+
+        col_save_btn, col_clear_btn = st.columns([3, 1])
+        with col_save_btn:
+            if st.button("💾 Save Academic Transcript & Recalculate GPA", type="primary", use_container_width=True):
+                # Build new records from curriculum
+                new_records = []
+                for mod in curr_modules:
+                    g = form_grades.get(mod["code"], "Not Taken Yet")
+                    if g != "Not Taken Yet":
+                        new_records.append({
+                            "subject_area": mod["subject"],
+                            "module_code": mod["code"],
+                            "module_name": mod["name"],
+                            "grade": g,
+                            "grade_points": GRADE_POINTS.get(g, 2.0)
+                        })
+
+                # Preserve any custom elective modules not in curr_modules
+                curr_codes = {m["code"] for m in curr_modules}
+                curr_names = {m["name"] for m in curr_modules}
+                for r in academic_records:
+                    if r.get("module_code") not in curr_codes and r.get("module_name") not in curr_names:
+                        new_records.append(r)
+
+                db.set_academic_records(user_id, new_records)
+                st.success("🎉 Academic records updated! GPA recalculated and AI Career Assessment updated.")
+                st.rerun()
+
+        with col_clear_btn:
+            if st.button("🗑️ Reset All Modules", use_container_width=True, help="Clear all saved module records"):
+                db.set_academic_records(user_id, [])
+                st.toast("Academic records cleared.")
+                st.rerun()
+
+        st.divider()
+        col_summary_l, col_summary_r = st.columns([3, 2])
+        with col_summary_l:
+            st.markdown("#### 📋 Current Completed Transcript")
             if academic_records:
                 df_acad = pd.DataFrame(academic_records)[["subject_area", "module_code", "module_name", "grade", "grade_points"]]
-                df_acad.columns = ["Subject Area", "Module Code", "Module Name", "Grade", "Grade Points"]
+                df_acad.columns = ["Subject Domain", "Module Code", "Module Name", "Grade", "Grade Points"]
                 st.dataframe(df_acad, use_container_width=True, hide_index=True)
             else:
-                st.info("No academic records logged yet.")
+                st.warning("No completed modules currently saved. Select your grades in the Curriculum Grade Sheet above and click Save.")
 
-        with col_acad_right:
-            st.markdown("#### ➕ Record Module Result")
-            with st.form("module_form"):
-                m_subj = st.selectbox("Subject Domain", SUBJECT_AREAS)
-                m_code = st.text_input("Module Code (e.g. IT2113)")
-                m_name = st.text_input("Module Name (e.g. Object-Oriented Programming)")
-                m_grade = st.selectbox("Letter Grade Achieved", list(GRADE_POINTS.keys()), index=1)
-                m_submit = st.form_submit_button("Add Module Result", use_container_width=True)
-                if m_submit:
-                    if not m_name:
-                        st.error("Please provide module name.")
+        with col_summary_r:
+            st.markdown("#### ➕ Add Custom / Elective Module")
+            st.caption("If you completed an elective outside your primary degree catalog, record it here.")
+            with st.form("custom_elective_form"):
+                e_code = st.text_input("Module Code (e.g. ELEC201)")
+                e_name = st.text_input("Module Title")
+                e_subj = st.selectbox("Subject Domain", SUBJECT_AREAS)
+                e_grade = st.selectbox("Grade", list(GRADE_POINTS.keys()), index=1)
+                e_sub = st.form_submit_button("Add Elective Module", use_container_width=True)
+                if e_sub:
+                    if not e_name:
+                        st.error("Please enter a valid module title.")
                     else:
-                        existing = list(academic_records)
-                        existing.append({
-                            "subject_area": m_subj,
-                            "module_code": m_code,
-                            "module_name": m_name,
-                            "grade": m_grade,
-                            "grade_points": GRADE_POINTS.get(m_grade, 2.0)
+                        updated = [r for r in academic_records if r.get("module_code") != e_code and r.get("module_name") != e_name]
+                        updated.append({
+                            "subject_area": e_subj,
+                            "module_code": e_code,
+                            "module_name": e_name,
+                            "grade": e_grade,
+                            "grade_points": GRADE_POINTS.get(e_grade, 2.0)
                         })
-                        db.set_academic_records(user_id, existing)
-                        st.success("Module added and GPA recalculated!")
+                        db.set_academic_records(user_id, updated)
+                        st.success(f"Added elective {e_name} ({e_grade})!")
                         st.rerun()
 
     # -------------------------------------------------------------
