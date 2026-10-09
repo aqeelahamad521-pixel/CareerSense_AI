@@ -7,10 +7,14 @@
 # FINAL PROJECT REPORT
 # CareerSense AI: An Explainable AI-Powered Career Development and Skill-Roadmap Platform for Undergraduate Students
 
-### Project Author & Student Profile:
-| Full Name | Registration No. | Degree Programme | Academic Year | Cumulative GPA |
-|---|---|---|---|---|
-| **MFA Ahamad (Aqeel Ahamad)** | **D/DBA/25/0021** | **BSc (Hons) in Data Science & Business Analytics** | **Year 2** | **3.40** |
+### Project Author & Academic Attribution:
+| Field | Details |
+|---|---|
+| **Student Author** | **MFA Ahamad (Aqeel Ahamad)** |
+| **Degree Programme** | **BSc (Hons) in Data Science & Business Analytics** |
+| **Academic Level** | **Undergraduate (Intake 41/42)** |
+| **Faculty & Department** | **Faculty of Computing, General Sir John Kotelawala Defence University (KDU)** |
+| **Module** | **Essentials of Artificial Intelligence (Group 19)** |
 
 
 ---
@@ -144,7 +148,8 @@ The upskilling process is modeled as state-space search over a directed graph $G
   $$g(n) = \sum_{a \in \text{path}} \text{Hours}(a)$$
 - **Admissible Heuristic $h(n)$**:
   $$h(n) = \sum_{s \in \text{Unsatisfied Gaps}} \min_{a \in \text{Available}(s)} \text{Hours}(a)$$
-  Because $h(n)$ never overestimates the actual hours needed to close the remaining gaps, the heuristic is strictly admissible ($h(n) \le h^*(n)$), ensuring an optimal sequence.
+  Because each learning activity in the curated curriculum addresses a single primary competency, each remaining unsatisfied gap requires at least one dedicated activity. The minimum available activity hours $\min_{a} \text{Hours}(a)$ therefore constitutes a true mathematical lower bound on remaining effort. Consequently, $h(n)$ never overestimates the optimal remaining cost ($h(n) \le h^*(n)$), satisfying the admissibility criterion for A* search.
+- **Search Bounds & Topological Fallback**: State exploration utilizes a min-heap priority queue ordered by $f(n) = g(n) + h(n)$. To guarantee termination across large or partially connected activity graphs, search is bounded by an iteration threshold ($N=2000$). If benchmark competencies exceed the reach of the immediate activity subset, a deterministic prerequisite-respecting topological sort fallback guarantees a valid, dependency-consistent learning roadmap.
 - **Time-Constrained Weekly Scheduling**: The resulting sequence is mapped to weeks based on student study capacity $W_{\text{hours}}$:
   $$\text{Week}(a) = \left\lceil \frac{\sum \text{Hours}}{W_{\text{hours}}} \right\rceil$$
 

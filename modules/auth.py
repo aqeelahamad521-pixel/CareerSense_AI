@@ -180,10 +180,10 @@ def render_login_and_registration(db: DatabaseManager):
                     st.error(f"Error registering account: {str(e)}")
 
     with tab_demo:
-        st.info("Select a persona to sign in immediately (Default Student: **Aqeel Ahamad / MFA Ahamad** - Year 2 Data Science & Business Analytics, GPA 3.40):")
+        st.info("Select a persona to sign in immediately (Demonstration Sandbox Student: **Aqeel Ahamad / MFA Ahamad** - Year 2 Data Science & Business Analytics):")
         col1, col2, col3, col4 = st.columns(4)
         with col1:
-            if st.button("🧑‍🎓 Aqeel Ahamad (Student)", use_container_width=True):
+            if st.button("🧑‍🎓 Student Persona", use_container_width=True):
                 user = db.authenticate_user("student_demo", "student123")
                 if user:
                     login_user(user)

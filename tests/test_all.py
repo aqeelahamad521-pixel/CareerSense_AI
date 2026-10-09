@@ -98,6 +98,29 @@ class TestAStarRoadmap(unittest.TestCase):
         # Higher study hours should result in shorter or equal total weeks
         self.assertLessEqual(res_20hrs["total_weeks"], res_8hrs["total_weeks"])
 
+    def test_heuristic_admissibility_and_non_negativity(self):
+        """Verifies that h(goal) = 0, h(n) >= 0, and h(n) does not overestimate the true cost for single gaps."""
+        # Goal state: target is fully met
+        h_goal = self.optimizer._heuristic_remaining_skill_distance(
+            {"REST APIs & Web Services": 2}, {"REST APIs & Web Services": 2}, self.optimizer.activities
+        )
+        self.assertEqual(h_goal, 0.0)
+
+        # Unmet state: h(n) >= 0
+        h_gap = self.optimizer._heuristic_remaining_skill_distance(
+            {"REST APIs & Web Services": 0}, {"REST APIs & Web Services": 2}, self.optimizer.activities
+        )
+        self.assertGreater(h_gap, 0.0)
+
+        # Admissibility check: h(n) must be <= total actual hours of activities required
+        candidate_activities = [
+            a for a in self.optimizer.activities if a.get("main_skill") == "REST APIs & Web Services"
+        ]
+        if candidate_activities:
+            min_candidate_hours = min(a["estimated_hours"] for a in candidate_activities)
+            # h_gap should be lower bound
+            self.assertLessEqual(h_gap, sum(a["estimated_hours"] for a in candidate_activities))
+
 class TestMLClassifier(unittest.TestCase):
     def setUp(self):
         self.classifier = CareerClassifier()

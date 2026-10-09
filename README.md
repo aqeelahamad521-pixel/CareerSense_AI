@@ -7,12 +7,15 @@
 
 ---
 
-## 👤 Student Author & Project Profile
+## 👤 Author & Academic Attribution
 
-| Name | Registration No. | Degree Programme | Academic Year | Cumulative GPA |
-|---|---|---|---|---|
-| **MFA Ahamad (Aqeel Ahamad)** | **D/DBA/25/0021** | **BSc (Hons) in Data Science & Business Analytics** | **Year 2** | **3.40** |
-
+| Field | Details |
+|---|---|
+| **Student Author** | **MFA Ahamad (Aqeel Ahamad)** |
+| **Degree Programme** | **BSc (Hons) in Data Science & Business Analytics** |
+| **Academic Level** | **Undergraduate (Intake 41/42)** |
+| **Faculty & Department** | **Faculty of Computing, General Sir John Kotelawala Defence University (KDU)** |
+| **Module** | **Essentials of Artificial Intelligence (Group 19)** |
 
 ---
 
@@ -35,10 +38,10 @@ CareerSense AI solves the problem of generic, non-personalized career guidance b
    - Validates inter-skill dependencies (e.g. Automated Testing requires OOP).
    - Generates human-readable, transparent diagnostic explanations.
 3. **AI Layer 3 — A\* Search Algorithm for Roadmap Optimization**:
-   - Formulates upskilling as a state-space graph search over an activity DAG (courses, projects, certifications).
-   - $g(n) = \text{accumulated study hours}$.
-   - Admissible heuristic $h(n) = \sum \min \text{hours for remaining skill gaps}$ (guarantees shortest path).
-   - Constrained to student's declared weekly study budget (e.g. 8 hrs/week) to generate week-by-week milestones.
+   - Formulates upskilling as a state-space graph search over a curated activity DAG (courses, projects, certifications).
+   - Cost function $g(n) = \text{accumulated study hours}$.
+   - Admissible heuristic $h(n) = \sum_{s \in \text{Gaps}} \min_{a} \text{Hours}(a)$ providing an admissible lower-bound on remaining effort to close all competency gaps.
+   - Maps the optimal learning path into week-by-week milestones constrained by the student's declared weekly study budget (e.g., 8 hrs/week), backed by a topological sort fallback if graph activities cannot fully cover the target competencies.
 4. **Interactive Multi-Role Web Platform**:
    - **Student Portal**: Profile, academic grades, skill management, document uploads, radar chart comparison, A* roadmap task tracking, and downloadable career reports.
    - **Academic Advisor Portal**: Advisee search, AI explanation review, prerequisite audit, and feedback note submission.
@@ -131,8 +134,7 @@ You can click any of the **Quick Demo Access** buttons on the login screen or lo
 
 | Persona / Role | Username | Password | Notes |
 |---|---|---|---|
-| **Student Persona** | `student_demo` | `student123` | Aqeel Ahamad / MFA Ahamad (Year 2 Data Science & Business Analytics, GPA 3.40) |
-
+| **Student Persona** | `student_demo` | `student123` | Demo Student Persona (Undergraduate Computing Student) |
 | **Academic Advisor** | `advisor` | `advisor123` | Dr. Nihal Fernando (Review advisees & log feedback) |
 | **Programme Coordinator** | `coordinator` | `coordinator123` | Prof. K. Jayasinghe (Anonymized cohort analytics) |
 | **System Administrator** | `admin` | `admin123` | Model explorer, confusion matrices, rule inspector |

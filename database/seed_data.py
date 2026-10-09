@@ -51,8 +51,8 @@ def seed_database():
         password="student123",
         role="student",
         full_name="Aqeel Ahamad (MFA Ahamad)",
-        reg_no="D/DBA/25/0021",
-        email="ahamad.mfa@kdu.ac.lk"
+        reg_no="STU-DEMO-01",
+        email="demo.student@kdu.ac.lk"
     )
     
     db.save_student_profile(

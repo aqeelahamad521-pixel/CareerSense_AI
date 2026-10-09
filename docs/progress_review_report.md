@@ -17,9 +17,9 @@
 | **Primary Deliverable** | Working AI-Enabled Web Prototype, Trained Models, Knowledge Base, and Roadmap Graph |
 
 ### Group & Author Details
-| Name | Index Number | Degree Programme |
+| Name | Academic Level | Degree Programme |
 |---|---|---|
-| **MFA Ahamad (Aqeel Ahamad)** | **D/DBA/25/0021** | **Department of Data Science and Business Analytics** |
+| **MFA Ahamad (Aqeel Ahamad)** | **Undergraduate (Intake 41/42)** | **Department of Data Science and Business Analytics** |
 
 **Group No:** 19  
 **Submission Date:** 21.09.2026  
@@ -113,7 +113,7 @@ The fundamental objective of designing an explainable AI career advisory system 
 1. **Dual Machine Learning Architecture**: While the proposal outlined K-NN as the primary model and Decision Tree as a baseline, the system was refined to compute an ensemble probability distribution (70% K-NN proximity weighting + 30% Decision Tree rule weighting). This provides both neighbor-based exemplar comparisons and transparent decision paths.
 2. **Dynamic Skill Reassessment on Activity Completion**: Originally, progress tracking was planned as a passive logging mechanism. In the developed prototype, when a student toggles an activity status to "Completed", the system automatically upgrades the relevant skill proficiency in the SQLite database and triggers an instant recalculation of the holistic Career Readiness Score.
 3. **Downloadable Formatted HTML/Print Career Reports**: A comprehensive report generation module was added, enabling students and advisors to export a complete, printable diagnostic dossier containing student metrics, Plotly radar comparisons, prerequisite audits, and the week-by-week A* roadmap.
-4. **Primary Persona Focus**: The primary scenario profile was refined to **Aqeel Ahamad (MFA Ahamad)**, Index Number `D/DBA/25/0021`, Year 2, enrolled in the **BSc (Hons) in Data Science & Business Analytics** degree with a 3.40 GPA, aligning the demonstration with realistic university cohorts.
+4. **Primary Persona Focus**: The primary scenario profile was refined to **Aqeel Ahamad (MFA Ahamad)**, Year 2, enrolled in the **BSc (Hons) in Data Science & Business Analytics** degree, aligning the demonstration with realistic university cohorts.
 
 ### 2.2 Finalization of AI Techniques
 The three core AI techniques have been finalized, implemented, and benchmarked:
@@ -482,7 +482,7 @@ The authentication portal provides secure credential sign-in, user registration,
 * **Administrator**: `admin` / `admin123`
 
 ### 6.2 Student Profile, Academic Records & Skill Management
-* Centralized header displaying **Aqeel Ahamad (MFA Ahamad)**, Reg No `D/DBA/25/0021`, Year 2, BSc (Hons) in Data Science & Business Analytics, GPA 3.40.
+* Centralized header displaying **Aqeel Ahamad (MFA Ahamad)**, Year 2, BSc (Hons) in Data Science & Business Analytics.
 * Module records table detailing course codes (`BA2101`, `MA1102`, `CS1120`, `IT1223`, `CS2110`, `IT2133`) with grades and grade points.
 * Interactive skill manager with proficiency badges (`None`, `Beginner`, `Intermediate`, `Advanced`).
 
@@ -555,7 +555,7 @@ In multi-class career classification across 5 tracks, evaluating models using si
 
 | Member / Index No. | Assigned Role | Work Completed to Date | Remaining Responsibility |
 |---|---|---|---|
-| **MFA Ahamad (Aqeel Ahamad)**<br>`D/DBA/25/0021` | **Lead AI Engineer & System Architect** | • Designed the multi-tier system architecture and relational SQLite database schema.<br>• Synthesized the 850-record undergraduate benchmark dataset (`scripts/generate_dataset.py`).<br>• Implemented and evaluated K-NN and Decision Tree classification models (`ai_engine/ml_classifier.py`).<br>• Engineered the forward-chaining Rule-Based Expert System and prerequisite knowledge base (`ai_engine/rule_engine.py`).<br>• Implemented the A\* search roadmap optimizer with admissible skill-distance heuristic (`ai_engine/a_star_roadmap.py`).<br>• Developed the multi-role Streamlit web application with Student, Advisor, Coordinator, and Admin dashboards (`app.py`, `modules/`).<br>• Built automated test suite with 100% test pass rate (`tests/test_all.py`).<br>• Implemented the downloadable HTML Career Advisory Report generator (`modules/report_generator.py`). | • Integrate official KDU curriculum module catalog into the student profile workflow.<br>• Expand sub-role specializations under core career tracks.<br>• Conduct usability evaluation sessions with peer students.<br>• Prepare final Stage 3 submission package and presentation video. |
+| **MFA Ahamad (Aqeel Ahamad)** | **Lead AI Engineer & System Architect** | • Designed the multi-tier system architecture and relational SQLite database schema.<br>• Synthesized the 850-record undergraduate benchmark dataset (`scripts/generate_dataset.py`).<br>• Implemented and evaluated K-NN and Decision Tree classification models (`ai_engine/ml_classifier.py`).<br>• Engineered the forward-chaining Rule-Based Expert System and prerequisite knowledge base (`ai_engine/rule_engine.py`).<br>• Implemented the A\* search roadmap optimizer with admissible skill-distance heuristic (`ai_engine/a_star_roadmap.py`).<br>• Developed the multi-role Streamlit web application with Student, Advisor, Coordinator, and Admin dashboards (`app.py`, `modules/`).<br>• Built automated test suite with 100% test pass rate (`tests/test_all.py`).<br>• Implemented the downloadable HTML Career Advisory Report generator (`modules/report_generator.py`). | • Integrate official KDU curriculum module catalog into the student profile workflow.<br>• Expand sub-role specializations under core career tracks.<br>• Conduct usability evaluation sessions with peer students.<br>• Prepare final Stage 3 submission package and presentation video. |
 
 ---
 

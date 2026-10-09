@@ -135,10 +135,10 @@ def build_pdf():
     # Author Details Table
     author_table_data = [
         [Paragraph("Group & Author Details", th_style), Paragraph("", th_style), Paragraph("", th_style)],
-        [Paragraph("Name", td_bold), Paragraph("Index Number", td_bold), Paragraph("Degree Programme", td_bold)],
-        [Paragraph("MFA Ahamad (Aqeel Ahamad)", td_style), Paragraph("D/DBA/25/0021", td_style), Paragraph("Department of Data Science and Business Analytics", td_style)],
+        [Paragraph("Name", td_bold), Paragraph("Academic Level", td_bold), Paragraph("Degree Programme", td_bold)],
+        [Paragraph("MFA Ahamad (Aqeel Ahamad)", td_style), Paragraph("Undergraduate (Intake 41/42)", td_style), Paragraph("Department of Data Science and Business Analytics", td_style)],
     ]
-    t_auth = Table(author_table_data, colWidths=[2.3 * inch, 1.5 * inch, 3.0 * inch])
+    t_auth = Table(author_table_data, colWidths=[2.3 * inch, 1.8 * inch, 2.7 * inch])
     t_auth.setStyle(TableStyle([
         ('SPAN', (0, 0), (2, 0)),
         ('BACKGROUND', (0, 0), (2, 0), c_navy),
@@ -153,7 +153,7 @@ def build_pdf():
 
     meta_table = [
         [Paragraph("<b>Group No</b> : 19", td_style), Paragraph("<b>Submission Date</b> : 21.09.2026", td_style)],
-        [Paragraph("<b>Academic Year</b> : Year 2", td_style), Paragraph("<b>Cumulative GPA</b> : 3.40", td_style)]
+        [Paragraph("<b>Academic Year</b> : Year 2", td_style), Paragraph("<b>Faculty</b> : Faculty of Computing", td_style)]
     ]
     t_meta = Table(meta_table, colWidths=[3.4 * inch, 3.4 * inch])
     t_meta.setStyle(TableStyle([
@@ -242,7 +242,7 @@ def build_pdf():
     story.append(Paragraph("&bull; <b>Dual-Engine ML Classification</b>: Integrated an ensemble probability combining K-NN proximity (70%) and Decision Tree split logic (30%) for both similarity and interpretability.", bullet_style))
     story.append(Paragraph("&bull; <b>Dynamic Skill Reassessment</b>: Marking a roadmap activity as 'Completed' immediately updates student proficiency in SQLite and triggers real-time Career Readiness recalibration.", bullet_style))
     story.append(Paragraph("&bull; <b>Downloadable Advisory Dossier</b>: Developed an automated report generator creating official, printable HTML/PDF Career Advisory Reports.", bullet_style))
-    story.append(Paragraph("&bull; <b>Primary Persona Realism</b>: Centered the demonstration scenario on <b>Aqeel Ahamad (MFA Ahamad)</b>, Year 2 Data Science & Business Analytics student (GPA 3.40).", bullet_style))
+    story.append(Paragraph("&bull; <b>Primary Persona Realism</b>: Centered the demonstration scenario on <b>Aqeel Ahamad (MFA Ahamad)</b>, Year 2 Data Science & Business Analytics student.", bullet_style))
 
     story.append(Paragraph("2.2 Finalization of AI Techniques", h2_style))
     story.append(Paragraph("<b>2.2.1 Machine Learning Classification:</b> Predicts student career track fit across 5 classes (Software Engineering, Data Science / AI, Cybersecurity, Cloud / DevOps, UI/UX Design) using a 36-dimensional feature vector.", body_style))
@@ -408,7 +408,7 @@ def build_pdf():
     outputs_summary = [
         [Paragraph("Subsystem Interface", th_style), Paragraph("Functional Output & Verification Evidence", th_style)],
         [Paragraph("6.1 Login Interface", td_bold), Paragraph("Role-based authentication supporting Student, Advisor, Coordinator, and Administrator accounts with 1-click demo access.", td_style)],
-        [Paragraph("6.2 Student Profile & Academics", td_bold), Paragraph("Header bar showing Aqeel Ahamad (D/DBA/25/0021), Year 2, GPA 3.40, module grade table, and skill inventory.", td_style)],
+        [Paragraph("6.2 Student Profile & Academics", td_bold), Paragraph("Header bar showing Aqeel Ahamad, Year 2 Data Science & Business Analytics student, module grade table, and skill inventory.", td_style)],
         [Paragraph("6.3 AI Assessment & Radar Chart", td_bold), Paragraph("Predicted career match bars (Data Science/AI: 84.5%, SE: 71.0%) and Plotly polar radar chart comparing student vs benchmark.", td_style)],
         [Paragraph("6.4 Prerequisite Audit & Gap Matrix", td_bold), Paragraph("Pass confirmation on Applied Statistics (Grade A &ge; B-), with prioritized gap breakdown (Machine Learning: High, Data Viz: Medium).", td_style)],
         [Paragraph("6.5 A* Learning Roadmap", td_bold), Paragraph("8-week sequence (EDA Project, Supervised ML, End-to-End ML Project) with interactive status dropdowns triggering live score recalculation.", td_style)],
@@ -462,7 +462,7 @@ def build_pdf():
     contrib_data = [
         [Paragraph("Member Details", th_style), Paragraph("Assigned Role", th_style), Paragraph("Work Completed to Date", th_style), Paragraph("Remaining Responsibility", th_style)],
         [
-            Paragraph("<b>MFA Ahamad<br>(Aqeel Ahamad)</b><br>D/DBA/25/0021<br>Dept of Data Science & Business Analytics", td_style),
+            Paragraph("<b>MFA Ahamad<br>(Aqeel Ahamad)</b><br>Undergraduate (Intake 41/42)<br>Dept of Data Science & Business Analytics", td_style),
             Paragraph("Lead AI Engineer & System Architect", td_bold),
             Paragraph(
                 "&bull; Designed 3-layer AI architecture and SQLite DB schema.<br>"
