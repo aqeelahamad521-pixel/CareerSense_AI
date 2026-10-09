@@ -1,98 +1,169 @@
 {
   "knn": {
-    "name": "K-Nearest Neighbors (Primary Model)",
-    "accuracy": 100.0,
-    "precision": 100.0,
-    "recall": 100.0,
-    "f1_score": 100.0,
+    "accuracy": 88.82,
+    "precision": 89.74,
+    "recall": 88.82,
+    "f1_score": 88.87,
+    "precision_macro": 91.59,
+    "recall_macro": 88.18,
+    "f1_score_macro": 89.49,
     "confusion_matrix": [
       [
-        40,
-        0,
+        47,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        4,
+        29,
         0,
         0,
         0
       ],
       [
+        4,
         0,
-        39,
-        0,
-        0,
+        23,
+        3,
         0
       ],
       [
+        2,
+        1,
         0,
-        0,
-        41,
-        0,
+        32,
         0
       ],
       [
+        2,
         0,
         0,
         0,
-        22,
-        0
-      ],
-      [
-        0,
-        0,
-        0,
-        0,
-        28
+        20
       ]
     ],
+    "per_class": {
+      "Software Engineering": {
+        "precision": 79.66,
+        "recall": 94.0,
+        "f1_score": 86.24,
+        "support": 50
+      },
+      "Data Science / AI": {
+        "precision": 93.55,
+        "recall": 87.88,
+        "f1_score": 90.62,
+        "support": 33
+      },
+      "Cybersecurity": {
+        "precision": 95.83,
+        "recall": 76.67,
+        "f1_score": 85.19,
+        "support": 30
+      },
+      "Cloud / DevOps": {
+        "precision": 88.89,
+        "recall": 91.43,
+        "f1_score": 90.14,
+        "support": 35
+      },
+      "UI/UX Design": {
+        "precision": 100.0,
+        "recall": 90.91,
+        "f1_score": 95.24,
+        "support": 22
+      }
+    },
     "labels": [
       "Software Engineering",
       "Data Science / AI",
       "Cybersecurity",
       "Cloud / DevOps",
       "UI/UX Design"
-    ]
+    ],
+    "name": "K-Nearest Neighbors (Primary Model)",
+    "cv_accuracy_mean": 89.12,
+    "cv_accuracy_std": 2.2
   },
   "decision_tree": {
-    "name": "Decision Tree Classifier (Baseline Model)",
-    "accuracy": 98.82,
-    "precision": 98.82,
-    "recall": 98.82,
-    "f1_score": 98.82,
+    "accuracy": 60.0,
+    "precision": 64.16,
+    "recall": 60.0,
+    "f1_score": 60.39,
+    "precision_macro": 65.41,
+    "recall_macro": 58.63,
+    "f1_score_macro": 59.72,
     "confusion_matrix": [
       [
-        40,
-        0,
-        0,
+        33,
+        2,
+        7,
+        7,
+        1
+      ],
+      [
+        11,
+        18,
+        4,
         0,
         0
       ],
       [
-        0,
-        37,
-        0,
-        0,
-        2
-      ],
-      [
-        0,
-        0,
-        41,
-        0,
+        2,
+        2,
+        21,
+        5,
         0
       ],
       [
         0,
-        0,
-        0,
-        22,
+        2,
+        13,
+        20,
         0
       ],
       [
-        0,
-        0,
-        0,
-        0,
-        28
+        4,
+        3,
+        4,
+        1,
+        10
       ]
     ],
+    "per_class": {
+      "Software Engineering": {
+        "precision": 66.0,
+        "recall": 66.0,
+        "f1_score": 66.0,
+        "support": 50
+      },
+      "Data Science / AI": {
+        "precision": 66.67,
+        "recall": 54.55,
+        "f1_score": 60.0,
+        "support": 33
+      },
+      "Cybersecurity": {
+        "precision": 42.86,
+        "recall": 70.0,
+        "f1_score": 53.16,
+        "support": 30
+      },
+      "Cloud / DevOps": {
+        "precision": 60.61,
+        "recall": 57.14,
+        "f1_score": 58.82,
+        "support": 35
+      },
+      "UI/UX Design": {
+        "precision": 90.91,
+        "recall": 45.45,
+        "f1_score": 60.61,
+        "support": 22
+      }
+    },
     "labels": [
       "Software Engineering",
       "Data Science / AI",
@@ -100,45 +171,97 @@
       "Cloud / DevOps",
       "UI/UX Design"
     ],
+    "name": "Decision Tree Classifier (Baseline Model)",
+    "cv_accuracy_mean": 63.53,
+    "cv_accuracy_std": 4.5,
     "top_features": [
       [
-        "grade_programming",
-        0.22
+        "interest_security",
+        0.1481
       ],
       [
-        "grade_math",
-        0.18
-      ],
-      [
-        "grade_design",
-        0.16
-      ],
-      [
-        "grade_networking",
-        0.15
-      ],
-      [
-        "grade_systems",
-        0.14
+        "interest_design",
+        0.1216
       ],
       [
         "interest_software",
-        0.05
+        0.1113
       ],
       [
         "interest_data",
-        0.04
+        0.1094
       ],
       [
-        "interest_security",
-        0.03
+        "interest_cloud",
+        0.0962
+      ],
+      [
+        "skill_dsa",
+        0.0697
+      ],
+      [
+        "skill_web_api",
+        0.0637
+      ],
+      [
+        "skill_ml",
+        0.0624
       ]
     ]
   },
+  "model_comparison": [
+    {
+      "model": "Zero-Rule (Dummy Baseline)",
+      "type": "Baseline",
+      "accuracy": 29.41,
+      "f1_macro": 9.09,
+      "f1_weighted": 13.37,
+      "rationale": "Majority class baseline to verify non-trivial learning"
+    },
+    {
+      "model": "Decision Tree Classifier",
+      "type": "Interpretable Baseline",
+      "accuracy": 60.0,
+      "f1_macro": 59.72,
+      "f1_weighted": 60.39,
+      "rationale": "Rule-interpretable single tree benchmark (max depth 6)"
+    },
+    {
+      "model": "Random Forest Classifier",
+      "type": "Ensemble Benchmark",
+      "accuracy": 82.94,
+      "f1_macro": 83.13,
+      "f1_weighted": 82.84,
+      "rationale": "Ensemble tree benchmark verifying variance control"
+    },
+    {
+      "model": "Multinomial Logistic Regression",
+      "type": "Linear Benchmark",
+      "accuracy": 88.82,
+      "f1_macro": 89.45,
+      "f1_weighted": 88.83,
+      "rationale": "Linear parametric boundary benchmark"
+    },
+    {
+      "model": "K-Nearest Neighbors (k=7, distance)",
+      "type": "Primary Selected Model",
+      "accuracy": 88.82,
+      "f1_macro": 89.49,
+      "f1_weighted": 88.87,
+      "rationale": "Selected non-parametric model reflecting peer cohort similarity"
+    }
+  ],
   "dataset_info": {
     "total_samples": 850,
     "training_samples": 680,
     "testing_samples": 170,
-    "features_count": 36
+    "features_count": 36,
+    "class_distribution": {
+      "Software Engineering": 251,
+      "Data Science / AI": 165,
+      "Cybersecurity": 148,
+      "Cloud / DevOps": 178,
+      "UI/UX Design": 108
+    }
   }
 }

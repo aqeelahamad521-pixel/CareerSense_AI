@@ -152,26 +152,71 @@ The upskilling process is modeled as state-space search over a directed graph $G
 
 ## 8. Testing and Results
 
-### 8.1 Machine Learning Model Evaluation
-The models were trained on 680 student records and evaluated on 170 holdout test records across the five career tracks:
+### 8.1 Machine Learning Model Evaluation & Multi-Model Benchmarking
 
-| Metric | K-Nearest Neighbors (Primary) | Decision Tree (Baseline) |
+To ensure scientific rigor, avoid synthetic target leakage, and prevent overfitting, the evaluation pipeline implemented:
+1. **Stratified Splitting**: 850 undergraduate student profiles were split into an 80% training set (680 profiles) and a 20% held-out test set (170 profiles), preserving class proportions across all five tracks.
+2. **Preprocessing Leakage Prevention**: Feature standardization (`StandardScaler`) was strictly fitted only on the training set and subsequently applied to transform test samples.
+3. **5-Fold Stratified Cross-Validation**: Conducted across the training set to evaluate generalization variance prior to final testing.
+4. **Multi-Model Benchmark Suite**: Compared against four candidate paradigms (Zero-Rule Dummy, Decision Tree, Multinomial Logistic Regression, and Random Forest).
+
+#### Candidate Model Benchmark Comparison (Held-Out Test Set, N=170):
+
+| Model Architecture | Machine Learning Paradigm | Accuracy | Macro F1 | Weighted F1 | Evaluation Role & Technical Rationale |
+|---|---|---|---|---|---|
+| **Zero-Rule (Dummy)** | Baseline | 29.41% | 9.09% | 13.37% | Majority-class baseline confirming non-trivial learning |
+| **Decision Tree (max depth 6)** | Interpretable Non-linear | 60.00% | 59.72% | 60.39% | White-box baseline providing human-interpretable decision paths |
+| **Random Forest (100 trees)** | Ensemble Non-linear | 82.94% | 83.13% | 82.84% | Bagging benchmark demonstrating non-linear feature interaction |
+| **Multinomial Logistic Regression** | Parametric Linear | 88.82% | 89.45% | 88.83% | L2-regularized linear decision boundary benchmark |
+| **K-Nearest Neighbors ($k=7$, distance)** | Instance-Based (Non-parametric) | **88.82%** | **89.49%** | **88.87%** | **Selected Primary Model** (Optimal balance of accuracy, peer similarity, & explainability) |
+
+#### Cross-Validation and Detailed Test Set Metrics:
+
+| Metric | K-Nearest Neighbors (Primary Model) | Decision Tree (Interpretable Baseline) |
 |---|---|---|
-| **Accuracy** | **89.41%** | **84.71%** |
-| **Precision (Weighted)** | **89.65%** | **84.82%** |
-| **Recall (Weighted)** | **89.41%** | **84.71%** |
-| **F1-Score (Weighted)** | **89.28%** | **84.65%** |
+| **5-Fold CV Accuracy (Train Set)** | **89.12% (±2.20%)** | **63.53% (±4.50%)** |
+| **Held-Out Test Accuracy** | **88.82%** | **60.00%** |
+| **Precision (Weighted)** | **89.74%** | **64.16%** |
+| **Recall (Weighted)** | **88.82%** | **60.00%** |
+| **F1-Score (Weighted)** | **88.87%** | **60.39%** |
+| **Precision (Macro Unweighted)** | **91.59%** | **65.41%** |
+| **Recall (Macro Unweighted)** | **88.18%** | **58.63%** |
+| **F1-Score (Macro Unweighted)** | **89.49%** | **59.72%** |
 
-#### K-NN Confusion Matrix (Holdout Test Set):
+#### Confusion Matrices (Held-Out Test Set, N=170):
+
+**1. K-Nearest Neighbors Confusion Matrix (Selected Primary Model):**
 ```
-                       Pred: SE   Pred: DS   Pred: Sec  Pred: Cld  Pred: UI
-Actual: SE (n=48)         45          1          0          2          0
-Actual: DS (n=37)          2         34          0          1          0
-Actual: Sec (n=31)         0          0         28          3          0
-Actual: Cld (n=29)         1          1          3         24          0
-Actual: UI (n=25)          0          0          0          1         24
+                         Pred: SE   Pred: DS   Pred: Sec  Pred: Cld  Pred: UI   Support
+Actual: SE (n=50)           47          1          1          1          0        50
+Actual: DS (n=33)            4         29          0          0          0        33
+Actual: Sec (n=30)           4          0         23          3          0        30
+Actual: Cld (n=35)           2          1          0         32          0        35
+Actual: UI (n=22)            2          0          0          0         20        22
+Total Predictions           59         31         24         36         20       170
 ```
-Both models demonstrated strong discriminative capacity, with K-NN achieving higher boundary precision while the Decision Tree offered transparent inspection of critical split nodes (primarily `grade_programming`, `grade_math`, `interest_software`, and `skill_oop`).
+
+**2. Decision Tree Confusion Matrix (Baseline Model):**
+```
+                         Pred: SE   Pred: DS   Pred: Sec  Pred: Cld  Pred: UI   Support
+Actual: SE (n=50)           33          2          7          7          1        50
+Actual: DS (n=33)           11         18          4          0          0        33
+Actual: Sec (n=30)           2          2         21          5          0        30
+Actual: Cld (n=35)           0          2         13         20          0        35
+Actual: UI (n=22)            4          3          4          1         10        22
+```
+
+#### Per-Class Performance Breakdown (K-NN):
+- **Software Engineering**: Precision = 79.7%, Recall = 94.0%, F1 = 86.2% (Support = 50)
+- **Data Science / AI**: Precision = 93.5%, Recall = 87.9%, F1 = 90.6% (Support = 33)
+- **Cybersecurity**: Precision = 95.8%, Recall = 76.7%, F1 = 85.2% (Support = 30)
+- **Cloud / DevOps**: Precision = 88.9%, Recall = 91.4%, F1 = 90.1% (Support = 35)
+- **UI/UX Design**: Precision = 100.0%, Recall = 90.9%, F1 = 95.2% (Support = 22)
+
+#### Diagnostic Insights & Metric Independence:
+- **Absence of 100% Artificial Accuracy**: Synthetic data generation incorporates authentic correlation structures, continuous academic caliber, and overlapping multi-domain interests. Non-zero off-diagonal confusion matrix elements reflect realistic boundary ambiguity between related disciplines (e.g. slight overlap between Software Engineering and Cloud/DevOps).
+- **Independent Precision, Recall, and F1 Values**: In multiclass evaluation with non-trivial misclassifications, class-specific False Positives and False Negatives diverge, guaranteeing that Precision ($TP / (TP + FP)$), Recall ($TP / (TP + FN)$), and F1-score are mathematically independent and non-identical.
+- **Model Selection Justification**: K-NN ($k=7$, distance-weighted) was selected over Logistic Regression despite identical accuracy because K-NN's instance-based reasoning naturally maps to student peer mentoring ('students with nearest academic and skill backgrounds followed this trajectory'), providing accessible neighbor distance metrics. The Decision Tree was retained as the white-box interpretable baseline to extract Gini feature importances (`interest_security`: 0.1481, `interest_design`: 0.1216, `interest_software`: 0.1113, `skill_dsa`: 0.0697, `skill_web_api`: 0.0637).
 
 ### 8.2 Unit & Integration Testing
 Automated test suite (`tests/test_all.py`) validated:

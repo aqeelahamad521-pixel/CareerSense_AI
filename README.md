@@ -139,14 +139,23 @@ You can click any of the **Quick Demo Access** buttons on the login screen or lo
 
 ## 📊 AI Model Evaluation Benchmarks
 
-Evaluated on 170 holdout test samples (80/20 train/test split of 850 undergraduate profiles):
+Evaluated on 170 holdout test samples (80/20 train/test split of 850 undergraduate profiles with 5-Fold Stratified Cross-Validation on the training set):
 
-| Metric | K-Nearest Neighbors (Primary) | Decision Tree (Baseline) |
+| Metric | K-Nearest Neighbors (Primary Model) | Decision Tree (Baseline Model) |
 |---|---|---|
-| **Accuracy** | **89.41%** | **84.71%** |
-| **Precision (Weighted)** | **89.65%** | **84.82%** |
-| **Recall (Weighted)** | **89.41%** | **84.71%** |
-| **F1-Score (Weighted)** | **89.28%** | **84.65%** |
+| **5-Fold CV Accuracy (Train Set)** | **89.12% (±2.20%)** | **63.53% (±4.50%)** |
+| **Held-Out Test Accuracy** | **88.82%** | **60.00%** |
+| **Precision (Weighted)** | **89.74%** | **64.16%** |
+| **Recall (Weighted)** | **88.82%** | **60.00%** |
+| **F1-Score (Weighted)** | **88.87%** | **60.39%** |
+| **Macro F1-Score (Unweighted)** | **89.49%** | **59.72%** |
+
+#### Multi-Model Benchmark Suite (Held-Out Test Set):
+- **Zero-Rule (Dummy Baseline)**: 29.41% Accuracy | 9.09% Macro F1
+- **Decision Tree (max depth 6)**: 60.00% Accuracy | 59.72% Macro F1
+- **Random Forest (100 trees)**: 82.94% Accuracy | 83.13% Macro F1
+- **Multinomial Logistic Regression**: 88.82% Accuracy | 89.45% Macro F1
+- **K-Nearest Neighbors ($k=7$, distance)**: **88.82% Accuracy** | **89.49% Macro F1** (Selected Primary Model)
 
 ---
 
