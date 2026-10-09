@@ -120,11 +120,11 @@ def main():
             logout_user()
 
         st.markdown("---")
-        st.caption("**Student Profile:**")
-        st.caption("• **Aqeel Ahamad (MFA Ahamad)**")
-        st.caption("• Reg No: D/DBA/25/0021")
-        st.caption("• Year 2 | Data Science & Business Analytics")
-        st.caption("• Cumulative GPA: 3.40")
+        st.caption("**Demonstration Sandbox**")
+        st.caption("• Environment: Local Sandbox")
+        st.caption("• Primary Persona: Aqeel Ahamad (MFA Ahamad)")
+        st.caption("• Degree: BSc (Hons) in Data Science & Business Analytics")
+        st.caption("• Status: Academic Prototype")
 
 
     # Dispatch to appropriate role dashboard

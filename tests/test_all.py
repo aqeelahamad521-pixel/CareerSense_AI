@@ -301,6 +301,98 @@ class TestMLEvaluationMathematicalCorrectness(unittest.TestCase):
         self.assertEqual(m["per_class"]["C"]["recall"], 0.0)
         self.assertEqual(m["per_class"]["C"]["support"], 0)
 
+    def test_imbalanced_classes_agreement_with_sklearn(self):
+        """Verifies that imbalanced class distributions agree with scikit-learn standard metrics."""
+        from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+        labels = ["Class_Major", "Class_Minor", "Class_Rare"]
+        y_true = ["Class_Major"] * 30 + ["Class_Minor"] * 8 + ["Class_Rare"] * 2
+        # Introduce known asymmetric errors
+        y_pred = (
+            ["Class_Major"] * 26 + ["Class_Minor"] * 4 +
+            ["Class_Minor"] * 6 + ["Class_Major"] * 2 +
+            ["Class_Minor"] * 1 + ["Class_Rare"] * 1
+        )
+        m = compute_multiclass_metrics(y_true, y_pred, labels)
+        
+        sk_acc = round(accuracy_score(y_true, y_pred) * 100, 2)
+        sk_p_wt = round(precision_score(y_true, y_pred, average="weighted", zero_division=0) * 100, 2)
+        sk_r_wt = round(recall_score(y_true, y_pred, average="weighted", zero_division=0) * 100, 2)
+        sk_f1_wt = round(f1_score(y_true, y_pred, average="weighted", zero_division=0) * 100, 2)
+        sk_p_mac = round(precision_score(y_true, y_pred, average="macro", zero_division=0) * 100, 2)
+        sk_r_mac = round(recall_score(y_true, y_pred, average="macro", zero_division=0) * 100, 2)
+        sk_f1_mac = round(f1_score(y_true, y_pred, average="macro", zero_division=0) * 100, 2)
+        
+        self.assertEqual(m["accuracy"], sk_acc)
+        self.assertEqual(m["precision"], sk_p_wt)
+        self.assertEqual(m["recall"], sk_r_wt)
+        self.assertEqual(m["f1_score"], sk_f1_wt)
+        self.assertEqual(m["precision_macro"], sk_p_mac)
+        self.assertEqual(m["recall_macro"], sk_r_mac)
+        self.assertEqual(m["f1_score_macro"], sk_f1_mac)
+
+    def test_class_with_no_predictions_agreement_with_sklearn(self):
+        """Verifies that when a class has no predictions, metrics handle zero-division identically to scikit-learn."""
+        from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+        labels = ["A", "B", "C"]
+        y_true = ["A", "A", "B", "B", "C", "C"]
+        # Model never predicts class C
+        y_pred = ["A", "B", "B", "B", "A", "B"]
+        m = compute_multiclass_metrics(y_true, y_pred, labels)
+        
+        sk_acc = round(accuracy_score(y_true, y_pred) * 100, 2)
+        sk_p_wt = round(precision_score(y_true, y_pred, average="weighted", zero_division=0) * 100, 2)
+        sk_f1_wt = round(f1_score(y_true, y_pred, average="weighted", zero_division=0) * 100, 2)
+        sk_f1_mac = round(f1_score(y_true, y_pred, average="macro", zero_division=0) * 100, 2)
+        
+        self.assertEqual(m["accuracy"], sk_acc)
+        self.assertEqual(m["precision"], sk_p_wt)
+        self.assertEqual(m["f1_score"], sk_f1_wt)
+        self.assertEqual(m["f1_score_macro"], sk_f1_mac)
+        self.assertEqual(m["per_class"]["C"]["precision"], 0.0)
+        self.assertEqual(m["per_class"]["C"]["recall"], 0.0)
+
+    def test_class_absent_from_test_set_agreement_with_sklearn(self):
+        """Verifies that when a configured class is entirely absent from test data, macro metrics average over all classes."""
+        from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+        labels = ["Track_1", "Track_2", "Track_3"]
+        # Track_3 is absent from both true and predicted labels
+        y_true = ["Track_1", "Track_1", "Track_2", "Track_2"]
+        y_pred = ["Track_1", "Track_2", "Track_2", "Track_2"]
+        m = compute_multiclass_metrics(y_true, y_pred, labels)
+        
+        sk_acc = round(accuracy_score(y_true, y_pred) * 100, 2)
+        sk_p_mac = round(precision_score(y_true, y_pred, labels=labels, average="macro", zero_division=0) * 100, 2)
+        sk_r_mac = round(recall_score(y_true, y_pred, labels=labels, average="macro", zero_division=0) * 100, 2)
+        sk_f1_mac = round(f1_score(y_true, y_pred, labels=labels, average="macro", zero_division=0) * 100, 2)
+        
+        self.assertEqual(m["accuracy"], sk_acc)
+        self.assertEqual(m["precision_macro"], sk_p_mac)
+        self.assertEqual(m["recall_macro"], sk_r_mac)
+        self.assertEqual(m["f1_score_macro"], sk_f1_mac)
+        self.assertEqual(m["per_class"]["Track_3"]["support"], 0)
+
+    def test_confusion_matrix_dimensions_and_sample_counts(self):
+        """Verifies that confusion matrix dimensions match class count and row/column totals strictly equal sample counts."""
+        labels = ["A", "B", "C", "D", "E"]
+        k = len(labels)
+        y_true = ["A", "B", "C", "D", "E", "A", "B", "C", "D", "E"]
+        y_pred = ["A", "B", "C", "E", "D", "B", "B", "C", "D", "A"]
+        m = compute_multiclass_metrics(y_true, y_pred, labels)
+        cm = m["confusion_matrix"]
+        
+        # Dimensions k x k
+        self.assertEqual(len(cm), k)
+        for row in cm:
+            self.assertEqual(len(row), k)
+            
+        # Total sample count
+        self.assertEqual(sum(sum(row) for row in cm), len(y_true))
+        
+        # Trace equals correct predictions count
+        trace = sum(cm[i][i] for i in range(k))
+        correct_count = sum(1 for yt, yp in zip(y_true, y_pred) if yt == yp)
+        self.assertEqual(trace, correct_count)
+
     def test_legitimate_metric_equality_on_perfect_predictions(self):
         """
         Verifies that accuracy, precision, recall, and F1 legitimately equal 100.0%

@@ -57,7 +57,8 @@ def render_admin_view(db, rule_engine, a_star, ml_classifier):
                 col_rename = {
                     "model": "Model Architecture",
                     "type": "Paradigm / Role",
-                    "accuracy": "Accuracy (%)",
+                    "cv_accuracy": "5-Fold CV (%)",
+                    "accuracy": "Held-Out Test Acc (%)",
                     "f1_macro": "Macro F1 (%)",
                     "f1_weighted": "Weighted F1 (%)",
                     "rationale": "Evaluation Rationale"

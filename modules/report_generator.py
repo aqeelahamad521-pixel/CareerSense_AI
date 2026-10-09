@@ -17,7 +17,7 @@ class CareerReportGenerator:
 
         name = user_info.get("full_name") or "Aqeel Ahamad (MFA Ahamad)"
         raw_reg = user_info.get("reg_no")
-        reg_no = str(raw_reg) if raw_reg else "D/DBA/25/0021"
+        reg_no = str(raw_reg) if raw_reg else "STU-DEMO-01"
         ref_code = reg_no.replace("/", "").replace(" ", "").replace("-", "")
         degree = student_profile.get("degree") or "BSc (Hons) in Data Science & Business Analytics"
         year = student_profile.get("year", 2)
