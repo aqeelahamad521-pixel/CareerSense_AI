@@ -61,6 +61,7 @@ class ExplainabilityEngine:
             "skill_gaps": skill_gaps,
             "dependency_alerts": dep_alerts,
             "radar_comparison": radar_data,
+            "nearest_neighbor_distances": ml_results.get("nearest_neighbor_distances", []),
             "explainability_summary": self._synthesize_summary(chosen_track, ml_results, prereq_eval, skill_gaps)
         }
 

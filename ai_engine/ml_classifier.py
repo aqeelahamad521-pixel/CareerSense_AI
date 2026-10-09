@@ -1,23 +1,26 @@
 """
 AI Layer 1: Machine Learning Career Classifier for CareerSense AI.
 Implements:
-1. K-Nearest Neighbors (K-NN) as Primary Classifier (with neighbor-based confidence)
-2. Decision Tree Classifier as Interpretable Baseline (with feature importances & tree paths)
+1. K-Nearest Neighbors (K-NN) as Primary Classifier (with neighbor-based proximity)
+2. Decision Tree Classifier as Interpretable Baseline (with Gini feature importances)
 3. Standard feature scaling and vector extraction
-4. Model evaluation metrics (Accuracy, Weighted/Macro Precision, Recall, F1, Confusion Matrix)
-5. Multi-model benchmarking (DummyClassifier, Decision Tree, Logistic Regression, Random Forest, K-NN)
-6. Dual-engine support: uses Scikit-learn when available, with a mathematically rigorous NumPy engine fallback.
+4. Rigorous multiclass evaluation metrics (Accuracy, Weighted/Macro Precision, Recall, F1, Confusion Matrix)
+5. Multi-model benchmarking (Zero-Rule Dummy, Decision Tree, Logistic Regression, Random Forest, K-NN)
+6. Isolated 5-Fold Stratified Cross-Validation pipelines to prevent preprocessing data leakage
+7. Full provenance tracking (dataset SHA256, timestamps, random seeds, dependency versions)
 """
 import os
+import sys
 import pickle
 import json
+import hashlib
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, List, Tuple, Any
 import numpy as np
 import pandas as pd
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-import sys
 sys.path.append(str(BASE_DIR))
 
 from config import (
@@ -30,6 +33,7 @@ def compute_multiclass_metrics(y_true, y_pred, labels):
     """
     Computes mathematically rigorous multiclass classification metrics.
     Guarantees that Accuracy, Precision, Recall, and F1 are independently calculated.
+    Correctly handles edge cases, zero-division, and missing classes.
     """
     y_true = list(y_true)
     y_pred = list(y_pred)
@@ -37,10 +41,11 @@ def compute_multiclass_metrics(y_true, y_pred, labels):
     if n == 0:
         return {}
     
-    # 1. Accuracy
-    acc = sum(1 for yt, yp in zip(y_true, y_pred) if yt == yp) / n
+    # 1. Accuracy: correct predictions divided by total evaluated samples
+    correct = sum(1 for yt, yp in zip(y_true, y_pred) if yt == yp)
+    acc = correct / n
     
-    # 2. Confusion matrix: rows = actual, columns = predicted
+    # 2. Confusion matrix: rows = actual labels, columns = predicted labels
     label_to_idx = {l: i for i, l in enumerate(labels)}
     k = len(labels)
     cm = [[0 for _ in range(k)] for _ in range(k)]
@@ -99,121 +104,6 @@ def compute_multiclass_metrics(y_true, y_pred, labels):
         "per_class": per_class,
         "labels": labels
     }
-
-class NumpyStandardScaler:
-    def __init__(self):
-        self.mean_ = None
-        self.scale_ = None
-
-    def fit(self, X):
-        self.mean_ = np.mean(X, axis=0)
-        self.scale_ = np.std(X, axis=0)
-        self.scale_[self.scale_ == 0.0] = 1.0
-        return self
-
-    def transform(self, X):
-        return (X - self.mean_) / self.scale_
-
-    def fit_transform(self, X):
-        return self.fit(X).transform(X)
-
-class NumpyKNN:
-    def __init__(self, k=7):
-        self.k = k
-        self.X_train = None
-        self.y_train = None
-        self.classes_ = np.array(CAREER_TRACKS)
-
-    def fit(self, X, y):
-        self.X_train = np.array(X, dtype=np.float64)
-        self.y_train = np.array(y)
-        self.classes_ = np.array(CAREER_TRACKS)
-        return self
-
-    def kneighbors(self, X, n_neighbors=None):
-        k = n_neighbors or self.k
-        X = np.array(X, dtype=np.float64)
-        if X.ndim == 1:
-            X = X.reshape(1, -1)
-        
-        all_dists = []
-        all_indices = []
-        for x_row in X:
-            dists = np.linalg.norm(self.X_train - x_row, axis=1)
-            idx = np.argsort(dists)[:k]
-            all_dists.append(dists[idx])
-            all_indices.append(idx)
-        return np.array(all_dists), np.array(all_indices)
-
-    def predict_proba(self, X):
-        X = np.array(X, dtype=np.float64)
-        if X.ndim == 1:
-            X = X.reshape(1, -1)
-        dists, indices = self.kneighbors(X)
-        all_probs = []
-        for d_row, idx_row in zip(dists, indices):
-            weights = 1.0 / (d_row + 1e-5)
-            prob_dict = {c: 0.0 for c in self.classes_}
-            for d_w, idx in zip(weights, idx_row):
-                c = self.y_train[idx]
-                prob_dict[c] = prob_dict.get(c, 0.0) + d_w
-            total_w = sum(prob_dict.values()) or 1.0
-            probs = [prob_dict.get(c, 0.0) / total_w for c in self.classes_]
-            all_probs.append(probs)
-        return np.array(all_probs)
-
-    def predict(self, X):
-        probs = self.predict_proba(X)
-        preds = [self.classes_[np.argmax(p)] for p in probs]
-        return preds[0] if len(preds) == 1 else np.array(preds)
-
-class InterpretableDecisionTree:
-    """Interpretable tree classifier based on domain splits and feature weighting."""
-    def __init__(self, max_depth=6):
-        self.max_depth = max_depth
-        self.classes_ = np.array(CAREER_TRACKS)
-        self.feature_importances_ = None
-
-    def fit(self, X, y):
-        self.classes_ = np.array(CAREER_TRACKS)
-        importances = np.zeros(X.shape[1])
-        # Indices corresponding to core discriminators
-        importances[0] = 0.22 # grade_programming
-        importances[1] = 0.18 # grade_math
-        importances[3] = 0.15 # grade_networking
-        importances[4] = 0.14 # grade_systems
-        importances[5] = 0.16 # grade_design
-        importances[6] = 0.05 # interest_software
-        importances[7] = 0.04 # interest_data
-        importances[8] = 0.03 # interest_security
-        importances[9] = 0.03 # interest_cloud
-        importances /= np.sum(importances)
-        self.feature_importances_ = importances
-        return self
-
-    def predict_proba(self, X):
-        X = np.array(X, dtype=np.float64)
-        if X.ndim == 1:
-            X = X.reshape(1, -1)
-        all_probs = []
-        for row in X:
-            scores = {
-                "Software Engineering": (row[0] * 1.5) + (row[6] * 1.2) + (row[11] * 1.5) + (row[12] * 1.2),
-                "Data Science / AI": (row[1] * 1.5) + (row[7] * 1.2) + (row[16] * 1.5) + (row[17] * 1.2),
-                "Cybersecurity": (row[3] * 1.5) + (row[8] * 1.2) + (row[21] * 1.5) + (row[22] * 1.2),
-                "Cloud / DevOps": (row[4] * 1.5) + (row[9] * 1.2) + (row[26] * 1.5) + (row[27] * 1.2),
-                "UI/UX Design": (row[5] * 1.5) + (row[10] * 1.2) + (row[31] * 1.5) + (row[32] * 1.2)
-            }
-            vals = np.array([scores[c] for c in self.classes_])
-            exp_vals = np.exp(vals - np.max(vals))
-            probs = exp_vals / np.sum(exp_vals)
-            all_probs.append(probs)
-        return np.array(all_probs)
-
-    def predict(self, X):
-        probs = self.predict_proba(X)
-        preds = [self.classes_[np.argmax(p)] for p in probs]
-        return preds[0] if len(preds) == 1 else np.array(preds)
 
 class CareerClassifier:
     def __init__(self):
@@ -348,197 +238,187 @@ class CareerClassifier:
 
     def train_models(self, dataset_path=DATASET_PATH) -> dict:
         """
-        Trains K-NN and Decision Tree models and calculates comprehensive evaluation metrics,
-        benchmarking against Dummy, Logistic Regression, and Random Forest baselines.
+        Trains and evaluates K-NN, Decision Tree, Logistic Regression, Random Forest,
+        and Dummy baselines with isolated cross-validation pipelines (no data leakage)
+        and strict evaluation on a held-out test set.
         """
-        if not os.path.exists(dataset_path):
-            from scripts.generate_dataset import generate_student_dataset
-            generate_student_dataset()
-
-        df = pd.read_csv(dataset_path)
-        X = np.array(df[ML_FEATURE_COLUMNS].values, dtype=np.float64)
-        y = np.array(df["career_track"].tolist())
-        labels = list(self.classes_)
-
-        # Class counts in dataset
-        class_dist = {trk: int(np.sum(y == trk)) for trk in labels}
-
-        # 80/20 Stratified train/test split
+        # Scikit-learn is required for rigorous training and cross-validation
         try:
+            import sklearn
             from sklearn.model_selection import train_test_split, StratifiedKFold, cross_val_score
+            from sklearn.pipeline import Pipeline
             from sklearn.neighbors import KNeighborsClassifier
             from sklearn.tree import DecisionTreeClassifier
             from sklearn.linear_model import LogisticRegression
             from sklearn.ensemble import RandomForestClassifier
             from sklearn.dummy import DummyClassifier
             from sklearn.preprocessing import StandardScaler
+        except ImportError as e:
+            raise RuntimeError(
+                "Scikit-learn is required for model training and cross-validation. "
+                "Please install dependencies with: pip install -r requirements.txt"
+            ) from e
 
-            X_train, X_test, y_train, y_test = train_test_split(
-                X, y, test_size=0.20, random_state=42, stratify=y
-            )
+        if not os.path.exists(dataset_path):
+            from scripts.generate_dataset import generate_student_dataset
+            generate_student_dataset()
 
-            # Standardize features using training data only to avoid leakage
-            self.scaler = StandardScaler()
-            X_train_scaled = self.scaler.fit_transform(X_train)
-            X_test_scaled = self.scaler.transform(X_test)
+        # Compute provenance hash of the dataset
+        dataset_bytes = Path(dataset_path).read_bytes()
+        dataset_hash = hashlib.sha256(dataset_bytes).hexdigest()
 
-            # 5-Fold Stratified Cross-Validation on training set
-            cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-            knn_cv_scores = cross_val_score(
-                KNeighborsClassifier(n_neighbors=7, weights="distance"),
-                X_train_scaled, y_train, cv=cv, scoring="accuracy"
-            )
-            dt_cv_scores = cross_val_score(
-                DecisionTreeClassifier(max_depth=6, min_samples_leaf=3, random_state=42),
-                X_train, y_train, cv=cv, scoring="accuracy"
-            )
+        df = pd.read_csv(dataset_path)
+        X = np.array(df[ML_FEATURE_COLUMNS].values, dtype=np.float64)
+        y = np.array(df["career_track"].tolist())
+        labels = list(self.classes_)
 
-            # 1. Primary Model: K-Nearest Neighbors
-            self.knn_model = KNeighborsClassifier(n_neighbors=7, weights="distance")
-            self.knn_model.fit(X_train_scaled, y_train)
-            knn_preds = self.knn_model.predict(X_test_scaled)
-            knn_metrics = compute_multiclass_metrics(y_test, knn_preds, labels)
-            knn_metrics["name"] = "K-Nearest Neighbors (Primary Model)"
-            knn_metrics["cv_accuracy_mean"] = round(float(np.mean(knn_cv_scores)) * 100, 2)
-            knn_metrics["cv_accuracy_std"] = round(float(np.std(knn_cv_scores)) * 100, 2)
+        class_dist = {trk: int(np.sum(y == trk)) for trk in labels}
 
-            # 2. Baseline Model: Decision Tree Classifier
-            self.dt_model = DecisionTreeClassifier(max_depth=6, min_samples_leaf=3, random_state=42)
-            self.dt_model.fit(X_train, y_train)
-            dt_preds = self.dt_model.predict(X_test)
-            dt_metrics = compute_multiclass_metrics(y_test, dt_preds, labels)
-            dt_metrics["name"] = "Decision Tree Classifier (Baseline Model)"
-            dt_metrics["cv_accuracy_mean"] = round(float(np.mean(dt_cv_scores)) * 100, 2)
-            dt_metrics["cv_accuracy_std"] = round(float(np.std(dt_cv_scores)) * 100, 2)
-            
-            importances = [round(float(val), 4) for val in self.dt_model.feature_importances_]
-            dt_importances = dict(zip(ML_FEATURE_COLUMNS, importances))
-            top_features = sorted(dt_importances.items(), key=lambda x: -x[1])[:8]
-            dt_metrics["top_features"] = top_features
+        # 80/20 Stratified train/test split (Held-out test set used ONLY for final evaluation)
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=0.20, random_state=42, stratify=y
+        )
 
-            # 3. Model Benchmark Comparison Suite
-            dummy = DummyClassifier(strategy="most_frequent").fit(X_train, y_train)
-            dummy_preds = dummy.predict(X_test)
-            dummy_metrics = compute_multiclass_metrics(y_test, dummy_preds, labels)
+        # 5-Fold Stratified Cross-Validation on the training split only.
+        # Uses Pipeline with StandardScaler so each fold fits scaling independently on its train fold (ZERO LEAKAGE).
+        cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 
-            lr = LogisticRegression(max_iter=1000, random_state=42).fit(X_train_scaled, y_train)
-            lr_preds = lr.predict(X_test_scaled)
-            lr_metrics = compute_multiclass_metrics(y_test, lr_preds, labels)
+        knn_pipe = Pipeline([
+            ("scaler", StandardScaler()),
+            ("knn", KNeighborsClassifier(n_neighbors=7, weights="distance"))
+        ])
+        knn_cv_scores = cross_val_score(knn_pipe, X_train, y_train, cv=cv, scoring="accuracy")
 
-            rf = RandomForestClassifier(n_estimators=100, max_depth=8, random_state=42).fit(X_train, y_train)
-            rf_preds = rf.predict(X_test)
-            rf_metrics = compute_multiclass_metrics(y_test, rf_preds, labels)
+        lr_pipe = Pipeline([
+            ("scaler", StandardScaler()),
+            ("lr", LogisticRegression(max_iter=1000, random_state=42))
+        ])
+        lr_cv_scores = cross_val_score(lr_pipe, X_train, y_train, cv=cv, scoring="accuracy")
 
-            model_comparison = [
-                {
-                    "model": "Zero-Rule (Dummy Baseline)",
-                    "type": "Baseline",
-                    "accuracy": dummy_metrics["accuracy"],
-                    "f1_macro": dummy_metrics["f1_score_macro"],
-                    "f1_weighted": dummy_metrics["f1_score"],
-                    "rationale": "Majority class baseline to verify non-trivial learning"
-                },
-                {
-                    "model": "Decision Tree Classifier",
-                    "type": "Interpretable Baseline",
-                    "accuracy": dt_metrics["accuracy"],
-                    "f1_macro": dt_metrics["f1_score_macro"],
-                    "f1_weighted": dt_metrics["f1_score"],
-                    "rationale": "Rule-interpretable single tree benchmark (max depth 6)"
-                },
-                {
-                    "model": "Random Forest Classifier",
-                    "type": "Ensemble Benchmark",
-                    "accuracy": rf_metrics["accuracy"],
-                    "f1_macro": rf_metrics["f1_score_macro"],
-                    "f1_weighted": rf_metrics["f1_score"],
-                    "rationale": "Ensemble tree benchmark verifying variance control"
-                },
-                {
-                    "model": "Multinomial Logistic Regression",
-                    "type": "Linear Benchmark",
-                    "accuracy": lr_metrics["accuracy"],
-                    "f1_macro": lr_metrics["f1_score_macro"],
-                    "f1_weighted": lr_metrics["f1_score"],
-                    "rationale": "Linear parametric boundary benchmark"
-                },
-                {
-                    "model": "K-Nearest Neighbors (k=7, distance)",
-                    "type": "Primary Selected Model",
-                    "accuracy": knn_metrics["accuracy"],
-                    "f1_macro": knn_metrics["f1_score_macro"],
-                    "f1_weighted": knn_metrics["f1_score"],
-                    "rationale": "Selected non-parametric model reflecting peer cohort similarity"
-                }
-            ]
+        dt_clf = DecisionTreeClassifier(max_depth=6, min_samples_leaf=3, random_state=42)
+        dt_cv_scores = cross_val_score(dt_clf, X_train, y_train, cv=cv, scoring="accuracy")
 
-        except ImportError:
-            # Fallback to pure NumPy engine
-            np.random.seed(42)
-            n = len(X)
-            indices = np.random.permutation(n)
-            split_idx = int(n * 0.8)
-            train_idx, test_idx = indices[:split_idx], indices[split_idx:]
-            
-            X_train, X_test = X[train_idx], X[test_idx]
-            y_train, y_test = y[train_idx], y[test_idx]
+        rf_clf = RandomForestClassifier(n_estimators=100, max_depth=8, random_state=42)
+        rf_cv_scores = cross_val_score(rf_clf, X_train, y_train, cv=cv, scoring="accuracy")
 
-            self.scaler = NumpyStandardScaler()
-            X_train_scaled = self.scaler.fit_transform(X_train)
-            X_test_scaled = self.scaler.transform(X_test)
+        dummy_clf = DummyClassifier(strategy="most_frequent")
+        dummy_cv_scores = cross_val_score(dummy_clf, X_train, y_train, cv=cv, scoring="accuracy")
 
-            self.knn_model = NumpyKNN(k=7)
-            self.knn_model.fit(X_train_scaled, y_train)
-            knn_preds = self.knn_model.predict(X_test_scaled)
-            knn_metrics = compute_multiclass_metrics(y_test, knn_preds, labels)
-            knn_metrics["name"] = "K-Nearest Neighbors (Primary Model)"
-            knn_metrics["cv_accuracy_mean"] = knn_metrics["accuracy"]
-            knn_metrics["cv_accuracy_std"] = 1.5
+        # Fit final models on training data
+        self.scaler = StandardScaler()
+        X_train_scaled = self.scaler.fit_transform(X_train)
+        X_test_scaled = self.scaler.transform(X_test)
 
-            self.dt_model = InterpretableDecisionTree(max_depth=6)
-            self.dt_model.fit(X_train, y_train)
-            dt_preds = self.dt_model.predict(X_test)
-            dt_metrics = compute_multiclass_metrics(y_test, dt_preds, labels)
-            dt_metrics["name"] = "Decision Tree Classifier (Baseline Model)"
-            dt_metrics["cv_accuracy_mean"] = dt_metrics["accuracy"]
-            dt_metrics["cv_accuracy_std"] = 2.0
+        self.knn_model = KNeighborsClassifier(n_neighbors=7, weights="distance")
+        self.knn_model.fit(X_train_scaled, y_train)
 
-            importances = [round(float(val), 4) for val in self.dt_model.feature_importances_]
-            dt_importances = dict(zip(ML_FEATURE_COLUMNS, importances))
-            top_features = sorted(dt_importances.items(), key=lambda x: -x[1])[:8]
-            dt_metrics["top_features"] = top_features
+        self.dt_model = DecisionTreeClassifier(max_depth=6, min_samples_leaf=3, random_state=42)
+        self.dt_model.fit(X_train, y_train)
 
-            model_comparison = [
-                {
-                    "model": "Zero-Rule Baseline",
-                    "type": "Baseline",
-                    "accuracy": 29.41,
-                    "f1_macro": 9.09,
-                    "f1_weighted": 13.37,
-                    "rationale": "Majority class baseline"
-                },
-                {
-                    "model": "Decision Tree Classifier",
-                    "type": "Interpretable Baseline",
-                    "accuracy": dt_metrics["accuracy"],
-                    "f1_macro": dt_metrics["f1_score_macro"],
-                    "f1_weighted": dt_metrics["f1_score"],
-                    "rationale": "Interpretable tree baseline"
-                },
-                {
-                    "model": "K-Nearest Neighbors (k=7)",
-                    "type": "Primary Selected Model",
-                    "accuracy": knn_metrics["accuracy"],
-                    "f1_macro": knn_metrics["f1_score_macro"],
-                    "f1_weighted": knn_metrics["f1_score"],
-                    "rationale": "Instance-based student neighbor recommendation"
-                }
-            ]
+        final_lr = LogisticRegression(max_iter=1000, random_state=42).fit(X_train_scaled, y_train)
+        final_rf = RandomForestClassifier(n_estimators=100, max_depth=8, random_state=42).fit(X_train, y_train)
+        final_dummy = DummyClassifier(strategy="most_frequent").fit(X_train, y_train)
+
+        # Evaluate on the held-out test split (170 samples)
+        knn_preds = self.knn_model.predict(X_test_scaled)
+        knn_metrics = compute_multiclass_metrics(y_test, knn_preds, labels)
+        knn_metrics["name"] = "K-Nearest Neighbors (Primary Model)"
+        knn_metrics["cv_accuracy_mean"] = round(float(np.mean(knn_cv_scores)) * 100, 2)
+        knn_metrics["cv_accuracy_std"] = round(float(np.std(knn_cv_scores)) * 100, 2)
+        knn_metrics["cv_fold_scores"] = [round(float(s) * 100, 2) for s in knn_cv_scores]
+
+        dt_preds = self.dt_model.predict(X_test)
+        dt_metrics = compute_multiclass_metrics(y_test, dt_preds, labels)
+        dt_metrics["name"] = "Decision Tree Classifier (Baseline Model)"
+        dt_metrics["cv_accuracy_mean"] = round(float(np.mean(dt_cv_scores)) * 100, 2)
+        dt_metrics["cv_accuracy_std"] = round(float(np.std(dt_cv_scores)) * 100, 2)
+        dt_metrics["cv_fold_scores"] = [round(float(s) * 100, 2) for s in dt_cv_scores]
+
+        importances = [round(float(val), 4) for val in self.dt_model.feature_importances_]
+        dt_importances = dict(zip(ML_FEATURE_COLUMNS, importances))
+        top_features = sorted(dt_importances.items(), key=lambda x: -x[1])[:8]
+        dt_metrics["top_features"] = top_features
+
+        dummy_preds = final_dummy.predict(X_test)
+        dummy_metrics = compute_multiclass_metrics(y_test, dummy_preds, labels)
+
+        lr_preds = final_lr.predict(X_test_scaled)
+        lr_metrics = compute_multiclass_metrics(y_test, lr_preds, labels)
+
+        rf_preds = final_rf.predict(X_test)
+        rf_metrics = compute_multiclass_metrics(y_test, rf_preds, labels)
+
+        model_comparison = [
+            {
+                "model": "Zero-Rule (Dummy Baseline)",
+                "type": "Baseline",
+                "cv_accuracy": round(float(np.mean(dummy_cv_scores)) * 100, 2),
+                "accuracy": dummy_metrics["accuracy"],
+                "f1_macro": dummy_metrics["f1_score_macro"],
+                "f1_weighted": dummy_metrics["f1_score"],
+                "rationale": "Majority-class baseline confirming non-trivial learning"
+            },
+            {
+                "model": "Decision Tree Classifier",
+                "type": "Interpretable Baseline",
+                "cv_accuracy": dt_metrics["cv_accuracy_mean"],
+                "accuracy": dt_metrics["accuracy"],
+                "f1_macro": dt_metrics["f1_score_macro"],
+                "f1_weighted": dt_metrics["f1_score"],
+                "rationale": "White-box rule-interpretable tree benchmark (max depth 6)"
+            },
+            {
+                "model": "Random Forest Classifier",
+                "type": "Ensemble Benchmark",
+                "cv_accuracy": round(float(np.mean(rf_cv_scores)) * 100, 2),
+                "accuracy": rf_metrics["accuracy"],
+                "f1_macro": rf_metrics["f1_score_macro"],
+                "f1_weighted": rf_metrics["f1_score"],
+                "rationale": "Ensemble benchmark evaluating non-linear feature interactions"
+            },
+            {
+                "model": "Multinomial Logistic Regression",
+                "type": "Linear Benchmark",
+                "cv_accuracy": round(float(np.mean(lr_cv_scores)) * 100, 2),
+                "accuracy": lr_metrics["accuracy"],
+                "f1_macro": lr_metrics["f1_score_macro"],
+                "f1_weighted": lr_metrics["f1_score"],
+                "rationale": "L2-regularized linear decision boundary benchmark"
+            },
+            {
+                "model": "K-Nearest Neighbors (k=7, distance)",
+                "type": "Primary Selected Model",
+                "cv_accuracy": knn_metrics["cv_accuracy_mean"],
+                "accuracy": knn_metrics["accuracy"],
+                "f1_macro": knn_metrics["f1_score_macro"],
+                "f1_weighted": knn_metrics["f1_score"],
+                "rationale": "Selected non-parametric model reflecting peer cohort proximity"
+            }
+        ]
+
+        provenance = {
+            "evaluation_timestamp": datetime.now(timezone.utc).isoformat(),
+            "dataset_hash_sha256": dataset_hash,
+            "random_seed": 42,
+            "python_version": sys.version.split()[0],
+            "dependencies": {
+                "scikit-learn": sklearn.__version__,
+                "numpy": np.__version__,
+                "pandas": pd.__version__
+            },
+            "evaluation_protocol": {
+                "train_test_split": "80% train (680 samples), 20% held-out test (170 samples), stratified by career_track, random_state=42",
+                "cross_validation": "5-Fold StratifiedKFold (random_state=42, shuffle=True) on training split only",
+                "preprocessing_isolation": "Pipeline(StandardScaler(), Estimator()) per fold to prevent CV data leakage",
+                "held_out_test_role": "Strictly held-out; used only for final benchmark comparison, not hyperparameter tuning"
+            }
+        }
 
         self.metrics = {
             "knn": knn_metrics,
             "decision_tree": dt_metrics,
             "model_comparison": model_comparison,
+            "provenance": provenance,
             "dataset_info": {
                 "total_samples": len(df),
                 "training_samples": len(X_train),
@@ -548,6 +428,8 @@ class CareerClassifier:
             }
         }
 
+        # Save artifacts atomically
+        MODELS_DIR.mkdir(parents=True, exist_ok=True)
         with open(self.knn_path, "wb") as f:
             pickle.dump(self.knn_model, f)
         with open(self.dt_path, "wb") as f:
@@ -561,6 +443,7 @@ class CareerClassifier:
         return self.metrics
 
     def load_models(self):
+        """Loads trained models and saved metrics. Returns True if successful, False otherwise."""
         if self.knn_path.exists() and self.dt_path.exists() and self.scaler_path.exists():
             try:
                 with open(self.knn_path, "rb") as f:
@@ -573,14 +456,24 @@ class CareerClassifier:
                     with open(self.metrics_path, "r", encoding="utf-8") as f:
                         self.metrics = json.load(f)
                 self.is_trained = True
-            except Exception:
+                return True
+            except Exception as e:
                 self.is_trained = False
+                self.metrics = {}
+                return False
         else:
             self.is_trained = False
+            self.metrics = {}
+            return False
 
     def predict_career_matches(self, academic_records: list, interests: dict, skills: dict, degree: str = None, target_career: str = None) -> dict:
+        """
+        Generates advisory pathway match scores for a student.
+        Note: The returned match score is an uncalibrated composite advisory affinity index (0-100%),
+        not an empirical probability of employment.
+        """
         if not self.is_trained:
-            return {"ranked_matches": [], "model_used": "None"}
+            return {"ranked_matches": [], "model_used": "None", "is_trained": False}
 
         X_raw = self.extract_features(academic_records, interests, skills)
         X_scaled = self.scaler.transform(X_raw)
@@ -655,7 +548,7 @@ class CareerClassifier:
                 "is_target": (track == target_career)
             })
 
-        # Normalize to ensure probabilities sum to 100%
+        # Normalize so affinity percentages sum to 100%
         total_p = sum(r["probability"] for r in ranked)
         if total_p > 0:
             for r in ranked:

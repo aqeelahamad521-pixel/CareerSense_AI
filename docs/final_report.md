@@ -156,7 +156,7 @@ The upskilling process is modeled as state-space search over a directed graph $G
 
 To ensure scientific rigor, avoid synthetic target leakage, and prevent overfitting, the evaluation pipeline implemented:
 1. **Stratified Splitting**: 850 undergraduate student profiles were split into an 80% training set (680 profiles) and a 20% held-out test set (170 profiles), preserving class proportions across all five tracks.
-2. **Preprocessing Leakage Prevention**: Feature standardization (`StandardScaler`) was strictly fitted only on the training set and subsequently applied to transform test samples.
+2. **Preprocessing Leakage Prevention**: Feature standardization (`StandardScaler`) was encapsulated strictly within a scikit-learn `Pipeline` alongside the estimator during cross-validation, guaranteeing that scaling parameters were fitted purely on each training fold without information bleeding across fold boundaries or from the held-out test set.
 3. **5-Fold Stratified Cross-Validation**: Conducted across the training set to evaluate generalization variance prior to final testing.
 4. **Multi-Model Benchmark Suite**: Compared against four candidate paradigms (Zero-Rule Dummy, Decision Tree, Multinomial Logistic Regression, and Random Forest).
 
@@ -174,7 +174,7 @@ To ensure scientific rigor, avoid synthetic target leakage, and prevent overfitt
 
 | Metric | K-Nearest Neighbors (Primary Model) | Decision Tree (Interpretable Baseline) |
 |---|---|---|
-| **5-Fold CV Accuracy (Train Set)** | **89.12% (±2.20%)** | **63.53% (±4.50%)** |
+| **5-Fold CV Accuracy (Train Set)** | **89.56% (±2.48%)** *(Pipeline Isolation)* | **63.53% (±4.50%)** |
 | **Held-Out Test Accuracy** | **88.82%** | **60.00%** |
 | **Precision (Weighted)** | **89.74%** | **64.16%** |
 | **Recall (Weighted)** | **88.82%** | **60.00%** |
@@ -218,13 +218,14 @@ Actual: UI (n=22)            4          3          4          1         10      
 - **Independent Precision, Recall, and F1 Values**: In multiclass evaluation with non-trivial misclassifications, class-specific False Positives and False Negatives diverge, guaranteeing that Precision ($TP / (TP + FP)$), Recall ($TP / (TP + FN)$), and F1-score are mathematically independent and non-identical.
 - **Model Selection Justification**: K-NN ($k=7$, distance-weighted) was selected over Logistic Regression despite identical accuracy because K-NN's instance-based reasoning naturally maps to student peer mentoring ('students with nearest academic and skill backgrounds followed this trajectory'), providing accessible neighbor distance metrics. The Decision Tree was retained as the white-box interpretable baseline to extract Gini feature importances (`interest_security`: 0.1481, `interest_design`: 0.1216, `interest_software`: 0.1113, `skill_dsa`: 0.0697, `skill_web_api`: 0.0637).
 
-### 8.2 Unit & Integration Testing
+### 8.2 Unit, Integration & Mathematical Correctness Testing
 Automated test suite (`tests/test_all.py`) validated:
-- Academic prerequisite compliance and failure identification (100% test pass rate).
-- Skill gap level difference computation and severity ranking.
-- A\* search topological ordering (guaranteeing courses precede dependent projects).
-- Weekly study budget scheduling (confirming schedules scale inversely with student hours).
-- End-to-end integration and explainability bundle synthesis.
+- **Mathematical Invariants of Multiclass Evaluation**: Strict algebraic verification that Accuracy equals correct predictions over total predictions ($\sum TP / N$), total confusion matrix sum equals sample count ($N$), diagonal trace equals correct predictions count, row sums equal true class support, and weighted metrics correctly weight per-class metrics by support. Zero-division handling returns 0.0 safely without throwing runtime exceptions.
+- **Academic Prerequisite Compliance and Failure Identification** (100% test pass rate).
+- **Skill Gap Level Difference Computation and Severity Ranking**.
+- **A\* Search Topological Ordering** (guaranteeing courses precede dependent projects).
+- **Weekly Study Budget Scheduling** (confirming schedules scale inversely with student hours).
+- **End-to-End Integration and Explainability Bundle Synthesis**.
 
 ### 8.3 End-to-End Scenario Walkthrough (Group Proposal Page 12)
 The system was verified against the exact benchmark scenario:
@@ -250,6 +251,7 @@ The system was verified against the exact benchmark scenario:
 2. **Dynamic Industry Demand**: Technology requirements evolve rapidly. The current system addresses this by decoupling career definitions and rules into editable JSON schemas, allowing faculty administrators to update competency benchmarks without altering application code.
 3. **Document Extraction Depth**: The prototype utilizes structured document metadata extraction rather than full computer vision or NLP PDF parsing. Future revisions could integrate OCR and LLM-based CV parsing.
 4. **Advisory Role**: CareerSense AI is explicitly designed as a **decision-support tool** to empower students and faculty mentors; it does not replace human career counselors or guarantee employment.
+5. **Synthetic Demonstration Dataset**: The 850-student evaluation cohort was synthetically generated to model realistic undergraduate computing degree curricula, maintaining genuine covariance between module competencies, domain interests, and career tracks. Because privacy regulations and university data protection frameworks restrict the publication of live student academic records and longitudinal industry employment trajectories, the dataset serves as an educational benchmark rather than an empirical study of the labor market.
 
 ---
 

@@ -143,7 +143,7 @@ Evaluated on 170 holdout test samples (80/20 train/test split of 850 undergradua
 
 | Metric | K-Nearest Neighbors (Primary Model) | Decision Tree (Baseline Model) |
 |---|---|---|
-| **5-Fold CV Accuracy (Train Set)** | **89.12% (±2.20%)** | **63.53% (±4.50%)** |
+| **5-Fold CV Accuracy (Train Set)** | **89.56% (±2.48%)** *(Pipeline Isolation)* | **63.53% (±4.50%)** |
 | **Held-Out Test Accuracy** | **88.82%** | **60.00%** |
 | **Precision (Weighted)** | **89.74%** | **64.16%** |
 | **Recall (Weighted)** | **88.82%** | **60.00%** |
@@ -156,6 +156,10 @@ Evaluated on 170 holdout test samples (80/20 train/test split of 850 undergradua
 - **Random Forest (100 trees)**: 82.94% Accuracy | 83.13% Macro F1
 - **Multinomial Logistic Regression**: 88.82% Accuracy | 89.45% Macro F1
 - **K-Nearest Neighbors ($k=7$, distance)**: **88.82% Accuracy** | **89.49% Macro F1** (Selected Primary Model)
+
+### 🛡️ Evaluation Methodology & Synthetic Dataset Transparency
+- **Preprocessing Leakage Remediation**: K-NN cross-validation is evaluated strictly through a scikit-learn `Pipeline([('scaler', StandardScaler()), ('knn', KNeighborsClassifier(...))])` executed on the training split, ensuring that scaling parameters are computed independently within each fold. The held-out test split (20%) is strictly isolated for final testing.
+- **Dataset Context & Ethical Limitations**: The student cohort (`data/students_dataset.csv`, 850 records) is an educational synthetic demonstration reflecting real computing curricula. While engineered with realistic latent skills, prerequisite rules, and overlapping interests, it is explicitly labelled as synthetic and should not be treated as empirical graduate employment data.
 
 ---
 

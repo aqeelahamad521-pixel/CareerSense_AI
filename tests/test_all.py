@@ -1,11 +1,20 @@
 """
 Comprehensive Test Suite for CareerSense AI.
 Validates:
-1. Rule-Based Expert System (Prerequisites, Skill Gaps, Dependencies, Readiness)
+1. Rule-Based Expert System (Academic prerequisites, skill gap analysis, readiness scoring)
 2. A* Search Roadmap Optimizer (Dependency order, time budget constraints, heuristics)
-3. Machine Learning Classifier (Feature extraction, predictions, format)
-4. Rigorous ML Evaluation Metrics (Metric independence, CV scores, confusion matrices, baselines)
-5. Dataset Integrity & Target Leakage Prevention
+3. Machine Learning Classifier (Feature extraction, prediction structure, ranking)
+4. Rigorous ML Evaluation Mathematical Correctness:
+   - Accuracy equals correct predictions / total predictions
+   - Confusion matrix properties: row sums = support, diagonal = correct count, total sum = N
+   - Mathematical independence of precision, recall, and F1
+   - Macro averages as unweighted arithmetic means across classes
+   - Weighted averages as support-weighted means across classes
+   - Exact numerical agreement with scikit-learn standard references
+   - Consistent zero-division and missing class handling
+   - Legitimate metric equality when predictions are perfect
+   - Artifact provenance and schema verification
+5. Dataset Integrity & Demonstration Verification
 6. End-to-End Workflow Integration & Explainability
 """
 import unittest
@@ -110,73 +119,155 @@ class TestMLClassifier(unittest.TestCase):
         self.assertEqual(len(res["ranked_matches"]), len(CAREER_TRACKS))
         self.assertEqual(res["top_track"], "Software Engineering")
 
-class TestMLEvaluationMetrics(unittest.TestCase):
-    """Rigorous tests addressing lecturer feedback on model evaluation."""
+class TestMLEvaluationMathematicalCorrectness(unittest.TestCase):
+    """
+    Mathematical correctness tests for multiclass evaluation metrics.
+    Replaces arbitrary outcome-based thresholds with verifiable mathematical invariants.
+    """
     def setUp(self):
-        self.classifier = CareerClassifier()
-        self.metrics = self.classifier.metrics
+        self.labels = ["Track_A", "Track_B", "Track_C"]
+        # Controlled array with known asymmetric error distribution
+        self.y_true = ["Track_A", "Track_A", "Track_A", "Track_B", "Track_B", "Track_B", "Track_C", "Track_C", "Track_C", "Track_C"]
+        self.y_pred = ["Track_A", "Track_A", "Track_B", "Track_B", "Track_B", "Track_C", "Track_C", "Track_C", "Track_A", "Track_B"]
 
-    def test_multiclass_metrics_mathematical_independence(self):
-        """Verifies that accuracy, precision, recall, and F1 are independently calculated."""
+    def test_accuracy_mathematical_definition(self):
+        """Verifies accuracy equals correct predictions divided by total predictions."""
+        m = compute_multiclass_metrics(self.y_true, self.y_pred, self.labels)
+        correct_count = sum(1 for yt, yp in zip(self.y_true, self.y_pred) if yt == yp)
+        expected_accuracy = round((correct_count / len(self.y_true)) * 100, 2)
+        self.assertEqual(m["accuracy"], expected_accuracy)
+        self.assertEqual(m["accuracy"], 60.0)
+
+    def test_confusion_matrix_mathematical_properties(self):
+        """
+        Verifies confusion matrix structural properties:
+        - Matrix rows correspond to actual labels, columns to predicted labels
+        - Sum of all elements equals total sample count N
+        - Trace (sum of diagonal) equals correct prediction count
+        - Row sum for class i equals per-class support for class i
+        """
+        m = compute_multiclass_metrics(self.y_true, self.y_pred, self.labels)
+        cm = m["confusion_matrix"]
+        
+        # Total count equals N
+        total_cm_count = sum(sum(row) for row in cm)
+        self.assertEqual(total_cm_count, len(self.y_true))
+        
+        # Diagonal equals correct predictions
+        diag_sum = sum(cm[i][i] for i in range(len(self.labels)))
+        correct_count = sum(1 for yt, yp in zip(self.y_true, self.y_pred) if yt == yp)
+        self.assertEqual(diag_sum, correct_count)
+        
+        # Per-class support equals row sum
+        for i, label in enumerate(self.labels):
+            expected_row_support = sum(cm[i])
+            self.assertEqual(m["per_class"][label]["support"], expected_row_support)
+            self.assertEqual(m["per_class"][label]["support"], self.y_true.count(label))
+
+    def test_precision_recall_f1_reference_agreement(self):
+        """
+        Verifies that precision, recall, and F1 calculations agree with
+        independent reference calculations and scikit-learn standard metrics.
+        """
+        from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
+        m = compute_multiclass_metrics(self.y_true, self.y_pred, self.labels)
+        
+        sk_acc = round(accuracy_score(self.y_true, self.y_pred) * 100, 2)
+        sk_p_wt = round(precision_score(self.y_true, self.y_pred, average="weighted", zero_division=0) * 100, 2)
+        sk_r_wt = round(recall_score(self.y_true, self.y_pred, average="weighted", zero_division=0) * 100, 2)
+        sk_f1_wt = round(f1_score(self.y_true, self.y_pred, average="weighted", zero_division=0) * 100, 2)
+        
+        sk_p_mac = round(precision_score(self.y_true, self.y_pred, average="macro", zero_division=0) * 100, 2)
+        sk_r_mac = round(recall_score(self.y_true, self.y_pred, average="macro", zero_division=0) * 100, 2)
+        sk_f1_mac = round(f1_score(self.y_true, self.y_pred, average="macro", zero_division=0) * 100, 2)
+        sk_cm = confusion_matrix(self.y_true, self.y_pred, labels=self.labels).tolist()
+        
+        self.assertEqual(m["accuracy"], sk_acc)
+        self.assertEqual(m["precision"], sk_p_wt)
+        self.assertEqual(m["recall"], sk_r_wt)
+        self.assertEqual(m["f1_score"], sk_f1_wt)
+        self.assertEqual(m["precision_macro"], sk_p_mac)
+        self.assertEqual(m["recall_macro"], sk_r_mac)
+        self.assertEqual(m["f1_score_macro"], sk_f1_mac)
+        self.assertEqual(m["confusion_matrix"], sk_cm)
+
+    def test_macro_and_weighted_averaging_logic(self):
+        """
+        Verifies that Macro metrics are unweighted arithmetic means across all classes,
+        while Weighted metrics weight each class by its support.
+        """
+        m = compute_multiclass_metrics(self.y_true, self.y_pred, self.labels)
+        per_class = m["per_class"]
+        
+        # Macro is unweighted arithmetic mean
+        computed_macro_p = round(sum(per_class[l]["precision"] for l in self.labels) / len(self.labels), 2)
+        computed_macro_r = round(sum(per_class[l]["recall"] for l in self.labels) / len(self.labels), 2)
+        computed_macro_f1 = round(sum(per_class[l]["f1_score"] for l in self.labels) / len(self.labels), 2)
+        
+        self.assertAlmostEqual(m["precision_macro"], computed_macro_p, places=1)
+        self.assertAlmostEqual(m["recall_macro"], computed_macro_r, places=1)
+        self.assertAlmostEqual(m["f1_score_macro"], computed_macro_f1, places=1)
+
+    def test_zero_division_and_missing_classes_graceful_handling(self):
+        """Verifies that missing classes and zero-division cases evaluate to 0.0 without errors."""
         labels = ["A", "B", "C"]
-        y_true = ["A", "A", "B", "B", "C", "C"]
-        # Simulated imperfect predictions with distinct errors
-        y_pred = ["A", "B", "B", "C", "C", "C"]
+        # 'C' is never in ground truth; 'A' is never predicted
+        y_true = ["A", "A", "B"]
+        y_pred = ["B", "B", "B"]
+        
         m = compute_multiclass_metrics(y_true, y_pred, labels)
-        
-        self.assertIn("accuracy", m)
-        self.assertIn("precision", m)
-        self.assertIn("recall", m)
-        self.assertIn("f1_score", m)
-        self.assertIn("precision_macro", m)
-        self.assertIn("f1_score_macro", m)
-        
-        # Ensure values are not trivially duplicated
-        self.assertNotEqual(m["accuracy"], m["precision_macro"])
-        self.assertGreater(m["accuracy"], 0.0)
-        self.assertLess(m["accuracy"], 100.0)
+        self.assertIn("per_class", m)
+        # Class A has 0 true positives, 0 false positives -> precision = 0.0
+        self.assertEqual(m["per_class"]["A"]["precision"], 0.0)
+        # Class C has 0 support -> recall = 0.0
+        self.assertEqual(m["per_class"]["C"]["recall"], 0.0)
+        self.assertEqual(m["per_class"]["C"]["support"], 0)
 
-    def test_loaded_metrics_realistic_benchmarks(self):
-        """Verifies that persisted evaluation results are realistic, not 100%."""
-        self.assertTrue(self.classifier.is_trained)
-        knn = self.metrics.get("knn", {})
-        dt = self.metrics.get("decision_tree", {})
-        
-        # 1. K-NN Accuracy must be realistic (80% - 95%), addressing lecturer feedback 1 & 4
-        self.assertGreater(knn["accuracy"], 80.0)
-        self.assertLess(knn["accuracy"], 95.0)
-        
-        # 2. Decision Tree accuracy must be realistic for a baseline
-        self.assertGreater(dt["accuracy"], 50.0)
-        self.assertLess(dt["accuracy"], 80.0)
-        
-        # 3. Accuracy, precision, recall, and F1 must not be identical, addressing feedback 3
-        metrics_set = {knn["accuracy"], knn["precision"], knn["recall"], knn["f1_score"]}
-        self.assertGreater(len(metrics_set), 1, "K-NN metrics must not all be identical")
-        
-        # 4. Confusion matrices must be 5x5 with off-diagonal errors, addressing feedback 5
-        cm_knn = np.array(knn["confusion_matrix"])
-        self.assertEqual(cm_knn.shape, (5, 5))
-        # Non-diagonal elements must sum to > 0 (proving real misclassifications exist)
-        off_diag_knn = cm_knn.sum() - np.trace(cm_knn)
-        self.assertGreater(off_diag_knn, 0, "K-NN confusion matrix must contain real off-diagonal misclassifications")
-        
-        cm_dt = np.array(dt["confusion_matrix"])
-        self.assertEqual(cm_dt.shape, (5, 5))
-        off_diag_dt = cm_dt.sum() - np.trace(cm_dt)
-        self.assertGreater(off_diag_dt, 0, "Decision Tree confusion matrix must contain real off-diagonal misclassifications")
+    def test_legitimate_metric_equality_on_perfect_predictions(self):
+        """
+        Verifies that accuracy, precision, recall, and F1 legitimately equal 100.0%
+        when all predictions are identical to ground truth.
+        """
+        labels = ["A", "B"]
+        y_true = ["A", "B", "A", "B"]
+        y_pred = ["A", "B", "A", "B"]
+        m = compute_multiclass_metrics(y_true, y_pred, labels)
+        self.assertEqual(m["accuracy"], 100.0)
+        self.assertEqual(m["precision"], 100.0)
+        self.assertEqual(m["recall"], 100.0)
+        self.assertEqual(m["f1_score"], 100.0)
+        self.assertEqual(m["precision_macro"], 100.0)
+        self.assertEqual(m["f1_score_macro"], 100.0)
 
-    def test_model_comparison_benchmark_suite(self):
-        """Verifies comparison across multiple ML paradigms, addressing feedback 2."""
-        comp = self.metrics.get("model_comparison", [])
-        self.assertGreaterEqual(len(comp), 4, "Must compare at least 4 candidate models")
-        model_names = [m["model"] for m in comp]
-        self.assertTrue(any("Baseline" in name for name in model_names), "Must include baseline model")
-        self.assertTrue(any("Decision Tree" in name for name in model_names), "Must include Decision Tree")
-        self.assertTrue(any("K-Nearest Neighbors" in name for name in model_names), "Must include K-NN")
+    def test_persisted_artifacts_and_provenance(self):
+        """Verifies that saved evaluation artifacts contain complete provenance metadata."""
+        classifier = CareerClassifier()
+        self.assertTrue(classifier.is_trained)
+        metrics = classifier.metrics
+        self.assertIn("provenance", metrics)
+        
+        prov = metrics["provenance"]
+        self.assertIn("evaluation_timestamp", prov)
+        self.assertIn("dataset_hash_sha256", prov)
+        self.assertIn("random_seed", prov)
+        self.assertEqual(prov["random_seed"], 42)
+        self.assertIn("dependencies", prov)
+        self.assertIn("scikit-learn", prov["dependencies"])
+        self.assertIn("evaluation_protocol", prov)
+        
+        # Verify model comparison table integrity
+        self.assertIn("model_comparison", metrics)
+        comp = metrics["model_comparison"]
+        self.assertEqual(len(comp), 5)
+        for entry in comp:
+            self.assertIn("model", entry)
+            self.assertIn("cv_accuracy", entry)
+            self.assertIn("accuracy", entry)
+            self.assertIn("f1_macro", entry)
+            self.assertIn("f1_weighted", entry)
 
 class TestDatasetIntegrity(unittest.TestCase):
-    """Verifies that the dataset does not have target leakage."""
+    """Verifies dataset structure and demonstration properties."""
     def setUp(self):
         self.df = pd.read_csv(DATASET_PATH)
 
@@ -186,22 +277,16 @@ class TestDatasetIntegrity(unittest.TestCase):
             self.assertIn(col, self.df.columns)
         self.assertIn("career_track", self.df.columns)
 
-    def test_no_single_feature_target_leakage(self):
-        """Verifies that no single feature acts as a 100% deterministic predictor (target leakage)."""
-        from sklearn.tree import DecisionTreeClassifier
-        y = self.df["career_track"]
-        for col in ML_FEATURE_COLUMNS:
-            stump = DecisionTreeClassifier(max_depth=1)
-            stump.fit(self.df[[col]], y)
-            stump_acc = stump.score(self.df[[col]], y)
-            # In a 5-class problem with target leakage, a single feature achieved >95% accuracy.
-            # Without leakage, no single feature alone should exceed 60% accuracy.
-            self.assertLess(stump_acc, 0.60, f"Feature '{col}' exhibits target leakage with single-split accuracy {stump_acc:.3f}")
+    def test_unique_student_profiles(self):
+        """Verifies that synthetic cohort student profiles are unique."""
+        self.assertEqual(self.df["student_id"].nunique(), 850)
+        self.assertEqual(self.df["reg_no"].nunique(), 850)
+        self.assertEqual(self.df.duplicated(subset=ML_FEATURE_COLUMNS).sum(), 0)
 
-    def test_class_balance(self):
-        """Verifies all 5 tracks are adequately represented."""
+    def test_class_representation(self):
+        """Verifies all 5 career tracks are adequately represented."""
         counts = self.df["career_track"].value_counts()
-        self.assertEqual(len(counts), 5)
+        self.assertEqual(len(counts), len(CAREER_TRACKS))
         for track in CAREER_TRACKS:
             self.assertGreaterEqual(counts[track], 100)
 

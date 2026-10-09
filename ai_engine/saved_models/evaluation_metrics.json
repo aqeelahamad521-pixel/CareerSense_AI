@@ -84,8 +84,15 @@
       "UI/UX Design"
     ],
     "name": "K-Nearest Neighbors (Primary Model)",
-    "cv_accuracy_mean": 89.12,
-    "cv_accuracy_std": 2.2
+    "cv_accuracy_mean": 89.56,
+    "cv_accuracy_std": 2.48,
+    "cv_fold_scores": [
+      91.18,
+      88.97,
+      85.29,
+      92.65,
+      89.71
+    ]
   },
   "decision_tree": {
     "accuracy": 60.0,
@@ -174,6 +181,13 @@
     "name": "Decision Tree Classifier (Baseline Model)",
     "cv_accuracy_mean": 63.53,
     "cv_accuracy_std": 4.5,
+    "cv_fold_scores": [
+      67.65,
+      67.65,
+      66.18,
+      57.35,
+      58.82
+    ],
     "top_features": [
       [
         "interest_security",
@@ -213,44 +227,66 @@
     {
       "model": "Zero-Rule (Dummy Baseline)",
       "type": "Baseline",
+      "cv_accuracy": 29.56,
       "accuracy": 29.41,
       "f1_macro": 9.09,
       "f1_weighted": 13.37,
-      "rationale": "Majority class baseline to verify non-trivial learning"
+      "rationale": "Majority-class baseline confirming non-trivial learning"
     },
     {
       "model": "Decision Tree Classifier",
       "type": "Interpretable Baseline",
+      "cv_accuracy": 63.53,
       "accuracy": 60.0,
       "f1_macro": 59.72,
       "f1_weighted": 60.39,
-      "rationale": "Rule-interpretable single tree benchmark (max depth 6)"
+      "rationale": "White-box rule-interpretable tree benchmark (max depth 6)"
     },
     {
       "model": "Random Forest Classifier",
       "type": "Ensemble Benchmark",
+      "cv_accuracy": 87.21,
       "accuracy": 82.94,
       "f1_macro": 83.13,
       "f1_weighted": 82.84,
-      "rationale": "Ensemble tree benchmark verifying variance control"
+      "rationale": "Ensemble benchmark evaluating non-linear feature interactions"
     },
     {
       "model": "Multinomial Logistic Regression",
       "type": "Linear Benchmark",
+      "cv_accuracy": 88.53,
       "accuracy": 88.82,
       "f1_macro": 89.45,
       "f1_weighted": 88.83,
-      "rationale": "Linear parametric boundary benchmark"
+      "rationale": "L2-regularized linear decision boundary benchmark"
     },
     {
       "model": "K-Nearest Neighbors (k=7, distance)",
       "type": "Primary Selected Model",
+      "cv_accuracy": 89.56,
       "accuracy": 88.82,
       "f1_macro": 89.49,
       "f1_weighted": 88.87,
-      "rationale": "Selected non-parametric model reflecting peer cohort similarity"
+      "rationale": "Selected non-parametric model reflecting peer cohort proximity"
     }
   ],
+  "provenance": {
+    "evaluation_timestamp": "2026-10-09T04:35:24.047145+00:00",
+    "dataset_hash_sha256": "87371f6919a197f5a098b7f10317ea9049841649275143c4a9a066d780975b34",
+    "random_seed": 42,
+    "python_version": "3.14.5",
+    "dependencies": {
+      "scikit-learn": "1.9.1",
+      "numpy": "2.4.6",
+      "pandas": "3.0.3"
+    },
+    "evaluation_protocol": {
+      "train_test_split": "80% train (680 samples), 20% held-out test (170 samples), stratified by career_track, random_state=42",
+      "cross_validation": "5-Fold StratifiedKFold (random_state=42, shuffle=True) on training split only",
+      "preprocessing_isolation": "Pipeline(StandardScaler(), Estimator()) per fold to prevent CV data leakage",
+      "held_out_test_role": "Strictly held-out; used only for final benchmark comparison, not hyperparameter tuning"
+    }
+  },
   "dataset_info": {
     "total_samples": 850,
     "training_samples": 680,

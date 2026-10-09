@@ -67,6 +67,21 @@ def render_admin_view(db, rule_engine, a_star, ml_classifier):
 
             st.divider()
 
+            # Provenance & Audit Verification Card
+            prov = metrics.get("provenance", {})
+            if prov:
+                with st.expander("🛡️ Model Provenance & Audit Metadata", expanded=False):
+                    col_p1, col_p2 = st.columns(2)
+                    with col_p1:
+                        st.markdown(f"• **Evaluation Timestamp (UTC)**: `{prov.get('training_timestamp_utc', 'N/A')}`")
+                        st.markdown(f"• **Dataset SHA-256**: `{prov.get('dataset_sha256', 'N/A')[:24]}...`")
+                        st.markdown(f"• **Random Seed**: `{prov.get('random_seed', 'N/A')}` (Deterministic train/test split)")
+                    with col_p2:
+                        st.markdown(f"• **Evaluation Protocol**: `{prov.get('evaluation_protocol', 'Stratified 80/20 held-out split with 5-fold CV')}`")
+                        st.markdown(f"• **Preprocessing Isolation**: `{prov.get('preprocessing_isolation', 'StandardScaler fitted strictly inside training folds')}`")
+                        env = prov.get('environment_versions', {})
+                        st.markdown(f"• **Runtime Environment**: scikit-learn `{env.get('scikit_learn', 'N/A')}`, numpy `{env.get('numpy', 'N/A')}`, python `{env.get('python', 'N/A')}`")
+
             # Detailed Side-by-Side Model Diagnostics
             col_m1, col_m2 = st.columns(2)
 
@@ -151,6 +166,7 @@ def render_admin_view(db, rule_engine, a_star, ml_classifier):
 
             with st.expander("ℹ️ Methodological Notes: Metric Independence & Target Leakage Prevention"):
                 st.markdown(r"""
+                - **Synthetic Demonstration Dataset & Limitations**: The dataset is an educational synthetic demonstration representing 850 undergraduate computing students. While engineered with domain realism and latent student archetypes, it is not sampled from empirical longitudinal graduate employment outcomes.
                 - **Target Leakage Remediation**: The student dataset generator uses continuous latent aptitudes with overlapping multi-domain interests and realistic grade distributions. No single feature acts as a trivial deterministic shortcut.
                 - **Independence of Precision, Recall, and F1**: Accuracy evaluates overall correct classifications ($\sum TP / N$). In multiclass problems with non-diagonal confusion matrices, per-class False Positives ($FP$) and False Negatives ($FN$) diverge, producing distinct Precision ($TP / (TP + FP)$) and Recall ($TP / (TP + FN)$) metrics.
                 - **Macro vs. Weighted Metrics**: Macro averages calculate the unweighted arithmetic mean across all 5 career tracks, treating minority tracks equally. Weighted averages weight each class metric by its test support ($N_k / N$).
@@ -197,13 +213,22 @@ def render_admin_view(db, rule_engine, a_star, ml_classifier):
         with col_r1:
             st.info("Regenerate synthetic student cohort dataset (850 realistic student profiles) with updated feature schemas.")
             if st.button("Generate Fresh Dataset", use_container_width=True):
-                from scripts.generate_dataset import generate_student_dataset
-                generate_student_dataset()
-                st.success("Fresh dataset generated in data/students_dataset.csv!")
+                try:
+                    from scripts.generate_dataset import generate_student_dataset
+                    generate_student_dataset()
+                    st.success("Fresh dataset generated in data/students_dataset.csv!")
+                except Exception as e:
+                    st.error(f"Dataset generation failed: {e}")
         with col_r2:
             st.info("Train K-NN and Decision Tree models, calculate cross-validation benchmarks, and persist model files.")
             if st.button("Retrain All AI Models", use_container_width=True):
-                run_train_models()
-                ml_classifier.load_models()
-                st.success("All AI models re-trained and metrics reloaded successfully!")
-                st.rerun()
+                try:
+                    run_train_models()
+                    loaded = ml_classifier.load_models()
+                    if loaded:
+                        st.success("All AI models re-trained and metrics reloaded successfully!")
+                        st.rerun()
+                    else:
+                        st.error("Model artifacts could not be loaded after training. Please inspect the logs.")
+                except Exception as e:
+                    st.error(f"Training failed: {e}")

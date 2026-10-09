@@ -123,7 +123,8 @@ def render_student_view(db, rule_engine, a_star, ml_classifier, explainability):
         col_assess_left, col_assess_right = st.columns([1, 1])
 
         with col_assess_left:
-            st.markdown("#### 🏆 Predicted Career Pathway Matches")
+            st.markdown("#### 🏆 Advisory Pathway Match Scores")
+            st.caption("Composite advisory affinity index combining ML competency, domain interest, degree curriculum alignment, and target career aspiration (uncalibrated multi-criteria index, not an empirical probability of employment).")
             ranked_matches = explanation_data.get("ranked_matches", [])
             for m in ranked_matches:
                 trk = m["track"]
@@ -142,18 +143,20 @@ def render_student_view(db, rule_engine, a_star, ml_classifier, explainability):
                 target_prob = next((m["probability"] for m in ranked_matches if m["track"] == current_target), 0.0)
                 st.info(
                     f"🎯 **Career Pathway Alignment Insight**:\n\n"
-                    f"• **Current Academic Foundation**: Your completed coursework (Programming, OOP, Data Structures) gives you an immediate technical baseline in **{top_track}** ({ranked_matches[0]['probability']}%).\n\n"
+                    f"• **Current Academic Foundation**: Your completed coursework gives you an immediate technical baseline in **{top_track}** ({ranked_matches[0]['probability']}%).\n\n"
                     f"• **Aspirational Goal Track**: You selected **{current_target}** ({target_prob}%) as your target career with high domain affinity.\n\n"
                     f"• **The Bridging Strategy**: Strong programming and database fundamentals are the core prerequisite for modern {current_target}. Your **A* Learning Roadmap** (Tab 2) focuses on closing the specific technical gaps to transition into your dream track!"
                 )
 
-            st.caption(f"💡 **Model Pipeline**: {explanation_data.get('model_type', 'K-NN + Decision Tree')}")
+            st.caption(f"💡 **Model Pipeline**: {explanation_data.get('model_type', 'K-NN & Decision Tree Pipeline')}")
 
             # Nearest neighbor distance metric
-            if "nearest_neighbor_distances" in explanation_data.get("model_type", "") or ml_classifier.is_trained:
+            nn_distances = explanation_data.get("nearest_neighbor_distances", [])
+            if nn_distances:
+                avg_dist = round(sum(nn_distances) / len(nn_distances), 2)
                 st.markdown("##### 📍 K-NN Instance Proximity")
-                st.caption("Student feature vector proximity to historical computing graduates:")
-                st.write("Average nearest cluster distance: **1.42 Euclidean units** (High similarity with successful computing graduates).")
+                st.caption("Student feature vector proximity to historical cohort profiles:")
+                st.write(f"Average nearest neighbor distance: **{avg_dist} Euclidean units** (calculated across the 5 closest student profiles in the standardized feature space).")
 
         with col_assess_right:
             st.markdown("#### 🕸️ Competency Radar Analysis")
