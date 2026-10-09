@@ -34,32 +34,35 @@ class AStarRoadmapOptimizer:
         Admissible heuristic h(n):
         Estimates the minimum study hours required to bridge all remaining skill gaps.
         For each unsatisfied skill gap, finds the minimum estimated hours among available
-        activities that address that skill.
+        activities that can actually advance that skill beyond its current level.
+        If no activity can advance an unsatisfied skill gap, 0.0 is contributed so as not
+        to violate admissibility (never overestimating actual reachable graph cost).
         """
         total_heuristic = 0.0
         for skill, target_val in target_skills.items():
             curr_val = current_skills.get(skill, 0)
             if curr_val < target_val:
                 gap = target_val - curr_val
-                # Find available activities that improve this skill
+                # Find available activities that actually advance this skill beyond current level
                 candidate_hours = [
                     act["estimated_hours"] for act in remaining_activities
-                    if act["main_skill"] == skill
+                    if act.get("main_skill") == skill and SKILL_LEVELS.get(act.get("skill_level_gain", "Beginner"), 1) > curr_val
                 ]
                 if candidate_hours:
-                    # Admissible lower bound
+                    # Admissible lower bound (minimum hours among activities that advance this skill)
                     min_act_hours = min(candidate_hours)
-                    total_heuristic += min_act_hours * min(1.0, gap)
+                    total_heuristic += min_act_hours
                 else:
-                    # Default heuristic weight if no direct activity found
-                    total_heuristic += gap * 8.0
-        return total_heuristic
+                    # If no remaining activity can advance this skill in this graph, contribute 0.0 to stay admissible
+                    total_heuristic += 0.0
+        return float(total_heuristic)
 
     def generate_optimal_roadmap(self, target_track: str, current_skills: Dict[str, str], weekly_hours: int = 8) -> Dict:
         """
         Runs A* search to find the optimal sequence of learning activities
         that satisfy all skill gaps for the target career track.
         """
+        weekly_hours = max(1, int(weekly_hours or 8))
         career_def = self.careers.get(target_track, {})
         req_competencies = career_def.get("required_competencies", [])
         
@@ -89,7 +92,9 @@ class AStarRoadmapOptimizer:
                 "total_weeks": 0,
                 "weekly_hours_budget": weekly_hours,
                 "message": f"All benchmark competencies for {target_track} are already satisfied!",
-                "roadmap": []
+                "roadmap": [],
+                "algorithm": "A* Search with Admissible Skill-Distance Heuristic",
+                "is_optimal": True
             }
 
         # Filter activities relevant to this track or identified gaps
@@ -173,6 +178,7 @@ class AStarRoadmapOptimizer:
 
         # Fallback: if search limit reached or goal unreachable due to graph sparsity,
         # sort relevant activities by prerequisite topological order & priority
+        a_star_optimal = (best_path is not None)
         if not best_path:
             best_path = self._topological_fallback(relevant_activities, active_gaps)
 
@@ -214,7 +220,7 @@ class AStarRoadmapOptimizer:
                 "status": "Planned"
             })
 
-        total_weeks = max([item["week_end"] for item in scheduled_roadmap], default=1)
+        total_weeks = max([item["week_end"] for item in scheduled_roadmap], default=0)
 
         return {
             "target_track": target_track,
@@ -222,7 +228,8 @@ class AStarRoadmapOptimizer:
             "total_weeks": total_weeks,
             "weekly_hours_budget": weekly_hours,
             "roadmap": scheduled_roadmap,
-            "algorithm": "A* Search with Admissible Skill-Distance Heuristic"
+            "algorithm": "A* Search with Admissible Skill-Distance Heuristic" if a_star_optimal else "Topological Prerequisite Ordering (Fallback)",
+            "is_optimal": a_star_optimal
         }
 
     def _topological_fallback(self, activities: List[dict], active_gaps: Dict[str, int]) -> List[dict]:

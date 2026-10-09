@@ -222,15 +222,15 @@ Actual: UI (n=22)            4          3          4          1         10      
 - **Absence of 100% Artificial Accuracy**: Synthetic data generation incorporates authentic correlation structures, continuous academic caliber, and overlapping multi-domain interests. Non-zero off-diagonal confusion matrix elements reflect realistic boundary ambiguity between related disciplines (e.g. slight overlap between Software Engineering and Cloud/DevOps).
 - **Independent Precision, Recall, and F1 Values**: In multiclass evaluation with non-trivial misclassifications, class-specific False Positives and False Negatives diverge, guaranteeing that Precision ($TP / (TP + FP)$), Recall ($TP / (TP + FN)$), and F1-score are mathematically independent and non-identical.
 - **Model Selection Justification**: K-NN ($k=7$, distance-weighted) was selected over Logistic Regression despite identical accuracy because K-NN's instance-based reasoning naturally maps to student peer mentoring ('students with nearest academic and skill backgrounds followed this trajectory'), providing accessible neighbor distance metrics. The Decision Tree was retained as the white-box interpretable baseline to extract Gini feature importances (`interest_security`: 0.1481, `interest_design`: 0.1216, `interest_software`: 0.1113, `skill_dsa`: 0.0697, `skill_web_api`: 0.0637).
+- **Prediction Score Semantics**: User-facing "Match Scores" are uncalibrated composite advisory affinity indices (combining academic grades, technical skills, domain interests, and career aspirations normalized to 100%). They do not represent calibrated Bayesian probabilities of employment. The pure ML track classification (`ml_predicted_track`) evaluates coursework and skills independently from student aspirations.
+- **A\* Heuristic Admissibility & Search Bounds**: The heuristic $h(n) = \sum_{s \in \text{Gaps}} \min_{a} \text{Hours}(a)$ is formulated as an admissible lower bound ($h(n) \le h^*(n)$) by identifying the minimum duration among activities that directly advance each remaining skill gap. With single-skill activities, the heuristic does not double-count activity durations. For graphs where benchmark competencies cannot be fully satisfied by the subset of activities, a deterministic topological sort fallback guarantees a valid, non-cyclic path.
 
 ### 8.2 Unit, Integration & Mathematical Correctness Testing
-Automated test suite (`tests/test_all.py`) validated:
+Automated test suite (`tests/test_all.py`, 40 passing tests) validated:
 - **Mathematical Invariants of Multiclass Evaluation**: Strict algebraic verification that Accuracy equals correct predictions over total predictions ($\sum TP / N$), total confusion matrix sum equals sample count ($N$), diagonal trace equals correct predictions count, row sums equal true class support, and weighted metrics correctly weight per-class metrics by support. Zero-division handling returns 0.0 safely without throwing runtime exceptions.
-- **Academic Prerequisite Compliance and Failure Identification** (100% test pass rate).
-- **Skill Gap Level Difference Computation and Severity Ranking**.
-- **A\* Search Topological Ordering** (guaranteeing courses precede dependent projects).
-- **Weekly Study Budget Scheduling** (confirming schedules scale inversely with student hours).
-- **End-to-End Integration and Explainability Bundle Synthesis**.
+- **Controlled A\* Shortest Path Optimality**: Benchmarked against independent exhaustive brute-force search on controlled mini-graphs, proving A* selects the strictly minimal cost path across single vs multi-step chains, handles zero-gap edge cases immediately (0 hours, 0 weeks), and safely clamps invalid study budgets.
+- **Score Semantics & Target Aspiration Separation**: Confirmed that pure ML classifications remain strictly independent of student target aspirations, and match scores are properly bounded in $[0, 100]$ summing to $100\%$.
+- **Security & User Access Isolation**: Verified deterministic SHA-256 password hashing, user authentication, and parameterized query execution.
 
 ### 8.3 End-to-End Scenario Walkthrough (Group Proposal Page 12)
 The system was verified against the exact benchmark scenario:

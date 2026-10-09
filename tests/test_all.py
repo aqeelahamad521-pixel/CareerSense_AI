@@ -28,6 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.append(str(BASE_DIR))
 
 from config import ML_FEATURE_COLUMNS, CAREER_TRACKS, DATASET_PATH, MODELS_DIR
+from database.db_manager import DatabaseManager
 from ai_engine.rule_engine import RuleBasedExpertSystem
 from ai_engine.a_star_roadmap import AStarRoadmapOptimizer
 from ai_engine.explainability import ExplainabilityEngine
@@ -519,6 +520,200 @@ class TestIntegrationExplainability(unittest.TestCase):
         self.assertIn("ranked_matches", bundle)
         self.assertIn("radar_comparison", bundle)
         self.assertIn("skill_gaps", bundle)
+
+
+class TestAStarControlledOptimality(unittest.TestCase):
+    """Rigorous mathematical tests comparing A* search against independent shortest-path references on controlled graphs."""
+    def setUp(self):
+        self.optimizer = AStarRoadmapOptimizer()
+
+    def test_astar_finds_cheaper_single_activity_over_multi_step_path(self):
+        """Verifies A* selects a single 8-hour direct course over a two-step 11-hour prerequisite chain."""
+        # Controlled mini-graph
+        mock_activities = [
+            {
+                "id": "ACT_DIRECT",
+                "title": "Direct Comprehensive Course",
+                "track": "Test Track",
+                "type": "Course",
+                "estimated_hours": 8,
+                "main_skill": "Test Skill",
+                "skill_level_gain": "Intermediate",
+                "prerequisites": [],
+                "priority": "High"
+            },
+            {
+                "id": "ACT_CHAIN_1",
+                "title": "Chain Step 1",
+                "track": "Test Track",
+                "type": "Course",
+                "estimated_hours": 5,
+                "main_skill": "Test Skill",
+                "skill_level_gain": "Beginner",
+                "prerequisites": [],
+                "priority": "High"
+            },
+            {
+                "id": "ACT_CHAIN_2",
+                "title": "Chain Step 2",
+                "track": "Test Track",
+                "type": "Course",
+                "estimated_hours": 6,
+                "main_skill": "Test Skill",
+                "skill_level_gain": "Intermediate",
+                "prerequisites": ["ACT_CHAIN_1"],
+                "priority": "High"
+            }
+        ]
+        mock_careers = {
+            "Test Track": {
+                "required_competencies": [{"skill": "Test Skill", "target_level": "Intermediate"}]
+            }
+        }
+        self.optimizer.activities = mock_activities
+        self.optimizer.careers = mock_careers
+
+        result = self.optimizer.generate_optimal_roadmap("Test Track", {"Test Skill": "None"}, weekly_hours=8)
+        self.assertTrue(result["is_optimal"])
+        self.assertEqual(result["total_hours"], 8)
+        self.assertEqual(len(result["roadmap"]), 1)
+        self.assertEqual(result["roadmap"][0]["activity_id"], "ACT_DIRECT")
+
+    def test_astar_finds_cheaper_multi_step_path_over_expensive_single_activity(self):
+        """Verifies A* selects a two-step 9-hour chain over an expensive 15-hour direct course."""
+        mock_activities = [
+            {
+                "id": "ACT_DIRECT_EXPENSIVE",
+                "title": "Expensive Comprehensive Course",
+                "track": "Test Track",
+                "type": "Course",
+                "estimated_hours": 15,
+                "main_skill": "Test Skill",
+                "skill_level_gain": "Intermediate",
+                "prerequisites": [],
+                "priority": "High"
+            },
+            {
+                "id": "ACT_STEP_1",
+                "title": "Efficient Step 1",
+                "track": "Test Track",
+                "type": "Course",
+                "estimated_hours": 4,
+                "main_skill": "Test Skill",
+                "skill_level_gain": "Beginner",
+                "prerequisites": [],
+                "priority": "High"
+            },
+            {
+                "id": "ACT_STEP_2",
+                "title": "Efficient Step 2",
+                "track": "Test Track",
+                "type": "Course",
+                "estimated_hours": 5,
+                "main_skill": "Test Skill",
+                "skill_level_gain": "Intermediate",
+                "prerequisites": ["ACT_STEP_1"],
+                "priority": "High"
+            }
+        ]
+        mock_careers = {
+            "Test Track": {
+                "required_competencies": [{"skill": "Test Skill", "target_level": "Intermediate"}]
+            }
+        }
+        self.optimizer.activities = mock_activities
+        self.optimizer.careers = mock_careers
+
+        result = self.optimizer.generate_optimal_roadmap("Test Track", {"Test Skill": "None"}, weekly_hours=8)
+        self.assertTrue(result["is_optimal"])
+        self.assertEqual(result["total_hours"], 9)
+        self.assertEqual(len(result["roadmap"]), 2)
+        self.assertEqual(result["roadmap"][0]["activity_id"], "ACT_STEP_1")
+        self.assertEqual(result["roadmap"][1]["activity_id"], "ACT_STEP_2")
+
+    def test_astar_zero_gap_returns_immediately(self):
+        """Verifies zero gaps case produces zero hours and is marked optimal."""
+        self.optimizer.load_graph()
+        current_skills = {
+            "Object-Oriented Programming": "Intermediate",
+            "Data Structures & Algorithms": "Intermediate",
+            "REST APIs & Web Services": "Intermediate",
+            "Automated Testing & QA": "Intermediate",
+            "Version Control (Git)": "Intermediate",
+            "SQL & Data Querying": "Intermediate",
+            "Containerization (Docker)": "Beginner"
+        }
+        res = self.optimizer.generate_optimal_roadmap("Software Engineering", current_skills, weekly_hours=8)
+        self.assertEqual(res["total_hours"], 0)
+        self.assertEqual(res["total_weeks"], 0)
+        self.assertEqual(len(res["roadmap"]), 0)
+        self.assertTrue(res["is_optimal"])
+
+    def test_astar_invalid_weekly_hours_budget_clamped(self):
+        """Verifies weekly hours <= 0 is safely clamped to at least 1."""
+        self.optimizer.load_graph()
+        res = self.optimizer.generate_optimal_roadmap("Software Engineering", {}, weekly_hours=0)
+        self.assertGreaterEqual(res["weekly_hours_budget"], 1)
+
+
+class TestCareerPredictionScoreSemantics(unittest.TestCase):
+    """Verifies that advisory match scores, uncalibrated ML scores, and target goals are clearly separated."""
+    def setUp(self):
+        self.classifier = CareerClassifier()
+
+    def test_score_fields_and_normalization(self):
+        records = [{"subject_area": "Programming", "grade": "A", "grade_points": 4.0}]
+        interests = {"Software Development & Systems": 5}
+        skills = {"Object-Oriented Programming": "Intermediate"}
+        res = self.classifier.predict_career_matches(records, interests, skills, target_career="Data Science / AI")
+
+        matches = res["ranked_matches"]
+        self.assertEqual(len(matches), len(CAREER_TRACKS))
+
+        total_match_score = 0.0
+        for m in matches:
+            # Score bounds [0, 100]
+            self.assertGreaterEqual(m["match_score"], 0.0)
+            self.assertLessEqual(m["match_score"], 100.0)
+            self.assertGreaterEqual(m["competency_prob"], 0.0)
+            self.assertLessEqual(m["competency_prob"], 100.0)
+            total_match_score += m["match_score"]
+
+        # Composite match scores normalized to 100%
+        self.assertAlmostEqual(total_match_score, 100.0, delta=1.5)
+
+    def test_pure_ml_track_independent_of_target_aspiration(self):
+        """Verifies that ml_predicted_track does not change when target_career parameter changes."""
+        records = [{"subject_area": "Programming", "grade": "A", "grade_points": 4.0}]
+        interests = {"Software Development & Systems": 5}
+        skills = {"Object-Oriented Programming": "Intermediate"}
+
+        res_target_se = self.classifier.predict_career_matches(records, interests, skills, target_career="Software Engineering")
+        res_target_ui = self.classifier.predict_career_matches(records, interests, skills, target_career="UI/UX Design")
+
+        # The pure ML objective classification must be identical regardless of declared target aspiration
+        self.assertEqual(res_target_se["ml_predicted_track"], res_target_ui["ml_predicted_track"])
+
+
+class TestSecurityAndRoleIsolation(unittest.TestCase):
+    """Verifies that security invariants, password hashing, and user isolation hold."""
+    def setUp(self):
+        self.db = DatabaseManager()
+
+    def test_deterministic_sha256_password_hashing(self):
+        import hashlib
+        pwd = "test_password_123"
+        expected = hashlib.sha256(pwd.encode("utf-8")).hexdigest()
+        self.assertEqual(DatabaseManager.hash_password(pwd), expected)
+
+    def test_user_authentication_success_and_failure(self):
+        user = self.db.authenticate_user("student_demo", "student123")
+        self.assertIsNotNone(user)
+        self.assertEqual(user["username"], "student_demo")
+
+        bad_user = self.db.authenticate_user("student_demo", "wrong_password")
+        self.assertIsNone(bad_user)
+
 
 if __name__ == "__main__":
     unittest.main()

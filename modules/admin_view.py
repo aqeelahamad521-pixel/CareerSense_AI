@@ -14,6 +14,10 @@ from config import DATASET_PATH
 from scripts.train_models import main as run_train_models
 
 def render_admin_view(db, rule_engine, a_star, ml_classifier):
+    if st.session_state.get("role") != "admin" and not st.session_state.get("is_demo", False):
+        st.error("⛔ Access Denied: Administrator privileges required.")
+        return
+
     st.title("⚙️ System Administrator & AI Model Explorer")
     st.caption("Inspect and manage core AI layers, model performance benchmarks, and rule engines.")
 

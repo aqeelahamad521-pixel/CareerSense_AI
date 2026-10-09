@@ -55,6 +55,7 @@ class ExplainabilityEngine:
         return {
             "target_track": chosen_track,
             "ranked_matches": ml_results.get("ranked_matches", []),
+            "ml_predicted_track": ml_results.get("ml_predicted_track", chosen_track),
             "model_type": ml_results.get("model_used", "K-NN & Decision Tree Pipeline"),
             "influential_factors": influential_factors,
             "prerequisite_evaluation": prereq_eval,
@@ -81,10 +82,22 @@ class ExplainabilityEngine:
                 score += (interests.get("Cloud Infrastructure & Automation", 3) - 3) * 6
             elif track == "UI/UX Design":
                 score += (interests.get("UI/UX Design & User Experience", 3) - 3) * 6
-            matches.append({"track": track, "probability": round(min(98.0, max(20.0, score)), 1)})
+            sc = round(min(98.0, max(20.0, score)), 1)
+            matches.append({
+                "track": track,
+                "probability": sc,
+                "match_score": sc,
+                "competency_score": sc,
+                "competency_prob": sc
+            })
 
         matches.sort(key=lambda x: -x["probability"])
-        return {"ranked_matches": matches, "model_used": "Knowledge-Based Heuristic"}
+        return {
+            "ranked_matches": matches,
+            "top_track": matches[0]["track"] if matches else "Software Engineering",
+            "ml_predicted_track": matches[0]["track"] if matches else "Software Engineering",
+            "model_used": "Knowledge-Based Heuristic"
+        }
 
     def _extract_influential_factors(self, track: str, academics: list, interests: dict, skills: dict, skill_gaps: list = None) -> dict:
         """

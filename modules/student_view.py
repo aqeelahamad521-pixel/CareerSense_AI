@@ -148,6 +148,10 @@ def render_student_view(db, rule_engine, a_star, ml_classifier, explainability):
                     f"• **The Bridging Strategy**: Strong programming and database fundamentals are the core prerequisite for modern {current_target}. Your **A* Learning Roadmap** (Tab 2) focuses on closing the specific technical gaps to transition into your dream track!"
                 )
 
+            ml_pred = explanation_data.get("ml_predicted_track", "")
+            if ml_pred:
+                st.markdown(f"🧠 **Pure ML Model Prediction (Coursework & Skills)**: **`{ml_pred}`**")
+
             st.caption(f"💡 **Model Pipeline**: {explanation_data.get('model_type', 'K-NN & Decision Tree Pipeline')}")
 
             # Nearest neighbor distance metric
@@ -522,13 +526,15 @@ def render_student_view(db, rule_engine, a_star, ml_classifier, explainability):
             uploaded_file = st.file_uploader("Select PDF or Document", type=["pdf", "docx", "txt"])
             if st.button("Process & Upload Document", use_container_width=True):
                 if uploaded_file is not None:
+                    from pathlib import Path
+                    clean_filename = Path(uploaded_file.name).name
                     db.add_student_document(
                         user_id=user_id,
                         doc_type=doc_type,
-                        filename=uploaded_file.name,
+                        filename=clean_filename,
                         extracted_metadata={"file_size": uploaded_file.size, "verified": True}
                     )
-                    st.success(f"{doc_type} '{uploaded_file.name}' successfully uploaded and indexed!")
+                    st.success(f"{doc_type} '{clean_filename}' successfully uploaded and indexed!")
                     st.rerun()
                 else:
                     st.error("Please choose a file to upload.")

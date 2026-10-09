@@ -15,19 +15,21 @@ def init_auth_session():
         "role": None,
         "full_name": None,
         "reg_no": None,
-        "active_tab": "Overview"
+        "active_tab": "Overview",
+        "is_demo": False
     }
     for k, v in defaults.items():
         if k not in st.session_state:
             st.session_state[k] = v
 
-def login_user(user: dict):
+def login_user(user: dict, is_demo: bool = False):
     st.session_state.authenticated = True
     st.session_state.user_id = user["id"]
     st.session_state.username = user["username"]
     st.session_state.role = user["role"]
     st.session_state.full_name = user["full_name"]
     st.session_state.reg_no = user.get("reg_no", "")
+    st.session_state.is_demo = is_demo or (user.get("username") in ["student_demo", "advisor", "coordinator", "admin"])
 
 def logout_user():
     st.session_state.authenticated = False
@@ -36,6 +38,7 @@ def logout_user():
     st.session_state.role = None
     st.session_state.full_name = None
     st.session_state.reg_no = None
+    st.session_state.is_demo = False
     st.rerun()
 
 def render_login_and_registration(db: DatabaseManager):
@@ -186,24 +189,24 @@ def render_login_and_registration(db: DatabaseManager):
             if st.button("🧑‍🎓 Student Persona", use_container_width=True):
                 user = db.authenticate_user("student_demo", "student123")
                 if user:
-                    login_user(user)
+                    login_user(user, is_demo=True)
                     st.rerun()
 
         with col2:
             if st.button("👨‍🏫 Academic Advisor", use_container_width=True):
                 user = db.authenticate_user("advisor", "advisor123")
                 if user:
-                    login_user(user)
+                    login_user(user, is_demo=True)
                     st.rerun()
         with col3:
             if st.button("📊 Coordinator", use_container_width=True):
                 user = db.authenticate_user("coordinator", "coordinator123")
                 if user:
-                    login_user(user)
+                    login_user(user, is_demo=True)
                     st.rerun()
         with col4:
             if st.button("⚙️ Administrator", use_container_width=True):
                 user = db.authenticate_user("admin", "admin123")
                 if user:
-                    login_user(user)
+                    login_user(user, is_demo=True)
                     st.rerun()
