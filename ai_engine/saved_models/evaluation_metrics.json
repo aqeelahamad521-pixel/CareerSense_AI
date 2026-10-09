@@ -271,8 +271,10 @@
     }
   ],
   "provenance": {
-    "evaluation_timestamp": "2026-10-09T04:35:24.047145+00:00",
+    "evaluation_timestamp": "2026-10-09T04:54:45.576423+00:00",
+    "training_timestamp_utc": "2026-10-09T04:54:45.576423+00:00",
     "dataset_hash_sha256": "87371f6919a197f5a098b7f10317ea9049841649275143c4a9a066d780975b34",
+    "dataset_sha256": "87371f6919a197f5a098b7f10317ea9049841649275143c4a9a066d780975b34",
     "random_seed": 42,
     "python_version": "3.14.5",
     "dependencies": {
@@ -280,7 +282,15 @@
       "numpy": "2.4.6",
       "pandas": "3.0.3"
     },
-    "evaluation_protocol": {
+    "environment_versions": {
+      "scikit_learn": "1.9.1",
+      "numpy": "2.4.6",
+      "pandas": "3.0.3",
+      "python": "3.14.5"
+    },
+    "evaluation_protocol": "Stratified 80/20 held-out split with 5-fold CV",
+    "preprocessing_isolation": "Pipeline(StandardScaler(), Estimator()) per fold to prevent CV data leakage",
+    "protocol_details": {
       "train_test_split": "80% train (680 samples), 20% held-out test (170 samples), stratified by career_track, random_state=42",
       "cross_validation": "5-Fold StratifiedKFold (random_state=42, shuffle=True) on training split only",
       "preprocessing_isolation": "Pipeline(StandardScaler(), Estimator()) per fold to prevent CV data leakage",

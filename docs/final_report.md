@@ -20,7 +20,7 @@ Undergraduate students entering computing degree programmes encounter an expandi
 
 This project presents **CareerSense AI**, an explainable, intelligent decision-support and career-roadmap platform designed specifically for undergraduate computing students. The platform synthesizes three foundational Artificial Intelligence paradigms into a cohesive three-tier pipeline: (1) **Machine Learning Classification** utilizing K-Nearest Neighbors (K-NN) as a primary model and a Decision Tree as an interpretable baseline to classify student profiles into five primary career tracks based on academic performance, domain interests, and technical skills; (2) a **Rule-Based Expert System** that models prerequisite relationships, verifies foundational course grades, computes prioritized skill gaps, and supplies transparent reasoning; and (3) an **A\* Search Algorithm** that optimizes learning sequences over an activity directed acyclic graph (DAG) under realistic student weekly study-hour budgets. 
 
-The system was implemented in Python using Streamlit, Scikit-learn, and SQLite, and evaluated on a synthetic benchmark cohort of 850 realistic undergraduate computing profiles. The K-NN classifier achieved an accuracy of 89.41% (F1-score: 89.28%), while the Decision Tree achieved 84.71% accuracy with high explainability. The integrated platform provides dedicated interfaces for students, academic advisors, and programme coordinators, delivering transparent, actionable guidance throughout the undergraduate journey.
+The system was implemented in Python using Streamlit, Scikit-learn, and SQLite, and evaluated on a synthetic benchmark cohort of 850 realistic undergraduate computing profiles. On the held-out test set (20%, N=170), the primary K-NN classifier achieved 88.82% accuracy (Weighted F1: 88.87%, Macro F1: 89.49%, and 5-Fold cross-validation accuracy of 89.56% ± 2.48% on the training set using fold-isolated pipelines), while the baseline Decision Tree achieved 60.00% accuracy (Weighted F1: 60.39%) with human-interpretable Gini feature importances. The integrated platform provides dedicated interfaces for students, academic advisors, and programme coordinators, delivering transparent, actionable guidance throughout the undergraduate journey.
 
 ---
 
@@ -265,9 +265,9 @@ The system was verified against the exact benchmark scenario:
 
 ## 11. Author Contribution & System Responsibilities
  
-| Author Name | Registration No. | Degree Programme | Technical Responsibilities |
-|---|---|---|---|
-| **MFA Ahamad (Aqeel Ahamad)** | **D/DBA/25/0021** | **BSc (Hons) in Data Science & Business Analytics** | • Core AI Architecture & Multi-tier pipeline design<br>• Machine learning feature extraction & classification pipeline<br>• Rule-based expert system authoring & prerequisite validation<br>• A\* search heuristic design & time-budgeted roadmap optimizer<br>• Streamlit multi-role web platform implementation & testing |
+| Author Name | Role / Degree Programme | Technical Responsibilities |
+|---|---|---|
+| **MFA Ahamad (Aqeel Ahamad)** | **Lead Developer & System Architect**<br>BSc (Hons) in Data Science & Business Analytics (Year 2) | • Core AI Architecture & Multi-tier pipeline design<br>• Machine learning feature extraction & classification pipeline<br>• Rule-based expert system authoring & prerequisite validation<br>• A\* search heuristic design & time-budgeted roadmap optimizer<br>• Streamlit multi-role web platform implementation & testing |
 
 
 ---

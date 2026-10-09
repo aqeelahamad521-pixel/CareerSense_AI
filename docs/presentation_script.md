@@ -10,7 +10,7 @@
 - **Slide Title**: CareerSense AI: An Explainable AI-Powered Career Development and Skill-Roadmap Platform for Undergraduate Students
 - **Context**: General Sir John Kotelawala Defence University, Faculty of Computing, Intake 41/42.
 - **Presenter**:
-  - **MFA Ahamad (Aqeel Ahamad)** | Reg No: D/DBA/25/0021 | Year 2, BSc (Hons) in Data Science & Business Analytics
+  - **MFA Ahamad (Aqeel Ahamad)** | Year 2, BSc (Hons) in Data Science & Business Analytics
 - **Speaker Notes**:
   > "Good morning, respected lecturers and panel members. Today, I am proud to present CareerSense AI, an intelligent, explainable decision-support and career roadmap platform tailored for undergraduate computing students."
 
@@ -39,11 +39,13 @@
 
 ### Slide 4: AI Layer 1 — ML Modeling & Benchmarks (Speaker: SGT Tharumila - 2 mins)
 - **Feature Vector**: 36 normalized inputs (6 academic subject grades, 5 domain interest ratings, 25 technical skill proficiencies).
-- **Dataset**: 850 realistic undergraduate computing profiles across KDU degree programmes.
-- **Evaluation Results (80/20 Test Split)**:
-  - **K-NN Classifier**: 89.41% Accuracy, 89.28% F1-score.
-  - **Decision Tree**: 84.71% Accuracy, 84.65% F1-score.
-- **Explainability**: Decision tree feature importances identify programming grades, mathematical foundation, and interest ratings as prime discriminators. K-NN distance metrics reveal proximity to historical graduate cohorts.
+- **Dataset**: 850 synthetic undergraduate computing profiles across KDU degree programmes.
+- **Evaluation Methodology**: Stratified 80/20 train/test split; 5-fold cross-validation with isolated StandardScaler pipelines (zero preprocessing leakage).
+- **Evaluation Results**:
+  - **K-NN Classifier (Primary Model)**: **88.82% Held-Out Accuracy**, **88.87% Weighted F1**, **89.49% Macro F1** (5-Fold CV Accuracy: **89.56% ± 2.48%**).
+  - **Decision Tree (Baseline)**: **60.00% Held-Out Accuracy**, **60.39% Weighted F1** (5-Fold CV: **63.53% ± 4.50%**).
+  - **Candidate Benchmarks**: Zero-Rule Dummy (29.41%), Random Forest (82.94%), Multinomial Logistic Regression (88.82%).
+- **Explainability**: Decision tree feature importances identify programming grades, mathematical foundation, and interest ratings as prime discriminators. K-NN instance distance metrics reveal Euclidean proximity to historical student profiles.
 
 ---
 

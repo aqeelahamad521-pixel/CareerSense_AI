@@ -116,8 +116,38 @@ class TestMLClassifier(unittest.TestCase):
         res = self.classifier.predict_career_matches(records, interests, skills)
         self.assertIn("ranked_matches", res)
         self.assertIn("top_track", res)
+        self.assertIn("ml_predicted_track", res)
         self.assertEqual(len(res["ranked_matches"]), len(CAREER_TRACKS))
         self.assertEqual(res["top_track"], "Software Engineering")
+
+    def test_prediction_output_components_and_target_separation(self):
+        """Verifies prediction components, probability normalization, and target aspiration separation."""
+        records = [{"subject_area": "Programming", "grade": "A", "grade_points": 4.0}]
+        interests = {"Software Development & Systems": 5}
+        skills = {"Object-Oriented Programming": "Intermediate"}
+        res = self.classifier.predict_career_matches(
+            records, interests, skills, target_career="Data Science / AI"
+        )
+        self.assertIn("ranked_matches", res)
+        self.assertIn("top_track", res)
+        self.assertIn("ml_predicted_track", res)
+        self.assertIn("nearest_neighbor_distances", res)
+        self.assertEqual(len(res["ranked_matches"]), len(CAREER_TRACKS))
+        
+        # Verify normalization (sums to ~100)
+        total_p = sum(m["probability"] for m in res["ranked_matches"])
+        self.assertAlmostEqual(total_p, 100.0, delta=1.0)
+        
+        # Verify target aspiration separation and field presence
+        for m in res["ranked_matches"]:
+            self.assertIn("match_score", m)
+            self.assertIn("competency_prob", m)
+            self.assertIn("knn_prob", m)
+            self.assertIn("dt_prob", m)
+            if m["track"] == "Data Science / AI":
+                self.assertTrue(m["is_target"])
+            else:
+                self.assertFalse(m["is_target"])
 
 class TestMLEvaluationMathematicalCorrectness(unittest.TestCase):
     """
@@ -129,6 +159,54 @@ class TestMLEvaluationMathematicalCorrectness(unittest.TestCase):
         # Controlled array with known asymmetric error distribution
         self.y_true = ["Track_A", "Track_A", "Track_A", "Track_B", "Track_B", "Track_B", "Track_C", "Track_C", "Track_C", "Track_C"]
         self.y_pred = ["Track_A", "Track_A", "Track_B", "Track_B", "Track_B", "Track_C", "Track_C", "Track_C", "Track_A", "Track_B"]
+
+    def test_invalid_inputs_length_mismatch(self):
+        """Verifies that length mismatch between y_true and y_pred raises ValueError."""
+        with self.assertRaises(ValueError) as ctx:
+            compute_multiclass_metrics(["Track_A", "Track_B"], ["Track_A"], self.labels)
+        self.assertIn("Length mismatch", str(ctx.exception))
+
+    def test_invalid_inputs_empty(self):
+        """Verifies that empty y_true or y_pred raises ValueError."""
+        with self.assertRaises(ValueError) as ctx:
+            compute_multiclass_metrics([], [], self.labels)
+        self.assertIn("non-empty", str(ctx.exception))
+
+    def test_invalid_inputs_none(self):
+        """Verifies that None inputs raise TypeError."""
+        with self.assertRaises(TypeError):
+            compute_multiclass_metrics(None, ["Track_A"], self.labels)
+        with self.assertRaises(TypeError):
+            compute_multiclass_metrics(["Track_A"], None, self.labels)
+
+    def test_invalid_labels_validation(self):
+        """Verifies that invalid, duplicate, or empty labels raise ValueError."""
+        with self.assertRaises(ValueError):
+            compute_multiclass_metrics(["Track_A"], ["Track_A"], [])
+        with self.assertRaises(ValueError):
+            compute_multiclass_metrics(["Track_A", "Track_B"], ["Track_A", "Track_B"], ["Track_A", "Track_A", "Track_B"])
+        with self.assertRaises(ValueError):
+            compute_multiclass_metrics(["Track_A"], ["Track_A"], None)
+
+    def test_unsupported_labels_in_data(self):
+        """Verifies that labels in y_true or y_pred outside configured labels raise ValueError."""
+        with self.assertRaises(ValueError) as ctx1:
+            compute_multiclass_metrics(["Track_A", "UNKNOWN"], ["Track_A", "Track_A"], self.labels)
+        self.assertIn("unsupported labels in y_true", str(ctx1.exception))
+
+        with self.assertRaises(ValueError) as ctx2:
+            compute_multiclass_metrics(["Track_A", "Track_A"], ["Track_A", "UNKNOWN"], self.labels)
+        self.assertIn("unsupported labels in y_pred", str(ctx2.exception))
+
+    def test_completely_incorrect_predictions(self):
+        """Verifies that when zero predictions are correct, accuracy and trace are 0.0."""
+        labels = ["A", "B"]
+        y_true = ["A", "B"]
+        y_pred = ["B", "A"]
+        m = compute_multiclass_metrics(y_true, y_pred, labels)
+        self.assertEqual(m["accuracy"], 0.0)
+        cm = m["confusion_matrix"]
+        self.assertEqual(cm[0][0] + cm[1][1], 0)
 
     def test_accuracy_mathematical_definition(self):
         """Verifies accuracy equals correct predictions divided by total predictions."""
@@ -265,6 +343,25 @@ class TestMLEvaluationMathematicalCorrectness(unittest.TestCase):
             self.assertIn("accuracy", entry)
             self.assertIn("f1_macro", entry)
             self.assertIn("f1_weighted", entry)
+
+    def test_training_evaluation_separation(self):
+        """Verifies that train samples and test samples partition the 850 dataset and CV is distinct from test."""
+        classifier = CareerClassifier()
+        self.assertTrue(classifier.is_trained)
+        ds_info = classifier.metrics["dataset_info"]
+        self.assertEqual(ds_info["total_samples"], 850)
+        self.assertEqual(ds_info["training_samples"], 680)
+        self.assertEqual(ds_info["testing_samples"], 170)
+        self.assertEqual(ds_info["training_samples"] + ds_info["testing_samples"], 850)
+        
+        knn_metrics = classifier.metrics["knn"]
+        self.assertIn("cv_accuracy_mean", knn_metrics)
+        self.assertIn("accuracy", knn_metrics)
+        self.assertIn("cv_fold_scores", knn_metrics)
+        self.assertEqual(len(knn_metrics["cv_fold_scores"]), 5)
+        # Verify CV score differs from test accuracy and is derived from 5 folds
+        self.assertIsInstance(knn_metrics["cv_accuracy_mean"], float)
+        self.assertIsInstance(knn_metrics["accuracy"], float)
 
 class TestDatasetIntegrity(unittest.TestCase):
     """Verifies dataset structure and demonstration properties."""

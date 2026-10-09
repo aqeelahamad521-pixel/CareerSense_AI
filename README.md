@@ -125,6 +125,8 @@ Open your browser and navigate to `http://localhost:8501`.
 
 ## 🔑 Demo Personas & Credentials
 
+> ⚠️ **DEMONSTRATION & SANDBOX CREDENTIALS**: All credentials listed below are provided strictly for local sandbox demonstration of this academic prototype. They connect exclusively to an isolated local SQLite database (`data/careersense.db`) populated with synthetic demonstration records and have no access to external or personal systems. Never commit or use real personal passwords.
+
 You can click any of the **Quick Demo Access** buttons on the login screen or log in using:
 
 | Persona / Role | Username | Password | Notes |

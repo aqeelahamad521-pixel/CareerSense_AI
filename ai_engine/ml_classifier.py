@@ -34,31 +34,61 @@ def compute_multiclass_metrics(y_true, y_pred, labels):
     Computes mathematically rigorous multiclass classification metrics.
     Guarantees that Accuracy, Precision, Recall, and F1 are independently calculated.
     Correctly handles edge cases, zero-division, and missing classes.
+    Validates input lengths, non-emptiness, label sets, and uniqueness.
     """
+    if y_true is None or y_pred is None:
+        raise TypeError("y_true and y_pred cannot be None.")
+    
     y_true = list(y_true)
     y_pred = list(y_pred)
-    n = len(y_true)
-    if n == 0:
-        return {}
     
-    # 1. Accuracy: correct predictions divided by total evaluated samples
-    correct = sum(1 for yt, yp in zip(y_true, y_pred) if yt == yp)
+    if len(y_true) == 0:
+        raise ValueError("y_true and y_pred must be non-empty arrays.")
+    
+    if len(y_true) != len(y_pred):
+        raise ValueError(f"Length mismatch: len(y_true)={len(y_true)} does not match len(y_pred)={len(y_pred)}.")
+    
+    if labels is None or not hasattr(labels, "__iter__"):
+        raise ValueError("labels must be an iterable collection of valid class labels.")
+        
+    labels_list = list(labels)
+    if len(labels_list) == 0:
+        raise ValueError("labels list must contain at least one class label.")
+        
+    if len(set(labels_list)) != len(labels_list):
+        raise ValueError(f"labels must contain unique, non-duplicated class labels. Given: {labels_list}")
+        
+    for l in labels_list:
+        if l is None or (isinstance(l, str) and not l.strip()):
+            raise ValueError(f"Invalid label found in labels: {repr(l)}")
+            
+    supported_labels = set(labels_list)
+    unsupported_true = set(y_true) - supported_labels
+    unsupported_pred = set(y_pred) - supported_labels
+    
+    if unsupported_true:
+        raise ValueError(f"Found unsupported labels in y_true not present in configured labels: {sorted(list(unsupported_true))}")
+    if unsupported_pred:
+        raise ValueError(f"Found unsupported labels in y_pred not present in configured labels: {sorted(list(unsupported_pred))}")
+        
+    n = len(y_true)
+    label_to_idx = {l: i for i, l in enumerate(labels_list)}
+    k = len(labels_list)
+    cm = [[0 for _ in range(k)] for _ in range(k)]
+    correct = 0
+    
+    for yt, yp in zip(y_true, y_pred):
+        cm[label_to_idx[yt]][label_to_idx[yp]] += 1
+        if yt == yp:
+            correct += 1
+            
     acc = correct / n
     
-    # 2. Confusion matrix: rows = actual labels, columns = predicted labels
-    label_to_idx = {l: i for i, l in enumerate(labels)}
-    k = len(labels)
-    cm = [[0 for _ in range(k)] for _ in range(k)]
-    for yt, yp in zip(y_true, y_pred):
-        if yt in label_to_idx and yp in label_to_idx:
-            cm[label_to_idx[yt]][label_to_idx[yp]] += 1
-            
-    # 3. Per-class metrics
     per_class = {}
     macro_p, macro_r, macro_f1 = 0.0, 0.0, 0.0
     weighted_p, weighted_r, weighted_f1 = 0.0, 0.0, 0.0
     
-    for i, label in enumerate(labels):
+    for i, label in enumerate(labels_list):
         tp = cm[i][i]
         fp = sum(cm[r][i] for r in range(k) if r != i)
         fn = sum(cm[i][c] for c in range(k) if c != i)
@@ -102,7 +132,7 @@ def compute_multiclass_metrics(y_true, y_pred, labels):
         "f1_score_macro": round(macro_f1, 2),
         "confusion_matrix": cm,
         "per_class": per_class,
-        "labels": labels
+        "labels": labels_list
     }
 
 class CareerClassifier:
@@ -396,9 +426,12 @@ class CareerClassifier:
             }
         ]
 
+        now_utc = datetime.now(timezone.utc).isoformat()
         provenance = {
-            "evaluation_timestamp": datetime.now(timezone.utc).isoformat(),
+            "evaluation_timestamp": now_utc,
+            "training_timestamp_utc": now_utc,
             "dataset_hash_sha256": dataset_hash,
+            "dataset_sha256": dataset_hash,
             "random_seed": 42,
             "python_version": sys.version.split()[0],
             "dependencies": {
@@ -406,7 +439,15 @@ class CareerClassifier:
                 "numpy": np.__version__,
                 "pandas": pd.__version__
             },
-            "evaluation_protocol": {
+            "environment_versions": {
+                "scikit_learn": sklearn.__version__,
+                "numpy": np.__version__,
+                "pandas": pd.__version__,
+                "python": sys.version.split()[0]
+            },
+            "evaluation_protocol": "Stratified 80/20 held-out split with 5-fold CV",
+            "preprocessing_isolation": "Pipeline(StandardScaler(), Estimator()) per fold to prevent CV data leakage",
+            "protocol_details": {
                 "train_test_split": "80% train (680 samples), 20% held-out test (170 samples), stratified by career_track, random_state=42",
                 "cross_validation": "5-Fold StratifiedKFold (random_state=42, shuffle=True) on training split only",
                 "preprocessing_isolation": "Pipeline(StandardScaler(), Estimator()) per fold to prevent CV data leakage",
@@ -540,6 +581,7 @@ class CareerClassifier:
             ranked.append({
                 "track": track,
                 "probability": round(float(combined_p) * 100, 1),
+                "match_score": round(float(combined_p) * 100, 1),
                 "competency_prob": round(float(ml_p) * 100, 1),
                 "knn_prob": round(float(knn_p) * 100, 1),
                 "dt_prob": round(float(dt_p) * 100, 1),
@@ -552,9 +594,15 @@ class CareerClassifier:
         total_p = sum(r["probability"] for r in ranked)
         if total_p > 0:
             for r in ranked:
-                r["probability"] = round((r["probability"] / total_p) * 100, 1)
+                norm_val = round((r["probability"] / total_p) * 100, 1)
+                r["probability"] = norm_val
+                r["match_score"] = norm_val
 
         ranked.sort(key=lambda x: -x["probability"])
+
+        # Determine pure ML top prediction from academic coursework and skills
+        ml_sorted = sorted(ranked, key=lambda x: -x["competency_prob"])
+        ml_predicted_track = ml_sorted[0]["track"] if ml_sorted else "Software Engineering"
 
         distances, indices = self.knn_model.kneighbors(X_scaled, n_neighbors=5)
         
@@ -566,6 +614,7 @@ class CareerClassifier:
         return {
             "ranked_matches": ranked,
             "top_track": ranked[0]["track"] if ranked else "Software Engineering",
+            "ml_predicted_track": ml_predicted_track,
             "model_used": weights_desc,
             "nearest_neighbor_distances": [round(float(d), 3) for d in distances[0]]
         }
