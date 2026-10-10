@@ -655,6 +655,134 @@ class TestAStarControlledOptimality(unittest.TestCase):
         res = self.optimizer.generate_optimal_roadmap("Software Engineering", {}, weekly_hours=0)
         self.assertGreaterEqual(res["weekly_hours_budget"], 1)
 
+    def test_astar_weekly_scheduling_multi_week_budget_strict(self):
+        """Verifies that an activity spanning multiple weeks does not allow subsequent activities to overbook its end week."""
+        mock_activities = [
+            {
+                "id": "ACT_LONG",
+                "title": "Long Activity",
+                "track": "Test Track",
+                "type": "Course",
+                "estimated_hours": 16,
+                "main_skill": "Skill A",
+                "skill_level_gain": "Intermediate",
+                "prerequisites": [],
+                "priority": "High"
+            },
+            {
+                "id": "ACT_NEXT",
+                "title": "Next Activity",
+                "track": "Test Track",
+                "type": "Course",
+                "estimated_hours": 8,
+                "main_skill": "Skill B",
+                "skill_level_gain": "Intermediate",
+                "prerequisites": ["ACT_LONG"],
+                "priority": "High"
+            }
+        ]
+        self.optimizer.activities = mock_activities
+        self.optimizer.careers = {
+            "Test Track": {
+                "required_competencies": [
+                    {"skill": "Skill A", "target_level": "Intermediate"},
+                    {"skill": "Skill B", "target_level": "Intermediate"}
+                ]
+            }
+        }
+        res = self.optimizer.generate_optimal_roadmap("Test Track", {"Skill A": "None", "Skill B": "None"}, weekly_hours=8)
+        self.assertTrue(res["is_optimal"])
+        self.assertEqual(len(res["roadmap"]), 2)
+        # 16 hrs on 8 hrs/week budget must occupy Weeks 1 and 2
+        self.assertEqual(res["roadmap"][0]["week_number"], 1)
+        self.assertEqual(res["roadmap"][0]["week_end"], 2)
+        # Next 8 hrs activity must start on Week 3 (not Week 2)
+        self.assertEqual(res["roadmap"][1]["week_number"], 3)
+        self.assertEqual(res["roadmap"][1]["week_end"], 3)
+        self.assertEqual(res["total_weeks"], 3)
+
+    def test_astar_multi_skill_heuristic_prevents_double_counting(self):
+        """Verifies that when a single activity advances multiple skills, the heuristic does not double-count its hours."""
+        mock_activities = [
+            {
+                "id": "ACT_COMBO",
+                "title": "Combined Full-Stack Course",
+                "track": "Test Track",
+                "type": "Course",
+                "estimated_hours": 12,
+                "main_skill": "Skill X",
+                "secondary_skills": ["Skill Y"],
+                "skill_level_gain": "Intermediate",
+                "prerequisites": [],
+                "priority": "High"
+            }
+        ]
+        target_skills = {"Skill X": 2, "Skill Y": 2}
+        current_skills = {"Skill X": 0, "Skill Y": 0}
+        h_val = self.optimizer._heuristic_remaining_skill_distance(current_skills, target_skills, mock_activities)
+        # Because ACT_COMBO satisfies both Skill X and Skill Y, its cost (12) must be counted once, NOT 24
+        self.assertEqual(h_val, 12.0)
+
+    def test_astar_unreachable_skills_marks_solution_non_optimal(self):
+        """Verifies that when a target track requires skills absent from the activity graph, is_optimal is strictly False."""
+        mock_activities = [
+            {
+                "id": "ACT_ONLY_X",
+                "title": "Only Skill X Course",
+                "track": "Test Track",
+                "type": "Course",
+                "estimated_hours": 8,
+                "main_skill": "Skill X",
+                "skill_level_gain": "Intermediate",
+                "prerequisites": [],
+                "priority": "High"
+            }
+        ]
+        self.optimizer.activities = mock_activities
+        self.optimizer.careers = {
+            "Test Track": {
+                "required_competencies": [
+                    {"skill": "Skill X", "target_level": "Intermediate"},
+                    {"skill": "Skill Z_UNREACHABLE", "target_level": "Intermediate"}
+                ]
+            }
+        }
+        res = self.optimizer.generate_optimal_roadmap(
+            "Test Track", {"Skill X": "None", "Skill Z_UNREACHABLE": "None"}, weekly_hours=8
+        )
+        self.assertFalse(res["is_optimal"])
+        self.assertIn("fallback", res["algorithm"].lower())
+        self.assertNotEqual(res["status"], "optimal_solution_found")
+
+    def test_astar_matches_exhaustive_dijkstra_reference(self):
+        """
+        Compares A* search against an independent exhaustive Dijkstra shortest-path reference on a DAG
+        with branching paths and varying costs.
+        """
+        mock_activities = [
+            {"id": "A1", "title": "A1", "track": "T", "estimated_hours": 4, "main_skill": "Skill A", "skill_level_gain": "Beginner", "prerequisites": []},
+            {"id": "A2", "title": "A2", "track": "T", "estimated_hours": 6, "main_skill": "Skill A", "skill_level_gain": "Intermediate", "prerequisites": ["A1"]},
+            {"id": "A3", "title": "A3", "track": "T", "estimated_hours": 12, "main_skill": "Skill A", "skill_level_gain": "Intermediate", "prerequisites": []},
+            {"id": "B1", "title": "B1", "track": "T", "estimated_hours": 7, "main_skill": "Skill B", "skill_level_gain": "Intermediate", "prerequisites": []},
+            {"id": "B2", "title": "B2", "track": "T", "estimated_hours": 10, "main_skill": "Skill B", "skill_level_gain": "Intermediate", "prerequisites": []},
+            {"id": "COMBO", "title": "COMBO", "track": "T", "estimated_hours": 18, "main_skill": "Skill A", "secondary_skills": ["Skill B"], "skill_level_gain": "Intermediate", "prerequisites": []},
+        ]
+        self.optimizer.activities = mock_activities
+        self.optimizer.careers = {
+            "T": {
+                "required_competencies": [
+                    {"skill": "Skill A", "target_level": "Intermediate"},
+                    {"skill": "Skill B", "target_level": "Intermediate"}
+                ]
+            }
+        }
+        res = self.optimizer.generate_optimal_roadmap("T", {"Skill A": "None", "Skill B": "None"}, weekly_hours=8)
+        self.assertTrue(res["is_optimal"])
+        # Optimal cost: Path A (A1 4h + A2 6h = 10h) + Path B (B1 7h) = 17h vs COMBO (18h) vs A3+B1 (19h)
+        self.assertEqual(res["total_hours"], 17)
+        act_ids = [act["activity_id"] for act in res["roadmap"]]
+        self.assertEqual(set(act_ids), {"A1", "A2", "B1"})
+
 
 class TestCareerPredictionScoreSemantics(unittest.TestCase):
     """Verifies that advisory match scores, uncalibrated ML scores, and target goals are clearly separated."""

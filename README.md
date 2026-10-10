@@ -40,8 +40,8 @@ CareerSense AI solves the problem of generic, non-personalized career guidance b
 3. **AI Layer 3 — A\* Search Algorithm for Roadmap Optimization**:
    - Formulates upskilling as a state-space graph search over a curated activity DAG (courses, projects, certifications).
    - Cost function $g(n) = \text{accumulated study hours}$.
-   - Admissible heuristic $h(n) = \sum_{s \in \text{Gaps}} \min_{a} \text{Hours}(a)$ providing an admissible lower-bound on remaining effort to close all competency gaps.
-   - Maps the optimal learning path into week-by-week milestones constrained by the student's declared weekly study budget (e.g., 8 hrs/week), backed by a topological sort fallback if graph activities cannot fully cover the target competencies.
+   - Admissible heuristic $h(n)$ estimating minimal remaining hours over unique activities (preventing double-counting if an activity advances multiple skills).
+   - Maps the learning path into week-by-week milestones strictly constrained by the student's declared study budget (e.g., 8 hrs/week) without overfilling multi-week spans, backed by a topological sort fallback (explicitly flagged as `is_optimal: False`) if graph activities cannot fully cover the target competencies.
 4. **Interactive Multi-Role Web Platform**:
    - **Student Portal**: Profile, academic grades, skill management, document uploads, radar chart comparison, A* roadmap task tracking, and downloadable career reports.
    - **Academic Advisor Portal**: Advisee search, AI explanation review, prerequisite audit, and feedback note submission.
@@ -164,7 +164,7 @@ Evaluated on 170 holdout test samples (80/20 train/test split of 850 undergradua
 ### 🛡️ Evaluation Methodology & Synthetic Dataset Transparency
 - **Preprocessing Leakage Remediation**: K-NN cross-validation is evaluated strictly through a scikit-learn `Pipeline([('scaler', StandardScaler()), ('knn', KNeighborsClassifier(...))])` executed on the training split, ensuring that scaling parameters are computed independently within each fold. The held-out test split (20%, $N=170$) is strictly isolated for final testing.
 - **Prediction Score Semantics**: User-facing "Match Scores" represent an uncalibrated composite advisory affinity index (combining academic coursework, technical skills, domain interests, and career aspirations). They are normalized for ranking and should not be interpreted as calibrated Bayesian probabilities of post-graduate employment. The pure ML track prediction (`ml_predicted_track`) evaluates coursework and skills independently from student aspirations.
-- **A\* Search Optimality & Bounds**: The heuristic $h(n) = \sum_{s \in \text{Gaps}} \min_{a} \text{Hours}(a)$ provides an admissible lower-bound under single-skill curriculum activities. The search explores state space ordered by $f(n) = g(n) + h(n)$ to minimize total study effort. For sparse or incomplete activity DAGs, a deterministic topological fallback guarantees a valid, prerequisite-consistent sequence.
+- **A\* Search Optimality & Bounds**: The heuristic $h(n)$ finds the minimal duration among available activities advancing each unsatisfied competency, summing unique activities to prevent double-counting under multi-skill activities. Nodes are expanded by $f(n) = g(n) + h(n)$ with cost-so-far pruning. For sparse or incomplete activity DAGs where required competencies include university coursework outside the graph, a deterministic topological fallback is used and explicitly marked as `is_optimal: False` with distinct status reporting.
 - **Dataset Context & Ethical Limitations**: The student cohort (`data/students_dataset.csv`, 850 records) is an educational synthetic demonstration reflecting real computing curricula. While engineered with realistic latent skills, prerequisite rules, and overlapping interests, it is explicitly labelled as synthetic and should not be treated as empirical graduate employment data.
 
 ---
@@ -175,7 +175,7 @@ Evaluated on 170 holdout test samples (80/20 train/test split of 850 undergradua
 - ✅ AI Layer 2 (Rule-Based Expert System with prerequisite validation)
 - ✅ AI Layer 3 (A\* Search Roadmap Optimizer with weekly time constraint)
 - ✅ Complete dataset generation script (`scripts/generate_dataset.py`)
-- ✅ Automated unit and integration test suite (`tests/test_all.py`)
+- ✅ Automated unit and integration test suite (`tests/test_all.py`, 44 passing tests)
 - ✅ Automated downloadable personalized Career Advisory Reports
 - ✅ Complete Academic Final Report (`docs/final_report.md`)
 - ✅ Group Presentation & Video Outline Script (`docs/presentation_script.md`)

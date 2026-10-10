@@ -15,7 +15,7 @@ class CareerReportGenerator:
         readiness_data = readiness_data or {}
         roadmap_data = roadmap_data or []
 
-        name = user_info.get("full_name") or "Aqeel Ahamad (MFA Ahamad)"
+        name = user_info.get("full_name") or "Aqeel Ahamad (Demo Student)"
         raw_reg = user_info.get("reg_no")
         reg_no = str(raw_reg) if raw_reg else "STU-DEMO-01"
         ref_code = reg_no.replace("/", "").replace(" ", "").replace("-", "")

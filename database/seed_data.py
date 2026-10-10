@@ -1,7 +1,7 @@
 """
 Seed Data Script for CareerSense AI.
-Populates the database with system users and the primary student profile:
-Aqeel Ahamad (MFA Ahamad), Year 2, BSc (Hons) in Data Science & Business Analytics, GPA 3.40.
+Populates the database with system users and a synthetic demonstration student profile:
+Aqeel Ahamad (Demo Student), Year 2, BSc (Hons) in Data Science & Business Analytics, Benchmark GPA 3.40.
 """
 import sys
 import os
@@ -15,9 +15,14 @@ from config import DATABASE_PATH
 
 def seed_database():
     # If DB exists, re-initialize cleanly
+    if DATABASE_PATH.exists():
+        try:
+            DATABASE_PATH.unlink()
+        except Exception as e:
+            print(f"Warning: could not unlink {DATABASE_PATH}: {e}")
     db = DatabaseManager()
     
-    print("Seeding database with Aqeel Ahamad (MFA Ahamad) profile...")
+    print("Seeding database with synthetic demo student profile...")
     
     # 1. System Administrative Users
     admin_id = db.create_user(
@@ -44,13 +49,13 @@ def seed_database():
         email="k.jayasinghe@kdu.ac.lk"
     )
     
-    # 2. Primary Student Persona: Aqeel Ahamad (MFA Ahamad)
-    # Year 2, Data Science and Business Analytics, GPA 3.40
+    # 2. Primary Student Persona: Synthetic demonstration profile
+    # Year 2, Data Science and Business Analytics, Benchmark GPA 3.40
     student1_id = db.create_user(
         username="student_demo",
         password="student123",
         role="student",
-        full_name="Aqeel Ahamad (MFA Ahamad)",
+        full_name="Aqeel Ahamad (Demo Student)",
         reg_no="STU-DEMO-01",
         email="demo.student@kdu.ac.lk"
     )
@@ -62,7 +67,7 @@ def seed_database():
         gpa=3.40,
         target_career="Data Science / AI",
         weekly_hours=8,
-        cv_filename="Aqeel_Ahamad_CV.pdf",
+        cv_filename="Demo_Student_CV.pdf",
         cv_extracted_skills=["Python", "Pandas", "NumPy", "SQL", "Machine Learning", "Statistics", "Data Visualization"],
         readiness_score=72.5
     )
@@ -119,13 +124,13 @@ def seed_database():
         demonstrated_skills="SQL & Data Querying, Data Visualization, Python Data Stack (Pandas/NumPy)"
     )
     
-    # Documents for Aqeel Ahamad
-    db.add_student_document(student1_id, "CV", "Aqeel_Ahamad_CV.pdf", {"pages": 2, "verified_skills": ["Python", "SQL", "Pandas", "Scikit-learn", "Git"]})
-    db.add_student_document(student1_id, "Transcript", "Academic_Transcript_Year2.pdf", {"gpa": 3.40, "credits_earned": 64})
+    # Documents for Demonstration Student
+    db.add_student_document(student1_id, "CV", "Demo_Student_CV.pdf", {"pages": 2, "verified_skills": ["Python", "SQL", "Pandas", "Scikit-learn", "Git"]})
+    db.add_student_document(student1_id, "Transcript", "Demo_Transcript_Year2.pdf", {"gpa": 3.40, "credits_earned": 64})
     db.add_student_document(student1_id, "Certificate", "IBM_Data_Science_Professional_Certificate.pdf", {"issuer": "IBM Coursera", "date": "2025-10-14"})
     db.add_student_document(student1_id, "Certificate", "DeepLearning_AI_Machine_Learning_Specialization.pdf", {"issuer": "DeepLearning.AI", "date": "2025-07-22"})
     
-    # A* Optimized Roadmap for Aqeel Ahamad (Data Science / AI)
+    # A* Optimized Roadmap for Demo Student (Data Science / AI)
     example_roadmap = [
         {"activity_id": "ACT_DS_02", "activity_title": "Exploratory Data Analysis & Visualization", "activity_type": "Project", "week_number": 1, "estimated_hours": 14, "main_skill": "Data Visualization", "status": "In-Progress"},
         {"activity_id": "ACT_DS_04", "activity_title": "Supervised & Unsupervised Machine Learning", "activity_type": "Course", "week_number": 3, "estimated_hours": 18, "main_skill": "Machine Learning & Modeling", "status": "Planned"},
@@ -133,15 +138,15 @@ def seed_database():
     ]
     db.save_roadmap(student1_id, "Data Science / AI", example_roadmap)
     
-    # Advisor note for Aqeel Ahamad
+    # Advisor note for Demo Student
     db.add_advisor_note(
         student_id=student1_id,
         advisor_name="Dr. Nihal Fernando",
-        feedback="Aqeel demonstrates exceptional quantitative reasoning and strong foundations in Data Science and Business Analytics. Advised to complete an end-to-end ML deployment pipeline to achieve full industry readiness.",
+        feedback="Student demonstrates strong quantitative foundations in Data Science and Business Analytics. Advised to complete an end-to-end ML deployment pipeline to achieve full industry readiness.",
         action_items="Complete Machine Learning project integration; containerize predictive service by end of Semester 2."
     )
     
-    print("Database seeding completed successfully for Aqeel Ahamad (MFA Ahamad)!")
+    print("Database seeding completed successfully for synthetic demonstration profile!")
 
 if __name__ == "__main__":
     seed_database()

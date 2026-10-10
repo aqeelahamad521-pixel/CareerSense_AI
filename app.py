@@ -123,7 +123,7 @@ def main():
         st.markdown("---")
         st.caption("**Demonstration Sandbox**")
         st.caption("• Environment: Local Sandbox")
-        st.caption("• Primary Persona: Aqeel Ahamad (MFA Ahamad)")
+        st.caption("• Primary Persona: Aqeel Ahamad (Demo Student)")
         st.caption("• Degree: BSc (Hons) in Data Science & Business Analytics")
         st.caption("• Status: Academic Prototype")
 
