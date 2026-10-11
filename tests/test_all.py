@@ -869,6 +869,241 @@ class TestAStarControlledOptimality(unittest.TestCase):
         self.assertEqual(results[0], results[1])
         self.assertEqual(results[1], results[2])
 
+    def test_activity_filtering_includes_secondary_skills(self):
+        """Verifies that an activity advancing a required skill solely via secondary_skills is included and selected."""
+        mock_activities = [
+            {
+                "id": "ACT_SEC_ONLY",
+                "title": "Cross-Track Activity with Secondary Skill",
+                "track": "Unrelated Track",
+                "type": "Course",
+                "estimated_hours": 10,
+                "main_skill": "Unrelated Skill",
+                "secondary_skills": ["Target Secondary Skill"],
+                "skill_level_gain": "Intermediate",
+                "prerequisites": [],
+                "priority": "High"
+            }
+        ]
+        self.optimizer.activities = mock_activities
+        self.optimizer.careers = {
+            "Special Track": {
+                "required_competencies": [
+                    {"skill": "Target Secondary Skill", "target_level": "Intermediate"}
+                ]
+            }
+        }
+        res = self.optimizer.generate_optimal_roadmap("Special Track", {"Target Secondary Skill": "None"}, weekly_hours=8)
+        self.assertTrue(res["is_optimal"])
+        self.assertEqual(res["status"], "optimal_solution_found")
+        self.assertEqual(res["total_hours"], 10)
+        self.assertEqual(len(res["roadmap"]), 1)
+        self.assertEqual(res["roadmap"][0]["activity_id"], "ACT_SEC_ONLY")
+
+    def test_activity_filtering_includes_prerequisite_with_unrelated_main_skill(self):
+        """Verifies that a prerequisite activity is included via backward closure even if its main skill is not an active gap."""
+        mock_activities = [
+            {
+                "id": "ACT_PREREQ",
+                "title": "Prerequisite Foundation",
+                "track": "Foundations Track",
+                "type": "Course",
+                "estimated_hours": 6,
+                "main_skill": "Unneeded Prereq Skill",
+                "skill_level_gain": "Intermediate",
+                "prerequisites": [],
+                "priority": "Low"
+            },
+            {
+                "id": "ACT_GOAL",
+                "title": "Target Competency Course",
+                "track": "Target Track",
+                "type": "Course",
+                "estimated_hours": 8,
+                "main_skill": "Crucial Target Skill",
+                "skill_level_gain": "Intermediate",
+                "prerequisites": ["ACT_PREREQ"],
+                "priority": "High"
+            }
+        ]
+        self.optimizer.activities = mock_activities
+        self.optimizer.careers = {
+            "Target Track": {
+                "required_competencies": [
+                    {"skill": "Crucial Target Skill", "target_level": "Intermediate"}
+                ]
+            }
+        }
+        # Student needs Crucial Target Skill; Unneeded Prereq Skill is NOT an active gap
+        res = self.optimizer.generate_optimal_roadmap("Target Track", {"Crucial Target Skill": "None"}, weekly_hours=8)
+        self.assertTrue(res["is_optimal"])
+        self.assertEqual(res["status"], "optimal_solution_found")
+        self.assertEqual(res["total_hours"], 14)
+        self.assertEqual(len(res["roadmap"]), 2)
+        self.assertEqual(res["roadmap"][0]["activity_id"], "ACT_PREREQ")
+        self.assertEqual(res["roadmap"][1]["activity_id"], "ACT_GOAL")
+
+    def test_partial_coverage_reported_only_when_skill_genuinely_uncovered(self):
+        """Verifies partial coverage is reported if and only if an active gap has no advancing activity anywhere in graph."""
+        mock_activities = [
+            {
+                "id": "ACT_A",
+                "title": "Skill A Course",
+                "track": "Track T",
+                "type": "Course",
+                "estimated_hours": 5,
+                "main_skill": "Skill A",
+                "skill_level_gain": "Intermediate",
+                "prerequisites": [],
+                "priority": "High"
+            }
+        ]
+        self.optimizer.activities = mock_activities
+        self.optimizer.careers = {
+            "Track T": {
+                "required_competencies": [
+                    {"skill": "Skill A", "target_level": "Intermediate"},
+                    {"skill": "Skill B Uncovered", "target_level": "Intermediate"}
+                ]
+            }
+        }
+        res = self.optimizer.generate_optimal_roadmap("Track T", {"Skill A": "None", "Skill B Uncovered": "None"}, weekly_hours=8)
+        self.assertFalse(res["is_optimal"])
+        self.assertEqual(res["status"], "partial_coverage")
+        self.assertIn("Partial Graph Coverage Fallback", res["algorithm"])
+        # Should still sequence the available activity for Skill A
+        self.assertEqual(len(res["roadmap"]), 1)
+        self.assertEqual(res["roadmap"][0]["activity_id"], "ACT_A")
+
+    def test_roadmap_duration_policy_fractional_hours(self):
+        """Verifies fractional hours are preserved consistently in search path cost, total_hours, and scheduled roadmap."""
+        mock_activities = [
+            {"id": "ACT_F1", "title": "Fractional 1", "track": "T", "estimated_hours": 7.5, "main_skill": "S1", "skill_level_gain": "Intermediate", "prerequisites": []},
+            {"id": "ACT_F2", "title": "Fractional 2", "track": "T", "estimated_hours": 3.25, "main_skill": "S2", "skill_level_gain": "Intermediate", "prerequisites": []},
+            {"id": "ACT_F3", "title": "Fractional 3", "track": "T", "estimated_hours": 4.25, "main_skill": "S3", "skill_level_gain": "Intermediate", "prerequisites": []}
+        ]
+        self.optimizer.activities = mock_activities
+        self.optimizer.careers = {
+            "T": {
+                "required_competencies": [
+                    {"skill": "S1", "target_level": "Intermediate"},
+                    {"skill": "S2", "target_level": "Intermediate"},
+                    {"skill": "S3", "target_level": "Intermediate"}
+                ]
+            }
+        }
+        res = self.optimizer.generate_optimal_roadmap("T", {"S1": "None", "S2": "None", "S3": "None"}, weekly_hours=8)
+        self.assertTrue(res["is_optimal"])
+        # 7.5 + 3.25 + 4.25 = 15.0 hours
+        self.assertEqual(res["total_hours"], 15)
+        # Sum of scheduled item hours must exactly equal total_hours
+        sched_sum = sum(item["estimated_hours"] for item in res["roadmap"])
+        self.assertEqual(sched_sum, 15.0)
+        hours_by_id = {item["activity_id"]: item["estimated_hours"] for item in res["roadmap"]}
+        self.assertEqual(hours_by_id["ACT_F1"], 7.5)
+        self.assertEqual(hours_by_id["ACT_F2"], 3.25)
+        self.assertEqual(hours_by_id["ACT_F3"], 4.25)
+
+    def test_roadmap_duration_policy_zero_or_negative_clamped(self):
+        """Verifies zero or negative activity hours are safely clamped to 1.0 hour, maintaining strictly positive costs."""
+        mock_activities = [
+            {"id": "ACT_ZERO", "title": "Zero Duration", "track": "T", "estimated_hours": 0, "main_skill": "S1", "skill_level_gain": "Intermediate", "prerequisites": []},
+            {"id": "ACT_NEG", "title": "Negative Duration", "track": "T", "estimated_hours": -10, "main_skill": "S2", "skill_level_gain": "Intermediate", "prerequisites": []}
+        ]
+        self.optimizer.activities = mock_activities
+        self.optimizer.careers = {
+            "T": {
+                "required_competencies": [
+                    {"skill": "S1", "target_level": "Intermediate"},
+                    {"skill": "S2", "target_level": "Intermediate"}
+                ]
+            }
+        }
+        res = self.optimizer.generate_optimal_roadmap("T", {"S1": "None", "S2": "None"}, weekly_hours=8)
+        self.assertTrue(res["is_optimal"])
+        # Both clamped to 1.0 hr -> 1 + 1 = 2 hrs
+        self.assertEqual(res["total_hours"], 2)
+        self.assertEqual(res["roadmap"][0]["estimated_hours"], 1)
+        self.assertEqual(res["roadmap"][1]["estimated_hours"], 1)
+
+    def test_roadmap_weekly_budget_longer_than_weekly_hours(self):
+        """Verifies that an activity longer than the weekly budget spans multiple weeks and respects the budget."""
+        mock_activities = [
+            {"id": "ACT_HUGE", "title": "20-Hour Course", "track": "T", "estimated_hours": 20, "main_skill": "S1", "skill_level_gain": "Intermediate", "prerequisites": []},
+            {"id": "ACT_FIT", "title": "4-Hour Course", "track": "T", "estimated_hours": 4, "main_skill": "S2", "skill_level_gain": "Intermediate", "prerequisites": ["ACT_HUGE"]},
+            {"id": "ACT_NEXT", "title": "6-Hour Course", "track": "T", "estimated_hours": 6, "main_skill": "S3", "skill_level_gain": "Intermediate", "prerequisites": ["ACT_FIT"]}
+        ]
+        self.optimizer.activities = mock_activities
+        self.optimizer.careers = {
+            "T": {
+                "required_competencies": [
+                    {"skill": "S1", "target_level": "Intermediate"},
+                    {"skill": "S2", "target_level": "Intermediate"},
+                    {"skill": "S3", "target_level": "Intermediate"}
+                ]
+            }
+        }
+        res = self.optimizer.generate_optimal_roadmap("T", {"S1": "None", "S2": "None", "S3": "None"}, weekly_hours=8)
+        self.assertTrue(res["is_optimal"])
+        # ACT_HUGE (20h on 8h budget): Week 1 (8h), Week 2 (8h), Week 3 (4h) -> weeks 1 to 3
+        self.assertEqual(res["roadmap"][0]["week_number"], 1)
+        self.assertEqual(res["roadmap"][0]["week_end"], 3)
+        # ACT_FIT (4h): Fits in remaining 4h of Week 3 -> week 3 to 3
+        self.assertEqual(res["roadmap"][1]["week_number"], 3)
+        self.assertEqual(res["roadmap"][1]["week_end"], 3)
+        # ACT_NEXT (6h): Week 3 is now full (4h + 4h = 8h), so starts on Week 4 -> week 4 to 4
+        self.assertEqual(res["roadmap"][2]["week_number"], 4)
+        self.assertEqual(res["roadmap"][2]["week_end"], 4)
+        self.assertEqual(res["total_weeks"], 4)
+        self.assertEqual(res["total_hours"], 30)
+
+    def test_multiple_consecutive_activities_scheduling(self):
+        """Verifies scheduling of multiple consecutive activities within and across weekly budget limits."""
+        mock_activities = [
+            {"id": "A1", "title": "A1", "track": "T", "estimated_hours": 2, "main_skill": "S1", "skill_level_gain": "Intermediate", "prerequisites": []},
+            {"id": "A2", "title": "A2", "track": "T", "estimated_hours": 3, "main_skill": "S2", "skill_level_gain": "Intermediate", "prerequisites": []},
+            {"id": "A3", "title": "A3", "track": "T", "estimated_hours": 3, "main_skill": "S3", "skill_level_gain": "Intermediate", "prerequisites": []},
+            {"id": "A4", "title": "A4", "track": "T", "estimated_hours": 4, "main_skill": "S4", "skill_level_gain": "Intermediate", "prerequisites": []}
+        ]
+        self.optimizer.activities = mock_activities
+        self.optimizer.careers = {
+            "T": {
+                "required_competencies": [
+                    {"skill": "S1", "target_level": "Intermediate"},
+                    {"skill": "S2", "target_level": "Intermediate"},
+                    {"skill": "S3", "target_level": "Intermediate"},
+                    {"skill": "S4", "target_level": "Intermediate"}
+                ]
+            }
+        }
+        res = self.optimizer.generate_optimal_roadmap("T", {"S1": "None", "S2": "None", "S3": "None", "S4": "None"}, weekly_hours=8)
+        self.assertTrue(res["is_optimal"])
+        # Total hours = 2 + 3 + 3 + 4 = 12
+        self.assertEqual(res["total_hours"], 12)
+        # Week 1: 2 + 3 + 3 = 8 hours full
+        # Week 2: 4 hours
+        self.assertEqual(res["total_weeks"], 2)
+
+    def test_astar_search_limit_exhaustion_marks_fallback_non_optimal(self):
+        """Verifies that if search iterations are exhausted, solution is marked non-optimal fallback."""
+        # Create an activity graph with circular prerequisite deadlock preventing goal attainment
+        mock_activities = [
+            {"id": "ACT_LOOP_1", "title": "Loop 1", "track": "T", "estimated_hours": 5, "main_skill": "S1", "skill_level_gain": "Intermediate", "prerequisites": ["ACT_LOOP_2"]},
+            {"id": "ACT_LOOP_2", "title": "Loop 2", "track": "T", "estimated_hours": 5, "main_skill": "S1", "skill_level_gain": "Intermediate", "prerequisites": ["ACT_LOOP_1"]}
+        ]
+        self.optimizer.activities = mock_activities
+        self.optimizer.careers = {
+            "T": {
+                "required_competencies": [
+                    {"skill": "S1", "target_level": "Intermediate"}
+                ]
+            }
+        }
+        res = self.optimizer.generate_optimal_roadmap("T", {"S1": "None"}, weekly_hours=8)
+        self.assertFalse(res["is_optimal"])
+        self.assertIn("Fallback", res["algorithm"])
+        self.assertNotEqual(res["status"], "optimal_solution_found")
+
 
 class TestCareerPredictionScoreSemantics(unittest.TestCase):
     """Verifies that advisory match scores, uncalibrated ML scores, and target goals are clearly separated."""

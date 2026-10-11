@@ -39,7 +39,8 @@ CareerSense AI solves the problem of generic, non-personalized career guidance b
    - Generates human-readable, transparent diagnostic explanations.
 3. **AI Layer 3 — A\* Search Algorithm for Roadmap Optimization**:
    - Formulates upskilling as a state-space graph search over a curated activity DAG (courses, projects, certifications).
-   - Cost function $g(n) = \text{accumulated study hours}$.
+   - Cost function $g(n) = \text{accumulated study hours}$ with consistent duration normalization supporting positive integer and fractional hours.
+   - Comprehensive activity filtering incorporating primary and secondary skill contributions alongside full recursive prerequisite closure.
    - Mathematically proven admissible heuristic $h(n) \le h^*(n)$ (using bottleneck lower bound $h(n) = \max_{s \in U} \min_{a \in \text{Cand}(s)} c(a)$ when multi-skill activities exist, and sum of minimums over disjoint candidate sets).
    - Maps the learning path into week-by-week milestones strictly constrained by the student's declared study budget (e.g., 8 hrs/week) without overfilling multi-week spans, backed by a topological sort fallback (explicitly flagged as `is_optimal: False`) if graph activities cannot fully cover the target competencies.
 4. **Interactive Multi-Role Web Platform**:
@@ -164,7 +165,7 @@ Evaluated on 170 holdout test samples (80/20 train/test split of 850 undergradua
 ### 🛡️ Evaluation Methodology & Synthetic Dataset Transparency
 - **Preprocessing Leakage Remediation**: K-NN cross-validation is evaluated strictly through a scikit-learn `Pipeline([('scaler', StandardScaler()), ('knn', KNeighborsClassifier(...))])` executed on the training split, ensuring that scaling parameters are computed independently within each fold. The held-out test split (20%, $N=170$) is strictly isolated for final testing.
 - **Prediction Score Semantics**: User-facing "Match Scores" represent an uncalibrated composite advisory affinity index (combining academic coursework, technical skills, domain interests, and career aspirations). They are normalized for ranking and should not be interpreted as calibrated Bayesian probabilities of post-graduate employment. The pure ML track prediction (`ml_predicted_track`) evaluates coursework and skills independently from student aspirations.
-- **A\* Search Optimality & Bounds**: The heuristic $h(n)$ uses a proven admissible lower bound $h(n) \le h^*(n)$ across all graph topologies. For multi-skill activities that advance multiple competencies simultaneously, it computes the bottleneck lower bound $\max_{s \in U} \min_{a \in \text{Cand}(s)} c(a)$, which is mathematically guaranteed never to overestimate the true minimum remaining cost $h^*(n)$. When candidate sets are disjoint, it sums the minimal costs. Full optimality ($g(n) = g^*(n)$) is verified against exhaustive Dijkstra references; incomplete coverage or topological fallbacks are strictly demarcated with `is_optimal: False` and distinct status codes (`goal_unreachable`, `search_limit_reached`, or `partial_coverage`).
+- **A\* Search Optimality & Bounds**: The heuristic $h(n)$ uses a proven admissible lower bound $h(n) \le h^*(n)$ across all graph topologies. For multi-skill activities that advance multiple competencies simultaneously, it computes the bottleneck lower bound $\max_{s \in U} \min_{a \in \text{Cand}(s)} c(a)$, which is mathematically guaranteed never to overestimate the true minimum remaining cost $h^*(n)$. When candidate sets are disjoint, it sums the minimal costs. Activity filtering incorporates primary and secondary skill contributions as well as full recursive prerequisite chains. Activity durations and path costs are consistently normalized across search, scheduling, and reporting. Full optimality ($g(n) = g^*(n)$) is verified against exhaustive Dijkstra references; incomplete coverage or topological fallbacks are strictly demarcated with `is_optimal: False` and distinct status codes (`goal_unreachable`, `search_limit_reached`, or `partial_coverage`).
 - **Dataset Context & Ethical Limitations**: The student cohort (`data/students_dataset.csv`, 850 records) is an educational synthetic demonstration reflecting real computing curricula. While engineered with realistic latent skills, prerequisite rules, and overlapping interests, it is explicitly labelled as synthetic and should not be treated as empirical graduate employment data.
 
 ---
@@ -175,7 +176,7 @@ Evaluated on 170 holdout test samples (80/20 train/test split of 850 undergradua
 - ✅ AI Layer 2 (Rule-Based Expert System with prerequisite validation)
 - ✅ AI Layer 3 (A\* Search Roadmap Optimizer with weekly time constraint)
 - ✅ Complete dataset generation script (`scripts/generate_dataset.py`)
-- ✅ Automated unit and integration test suite (`tests/test_all.py`, 48 passing tests)
+- ✅ Automated unit and integration test suite (`tests/test_all.py`, 56 passing tests)
 - ✅ Automated downloadable personalized Career Advisory Reports
 - ✅ Complete Academic Final Report (`docs/final_report.md`)
 - ✅ Group Presentation & Video Outline Script (`docs/presentation_script.md`)

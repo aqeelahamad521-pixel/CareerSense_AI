@@ -5,6 +5,7 @@ from the student's current skill profile to the target career competency benchma
 """
 import json
 import heapq
+import math
 from pathlib import Path
 from typing import Dict, List, Tuple, Set, Optional
 import sys
@@ -28,6 +29,31 @@ class AStarRoadmapOptimizer:
     - Step Cost c(s, a, s'): Estimated duration in hours of activity a (c(a) > 0).
     - Objective: Minimize total study hours g(n) = sum_{a in path} Hours(a) to reach the goal state.
     """
+    @staticmethod
+    def _normalize_duration(raw_hours) -> float:
+        """
+        Normalizes activity duration to a strictly positive numeric value.
+        Policy:
+        - Activity durations are measured in hours as positive numeric values.
+        - Fractional hours (e.g. 7.5, 3.25) are supported consistently throughout search,
+          cost calculation, weekly scheduling, and reporting.
+        - Zero or negative durations (<= 0) or non-numeric values are safely clamped to 1.0 hour
+          to ensure strictly positive edge costs in A* search.
+        - Durations are rounded to 2 decimal places to avoid floating point drift.
+        """
+        try:
+            val = float(raw_hours)
+        except (ValueError, TypeError):
+            val = 10.0
+        if val <= 0:
+            val = 1.0
+        return round(val, 2)
+
+    @staticmethod
+    def _format_duration(hours: float):
+        """Formats hours as integer if whole, or float rounded to 2 decimals."""
+        h = round(float(hours), 2)
+        return int(h) if h.is_integer() else h
     def __init__(self, heuristic_mode: str = "auto"):
         """
         heuristic_mode:
@@ -109,8 +135,8 @@ class AStarRoadmapOptimizer:
                     and SKILL_LEVELS.get(act.get("skill_level_gain", "Beginner"), 1) > curr_val
                 ]
                 if candidates:
-                    min_act = min(candidates, key=lambda a: a.get("estimated_hours", 10))
-                    min_costs_per_skill[skill] = float(min_act.get("estimated_hours", 10))
+                    min_act = min(candidates, key=lambda a: self._normalize_duration(a.get("estimated_hours", 10)))
+                    min_costs_per_skill[skill] = self._normalize_duration(min_act.get("estimated_hours", 10))
 
         if not min_costs_per_skill:
             return 0.0
@@ -131,6 +157,45 @@ class AStarRoadmapOptimizer:
         else:
             # Disjoint candidate sets: sum of minimums is strictly admissible
             return float(sum(min_costs_per_skill.values()))
+
+    def _filter_eligible_activities(
+        self, target_track: str, active_gaps: Dict[str, int]
+    ) -> List[dict]:
+        """
+        Builds the eligible activity set for A* search.
+        Includes every activity that can legitimately contribute to closing an active skill gap
+        (as a main_skill OR through secondary_skills) or belongs to the target career track,
+        PLUS the complete recursive prerequisite chain required to execute any included activity.
+
+        Activities from unrelated tracks with no relevance to active gaps or prerequisites are
+        excluded to preserve search efficiency without pruning any feasible paths.
+        """
+        activity_by_id = {a["id"]: a for a in self.activities}
+        eligible_ids: Set[str] = set()
+
+        # Step 1: Seed with all activities directly contributing to active gaps or target track
+        for a in self.activities:
+            is_track = (a.get("track") == target_track)
+            is_main_gap = (a.get("main_skill") in active_gaps)
+            is_sec_gap = any(s in active_gaps for s in a.get("secondary_skills", []))
+            if is_track or is_main_gap or is_sec_gap:
+                eligible_ids.add(a["id"])
+
+        # Step 2: Backward reachability closure — recursively include all prerequisite activities
+        queue = list(eligible_ids)
+        while queue:
+            curr_id = queue.pop()
+            curr_act = activity_by_id.get(curr_id)
+            if not curr_act:
+                continue
+            for prereq_id in curr_act.get("prerequisites", []):
+                if prereq_id not in eligible_ids and prereq_id in activity_by_id:
+                    eligible_ids.add(prereq_id)
+                    queue.append(prereq_id)
+
+        # Preserve the original order of activities in the learning graph
+        relevant = [a for a in self.activities if a["id"] in eligible_ids]
+        return relevant if relevant else list(self.activities)
 
     def generate_optimal_roadmap(
         self, target_track: str, current_skills: Dict[str, str], weekly_hours: int = 8
@@ -175,13 +240,8 @@ class AStarRoadmapOptimizer:
                 "status": "already_satisfied"
             }
 
-        # Filter activities relevant to this track or identified gaps
-        relevant_activities = [
-            a for a in self.activities
-            if a.get("track") == target_track or a.get("main_skill") in active_gaps
-        ]
-        if not relevant_activities:
-            relevant_activities = self.activities
+        # Filter activities relevant to this track, identified gaps, and their prerequisite chains
+        relevant_activities = self._filter_eligible_activities(target_track, active_gaps)
 
         # Check for gaps that have no corresponding activity in the graph
         uncovered_gaps = [
@@ -264,7 +324,8 @@ class AStarRoadmapOptimizer:
                         continue
 
                     # Transition: Take this activity
-                    new_g = g + act.get("estimated_hours", 10)
+                    act_cost = self._normalize_duration(act.get("estimated_hours", 10))
+                    new_g = round(g + act_cost, 2)
                     new_completed = tuple(sorted(list(completed_set | {act_id})))
 
                     # Update skill levels from this activity
@@ -282,7 +343,7 @@ class AStarRoadmapOptimizer:
                     # Compute remaining activities for heuristic
                     remaining_acts = [a for a in relevant_activities if a["id"] not in new_completed]
                     new_h = self._heuristic_remaining_skill_distance(new_skills_dict, search_targets, remaining_acts)
-                    new_f = new_g + new_h
+                    new_f = round(new_g + new_h, 2)
 
                     counter += 1
                     heapq.heappush(open_set, (new_f, new_g, counter, new_skills_tup, new_completed, path + [act]))
@@ -308,46 +369,47 @@ class AStarRoadmapOptimizer:
         # Build week-by-week schedule respecting declared weekly study budget
         scheduled_roadmap = []
         current_week = 1
-        current_week_hours_accum = 0
-        total_hours = 0
+        current_week_hours_accum = 0.0
+        total_hours_accum = 0.0
 
         for act in best_path:
-            hours = max(1, int(act.get("estimated_hours", 1)))
-            total_hours += hours
+            hours = self._normalize_duration(act.get("estimated_hours", 10))
+            total_hours_accum += hours
 
-            # If adding this activity exceeds current week budget and current week already has work
+            # If adding this activity exceeds weekly budget and current week already has work scheduled,
+            # advance to the next week so activities begin cleanly.
             if current_week_hours_accum + hours > weekly_hours and current_week_hours_accum > 0:
                 current_week += 1
-                current_week_hours_accum = 0
+                current_week_hours_accum = 0.0
 
             start_week = current_week
             avail_in_start_week = weekly_hours - current_week_hours_accum
 
-            if hours <= avail_in_start_week:
-                # Fits entirely within the current week
+            if hours <= avail_in_start_week + 1e-9:
+                # Fits entirely within current week
                 end_week = start_week
                 current_week_hours_accum += hours
-                if current_week_hours_accum == weekly_hours:
+                if abs(current_week_hours_accum - weekly_hours) < 1e-9:
                     current_week += 1
-                    current_week_hours_accum = 0
+                    current_week_hours_accum = 0.0
             else:
-                # Spans across multiple weeks
+                # Activity spans across multiple weeks
                 remaining_hours = hours - avail_in_start_week
-                extra_weeks = (remaining_hours + weekly_hours - 1) // weekly_hours
+                extra_weeks = math.ceil(remaining_hours / weekly_hours)
                 end_week = start_week + extra_weeks
                 rem_final = remaining_hours % weekly_hours
-                if rem_final == 0:
+                if abs(rem_final) < 1e-9:
                     current_week = end_week + 1
-                    current_week_hours_accum = 0
+                    current_week_hours_accum = 0.0
                 else:
                     current_week = end_week
-                    current_week_hours_accum = rem_final
+                    current_week_hours_accum = round(rem_final, 2)
 
             scheduled_roadmap.append({
                 "activity_id": act["id"],
                 "activity_title": act["title"],
                 "activity_type": act.get("type", "Course"),
-                "estimated_hours": hours,
+                "estimated_hours": self._format_duration(hours),
                 "main_skill": act.get("main_skill", ""),
                 "skill_level_gain": act.get("skill_level_gain", "Intermediate"),
                 "priority": act.get("priority", "Medium"),
@@ -360,10 +422,11 @@ class AStarRoadmapOptimizer:
             })
 
         total_weeks = max([item["week_end"] for item in scheduled_roadmap], default=0)
+        formatted_total_hours = self._format_duration(total_hours_accum)
 
         return {
             "target_track": target_track,
-            "total_hours": total_hours,
+            "total_hours": formatted_total_hours,
             "total_weeks": total_weeks,
             "weekly_hours_budget": weekly_hours,
             "roadmap": scheduled_roadmap,
@@ -378,10 +441,13 @@ class AStarRoadmapOptimizer:
         ordered = []
         added_ids = set()
 
-        # Sort candidates prioritizing those closing gaps
+        # Sort candidates prioritizing those closing gaps (main or secondary skills)
         candidates = sorted(
             activities,
-            key=lambda a: (0 if a.get("main_skill") in active_gaps else 1, a.get("estimated_hours", 10))
+            key=lambda a: (
+                0 if (a.get("main_skill") in active_gaps or any(s in active_gaps for s in a.get("secondary_skills", []))) else 1,
+                self._normalize_duration(a.get("estimated_hours", 10))
+            )
         )
 
         for _ in range(len(candidates)):
