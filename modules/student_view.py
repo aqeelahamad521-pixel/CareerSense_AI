@@ -56,7 +56,7 @@ def render_student_view(db, rule_engine, a_star, ml_classifier, explainability):
                 user_id=user_id,
                 degree=profile.get("degree", "BSc (Hons) in Data Science & Business Analytics"),
                 year=academic_year,
-                gpa=profile.get("gpa", 3.40),
+                gpa=profile.get("gpa", 3.50),
                 target_career=target_career,
                 weekly_hours=weekly_hours
             )
@@ -95,7 +95,7 @@ def render_student_view(db, rule_engine, a_star, ml_classifier, explainability):
             user_id=user_id,
             degree=profile.get("degree", "BSc (Hons) in Data Science & Business Analytics"),
             year=profile.get("year", 2),
-            gpa=profile.get("gpa", 3.40),
+            gpa=profile.get("gpa", 3.50),
             target_career=current_target,
             weekly_hours=current_weekly_hours,
             readiness_score=readiness_data["total_readiness_score"]
@@ -128,22 +128,40 @@ def render_student_view(db, rule_engine, a_star, ml_classifier, explainability):
             ranked_matches = explanation_data.get("ranked_matches", [])
             for m in ranked_matches:
                 trk = m["track"]
-                prob = m["probability"]
+                score_val = m.get("match_score", m.get("probability", 0.0))
                 is_selected = (trk == current_target)
                 badge = " ⭐ (Target)" if is_selected else ""
                 
                 col_m1, col_m2 = st.columns([3, 1])
                 col_m1.markdown(f"**{trk}{badge}**")
-                col_m2.markdown(f"**{prob}%**")
-                st.progress(prob / 100.0)
+                col_m2.markdown(f"**{score_val}%**")
+                st.progress(score_val / 100.0)
+
+            # Score Semantics & Attribution Breakdown Expander
+            with st.expander("🔍 Score Semantics & Metric Breakdown"):
+                st.caption(
+                    "CareerSense AI distinguishes uncalibrated advisory match scores from empirical employment probabilities. "
+                    "Below is the decomposed breakdown of technical and contextual factors for each career pathway:"
+                )
+                for m in ranked_matches:
+                    trk = m["track"]
+                    score_val = m.get("match_score", m.get("probability", 0.0))
+                    st.markdown(f"**{trk}** (Overall Advisory Match: **{score_val}%**)")
+                    col_b1, col_b2, col_b3, col_b4 = st.columns(4)
+                    col_b1.metric("Pure ML Competency", f"{m.get('ml_competency_score', m.get('competency_prob', 0.0))}%")
+                    col_b2.metric("K-NN Proximity", f"{m.get('knn_neighbor_score', m.get('knn_prob', 0.0))}%")
+                    col_b3.metric("Decision Tree", f"{m.get('dt_leaf_score', m.get('dt_prob', 0.0))}%")
+                    col_b4.metric("Domain Interest", f"{m.get('interest_score', m.get('interest_prob', 0.0))}%")
+                    st.divider()
 
             # Pathway Synergy Callout when Top Match differs from Target Career
             top_track = ranked_matches[0]["track"] if ranked_matches else ""
             if top_track and current_target and top_track != current_target:
-                target_prob = next((m["probability"] for m in ranked_matches if m["track"] == current_target), 0.0)
+                target_prob = next((m.get("match_score", m.get("probability", 0.0)) for m in ranked_matches if m["track"] == current_target), 0.0)
+                top_prob = ranked_matches[0].get("match_score", ranked_matches[0].get("probability", 0.0))
                 st.info(
                     f"🎯 **Career Pathway Alignment Insight**:\n\n"
-                    f"• **Current Academic Foundation**: Your completed coursework gives you an immediate technical baseline in **{top_track}** ({ranked_matches[0]['probability']}%).\n\n"
+                    f"• **Current Academic Foundation**: Your completed coursework gives you an immediate technical baseline in **{top_track}** ({top_prob}%).\n\n"
                     f"• **Aspirational Goal Track**: You selected **{current_target}** ({target_prob}%) as your target career with high domain affinity.\n\n"
                     f"• **The Bridging Strategy**: Strong programming and database fundamentals are the core prerequisite for modern {current_target}. Your **A* Learning Roadmap** (Tab 2) focuses on closing the specific technical gaps to transition into your dream track!"
                 )
@@ -245,6 +263,17 @@ def render_student_view(db, rule_engine, a_star, ml_classifier, explainability):
             result = a_star.generate_optimal_roadmap(current_target, student_skills, current_weekly_hours)
             db.save_roadmap(user_id, current_target, result["roadmap"])
             roadmap_items = db.get_roadmap(user_id, current_target)
+
+        # Compute live roadmap status & optimality verification
+        res_info = a_star.generate_optimal_roadmap(current_target, student_skills, current_weekly_hours)
+        if res_info.get("is_optimal"):
+            st.success(f"🏆 **Mathematical Optimality Verified**: {res_info['algorithm']} — {res_info['message']}")
+        elif res_info.get("status") == "partial_coverage":
+            st.warning(f"⚠️ **Partial Graph Coverage**: {res_info['algorithm']} — {res_info['message']}")
+        elif res_info.get("status") == "already_satisfied":
+            st.info(f"✨ **Skill Requirements Met**: {res_info['message']}")
+        else:
+            st.info(f"ℹ️ **Roadmap Generation Mode**: {res_info['algorithm']} — {res_info['message']}")
 
         # Roadmap metrics
         total_hours = sum(item["estimated_hours"] for item in roadmap_items)

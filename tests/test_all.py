@@ -783,6 +783,92 @@ class TestAStarControlledOptimality(unittest.TestCase):
         act_ids = [act["activity_id"] for act in res["roadmap"]]
         self.assertEqual(set(act_ids), {"A1", "A2", "B1"})
 
+    def test_astar_finds_cheaper_multi_skill_combo_over_separate_activities(self):
+        """Verifies A* selects a 13-hour multi-skill combo activity over separate 10-hour activities (20h total)."""
+        mock_activities = [
+            {"id": "ACT_SEP_A", "title": "Sep A", "track": "T", "estimated_hours": 10, "main_skill": "Skill A", "skill_level_gain": "Intermediate", "prerequisites": []},
+            {"id": "ACT_SEP_B", "title": "Sep B", "track": "T", "estimated_hours": 10, "main_skill": "Skill B", "skill_level_gain": "Intermediate", "prerequisites": []},
+            {"id": "ACT_COMBO", "title": "Combo AB", "track": "T", "estimated_hours": 13, "main_skill": "Skill A", "secondary_skills": ["Skill B"], "skill_level_gain": "Intermediate", "prerequisites": []},
+        ]
+        self.optimizer.activities = mock_activities
+        self.optimizer.careers = {
+            "T": {
+                "required_competencies": [
+                    {"skill": "Skill A", "target_level": "Intermediate"},
+                    {"skill": "Skill B", "target_level": "Intermediate"}
+                ]
+            }
+        }
+        res_astar = self.optimizer.generate_optimal_roadmap("T", {"Skill A": "None", "Skill B": "None"}, weekly_hours=8)
+        self.assertTrue(res_astar["is_optimal"])
+        self.assertEqual(res_astar["total_hours"], 13)
+        self.assertEqual(len(res_astar["roadmap"]), 1)
+        self.assertEqual(res_astar["roadmap"][0]["activity_id"], "ACT_COMBO")
+
+        # Verify against pure Uniform-Cost Search / Dijkstra reference (heuristic_mode="zero")
+        optimizer_dijkstra = AStarRoadmapOptimizer(heuristic_mode="zero")
+        optimizer_dijkstra.activities = mock_activities
+        optimizer_dijkstra.careers = self.optimizer.careers
+        res_dijkstra = optimizer_dijkstra.generate_optimal_roadmap("T", {"Skill A": "None", "Skill B": "None"}, weekly_hours=8)
+        self.assertEqual(res_astar["total_hours"], res_dijkstra["total_hours"])
+        self.assertEqual([a["activity_id"] for a in res_astar["roadmap"]], [a["activity_id"] for a in res_dijkstra["roadmap"]])
+
+        # Admissibility check: heuristic value h(start) must not exceed optimal cost h* = 13
+        h_start = self.optimizer._heuristic_remaining_skill_distance({"Skill A": 0, "Skill B": 0}, {"Skill A": 2, "Skill B": 2}, mock_activities)
+        self.assertLessEqual(h_start, 13.0)
+        self.assertEqual(h_start, 10.0)
+
+    def test_astar_finds_cheaper_separate_activities_over_expensive_combo(self):
+        """Verifies A* selects two separate 4-hour activities (8h total) over an expensive 16-hour combo."""
+        mock_activities = [
+            {"id": "ACT_SEP_A", "title": "Sep A", "track": "T", "estimated_hours": 4, "main_skill": "Skill A", "skill_level_gain": "Intermediate", "prerequisites": []},
+            {"id": "ACT_SEP_B", "title": "Sep B", "track": "T", "estimated_hours": 4, "main_skill": "Skill B", "skill_level_gain": "Intermediate", "prerequisites": []},
+            {"id": "ACT_COMBO_EXP", "title": "Combo Expensive", "track": "T", "estimated_hours": 16, "main_skill": "Skill A", "secondary_skills": ["Skill B"], "skill_level_gain": "Intermediate", "prerequisites": []},
+        ]
+        self.optimizer.activities = mock_activities
+        self.optimizer.careers = {
+            "T": {
+                "required_competencies": [
+                    {"skill": "Skill A", "target_level": "Intermediate"},
+                    {"skill": "Skill B", "target_level": "Intermediate"}
+                ]
+            }
+        }
+        res = self.optimizer.generate_optimal_roadmap("T", {"Skill A": "None", "Skill B": "None"}, weekly_hours=8)
+        self.assertTrue(res["is_optimal"])
+        self.assertEqual(res["total_hours"], 8)
+        act_ids = {a["activity_id"] for a in res["roadmap"]}
+        self.assertEqual(act_ids, {"ACT_SEP_A", "ACT_SEP_B"})
+
+    def test_astar_heuristic_modes_agreement_on_optimal_cost(self):
+        """Verifies that auto, admissible_max, and zero (Dijkstra) all find the exact same optimal cost."""
+        mock_activities = [
+            {"id": "X1", "title": "X1", "track": "T", "estimated_hours": 5, "main_skill": "Skill X", "skill_level_gain": "Beginner", "prerequisites": []},
+            {"id": "X2", "title": "X2", "track": "T", "estimated_hours": 6, "main_skill": "Skill X", "skill_level_gain": "Intermediate", "prerequisites": ["X1"]},
+            {"id": "Y1", "title": "Y1", "track": "T", "estimated_hours": 8, "main_skill": "Skill Y", "skill_level_gain": "Intermediate", "prerequisites": []},
+        ]
+        careers = {
+            "T": {
+                "required_competencies": [
+                    {"skill": "Skill X", "target_level": "Intermediate"},
+                    {"skill": "Skill Y", "target_level": "Intermediate"}
+                ]
+            }
+        }
+        results = []
+        for mode in ["auto", "admissible_max", "zero"]:
+            opt = AStarRoadmapOptimizer(heuristic_mode=mode)
+            opt.activities = mock_activities
+            opt.careers = careers
+            r = opt.generate_optimal_roadmap("T", {"Skill X": "None", "Skill Y": "None"}, weekly_hours=8)
+            self.assertTrue(r["is_optimal"])
+            results.append(r["total_hours"])
+
+        # All 3 modes must find the exact same optimal cost (5 + 6 + 8 = 19 hours)
+        self.assertEqual(results[0], 19)
+        self.assertEqual(results[0], results[1])
+        self.assertEqual(results[1], results[2])
+
 
 class TestCareerPredictionScoreSemantics(unittest.TestCase):
     """Verifies that advisory match scores, uncalibrated ML scores, and target goals are clearly separated."""
@@ -809,6 +895,44 @@ class TestCareerPredictionScoreSemantics(unittest.TestCase):
 
         # Composite match scores normalized to 100%
         self.assertAlmostEqual(total_match_score, 100.0, delta=1.5)
+
+    def test_score_semantic_fields_and_alignment(self):
+        """Verifies all decomposed score semantics, backward compatibility aliases, and sorting order."""
+        records = [{"subject_area": "Programming", "grade": "A", "grade_points": 4.0}]
+        interests = {"Software Development & Systems": 5}
+        skills = {"Object-Oriented Programming": "Intermediate"}
+        res = self.classifier.predict_career_matches(records, interests, skills, target_career="Data Science / AI")
+
+        matches = res["ranked_matches"]
+        # Verify strict descending order by match_score
+        scores = [m["match_score"] for m in matches]
+        self.assertEqual(scores, sorted(scores, reverse=True))
+
+        # Verify top_track matches highest match_score
+        self.assertEqual(res["top_track"], matches[0]["track"])
+
+        # Verify semantic keys and backward-compatible aliases
+        for m in matches:
+            self.assertIn("match_score", m)
+            self.assertIn("affinity_score", m)
+            self.assertIn("probability", m)
+            self.assertEqual(m["match_score"], m["affinity_score"])
+            self.assertEqual(m["match_score"], m["probability"])
+
+            self.assertIn("ml_competency_score", m)
+            self.assertIn("competency_prob", m)
+            self.assertEqual(m["ml_competency_score"], m["competency_prob"])
+
+            self.assertIn("knn_neighbor_score", m)
+            self.assertIn("knn_prob", m)
+            self.assertEqual(m["knn_neighbor_score"], m["knn_prob"])
+
+            self.assertIn("dt_leaf_score", m)
+            self.assertIn("dt_prob", m)
+            self.assertEqual(m["dt_leaf_score"], m["dt_prob"])
+
+            self.assertIn("interest_score", m)
+            self.assertIn("degree_prior_score", m)
 
     def test_pure_ml_track_independent_of_target_aspiration(self):
         """Verifies that ml_predicted_track does not change when target_career parameter changes."""

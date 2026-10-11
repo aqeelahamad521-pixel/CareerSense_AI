@@ -22,9 +22,9 @@ class CareerReportGenerator:
         degree = student_profile.get("degree") or "BSc (Hons) in Data Science & Business Analytics"
         year = student_profile.get("year", 2)
         try:
-            gpa = float(student_profile.get("gpa", 3.40))
+            gpa = float(student_profile.get("gpa", 3.50))
         except (ValueError, TypeError):
-            gpa = 3.40
+            gpa = 3.50
         target_track = explanation_data.get("target_track", "Data Science / AI")
         date_str = datetime.now().strftime("%B %d, %Y")
         
@@ -63,14 +63,15 @@ class CareerReportGenerator:
         # Build ranked career matches
         matches_html = ""
         for m in explanation_data.get("ranked_matches", [])[:4]:
+            score_val = m.get("match_score", m.get("probability", 0.0))
             matches_html += f"""
             <div style="margin-bottom: 8px;">
                 <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
                     <span><strong>{m['track']}</strong></span>
-                    <span>{m['probability']}%</span>
+                    <span>{score_val}%</span>
                 </div>
                 <div style="background:#edf2f7; height:8px; border-radius:4px; overflow:hidden;">
-                    <div style="background:#3182ce; height:8px; width:{m['probability']}%;"></div>
+                    <div style="background:#3182ce; height:8px; width:{score_val}%;"></div>
                 </div>
             </div>
             """
@@ -135,7 +136,10 @@ class CareerReportGenerator:
     </div>
 
     <div class="card" style="margin-bottom: 25px;">
-        <h3>AI Career Track Affinity (K-NN & Decision Tree Classification)</h3>
+        <h3>Advisory Career Track Affinity Scores</h3>
+        <p style="font-size:12px; color:#718096; margin-top:-4px;">
+            Uncalibrated multi-criteria composite affinity scores based on machine learning competency (K-NN & Decision Tree), domain interest, and curriculum alignment.
+        </p>
         {matches_html}
     </div>
 

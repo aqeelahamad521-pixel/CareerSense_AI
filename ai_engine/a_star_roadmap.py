@@ -17,7 +17,7 @@ from config import DATA_DIR, SKILL_LEVELS, LEVEL_TO_NAME
 class AStarRoadmapOptimizer:
     """
     State-Space Graph Search Optimizer for Student Upskilling.
-    
+
     Formal Problem Formulation:
     - State: (current_skills, completed_activities)
       * current_skills: Mapping of skill names to discrete proficiency levels (0=None, 1=Beginner, 2=Intermediate, 3=Advanced).
@@ -28,9 +28,17 @@ class AStarRoadmapOptimizer:
     - Step Cost c(s, a, s'): Estimated duration in hours of activity a (c(a) > 0).
     - Objective: Minimize total study hours g(n) = sum_{a in path} Hours(a) to reach the goal state.
     """
-    def __init__(self):
+    def __init__(self, heuristic_mode: str = "auto"):
+        """
+        heuristic_mode:
+        - "auto": dynamically selects proven admissible lower bound (sum of minimums for disjoint single-skill
+                  activities, bottleneck maximum lower bound when multi-skill activities exist).
+        - "admissible_max": always uses the proven bottleneck maximum lower bound h(n) = max_{s} min_{a} c(a).
+        - "zero": h(n) = 0.0 (strictly reduces A* to Dijkstra / Uniform-Cost Search).
+        """
         self.learning_graph_path = DATA_DIR / "learning_graph.json"
         self.careers_path = DATA_DIR / "career_definitions.json"
+        self.heuristic_mode = heuristic_mode
         self.load_graph()
 
     def load_graph(self):
@@ -46,30 +54,52 @@ class AStarRoadmapOptimizer:
         self, current_skills: Dict[str, int], target_skills: Dict[str, int], remaining_activities: List[dict]
     ) -> float:
         """
-        Admissible Heuristic h(n):
+        Proven Admissible Heuristic h(n):
         Estimates the minimum study hours required to bridge all remaining skill gaps.
 
-        Mathematical Formulation & Admissibility:
+        Mathematical Formulation & Admissibility Proof:
         Let S_gaps = {s in target_skills | current_skills[s] < target_skills[s]}.
-        For each unsatisfied skill gap s, let Cand(s) be the available activities that can advance
-        skill s beyond its current level.
+        If S_gaps is empty: h(n) = 0.0 (goal reached).
 
-        Admissibility Proof:
-        1. Single-Skill Activities (Disjoint Partition):
-           In the curated curriculum graph, each activity has a single 'main_skill'.
-           The candidate sets Cand(s) are therefore mutually disjoint for distinct skills.
-           Any valid sequence that bridges all gaps must select at least one activity from each Cand(s).
-           Hence h*(n) >= sum_{s in S_gaps} min_{a in Cand(s)} Hours(a).
-        2. Multi-Skill Activities (Shared Effects / Overlap Prevention):
-           If an activity can satisfy multiple skill gaps simultaneously, summing minimums could
-           double-count that activity's cost. To preserve strict admissibility (h(n) <= h*(n)) across
-           arbitrary graphs, the heuristic computes the total hours over UNIQUE minimal candidate activities.
-           If a single activity satisfies multiple gaps, its hours are counted exactly once.
-        3. Missing / Unreachable Activities:
-           If an unsatisfied skill has no remaining candidate activity in the graph, it contributes 0.0
-           to remain an admissible lower bound on reachable graph cost (never overestimating).
+        For each unsatisfied skill gap s in S_gaps, let Cand(s) be the available activities that can advance
+        skill s beyond its current level:
+          Cand(s) = {a in remaining_activities | (a.main_skill == s or s in a.secondary_skills) and gain(a, s) > current_skills[s]}
+
+        If for any s in S_gaps, Cand(s) is empty:
+          Skill s cannot be advanced by any remaining activity in the graph.
+          Contributes 0.0 to stay an admissible lower bound on reachable graph cost.
+
+        Let min_cost(s) = min_{a in Cand(s)} Hours(a) for all skills with non-empty Cand(s).
+        If no skills have candidate activities, return 0.0.
+
+        Case A: Uniform-Cost / Dijkstra Mode (heuristic_mode == "zero")
+          Returns 0.0. Guaranteed admissible (h(n) <= h*(n)) and reduces A* to Dijkstra's algorithm.
+
+        Case B: Multi-Skill / Overlapping Activities Present
+          If any activity in remaining_activities can advance more than one unsatisfied skill in S_gaps:
+          Summing minimums can overestimate the true optimal cost if a single activity satisfies multiple gaps
+          for less than the sum of separate minimums.
+          To guarantee admissibility, we use the proven Bottleneck Maximum Lower Bound:
+            h(n) = max_{s in S_gaps, Cand(s) != empty} min_{a in Cand(s)} Hours(a).
+          Proof: Any valid plan reaching the goal must advance every s in S_gaps, and therefore must include at least
+          one activity from each Cand(s). The cost of that plan must be at least the cost of the single activity chosen
+          to advance any specific skill, including the skill requiring the largest minimum duration:
+            Cost(pi*) >= max_{s in S_gaps} min_{a in Cand(s)} Hours(a).
+          This lower bound is mathematically guaranteed never to overestimate h*(n) under any topology.
+
+        Case C: Strictly Disjoint Single-Skill Partition
+          If every remaining activity advances AT MOST ONE unsatisfied skill in S_gaps:
+          The candidate sets Cand(s) are strictly pairwise disjoint across all s in S_gaps.
+          Therefore, no activity can be shared across any two unsatisfied skill gaps.
+          Any plan reaching the goal must select at least one activity from each disjoint candidate set.
+          Hence:
+            Cost(pi*) >= sum_{s in S_gaps} min_{a in Cand(s)} Hours(a).
+          In this case, the sum of minimums is mathematically proven to be admissible.
         """
-        best_candidate_per_skill = {}
+        if self.heuristic_mode == "zero":
+            return 0.0
+
+        min_costs_per_skill: Dict[str, float] = {}
         for skill, target_val in target_skills.items():
             curr_val = current_skills.get(skill, 0)
             if curr_val < target_val:
@@ -80,14 +110,27 @@ class AStarRoadmapOptimizer:
                 ]
                 if candidates:
                     min_act = min(candidates, key=lambda a: a.get("estimated_hours", 10))
-                    best_candidate_per_skill[skill] = min_act
+                    min_costs_per_skill[skill] = float(min_act.get("estimated_hours", 10))
 
-        if not best_candidate_per_skill:
+        if not min_costs_per_skill:
             return 0.0
 
-        # Unique minimal activities prevent double-counting if an activity advances multiple skills
-        unique_acts = {act["id"]: act for act in best_candidate_per_skill.values()}
-        return float(sum(act.get("estimated_hours", 0) for act in unique_acts.values()))
+        if self.heuristic_mode == "admissible_max":
+            return float(max(min_costs_per_skill.values()))
+
+        # "auto" mode: detect whether multi-skill sharing is possible among unsatisfied skills
+        unsatisfied_skills = set(min_costs_per_skill.keys())
+        has_multi_skill_activity = any(
+            len([s for s in unsatisfied_skills if (a.get("main_skill") == s or s in a.get("secondary_skills", []))]) > 1
+            for a in remaining_activities
+        )
+
+        if has_multi_skill_activity:
+            # Multi-skill activities exist: use proven bottleneck maximum lower bound to guarantee admissibility
+            return float(max(min_costs_per_skill.values()))
+        else:
+            # Disjoint candidate sets: sum of minimums is strictly admissible
+            return float(sum(min_costs_per_skill.values()))
 
     def generate_optimal_roadmap(
         self, target_track: str, current_skills: Dict[str, str], weekly_hours: int = 8
@@ -258,6 +301,10 @@ class AStarRoadmapOptimizer:
         # A solution is optimal if and only if A* reached the goal satisfying all active gaps without missing coverage.
         a_star_optimal = (status == "optimal_solution_found")
 
+        algo_name = "A* Search with Admissible Skill-Distance Heuristic" if a_star_optimal else (
+            "A* Search (Partial Graph Coverage Fallback)" if status == "partial_coverage" else "Topological Prerequisite Ordering (Fallback)"
+        )
+
         # Build week-by-week schedule respecting declared weekly study budget
         scheduled_roadmap = []
         current_week = 1
@@ -320,7 +367,7 @@ class AStarRoadmapOptimizer:
             "total_weeks": total_weeks,
             "weekly_hours_budget": weekly_hours,
             "roadmap": scheduled_roadmap,
-            "algorithm": "A* Search with Admissible Skill-Distance Heuristic" if a_star_optimal else "Topological Prerequisite Ordering (Fallback)",
+            "algorithm": algo_name,
             "is_optimal": a_star_optimal,
             "status": status,
             "message": status_message

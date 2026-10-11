@@ -510,8 +510,17 @@ class CareerClassifier:
     def predict_career_matches(self, academic_records: list, interests: dict, skills: dict, degree: str = None, target_career: str = None) -> dict:
         """
         Generates advisory pathway match scores for a student.
-        Note: The returned match score is an uncalibrated composite advisory affinity index (0-100%),
-        not an empirical probability of employment.
+
+        Score Semantics & Disambiguation:
+        - match_score / affinity_score (0-100%): An uncalibrated composite advisory affinity index
+          combining pure ML technical competency (40-65%), domain interest (15-20%), degree curriculum alignment
+          (15-25%), and student aspirational target preference (0-30%). Normalized to sum to 100% across the 5 tracks.
+          IT IS NOT AN EMPIRICAL OR BAYESIAN PROBABILITY OF POST-GRADUATE EMPLOYMENT.
+        - ml_competency_score / competency_prob (0-100%): Pure technical alignment predicted solely from verified
+          academic module grades and technical skills (70% K-NN + 30% Decision Tree), completely independent of student aspirations.
+        - knn_neighbor_score / knn_prob (0-100%): Inverse-distance weighted neighborhood class proportions from the K-NN model.
+        - dt_leaf_score / dt_prob (0-100%): Training-sample class frequency distribution in the Decision Tree leaf node.
+        - probability: Retained strictly for backward compatibility with legacy API callers and UI components; mirrors match_score.
         """
         if not self.is_trained:
             return {"ranked_matches": [], "model_used": "None", "is_trained": False}
@@ -577,31 +586,39 @@ class CareerClassifier:
             pri_p = prior.get(track, 0.20)
 
             combined_p = (w_ml * ml_p) + (w_target * tgt_p) + (w_interest * int_p) + (w_prior * pri_p)
-            
+            raw_match_pct = round(float(combined_p) * 100, 1)
+
             ranked.append({
                 "track": track,
-                "probability": round(float(combined_p) * 100, 1),
-                "match_score": round(float(combined_p) * 100, 1),
+                "probability": raw_match_pct,
+                "match_score": raw_match_pct,
+                "affinity_score": raw_match_pct,
+                "ml_competency_score": round(float(ml_p) * 100, 1),
                 "competency_prob": round(float(ml_p) * 100, 1),
+                "knn_neighbor_score": round(float(knn_p) * 100, 1),
                 "knn_prob": round(float(knn_p) * 100, 1),
+                "dt_leaf_score": round(float(dt_p) * 100, 1),
                 "dt_prob": round(float(dt_p) * 100, 1),
+                "interest_score": round(float(int_p) * 100, 1),
                 "interest_prob": round(float(int_p) * 100, 1),
+                "degree_prior_score": round(float(pri_p) * 100, 1),
                 "prior_prob": round(float(pri_p) * 100, 1),
                 "is_target": (track == target_career)
             })
 
         # Normalize so affinity percentages sum to 100%
-        total_p = sum(r["probability"] for r in ranked)
+        total_p = sum(r["match_score"] for r in ranked)
         if total_p > 0:
             for r in ranked:
-                norm_val = round((r["probability"] / total_p) * 100, 1)
+                norm_val = round((r["match_score"] / total_p) * 100, 1)
                 r["probability"] = norm_val
                 r["match_score"] = norm_val
+                r["affinity_score"] = norm_val
 
-        ranked.sort(key=lambda x: -x["probability"])
+        ranked.sort(key=lambda x: -x["match_score"])
 
         # Determine pure ML top prediction from academic coursework and skills
-        ml_sorted = sorted(ranked, key=lambda x: -x["competency_prob"])
+        ml_sorted = sorted(ranked, key=lambda x: -x["ml_competency_score"])
         ml_predicted_track = ml_sorted[0]["track"] if ml_sorted else "Software Engineering"
 
         distances, indices = self.knn_model.kneighbors(X_scaled, n_neighbors=5)
