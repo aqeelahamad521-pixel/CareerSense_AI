@@ -176,7 +176,7 @@ Evaluated on 170 holdout test samples (80/20 train/test split of 850 undergradua
 - ✅ AI Layer 2 (Rule-Based Expert System with prerequisite validation)
 - ✅ AI Layer 3 (A\* Search Roadmap Optimizer with weekly time constraint)
 - ✅ Complete dataset generation script (`scripts/generate_dataset.py`)
-- ✅ Automated unit and integration test suite (`tests/test_all.py`, 56 passing tests)
+- ✅ Automated unit and integration test suite (`tests/test_all.py`, 61 passing tests)
 - ✅ Automated downloadable personalized Career Advisory Reports
 - ✅ Complete Academic Final Report (`docs/final_report.md`)
 - ✅ Group Presentation & Video Outline Script (`docs/presentation_script.md`)

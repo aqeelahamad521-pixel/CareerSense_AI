@@ -1104,6 +1104,120 @@ class TestAStarControlledOptimality(unittest.TestCase):
         self.assertIn("Fallback", res["algorithm"])
         self.assertNotEqual(res["status"], "optimal_solution_found")
 
+    def test_path_cost_equals_sum_of_activity_costs_invariance(self):
+        """Verifies that returned total_hours strictly equals the sum of activity costs across the entire roadmap."""
+        mock_activities = [
+            {"id": "ACT_A1", "title": "A1", "track": "T", "estimated_hours": 6.5, "main_skill": "S1", "skill_level_gain": "Intermediate", "prerequisites": []},
+            {"id": "ACT_A2", "title": "A2", "track": "T", "estimated_hours": 8.0, "main_skill": "S2", "skill_level_gain": "Intermediate", "prerequisites": ["ACT_A1"]},
+            {"id": "ACT_A3", "title": "A3", "track": "T", "estimated_hours": 3.5, "main_skill": "S3", "skill_level_gain": "Intermediate", "prerequisites": ["ACT_A2"]}
+        ]
+        self.optimizer.activities = mock_activities
+        self.optimizer.careers = {
+            "T": {
+                "required_competencies": [
+                    {"skill": "S1", "target_level": "Intermediate"},
+                    {"skill": "S2", "target_level": "Intermediate"},
+                    {"skill": "S3", "target_level": "Intermediate"}
+                ]
+            }
+        }
+        res = self.optimizer.generate_optimal_roadmap("T", {"S1": "None", "S2": "None", "S3": "None"}, weekly_hours=8)
+        self.assertTrue(res["is_optimal"])
+        # Sum of items: 6.5 + 8.0 + 3.5 = 18.0
+        sum_items = sum(item["estimated_hours"] for item in res["roadmap"])
+        self.assertEqual(res["total_hours"], 18)
+        self.assertEqual(res["total_hours"], sum_items)
+        for item in res["roadmap"]:
+            self.assertGreater(item["estimated_hours"], 0)
+
+    def test_deep_cross_track_prerequisite_chain_retained(self):
+        """Verifies that a 4-level deep prerequisite chain across different tracks is fully preserved by backward closure."""
+        mock_activities = [
+            {"id": "P_ROOT", "title": "Root Course", "track": "Track 1", "estimated_hours": 4, "main_skill": "Skill R", "skill_level_gain": "Beginner", "prerequisites": []},
+            {"id": "P_MID1", "title": "Mid Course 1", "track": "Track 2", "estimated_hours": 5, "main_skill": "Skill M1", "skill_level_gain": "Beginner", "prerequisites": ["P_ROOT"]},
+            {"id": "P_MID2", "title": "Mid Course 2", "track": "Track 3", "estimated_hours": 6, "main_skill": "Skill M2", "skill_level_gain": "Beginner", "prerequisites": ["P_MID1"]},
+            {"id": "ACT_LEAF", "title": "Leaf Course", "track": "Track 4", "estimated_hours": 7, "main_skill": "Skill Other", "secondary_skills": ["Target Gap"], "skill_level_gain": "Intermediate", "prerequisites": ["P_MID2"]}
+        ]
+        self.optimizer.activities = mock_activities
+        self.optimizer.careers = {
+            "Target Career": {
+                "required_competencies": [
+                    {"skill": "Target Gap", "target_level": "Intermediate"}
+                ]
+            }
+        }
+        res = self.optimizer.generate_optimal_roadmap("Target Career", {"Target Gap": "None"}, weekly_hours=8)
+        self.assertTrue(res["is_optimal"])
+        self.assertEqual(res["status"], "optimal_solution_found")
+        self.assertEqual(res["total_hours"], 22)  # 4 + 5 + 6 + 7
+        act_ids = [item["activity_id"] for item in res["roadmap"]]
+        # Must execute in strict topological order
+        self.assertEqual(act_ids, ["P_ROOT", "P_MID1", "P_MID2", "ACT_LEAF"])
+
+    def test_missing_external_prerequisite_falls_back_non_optimal(self):
+        """Verifies that when an activity has an unresolvable missing prerequisite, A* falls back with is_optimal=False."""
+        mock_activities = [
+            {"id": "ACT_BROKEN", "title": "Broken Prereq", "track": "T", "estimated_hours": 8, "main_skill": "S1", "skill_level_gain": "Intermediate", "prerequisites": ["NON_EXISTENT_ID"]}
+        ]
+        self.optimizer.activities = mock_activities
+        self.optimizer.careers = {
+            "T": {
+                "required_competencies": [
+                    {"skill": "S1", "target_level": "Intermediate"}
+                ]
+            }
+        }
+        res = self.optimizer.generate_optimal_roadmap("T", {"S1": "None"}, weekly_hours=8)
+        self.assertFalse(res["is_optimal"])
+        self.assertNotEqual(res["status"], "optimal_solution_found")
+        self.assertIn("fallback", res["algorithm"].lower())
+
+    def test_heuristic_admissibility_and_bottleneck_max_proof(self):
+        """Verifies that when multi-skill activities exist, the bottleneck lower bound is strictly admissible."""
+        mock_activities = [
+            {"id": "A_COMBO", "title": "Combo", "track": "T", "estimated_hours": 15, "main_skill": "S1", "secondary_skills": ["S2"], "skill_level_gain": "Intermediate", "prerequisites": []},
+            {"id": "A_SEP1", "title": "Sep 1", "track": "T", "estimated_hours": 10, "main_skill": "S1", "skill_level_gain": "Intermediate", "prerequisites": []},
+            {"id": "A_SEP2", "title": "Sep 2", "track": "T", "estimated_hours": 10, "main_skill": "S2", "skill_level_gain": "Intermediate", "prerequisites": []}
+        ]
+        # h*(start) = 15 hours (choosing A_COMBO is cheaper than SEP1 + SEP2 = 20)
+        # Bottleneck bound: max(min(15, 10), min(15, 10)) = max(10, 10) = 10.0
+        # Admissibility condition: h(start) <= h*(start) (10.0 <= 15.0)
+        h_auto = self.optimizer._heuristic_remaining_skill_distance({"S1": 0, "S2": 0}, {"S1": 2, "S2": 2}, mock_activities)
+        self.assertEqual(h_auto, 10.0)
+        self.assertLessEqual(h_auto, 15.0)
+
+        # In admissible_max mode, it must also be 10.0
+        opt_max = AStarRoadmapOptimizer(heuristic_mode="admissible_max")
+        h_max = opt_max._heuristic_remaining_skill_distance({"S1": 0, "S2": 0}, {"S1": 2, "S2": 2}, mock_activities)
+        self.assertEqual(h_max, 10.0)
+        self.assertLessEqual(h_max, 15.0)
+
+    def test_complete_solution_found_when_one_exists_in_complex_graph(self):
+        """Verifies A* finds a complete optimal solution in a complex graph with distractor tracks and competing branches."""
+        mock_activities = [
+            {"id": "D1", "title": "Distractor", "track": "Irrelevant Track", "estimated_hours": 50, "main_skill": "Unrelated", "skill_level_gain": "Intermediate", "prerequisites": []},
+            {"id": "BRANCH1_A", "title": "Branch 1 Step A", "track": "T", "estimated_hours": 7, "main_skill": "S1", "skill_level_gain": "Beginner", "prerequisites": []},
+            {"id": "BRANCH1_B", "title": "Branch 1 Step B", "track": "T", "estimated_hours": 7, "main_skill": "S1", "skill_level_gain": "Intermediate", "prerequisites": ["BRANCH1_A"]},
+            {"id": "BRANCH2_A", "title": "Branch 2 Direct", "track": "T", "estimated_hours": 11, "main_skill": "S1", "skill_level_gain": "Intermediate", "prerequisites": []},
+            {"id": "S2_ACT", "title": "S2 Direct", "track": "Other Track", "estimated_hours": 8, "main_skill": "Other", "secondary_skills": ["S2"], "skill_level_gain": "Intermediate", "prerequisites": []}
+        ]
+        self.optimizer.activities = mock_activities
+        self.optimizer.careers = {
+            "T": {
+                "required_competencies": [
+                    {"skill": "S1", "target_level": "Intermediate"},
+                    {"skill": "S2", "target_level": "Intermediate"}
+                ]
+            }
+        }
+        res = self.optimizer.generate_optimal_roadmap("T", {"S1": "None", "S2": "None"}, weekly_hours=8)
+        self.assertTrue(res["is_optimal"])
+        self.assertEqual(res["status"], "optimal_solution_found")
+        # Optimal cost: BRANCH2_A (11) + S2_ACT (8) = 19h vs BRANCH1 (7+7=14) + S2_ACT (8) = 22h
+        self.assertEqual(res["total_hours"], 19)
+        act_ids = {item["activity_id"] for item in res["roadmap"]}
+        self.assertEqual(act_ids, {"BRANCH2_A", "S2_ACT"})
+
 
 class TestCareerPredictionScoreSemantics(unittest.TestCase):
     """Verifies that advisory match scores, uncalibrated ML scores, and target goals are clearly separated."""
