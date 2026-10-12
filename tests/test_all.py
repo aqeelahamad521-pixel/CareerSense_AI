@@ -1411,6 +1411,56 @@ class TestSecurityAndRoleIsolation(unittest.TestCase):
                 self.assertEqual(profile["user_id"], s["id"])
         self.assertIsNone(self.db.get_student_profile(999999))
 
+    def test_two_users_same_password_receive_different_salted_hashes(self):
+        """Verifies that two distinct users registering with the same password receive completely different salted hashes."""
+        common_pwd = "CommonUniversityPassword2026!"
+        uid1 = self.db.create_user("user_twin_1", common_pwd, "student", "Twin One", email="t1@kdu.ac.lk")
+        uid2 = self.db.create_user("user_twin_2", common_pwd, "student", "Twin Two", email="t2@kdu.ac.lk")
+        try:
+            u1 = self.db.get_user_by_id(uid1)
+            u2 = self.db.get_user_by_id(uid2)
+            self.assertNotEqual(u1["password_hash"], u2["password_hash"])
+            self.assertTrue(u1["password_hash"].startswith("pbkdf2:sha256:100000$"))
+            self.assertTrue(u2["password_hash"].startswith("pbkdf2:sha256:100000$"))
+
+            # Both authenticate successfully with their own salted hashes
+            self.assertIsNotNone(self.db.authenticate_user("user_twin_1", common_pwd))
+            self.assertIsNotNone(self.db.authenticate_user("user_twin_2", common_pwd))
+        finally:
+            with self.db.get_connection() as conn:
+                conn.cursor().execute("DELETE FROM users WHERE id IN (?, ?)", (uid1, uid2))
+                conn.commit()
+
+    def test_password_hash_stored_and_loaded_verification(self):
+        """Verifies password hashes remain verifiable after complete database persistence and retrieval."""
+        test_user = "persist_verify_user"
+        test_pass = "PersistPass987!"
+        uid = self.db.create_user(test_user, test_pass, "student", "Persist User")
+        try:
+            user_row = self.db.get_user_by_id(uid)
+            stored_hash = user_row["password_hash"]
+            is_valid, needs_rehash = DatabaseManager.verify_password(test_pass, stored_hash)
+            self.assertTrue(is_valid)
+            self.assertFalse(needs_rehash)
+        finally:
+            with self.db.get_connection() as conn:
+                conn.cursor().execute("DELETE FROM users WHERE id = ?", (uid,))
+                conn.commit()
+
+    def test_invalid_credentials_cannot_bypass_role_checks(self):
+        """Verifies that failed authentication never returns a valid user session or role assignment."""
+        roles_to_test = ["admin", "advisor", "coordinator", "student_demo"]
+        for username in roles_to_test:
+            # Bad password
+            user_bad_pwd = self.db.authenticate_user(username, "totally_incorrect_password")
+            self.assertIsNone(user_bad_pwd)
+            # Empty password
+            user_empty = self.db.authenticate_user(username, "")
+            self.assertIsNone(user_empty)
+            # SQL injection
+            user_inj = self.db.authenticate_user(username, "' OR 1=1 --")
+            self.assertIsNone(user_inj)
+
 
 if __name__ == "__main__":
     unittest.main()

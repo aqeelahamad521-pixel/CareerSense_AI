@@ -125,6 +125,15 @@ streamlit run app.py
 ```
 Open your browser and navigate to `http://localhost:8501`.
 
+### 6. Resetting the Demonstration Database (Optional)
+The local SQLite database (`data/careersense.db`) is pre-populated with sandbox demonstration accounts. If you wish to reset it to its initial clean state:
+- To preserve any custom student accounts registered during testing, backup the database first: `cp data/careersense.db data/careersense.db.bak`
+- Re-seed default demonstration accounts using salted PBKDF2 hashes:
+  ```bash
+  python database/seed_data.py
+  ```
+  This safely resets tables and seeds demo accounts without touching project models or datasets.
+
 ---
 
 ## 🔑 Demo Personas & Credentials
@@ -176,7 +185,7 @@ Evaluated on 170 holdout test samples (80/20 train/test split of 850 undergradua
 - ✅ AI Layer 2 (Rule-Based Expert System with prerequisite validation)
 - ✅ AI Layer 3 (A\* Search Roadmap Optimizer with weekly time constraint)
 - ✅ Complete dataset generation script (`scripts/generate_dataset.py`)
-- ✅ Automated unit and integration test suite (`tests/test_all.py`, 66 passing tests)
+- ✅ Automated unit and integration test suite (`tests/test_all.py`, 69 passing tests)
 - ✅ Automated downloadable personalized Career Advisory Reports
 - ✅ Complete Academic Final Report (`docs/final_report.md`)
 - ✅ Group Presentation & Video Outline Script (`docs/presentation_script.md`)
