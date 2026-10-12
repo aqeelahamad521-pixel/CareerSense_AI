@@ -1297,23 +1297,119 @@ class TestCareerPredictionScoreSemantics(unittest.TestCase):
 
 
 class TestSecurityAndRoleIsolation(unittest.TestCase):
-    """Verifies that security invariants, password hashing, and user isolation hold."""
+    """Verifies that security invariants, salted PBKDF2 password hashing, legacy migration, and user isolation hold."""
     def setUp(self):
         self.db = DatabaseManager()
 
-    def test_deterministic_sha256_password_hashing(self):
-        import hashlib
+    def test_salted_password_hashing_unique_salts(self):
+        """Verifies PBKDF2-HMAC-SHA256 password hashing generates unique random salts per call."""
         pwd = "test_password_123"
-        expected = hashlib.sha256(pwd.encode("utf-8")).hexdigest()
-        self.assertEqual(DatabaseManager.hash_password(pwd), expected)
+        h1 = DatabaseManager.hash_password(pwd)
+        h2 = DatabaseManager.hash_password(pwd)
+        self.assertNotEqual(h1, h2, "Salts must be unique across independent hashing calls")
+        self.assertTrue(h1.startswith("pbkdf2:sha256:100000$"))
+        self.assertTrue(h2.startswith("pbkdf2:sha256:100000$"))
+        parts1 = h1.split("$")
+        parts2 = h2.split("$")
+        self.assertEqual(len(parts1), 3)
+        self.assertEqual(len(parts2), 3)
+        self.assertNotEqual(parts1[1], parts2[1], "Salt hex strings must differ")
+
+    def test_password_verification_correct_and_incorrect(self):
+        """Verifies constant-time verification accepts valid passwords and rejects incorrect ones."""
+        pwd = "super_secret_credentials_456"
+        h = DatabaseManager.hash_password(pwd)
+        is_valid, needs_rehash = DatabaseManager.verify_password(pwd, h)
+        self.assertTrue(is_valid)
+        self.assertFalse(needs_rehash)
+
+        is_bad, _ = DatabaseManager.verify_password("wrong_credentials", h)
+        self.assertFalse(is_bad)
+        is_empty, _ = DatabaseManager.verify_password("", h)
+        self.assertFalse(is_empty)
+        is_none, _ = DatabaseManager.verify_password(None, h)
+        self.assertFalse(is_none)
+
+    def test_legacy_sha256_hash_verification_and_flags_rehash(self):
+        """Verifies legacy 64-char unsalted SHA-256 hashes are verified and flagged for rehash."""
+        import hashlib
+        legacy_pwd = "legacy_kdu_student_pwd"
+        legacy_hash = hashlib.sha256(legacy_pwd.encode("utf-8")).hexdigest()
+        self.assertEqual(len(legacy_hash), 64)
+
+        is_valid, needs_rehash = DatabaseManager.verify_password(legacy_pwd, legacy_hash)
+        self.assertTrue(is_valid)
+        self.assertTrue(needs_rehash, "Legacy unsalted hashes must trigger needs_rehash=True")
+
+        is_bad, _ = DatabaseManager.verify_password("wrong_password", legacy_hash)
+        self.assertFalse(is_bad)
+
+    def test_user_authentication_transparent_rehash_migration(self):
+        """Verifies authenticate_user transparently rehashes legacy SHA-256 records upon successful login."""
+        import hashlib
+        legacy_pwd = "legacy_user_secret_789"
+        legacy_hash = hashlib.sha256(legacy_pwd.encode("utf-8")).hexdigest()
+        username = "temp_legacy_mig_user"
+
+        with self.db.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM users WHERE username = ?", (username,))
+            cursor.execute(
+                "INSERT INTO users (username, password_hash, role, full_name, email) VALUES (?, ?, ?, ?, ?)",
+                (username, legacy_hash, "student", "Legacy Migration User", "legacy.mig@kdu.ac.lk")
+            )
+            conn.commit()
+
+        try:
+            # First authentication: validates legacy hash and upgrades record
+            user = self.db.authenticate_user(username, legacy_pwd)
+            self.assertIsNotNone(user)
+            self.assertEqual(user["username"], username)
+            self.assertTrue(user["password_hash"].startswith("pbkdf2:sha256:100000$"))
+
+            # Direct database verification to ensure persistence
+            persisted = self.db.get_user_by_id(user["id"])
+            self.assertTrue(persisted["password_hash"].startswith("pbkdf2:sha256:100000$"))
+
+            # Subsequent authentication succeeds with newly persisted PBKDF2 hash
+            subsequent = self.db.authenticate_user(username, legacy_pwd)
+            self.assertIsNotNone(subsequent)
+            self.assertTrue(subsequent["password_hash"].startswith("pbkdf2:sha256:100000$"))
+        finally:
+            with self.db.get_connection() as conn:
+                conn.cursor().execute("DELETE FROM users WHERE username = ?", (username,))
+                conn.commit()
 
     def test_user_authentication_success_and_failure(self):
+        """Verifies authentication for seeded demo accounts and invalid credentials."""
         user = self.db.authenticate_user("student_demo", "student123")
         self.assertIsNotNone(user)
         self.assertEqual(user["username"], "student_demo")
+        self.assertTrue(user["password_hash"].startswith("pbkdf2:sha256:100000$"))
 
         bad_user = self.db.authenticate_user("student_demo", "wrong_password")
         self.assertIsNone(bad_user)
+        non_user = self.db.authenticate_user("non_existent_student_999", "password")
+        self.assertIsNone(non_user)
+
+    def test_sql_injection_defense_parameterization(self):
+        """Verifies parameterized queries prevent SQL injection authentication bypass."""
+        injection_user = self.db.authenticate_user("admin' OR '1'='1", "admin123")
+        self.assertIsNone(injection_user)
+        injection_pwd = self.db.authenticate_user("admin", "' OR '1'='1")
+        self.assertIsNone(injection_pwd)
+        union_attempt = self.db.authenticate_user("' UNION SELECT * FROM users --", "any")
+        self.assertIsNone(union_attempt)
+
+    def test_student_profile_isolation(self):
+        """Verifies student profile data is isolated by user_id without cross-student data leakage."""
+        students = self.db.get_all_students_summary()
+        self.assertGreater(len(students), 0)
+        for s in students:
+            profile = self.db.get_student_profile(s["id"])
+            if profile:
+                self.assertEqual(profile["user_id"], s["id"])
+        self.assertIsNone(self.db.get_student_profile(999999))
 
 
 if __name__ == "__main__":

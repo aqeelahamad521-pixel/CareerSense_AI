@@ -271,8 +271,8 @@
     }
   ],
   "provenance": {
-    "evaluation_timestamp": "2026-10-12T04:18:32.625705+00:00",
-    "training_timestamp_utc": "2026-10-12T04:18:32.625705+00:00",
+    "evaluation_timestamp": "2026-10-12T05:44:55.869098+00:00",
+    "training_timestamp_utc": "2026-10-12T05:44:55.869098+00:00",
     "dataset_hash_sha256": "87371f6919a197f5a098b7f10317ea9049841649275143c4a9a066d780975b34",
     "dataset_sha256": "87371f6919a197f5a098b7f10317ea9049841649275143c4a9a066d780975b34",
     "random_seed": 42,

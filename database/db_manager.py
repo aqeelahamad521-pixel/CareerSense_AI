@@ -5,8 +5,11 @@ projects, documents metadata, roadmaps, and advisor notes.
 """
 import sqlite3
 import hashlib
+import hmac
+import secrets
 import json
 from pathlib import Path
+from typing import Tuple, Optional, Dict, List, Any
 import sys
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -15,6 +18,10 @@ sys.path.append(str(BASE_DIR))
 from config import DATABASE_PATH, GRADE_POINTS, SKILL_LEVELS, SUBJECT_AREAS, CORE_SKILLS, INTEREST_CATEGORIES
 
 class DatabaseManager:
+    PBKDF2_ALGORITHM = "sha256"
+    PBKDF2_ITERATIONS = 100_000
+    SALT_BYTES = 16
+
     def __init__(self, db_path=DATABASE_PATH):
         self.db_path = str(db_path)
         self.init_db()
@@ -24,9 +31,60 @@ class DatabaseManager:
         conn.row_factory = sqlite3.Row
         return conn
 
-    @staticmethod
-    def hash_password(password: str) -> str:
-        return hashlib.sha256(password.encode("utf-8")).hexdigest()
+    @classmethod
+    def hash_password(cls, password: str, iterations: Optional[int] = None) -> str:
+        """
+        Cryptographically hashes password using PBKDF2-HMAC-SHA256 with a unique random salt.
+        Format: pbkdf2:sha256:<iterations>$<salt_hex>$<hash_hex>
+        """
+        if iterations is None:
+            iterations = cls.PBKDF2_ITERATIONS
+        salt = secrets.token_hex(cls.SALT_BYTES)
+        salt_bytes = bytes.fromhex(salt)
+        key = hashlib.pbkdf2_hmac(cls.PBKDF2_ALGORITHM, password.encode("utf-8"), salt_bytes, iterations)
+        return f"pbkdf2:{cls.PBKDF2_ALGORITHM}:{iterations}${salt}${key.hex()}"
+
+    @classmethod
+    def verify_password(cls, password: str, stored_hash: str) -> Tuple[bool, bool]:
+        """
+        Verifies password against stored_hash in constant time using hmac.compare_digest.
+        Returns:
+            (is_valid: bool, needs_rehash: bool)
+
+        Handles:
+        1. Modern salted format: pbkdf2:<algo>:<iterations>$<salt_hex>$<hash_hex>
+        2. Legacy unsalted SHA-256 (64-char hex string) with needs_rehash=True for transparent migration.
+        """
+        if not stored_hash or not password:
+            return False, False
+
+        # Modern format: pbkdf2:sha256:<iterations>$<salt_hex>$<hash_hex>
+        if stored_hash.startswith("pbkdf2:"):
+            try:
+                parts = stored_hash.split("$")
+                if len(parts) == 3:
+                    header, salt_hex, key_hex = parts
+                    header_parts = header.split(":")
+                    if len(header_parts) == 3 and header_parts[0] == "pbkdf2":
+                        algo = header_parts[1]
+                        iterations = int(header_parts[2])
+                        salt_bytes = bytes.fromhex(salt_hex)
+                        computed_key = hashlib.pbkdf2_hmac(algo, password.encode("utf-8"), salt_bytes, iterations).hex()
+                        if hmac.compare_digest(computed_key, key_hex):
+                            needs_rehash = (iterations < cls.PBKDF2_ITERATIONS or algo != cls.PBKDF2_ALGORITHM)
+                            return True, needs_rehash
+            except Exception:
+                return False, False
+            return False, False
+
+        # Legacy unsalted SHA-256 (64-character hexadecimal digest)
+        if len(stored_hash) == 64 and all(c in "0123456789abcdefABCDEF" for c in stored_hash):
+            legacy_computed = hashlib.sha256(password.encode("utf-8")).hexdigest()
+            if hmac.compare_digest(legacy_computed.lower(), stored_hash.lower()):
+                # Valid legacy credentials; flag for immediate transparent rehash
+                return True, True
+
+        return False, False
 
     def init_db(self):
         """Initializes all database tables."""
@@ -177,13 +235,24 @@ class DatabaseManager:
             return user_id
 
     def authenticate_user(self, username, password):
-        pwd_hash = self.hash_password(password)
+        if not username or not password:
+            return None
         with self.get_connection() as conn:
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM users WHERE username = ? AND password_hash = ?", (username, pwd_hash))
+            cursor.execute("SELECT * FROM users WHERE username = ?", (username,))
             row = cursor.fetchone()
-            if row:
-                return dict(row)
+            if not row:
+                return None
+            user = dict(row)
+            stored_hash = user.get("password_hash", "")
+            is_valid, needs_rehash = self.verify_password(password, stored_hash)
+            if is_valid:
+                if needs_rehash:
+                    new_hash = self.hash_password(password)
+                    cursor.execute("UPDATE users SET password_hash = ? WHERE id = ?", (new_hash, user["id"]))
+                    conn.commit()
+                    user["password_hash"] = new_hash
+                return user
             return None
 
     def get_user_by_id(self, user_id):
