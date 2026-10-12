@@ -1504,6 +1504,121 @@ class TestSecurityAndRoleIsolation(unittest.TestCase):
             user_inj = self.db.authenticate_user(username, "' OR 1=1 --")
             self.assertIsNone(user_inj)
 
+    def test_malformed_password_hashes_handled_safely(self):
+        """Verifies malformed or out-of-bounds password hashes reject safely without throwing exceptions or hanging."""
+        # 1. Unknown / unsafe hash algorithm (e.g. md5)
+        bad_algo = "pbkdf2:md5:100000$0123456789abcdef0123456789abcdef$" + "a" * 64
+        valid, rehash = DatabaseManager.verify_password("testpass", bad_algo)
+        self.assertFalse(valid)
+        self.assertFalse(rehash)
+
+        # 2. Excessive iterations (> 2,000,000 DoS vector)
+        huge_iters = "pbkdf2:sha256:100000000$0123456789abcdef0123456789abcdef$" + "a" * 64
+        valid, rehash = DatabaseManager.verify_password("testpass", huge_iters)
+        self.assertFalse(valid)
+        self.assertFalse(rehash)
+
+        # 3. Too few iterations (< 10,000 weak factor)
+        weak_iters = "pbkdf2:sha256:500$0123456789abcdef0123456789abcdef$" + "a" * 64
+        valid, rehash = DatabaseManager.verify_password("testpass", weak_iters)
+        self.assertFalse(valid)
+        self.assertFalse(rehash)
+
+        # 4. Truncated or malformed components
+        for malformed in ["pbkdf2:sha256", "pbkdf2:sha256:100000", "pbkdf2:sha256:100000$", "pbkdf2:sha256:abc$salt$hash", None, "", 12345]:
+            valid, rehash = DatabaseManager.verify_password("testpass", malformed)
+            self.assertFalse(valid)
+            self.assertFalse(rehash)
+
+    def test_document_upload_filename_traversal_and_type_validation(self):
+        """Verifies document upload sanitizes filenames to prevent directory traversal and checks document types."""
+        test_uid = 99991
+        # Traversal filename '../../secret.pdf' must be stored as 'secret.pdf'
+        self.db.add_student_document(test_uid, "Certificate", "../../etc/passwd.pdf", {"size": 1024})
+        docs = self.db.get_student_documents(test_uid)
+        try:
+            self.assertEqual(len(docs), 1)
+            self.assertEqual(docs[0]["filename"], "passwd.pdf")
+            self.assertEqual(docs[0]["doc_type"], "Certificate")
+
+            # Invalid document type falls back to 'Other'
+            self.db.add_student_document(test_uid, "MaliciousType", "test.txt")
+            docs_updated = self.db.get_student_documents(test_uid)
+            self.assertEqual(len(docs_updated), 2)
+            self.assertEqual({d["doc_type"] for d in docs_updated}, {"Certificate", "Other"})
+
+            # Empty or dot filenames raise ValueError
+            with self.assertRaises(ValueError):
+                self.db.add_student_document(test_uid, "CV", "..")
+        finally:
+            with self.db.get_connection() as conn:
+                conn.cursor().execute("DELETE FROM student_documents WHERE user_id = ?", (test_uid,))
+                conn.commit()
+
+    def test_roadmap_status_transition_validation(self):
+        """Verifies activity status updates enforce valid lifecycle transitions."""
+        test_uid = 99992
+        self.db.save_roadmap(test_uid, "Software Engineering", [{
+            "activity_id": "TEST_ACT_1",
+            "activity_title": "Test Activity",
+            "activity_type": "Course",
+            "week_number": 1,
+            "estimated_hours": 8,
+            "main_skill": "Python",
+            "status": "Planned"
+        }])
+        try:
+            roadmap = self.db.get_roadmap(test_uid, "Software Engineering")
+            self.assertEqual(len(roadmap), 1)
+            item_id = roadmap[0]["id"]
+
+            # Valid transitions
+            self.db.update_roadmap_activity_status(item_id, "In Progress")
+            updated = self.db.get_roadmap(test_uid, "Software Engineering")[0]
+            self.assertIn(updated["status"], ["In Progress", "In-Progress"])
+
+            self.db.update_roadmap_activity_status(item_id, "Completed")
+            completed = self.db.get_roadmap(test_uid, "Software Engineering")[0]
+            self.assertEqual(completed["status"], "Completed")
+            self.assertIsNotNone(completed["completion_date"])
+
+            # Invalid status raises ValueError
+            with self.assertRaises(ValueError):
+                self.db.update_roadmap_activity_status(item_id, "HACKED_STATUS")
+        finally:
+            with self.db.get_connection() as conn:
+                conn.cursor().execute("DELETE FROM roadmaps WHERE user_id = ?", (test_uid,))
+                conn.commit()
+
+    def test_multi_user_document_and_roadmap_isolation(self):
+        """Verifies student A cannot view or retrieve student B's uploaded documents, roadmaps, or projects."""
+        uid_a = 99993
+        uid_b = 99994
+        try:
+            self.db.add_student_document(uid_a, "CV", "student_a_cv.pdf")
+            self.db.add_student_project(uid_a, "Project Alpha", "Description", "Python", "https://github.com/test/alpha", "Python, Testing")
+            self.db.save_roadmap(uid_a, "Data Science / AI", [{
+                "activity_id": "ACT_A",
+                "activity_title": "Roadmap A",
+                "activity_type": "Course",
+                "week_number": 1,
+                "estimated_hours": 5,
+                "main_skill": "Machine Learning",
+                "status": "Planned"
+            }])
+
+            # Student B's queries must return empty
+            self.assertEqual(self.db.get_student_documents(uid_b), [])
+            self.assertEqual(self.db.get_student_projects(uid_b), [])
+            self.assertEqual(self.db.get_roadmap(uid_b), [])
+        finally:
+            with self.db.get_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute("DELETE FROM student_documents WHERE user_id IN (?, ?)", (uid_a, uid_b))
+                cursor.execute("DELETE FROM student_projects WHERE user_id IN (?, ?)", (uid_a, uid_b))
+                cursor.execute("DELETE FROM roadmaps WHERE user_id IN (?, ?)", (uid_a, uid_b))
+                conn.commit()
+
 
 if __name__ == "__main__":
     unittest.main()

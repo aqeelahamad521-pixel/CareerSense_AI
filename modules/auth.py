@@ -32,13 +32,8 @@ def login_user(user: dict, is_demo: bool = False):
     st.session_state.is_demo = is_demo or (user.get("username") in ["student_demo", "advisor", "coordinator", "admin"])
 
 def logout_user():
-    st.session_state.authenticated = False
-    st.session_state.user_id = None
-    st.session_state.username = None
-    st.session_state.role = None
-    st.session_state.full_name = None
-    st.session_state.reg_no = None
-    st.session_state.is_demo = False
+    st.session_state.clear()
+    init_auth_session()
     st.rerun()
 
 def render_login_and_registration(db: DatabaseManager):

@@ -55,10 +55,10 @@ class DatabaseManager:
         1. Modern salted format: pbkdf2:<algo>:<iterations>$<salt_hex>$<hash_hex>
         2. Legacy unsalted SHA-256 (64-char hex string) with needs_rehash=True for transparent migration.
         """
-        if not stored_hash or not password:
+        if not stored_hash or not password or not isinstance(stored_hash, str) or not isinstance(password, str):
             return False, False
 
-        # Modern format: pbkdf2:sha256:<iterations>$<salt_hex>$<hash_hex>
+        # Modern format: pbkdf2:<algo>:<iterations>$<salt_hex>$<hash_hex>
         if stored_hash.startswith("pbkdf2:"):
             try:
                 parts = stored_hash.split("$")
@@ -66,11 +66,22 @@ class DatabaseManager:
                     header, salt_hex, key_hex = parts
                     header_parts = header.split(":")
                     if len(header_parts) == 3 and header_parts[0] == "pbkdf2":
-                        algo = header_parts[1]
+                        algo = header_parts[1].lower()
+                        # Strictly whitelist approved secure hash algorithms
+                        if algo not in ("sha256", "sha512"):
+                            return False, False
                         iterations = int(header_parts[2])
+                        # Bounds check iterations: min 10k, max 2M to prevent DoS or weak configurations
+                        if iterations < 10_000 or iterations > 2_000_000:
+                            return False, False
+                        # Validate salt and key hex format and lengths
+                        if len(salt_hex) < 16 or len(salt_hex) > 128:
+                            return False, False
                         salt_bytes = bytes.fromhex(salt_hex)
+                        if len(key_hex) not in (64, 128):
+                            return False, False
                         computed_key = hashlib.pbkdf2_hmac(algo, password.encode("utf-8"), salt_bytes, iterations).hex()
-                        if hmac.compare_digest(computed_key, key_hex):
+                        if hmac.compare_digest(computed_key.lower(), key_hex.lower()):
                             needs_rehash = (iterations < cls.PBKDF2_ITERATIONS or algo != cls.PBKDF2_ALGORITHM)
                             return True, needs_rehash
             except Exception:
@@ -390,13 +401,19 @@ class DatabaseManager:
             return [dict(r) for r in cursor.fetchall()]
 
     def add_student_document(self, user_id, doc_type, filename, extracted_metadata=None):
+        clean_filename = Path(filename).name
+        if not clean_filename or clean_filename in (".", ".."):
+            raise ValueError("Invalid document filename")
+        valid_types = {"CV", "Transcript", "Certificate", "Other"}
+        if doc_type not in valid_types:
+            doc_type = "Other"
         meta_str = json.dumps(extracted_metadata) if extracted_metadata else None
         with self.get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
             INSERT INTO student_documents (user_id, doc_type, filename, extracted_metadata)
             VALUES (?, ?, ?, ?)
-            """, (user_id, doc_type, filename, meta_str))
+            """, (user_id, doc_type, clean_filename, meta_str))
             conn.commit()
 
     # --- Roadmaps & Progress Tracking ---
@@ -423,6 +440,11 @@ class DatabaseManager:
             return [dict(r) for r in cursor.fetchall()]
 
     def update_roadmap_activity_status(self, roadmap_id, new_status):
+        if new_status == "In Progress":
+            new_status = "In-Progress"
+        valid_statuses = {"Planned", "In-Progress", "Completed"}
+        if new_status not in valid_statuses:
+            raise ValueError(f"Invalid activity status '{new_status}'. Allowed: {valid_statuses}")
         with self.get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""

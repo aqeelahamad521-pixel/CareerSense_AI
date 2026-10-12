@@ -557,14 +557,21 @@ def render_student_view(db, rule_engine, a_star, ml_classifier, explainability):
                 if uploaded_file is not None:
                     from pathlib import Path
                     clean_filename = Path(uploaded_file.name).name
-                    db.add_student_document(
-                        user_id=user_id,
-                        doc_type=doc_type,
-                        filename=clean_filename,
-                        extracted_metadata={"file_size": uploaded_file.size, "verified": True}
-                    )
-                    st.success(f"{doc_type} '{clean_filename}' successfully uploaded and indexed!")
-                    st.rerun()
+                    allowed_exts = {".pdf", ".docx", ".txt"}
+                    ext = Path(clean_filename).suffix.lower()
+                    if ext not in allowed_exts:
+                        st.error(f"Unsupported file format '{ext}'. Allowed extensions: PDF, DOCX, TXT.")
+                    elif uploaded_file.size > 10 * 1024 * 1024:
+                        st.error("Uploaded document exceeds maximum allowed size of 10MB.")
+                    else:
+                        db.add_student_document(
+                            user_id=user_id,
+                            doc_type=doc_type,
+                            filename=clean_filename,
+                            extracted_metadata={"file_size": uploaded_file.size, "verified": True}
+                        )
+                        st.success(f"{doc_type} '{clean_filename}' successfully uploaded and indexed!")
+                        st.rerun()
                 else:
                     st.error("Please choose a file to upload.")
 
