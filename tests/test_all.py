@@ -1380,6 +1380,49 @@ class TestSecurityAndRoleIsolation(unittest.TestCase):
                 conn.cursor().execute("DELETE FROM users WHERE username = ?", (username,))
                 conn.commit()
 
+    def test_legacy_user_failed_login_does_not_rehash_or_corrupt_record(self):
+        """Verifies failed login on a legacy account returns None without modifying the stored legacy hash."""
+        import hashlib
+        legacy_pwd = "correct_legacy_password"
+        legacy_hash = hashlib.sha256(legacy_pwd.encode("utf-8")).hexdigest()
+        username = "test_legacy_fail_user"
+
+        with self.db.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM users WHERE username = ?", (username,))
+            cursor.execute(
+                "INSERT INTO users (username, password_hash, role, full_name, email) VALUES (?, ?, ?, ?, ?)",
+                (username, legacy_hash, "student", "Legacy Fail User", "legacy.fail@kdu.ac.lk")
+            )
+            conn.commit()
+
+        try:
+            # 1. Failed login with incorrect password
+            bad_attempt = self.db.authenticate_user(username, "completely_wrong_password")
+            self.assertIsNone(bad_attempt)
+
+            # 2. Database state must be uncorrupted: still the original 64-char hex SHA-256
+            user_row = self.db.get_user_by_username(username)
+            self.assertIsNotNone(user_row)
+            self.assertEqual(user_row["password_hash"], legacy_hash)
+
+            # 3. Successful login with correct password upgrades the hash
+            good_attempt = self.db.authenticate_user(username, legacy_pwd)
+            self.assertIsNotNone(good_attempt)
+            self.assertTrue(good_attempt["password_hash"].startswith("pbkdf2:sha256:100000$"))
+
+            # 4. Subsequent login with correct password works with PBKDF2 hash
+            subsequent_good = self.db.authenticate_user(username, legacy_pwd)
+            self.assertIsNotNone(subsequent_good)
+
+            # 5. Subsequent login with wrong password still fails
+            subsequent_bad = self.db.authenticate_user(username, "wrong_password_again")
+            self.assertIsNone(subsequent_bad)
+        finally:
+            with self.db.get_connection() as conn:
+                conn.cursor().execute("DELETE FROM users WHERE username = ?", (username,))
+                conn.commit()
+
     def test_user_authentication_success_and_failure(self):
         """Verifies authentication for seeded demo accounts and invalid credentials."""
         user = self.db.authenticate_user("student_demo", "student123")

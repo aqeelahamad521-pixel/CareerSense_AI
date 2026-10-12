@@ -262,6 +262,13 @@ class DatabaseManager:
             row = cursor.fetchone()
             return dict(row) if row else None
 
+    def get_user_by_username(self, username: str):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM users WHERE username = ?", (username,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
+
     # --- Profile Methods ---
     def get_student_profile(self, user_id):
         with self.get_connection() as conn:
