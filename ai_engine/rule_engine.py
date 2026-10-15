@@ -173,9 +173,10 @@ class RuleBasedExpertSystem:
                 })
         return dependency_alerts
 
-    def calculate_career_readiness(self, target_track: str, student_profile: dict, academic_records: list, student_skills: dict, projects: list, documents: list) -> dict:
+    def calculate_career_readiness(self, target_track: str, student_profile: dict, academic_records: list, student_skills: dict, projects: list, documents: list, skill_evidence: dict = None) -> dict:
         """
-        Computes the holistic Career Readiness Score (0% to 100%) broken down into 4 components:
+        Computes a prototype readiness index (0 to 100) broken down into four
+        transparent components. It is not a hiring or employability prediction.
         1. Academic Score (25%)
         2. Competency Score (50%)
         3. Project Evidence Score (15%)
@@ -187,11 +188,13 @@ class RuleBasedExpertSystem:
         # 1. Competency Coverage (50% max)
         total_target_pts = 0
         student_achieved_pts = 0
+        skill_evidence = skill_evidence or {}
         for req in req_competencies:
             t_val = SKILL_LEVELS.get(req["target_level"], 2)
             c_val = SKILL_LEVELS.get(student_skills.get(req["skill"], "None"), 0)
             total_target_pts += t_val
-            student_achieved_pts += min(c_val, t_val)
+            evidence_factor = 1.0 if skill_evidence.get(req["skill"]) == "advisor_verified" else 0.5
+            student_achieved_pts += min(c_val, t_val) * evidence_factor
         
         competency_ratio = (student_achieved_pts / total_target_pts) if total_target_pts > 0 else 0.5
         competency_score = round(competency_ratio * 50.0, 1)
@@ -207,29 +210,41 @@ class RuleBasedExpertSystem:
 
         # 3. Project Evidence Score (15% max)
         proj_count = len(projects)
-        project_score = round(min(15.0, proj_count * 7.5), 1) # 2 projects = full score
+        project_points = sum(
+            7.5 if project.get("verification_status") == "advisor_verified" else 3.75
+            for project in projects
+        )
+        project_score = round(min(15.0, project_points), 1)
 
         # 4. Profile Completeness & Documents (10% max)
-        doc_count = len(documents)
-        cv_present = any(d.get("doc_type") == "CV" for d in documents) or bool(student_profile.get("cv_filename"))
-        doc_pts = 5.0 if cv_present else 0.0
-        doc_pts += min(5.0, (doc_count - (1 if cv_present else 0)) * 2.5)
-        document_score = round(min(10.0, doc_pts), 1)
+        cv_documents = [d for d in documents if d.get("doc_type") == "CV" and d.get("verification_status") != "rejected"]
+        other_documents = [d for d in documents if d.get("doc_type") != "CV" and d.get("verification_status") != "rejected"]
+        cv_present = bool(cv_documents)
+        cv_points = max(
+            [5.0 if d.get("verification_status") == "advisor_verified" else 2.5 for d in cv_documents]
+            or [0.0]
+        )
+        other_points = sum(
+            2.5 if d.get("verification_status") == "advisor_verified" else 1.25
+            for d in other_documents
+        )
+        document_score = round(min(10.0, cv_points + min(5.0, other_points)), 1)
 
         total_readiness = round(competency_score + academic_score + project_score + document_score, 1)
 
-        # Generate readiness label
+        # Evidence-neutral index labels: these deliberately avoid making an
+        # employment claim from self-reported prototype data.
         if total_readiness >= 80:
-            readiness_tier = "Job / Internship Ready"
+            readiness_tier = "Strong recorded evidence"
             tier_color = "green"
         elif total_readiness >= 60:
-            readiness_tier = "Near Ready (Minor Gaps)"
+            readiness_tier = "Developing recorded evidence"
             tier_color = "blue"
         elif total_readiness >= 40:
-            readiness_tier = "Developing (Targeted Training Needed)"
+            readiness_tier = "Early recorded evidence"
             tier_color = "orange"
         else:
-            readiness_tier = "Foundational Stage (Significant Gaps)"
+            readiness_tier = "Insufficient recorded evidence"
             tier_color = "red"
 
         # Check portfolio & workload rules
@@ -256,6 +271,8 @@ class RuleBasedExpertSystem:
         return {
             "total_readiness_score": total_readiness,
             "readiness_tier": readiness_tier,
+            "index_name": "Prototype readiness index",
+            "index_limitation": "A planning aid based on recorded profile evidence; not a prediction of hiring, internship eligibility, or career success.",
             "tier_color": tier_color,
             "breakdown": {
                 "competency_score": competency_score,
@@ -268,5 +285,11 @@ class RuleBasedExpertSystem:
                 "document_max": 10.0
             },
             "academic_eval": acad_results,
+            "evidence_summary": {
+                "advisor_verified_projects": sum(p.get("verification_status") == "advisor_verified" for p in projects),
+                "self_reported_projects": sum(p.get("verification_status", "self_reported") == "self_reported" for p in projects),
+                "advisor_verified_documents": sum(d.get("verification_status") == "advisor_verified" for d in documents),
+                "submitted_documents": sum(d.get("verification_status", "submitted") == "submitted" for d in documents),
+            },
             "advisory_warnings": advisory_warnings
         }

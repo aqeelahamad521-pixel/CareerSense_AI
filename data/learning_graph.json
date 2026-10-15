@@ -285,6 +285,97 @@
       "priority": "High",
       "description": "Create an atomic design system complete with design tokens (colors, typography, spacing), component states, and accessibility standards.",
       "resource_url": "https://designsystemsrepo.com/"
+    },
+    {
+      "id": "ACT_FOUND_01",
+      "title": "Object-oriented programming foundations",
+      "track": "Foundations",
+      "type": "Course",
+      "estimated_hours": 12,
+      "main_skill": "Object-Oriented Programming",
+      "skill_level_gain": "Intermediate",
+      "prerequisites": [],
+      "priority": "High",
+      "description": "Practice encapsulation, inheritance, composition, interfaces, and small class-based designs.",
+      "resource_url": ""
+    },
+    {
+      "id": "ACT_FOUND_02",
+      "title": "Practical Git workflow",
+      "track": "Foundations",
+      "type": "Practice",
+      "estimated_hours": 6,
+      "main_skill": "Version Control (Git)",
+      "skill_level_gain": "Intermediate",
+      "prerequisites": [],
+      "priority": "High",
+      "description": "Use branches, pull requests, conflict resolution, history inspection, and safe recovery in a small repository.",
+      "resource_url": ""
+    },
+    {
+      "id": "ACT_FOUND_03",
+      "title": "SQL querying and relational design",
+      "track": "Foundations",
+      "type": "Course",
+      "estimated_hours": 10,
+      "main_skill": "SQL & Data Querying",
+      "skill_level_gain": "Intermediate",
+      "prerequisites": [],
+      "priority": "High",
+      "description": "Build normalized schemas and practice joins, aggregation, subqueries, indexes, and transaction basics.",
+      "resource_url": ""
+    },
+    {
+      "id": "ACT_SEC_05",
+      "title": "Secure coding foundations",
+      "track": "Cybersecurity",
+      "type": "Practice",
+      "estimated_hours": 8,
+      "main_skill": "Secure Coding Practices",
+      "skill_level_gain": "Beginner",
+      "prerequisites": ["ACT_FOUND_01"],
+      "priority": "Medium",
+      "description": "Apply input validation, safe authentication flows, least privilege, secret handling, and dependency hygiene.",
+      "resource_url": ""
+    },
+    {
+      "id": "ACT_OPS_01",
+      "title": "Monitoring and logging foundations",
+      "track": "Foundations",
+      "type": "Practice",
+      "estimated_hours": 8,
+      "main_skill": "System Monitoring & Logging",
+      "skill_level_gain": "Beginner",
+      "prerequisites": [],
+      "priority": "Medium",
+      "description": "Define useful logs, service health indicators, alert thresholds, and a basic incident dashboard.",
+      "resource_url": ""
+    },
+    {
+      "id": "ACT_UI_04",
+      "title": "Visual design and typography foundations",
+      "track": "UI/UX Design",
+      "type": "Course",
+      "estimated_hours": 10,
+      "main_skill": "Design Principles & Typography",
+      "skill_level_gain": "Intermediate",
+      "prerequisites": [],
+      "priority": "High",
+      "description": "Practice hierarchy, spacing, contrast, type scales, color roles, and accessible interface composition.",
+      "resource_url": ""
+    },
+    {
+      "id": "ACT_UI_05",
+      "title": "Frontend implementation awareness",
+      "track": "UI/UX Design",
+      "type": "Practice",
+      "estimated_hours": 8,
+      "main_skill": "Frontend Framework Awareness",
+      "skill_level_gain": "Beginner",
+      "prerequisites": ["ACT_UI_04"],
+      "priority": "Medium",
+      "description": "Translate a design into semantic HTML and responsive component constraints while documenting states for engineers.",
+      "resource_url": ""
     }
   ]
 }

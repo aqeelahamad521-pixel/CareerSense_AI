@@ -29,7 +29,15 @@ class DatabaseManager:
     def get_connection(self):
         conn = sqlite3.connect(self.db_path)
         conn.row_factory = sqlite3.Row
+        conn.execute("PRAGMA foreign_keys = ON")
+        conn.execute("PRAGMA busy_timeout = 5000")
         return conn
+
+    @staticmethod
+    def _ensure_column(cursor, table: str, column: str, definition: str):
+        existing = {row[1] for row in cursor.execute(f"PRAGMA table_info({table})").fetchall()}
+        if column not in existing:
+            cursor.execute(f"ALTER TABLE {table} ADD COLUMN {column} {definition}")
 
     @classmethod
     def hash_password(cls, password: str, iterations: Optional[int] = None) -> str:
@@ -154,6 +162,7 @@ class DatabaseManager:
                 user_id INTEGER NOT NULL,
                 skill_name TEXT NOT NULL,
                 proficiency_level TEXT NOT NULL,
+                evidence_status TEXT NOT NULL DEFAULT 'self_reported' CHECK (evidence_status IN ('self_reported', 'advisor_verified')),
                 last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 UNIQUE (user_id, skill_name),
                 FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
@@ -182,6 +191,7 @@ class DatabaseManager:
                 technologies TEXT,
                 github_url TEXT,
                 demonstrated_skills TEXT,
+                verification_status TEXT NOT NULL DEFAULT 'self_reported' CHECK (verification_status IN ('self_reported', 'advisor_verified')),
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
             )
@@ -196,6 +206,9 @@ class DatabaseManager:
                 filename TEXT NOT NULL,
                 upload_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 extracted_metadata TEXT,
+                verification_status TEXT NOT NULL DEFAULT 'submitted' CHECK (verification_status IN ('submitted', 'advisor_verified', 'rejected')),
+                content_sha256 TEXT,
+                mime_type TEXT,
                 FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
             )
             """)
@@ -212,6 +225,10 @@ class DatabaseManager:
                 week_number INTEGER NOT NULL,
                 estimated_hours INTEGER NOT NULL,
                 main_skill TEXT NOT NULL,
+                skill_level_gain TEXT,
+                week_end INTEGER,
+                description TEXT,
+                resource_url TEXT,
                 status TEXT DEFAULT 'Planned' CHECK (status IN ('Planned', 'In-Progress', 'Completed')),
                 completion_date TIMESTAMP,
                 FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
@@ -230,10 +247,47 @@ class DatabaseManager:
                 FOREIGN KEY (student_id) REFERENCES users (id) ON DELETE CASCADE
             )
             """)
+
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS advisor_assignments (
+                advisor_id INTEGER NOT NULL,
+                student_id INTEGER NOT NULL UNIQUE,
+                assigned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                PRIMARY KEY (advisor_id, student_id),
+                FOREIGN KEY (advisor_id) REFERENCES users (id) ON DELETE CASCADE,
+                FOREIGN KEY (student_id) REFERENCES users (id) ON DELETE CASCADE
+            )
+            """)
+
+            # Lightweight forward migrations for databases created by earlier
+            # versions. SQLite cannot add CHECK constraints here, so every write
+            # path validates these values as well.
+            self._ensure_column(cursor, "student_skills", "evidence_status", "TEXT NOT NULL DEFAULT 'self_reported'")
+            self._ensure_column(cursor, "student_projects", "verification_status", "TEXT NOT NULL DEFAULT 'self_reported'")
+            self._ensure_column(cursor, "student_documents", "verification_status", "TEXT NOT NULL DEFAULT 'submitted'")
+            self._ensure_column(cursor, "student_documents", "content_sha256", "TEXT")
+            self._ensure_column(cursor, "student_documents", "mime_type", "TEXT")
+            self._ensure_column(cursor, "roadmaps", "skill_level_gain", "TEXT")
+            self._ensure_column(cursor, "roadmaps", "week_end", "INTEGER")
+            self._ensure_column(cursor, "roadmaps", "description", "TEXT")
+            self._ensure_column(cursor, "roadmaps", "resource_url", "TEXT")
+            cursor.execute("""
+                INSERT OR IGNORE INTO advisor_assignments (advisor_id, student_id)
+                SELECT advisor.id, student.id
+                FROM users AS advisor, users AS student
+                WHERE advisor.username = 'advisor' AND advisor.role = 'advisor'
+                  AND student.username = 'student_demo' AND student.role = 'student'
+            """)
             conn.commit()
 
     # --- Authentication Methods ---
     def create_user(self, username, password, role, full_name, reg_no=None, email=None):
+        if role not in {"student", "advisor", "coordinator", "admin"}:
+            raise ValueError("Invalid user role")
+        if not isinstance(password, str) or len(password) < 8:
+            raise ValueError("Password must contain at least 8 characters")
+        if not str(username).strip() or not str(full_name).strip():
+            raise ValueError("Username and full name are required")
         pwd_hash = self.hash_password(password)
         with self.get_connection() as conn:
             cursor = conn.cursor()
@@ -348,16 +402,29 @@ class DatabaseManager:
             cursor.execute("SELECT skill_name, proficiency_level FROM student_skills WHERE user_id = ?", (user_id,))
             return {r["skill_name"]: r["proficiency_level"] for r in cursor.fetchall()}
 
-    def set_student_skill(self, user_id, skill_name, level):
+    def get_student_skill_records(self, user_id):
+        with self.get_connection() as conn:
+            rows = conn.execute(
+                "SELECT skill_name, proficiency_level, evidence_status, last_updated FROM student_skills WHERE user_id = ?",
+                (user_id,),
+            ).fetchall()
+            return [dict(row) for row in rows]
+
+    def set_student_skill(self, user_id, skill_name, level, evidence_status="self_reported"):
+        if level not in SKILL_LEVELS:
+            raise ValueError("Invalid skill level")
+        if evidence_status not in {"self_reported", "advisor_verified"}:
+            raise ValueError("Invalid skill evidence status")
         with self.get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
-            INSERT INTO student_skills (user_id, skill_name, proficiency_level)
-            VALUES (?, ?, ?)
+            INSERT INTO student_skills (user_id, skill_name, proficiency_level, evidence_status)
+            VALUES (?, ?, ?, ?)
             ON CONFLICT(user_id, skill_name) DO UPDATE SET
                 proficiency_level=excluded.proficiency_level,
+                evidence_status=excluded.evidence_status,
                 last_updated=CURRENT_TIMESTAMP
-            """, (user_id, skill_name, level))
+            """, (user_id, skill_name, level, evidence_status))
             conn.commit()
 
     def get_student_interests(self, user_id):
@@ -385,13 +452,15 @@ class DatabaseManager:
             cursor.execute("SELECT * FROM student_projects WHERE user_id = ? ORDER BY created_at DESC", (user_id,))
             return [dict(r) for r in cursor.fetchall()]
 
-    def add_student_project(self, user_id, title, description, technologies, github_url, demonstrated_skills):
+    def add_student_project(self, user_id, title, description, technologies, github_url, demonstrated_skills, verification_status="self_reported"):
+        if verification_status not in {"self_reported", "advisor_verified"}:
+            raise ValueError("Invalid project verification status")
         with self.get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
-            INSERT INTO student_projects (user_id, title, description, technologies, github_url, demonstrated_skills)
-            VALUES (?, ?, ?, ?, ?, ?)
-            """, (user_id, title, description, technologies, github_url, demonstrated_skills))
+            INSERT INTO student_projects (user_id, title, description, technologies, github_url, demonstrated_skills, verification_status)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (user_id, title, description, technologies, github_url, demonstrated_skills, verification_status))
             conn.commit()
 
     def get_student_documents(self, user_id):
@@ -400,21 +469,90 @@ class DatabaseManager:
             cursor.execute("SELECT * FROM student_documents WHERE user_id = ? ORDER BY upload_date DESC", (user_id,))
             return [dict(r) for r in cursor.fetchall()]
 
-    def add_student_document(self, user_id, doc_type, filename, extracted_metadata=None):
+    def add_student_document(self, user_id, doc_type, filename, extracted_metadata=None, content_sha256=None, mime_type=None, verification_status="submitted"):
         clean_filename = Path(filename).name
         if not clean_filename or clean_filename in (".", ".."):
             raise ValueError("Invalid document filename")
         valid_types = {"CV", "Transcript", "Certificate", "Other"}
         if doc_type not in valid_types:
-            doc_type = "Other"
+            raise ValueError("Invalid document type")
+        if verification_status not in {"submitted", "advisor_verified", "rejected"}:
+            raise ValueError("Invalid document verification status")
+        if content_sha256 and (len(content_sha256) != 64 or any(c not in "0123456789abcdef" for c in content_sha256.lower())):
+            raise ValueError("Invalid SHA-256 digest")
         meta_str = json.dumps(extracted_metadata) if extracted_metadata else None
         with self.get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
-            INSERT INTO student_documents (user_id, doc_type, filename, extracted_metadata)
-            VALUES (?, ?, ?, ?)
-            """, (user_id, doc_type, clean_filename, meta_str))
+            INSERT INTO student_documents (user_id, doc_type, filename, extracted_metadata, verification_status, content_sha256, mime_type)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (user_id, doc_type, clean_filename, meta_str, verification_status, content_sha256, mime_type))
             conn.commit()
+
+    def _assert_advisor_access(self, actor_user_id, actor_role, student_id):
+        if actor_role == "admin":
+            return
+        if actor_role != "advisor":
+            raise PermissionError("Advisor or administrator access required")
+        with self.get_connection() as conn:
+            assignment = conn.execute(
+                "SELECT 1 FROM advisor_assignments WHERE advisor_id = ? AND student_id = ?",
+                (actor_user_id, student_id),
+            ).fetchone()
+        if not assignment:
+            raise PermissionError("This student is not assigned to the current advisor")
+
+    def assign_advisor(self, advisor_id, student_id):
+        with self.get_connection() as conn:
+            roles = conn.execute(
+                "SELECT id, role FROM users WHERE id IN (?, ?)", (advisor_id, student_id)
+            ).fetchall()
+            role_by_id = {row["id"]: row["role"] for row in roles}
+            if role_by_id.get(advisor_id) != "advisor" or role_by_id.get(student_id) != "student":
+                raise ValueError("Assignments require an advisor and a student")
+            conn.execute(
+                "INSERT INTO advisor_assignments (advisor_id, student_id) VALUES (?, ?) "
+                "ON CONFLICT(student_id) DO UPDATE SET advisor_id=excluded.advisor_id, assigned_at=CURRENT_TIMESTAMP",
+                (advisor_id, student_id),
+            )
+            conn.commit()
+
+    def verify_student_project(self, project_id, student_id, actor_user_id, actor_role, status="advisor_verified"):
+        self._assert_advisor_access(actor_user_id, actor_role, student_id)
+        if status not in {"self_reported", "advisor_verified"}:
+            raise ValueError("Invalid project verification status")
+        with self.get_connection() as conn:
+            cur = conn.execute(
+                "UPDATE student_projects SET verification_status = ? WHERE id = ? AND user_id = ?",
+                (status, project_id, student_id),
+            )
+            conn.commit()
+            return cur.rowcount == 1
+
+    def verify_student_document(self, document_id, student_id, actor_user_id, actor_role, status="advisor_verified"):
+        self._assert_advisor_access(actor_user_id, actor_role, student_id)
+        if status not in {"submitted", "advisor_verified", "rejected"}:
+            raise ValueError("Invalid document verification status")
+        with self.get_connection() as conn:
+            cur = conn.execute(
+                "UPDATE student_documents SET verification_status = ? WHERE id = ? AND user_id = ?",
+                (status, document_id, student_id),
+            )
+            conn.commit()
+            return cur.rowcount == 1
+
+    def verify_student_skill(self, student_id, skill_name, actor_user_id, actor_role, status="advisor_verified"):
+        self._assert_advisor_access(actor_user_id, actor_role, student_id)
+        if status not in {"self_reported", "advisor_verified"}:
+            raise ValueError("Invalid skill evidence status")
+        with self.get_connection() as conn:
+            cur = conn.execute(
+                "UPDATE student_skills SET evidence_status = ?, last_updated = CURRENT_TIMESTAMP "
+                "WHERE user_id = ? AND skill_name = ?",
+                (status, student_id, skill_name),
+            )
+            conn.commit()
+            return cur.rowcount == 1
 
     # --- Roadmaps & Progress Tracking ---
     def save_roadmap(self, user_id, target_career, activities_list):
@@ -424,10 +562,11 @@ class DatabaseManager:
             cursor.execute("DELETE FROM roadmaps WHERE user_id = ? AND target_career = ?", (user_id, target_career))
             for item in activities_list:
                 cursor.execute("""
-                INSERT INTO roadmaps (user_id, target_career, activity_id, activity_title, activity_type, week_number, estimated_hours, main_skill, status)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO roadmaps (user_id, target_career, activity_id, activity_title, activity_type, week_number, week_end, estimated_hours, main_skill, skill_level_gain, description, resource_url, status)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """, (user_id, target_career, item["activity_id"], item["activity_title"], item["activity_type"],
-                      item["week_number"], item["estimated_hours"], item["main_skill"], item.get("status", "Planned")))
+                      item["week_number"], item.get("week_end", item["week_number"]), item["estimated_hours"], item["main_skill"],
+                      item.get("skill_level_gain"), item.get("description", ""), item.get("resource_url", ""), item.get("status", "Planned")))
             conn.commit()
 
     def get_roadmap(self, user_id, target_career=None):
@@ -439,7 +578,7 @@ class DatabaseManager:
                 cursor.execute("SELECT * FROM roadmaps WHERE user_id = ? ORDER BY week_number ASC, id ASC", (user_id,))
             return [dict(r) for r in cursor.fetchall()]
 
-    def update_roadmap_activity_status(self, roadmap_id, new_status):
+    def update_roadmap_activity_status(self, roadmap_id, user_id, new_status):
         if new_status == "In Progress":
             new_status = "In-Progress"
         valid_statuses = {"Planned", "In-Progress", "Completed"}
@@ -450,12 +589,14 @@ class DatabaseManager:
             cursor.execute("""
             UPDATE roadmaps
             SET status = ?, completion_date = CASE WHEN ? = 'Completed' THEN CURRENT_TIMESTAMP ELSE NULL END
-            WHERE id = ?
-            """, (new_status, new_status, roadmap_id))
+            WHERE id = ? AND user_id = ?
+            """, (new_status, new_status, roadmap_id, user_id))
             conn.commit()
+            return cursor.rowcount == 1
 
     # --- Advisor Notes ---
-    def add_advisor_note(self, student_id, advisor_name, feedback, action_items=""):
+    def add_advisor_note(self, student_id, advisor_name, feedback, action_items="", actor_user_id=None, actor_role=None):
+        self._assert_advisor_access(actor_user_id, actor_role, student_id)
         with self.get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
@@ -471,7 +612,26 @@ class DatabaseManager:
             return [dict(r) for r in cursor.fetchall()]
 
     # --- Analytics for Coordinator ---
-    def get_all_students_summary(self):
+    def get_students_for_advisor(self, advisor_user_id, actor_role="advisor"):
+        if actor_role == "admin":
+            return self.get_all_students_summary("admin", include_identifiers=True)
+        if actor_role != "advisor":
+            raise PermissionError("Advisor access required")
+        with self.get_connection() as conn:
+            rows = conn.execute("""
+                SELECT u.id, u.full_name, u.reg_no, p.degree, p.year, p.gpa, p.target_career,
+                       p.last_readiness_score, p.weekly_hours
+                FROM advisor_assignments a
+                JOIN users u ON u.id = a.student_id
+                JOIN student_profiles p ON p.user_id = u.id
+                WHERE a.advisor_id = ?
+                ORDER BY u.full_name
+            """, (advisor_user_id,)).fetchall()
+            return [dict(row) for row in rows]
+
+    def get_all_students_summary(self, actor_role, include_identifiers=False):
+        if actor_role not in {"coordinator", "admin"}:
+            raise PermissionError("Coordinator or administrator access required")
         with self.get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
@@ -480,9 +640,18 @@ class DatabaseManager:
             JOIN student_profiles p ON u.id = p.user_id
             WHERE u.role = 'student'
             """)
-            return [dict(r) for r in cursor.fetchall()]
+            results = [dict(r) for r in cursor.fetchall()]
+            if actor_role == "coordinator" or not include_identifiers:
+                for index, row in enumerate(results, start=1):
+                    row.pop("full_name", None)
+                    row.pop("reg_no", None)
+                    row.pop("id", None)
+                    row["student_key"] = f"Cohort member {index}"
+            return results
 
-    def get_all_student_skills_summary(self):
+    def get_all_student_skills_summary(self, actor_role):
+        if actor_role not in {"coordinator", "admin"}:
+            raise PermissionError("Coordinator or administrator access required")
         with self.get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""

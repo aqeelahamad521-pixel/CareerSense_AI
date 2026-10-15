@@ -5,6 +5,8 @@
 **Essentials of Artificial Intelligence**  
 **Intake 41 – IT3182 (IT/IS) | Intake 42 – CS 22032 (DBA) / CS22023 (CS/SE/COE)**
 
+> **Historical document:** This progress report predates the October 2026 remediation. The current competency model has 31 grade-and-skill features; interests are scored once outside the model, the selected target does not affect ranking, and current metrics are synthetic-only diagnostics recorded in `ai_engine/saved_models/evaluation_metrics.json`.
+
 ---
 
 # PROGRESS REVIEW REPORT (STAGE 2)
@@ -147,18 +149,18 @@ The three core AI techniques have been finalized, implemented, and benchmarked:
 
 #### 2.2.1 Machine Learning Classification
 * **Algorithms**: K-Nearest Neighbors (Primary) and Decision Tree (Baseline).
-* **Input**: 36-dimensional standardized feature vector (6 academic subject grades, 5 domain interests, 25 technical skill levels).
+* **Current Input**: 31-dimensional standardized competency vector (6 academic subject grades and 25 technical skill levels). Interests are excluded from the model.
 * **Output**: Ranked career track predictions with alignment percentages across 5 tracks: *Software Engineering*, *Data Science / AI*, *Cybersecurity*, *Cloud / DevOps*, and *UI/UX Design*.
 
 #### 2.2.2 Rule-Based Expert System
 * **Algorithm**: Forward-chaining production rule engine executing deterministic IF–THEN evaluations.
 * **Input**: Academic records, target career benchmark competencies, self-assessed proficiencies, project portfolio, and document metadata.
-* **Output**: Prerequisite audit status (Pass/Violation), prioritized skill gaps (High/Medium/Satisfied), diagnostic explanation strings, and composite Career Readiness Score (0%–100%).
+* **Output**: Prerequisite audit status, prioritized skill gaps, diagnostic explanations, and a prototype readiness index that is not an employability measure.
 
 #### 2.2.3 A* Search Algorithm for Roadmap Optimization
 * **Algorithm**: Heuristic state-space graph search with priority queue expansion.
 * **Input**: Current student skill set, target career benchmark levels, student weekly available study hours (e.g., 8 hrs/week), and curated activity DAG.
-* **Output**: Optimal, dependency-consistent sequence of learning activities organized into weekly milestones.
+* **Output**: A dependency-consistent sequence minimizing declared activity hours, followed by weekly scheduling.
 
 ---
 
@@ -221,7 +223,7 @@ The three core AI techniques have been finalized, implemented, and benchmarked:
 * **Step 2 – Student Profile & Evidence Entry**:  
   The student inputs or updates degree programme details, academic semester module grades, self-assessed skill levels, domain interest sliders, portfolio project links, and document metadata.
 * **Step 3 – Feature Extraction & Normalization**:  
-  The application service extracts the student's raw data and constructs a 36-dimensional numeric feature vector $\vec{x}$, standardizing values using `StandardScaler`.
+  The application service constructs a 31-dimensional numeric competency vector $\vec{x}$ and standardizes it using `StandardScaler`.
 * **Step 4 – Machine Learning Classification (AI Layer 1)**:  
   The feature vector is fed to both the trained K-NN classifier and the Decision Tree model. The system computes class probabilities, neighbor distances, and ranked pathway affinities.
 * **Step 5 – Prerequisite Verification (AI Layer 2)**:  
@@ -303,13 +305,13 @@ The three core AI techniques have been finalized, implemented, and benchmarked:
 ### 5.1 Machine Learning Classification Model
 
 #### 5.1.1 Purpose of Machine Learning Classification
-The objective of the ML classification model is to predict which computing career tracks an undergraduate student is most naturally aligned with, based on their cumulative academic performance, technical skills, and domain interests.
+The objective of the ML classifier is to provide an exploratory competency-alignment signal from recorded academic performance and technical skills. It does not predict natural fit or career outcomes.
 
 #### 5.1.2 Input Features
-The model consumes 36 numerical and ordinal features:
+The current model consumes 31 numerical and ordinal competency features:
 * **Academic Performance (6 features)**: `grade_programming`, `grade_math`, `grade_database`, `grade_networking`, `grade_systems`, `grade_design`.
-* **Domain Interests (5 features)**: `interest_software`, `interest_data`, `interest_security`, `interest_cloud`, `interest_design`.
-* **Demonstrated Skills (25 features)**: Discrete proficiency scores (0 to 3) representing core computing proficiencies.
+* **Stated Interests**: Not model features; used once as a separate, transparent 20% component of the advisory composite.
+* **Recorded Skills (25 features)**: Discrete self-assessed or advisor-reviewed proficiency scores (0 to 3).
 
 #### 5.1.3 Target Variable
 The target variable is `career_track`, representing the 5 primary career classifications:
@@ -523,7 +525,7 @@ The authentication portal provides secure credential sign-in, user registration,
 ## 7. Problems Faced During Development
 
 ### 1. Designing Multi-Dimensional Student Feature Representations
-Mapping diverse undergraduate profiles into a standardized numeric vector was challenging due to differing grading scales and subjective skill self-assessments. This was resolved by designing a 36-dimensional feature schema combining normalized grade points (0.0–4.0), domain interest scales (1–5), and integer-mapped skill levels (0–3), coupled with `StandardScaler` normalization.
+Mapping diverse undergraduate profiles into a standardized numeric vector remains limited by subjective self-assessment. The remediated 31-dimensional schema combines normalized grade points (0.0–4.0) and integer-mapped skill levels (0–3); stated interests are kept separate to prevent double counting.
 
 ### 2. Formulating an Admissible Heuristic Function for A* Roadmap Search
 Initial heuristic formulations estimated remaining effort by counting missing skills multiplied by average activity hours. However, when an activity required fewer hours than the average, the heuristic occasionally overestimated remaining cost, violating admissibility ($h(n) > h^*(n)$). This was corrected by computing $h(n)$ as the strict minimum duration among uncompleted candidate activities that advance each unsatisfied skill gap.

@@ -104,7 +104,7 @@ def seed_database():
         "Linux Systems Administration": "Beginner"
     }
     for sk, lvl in initial_skills.items():
-        db.set_student_skill(student1_id, sk, lvl)
+        db.set_student_skill(student1_id, sk, lvl, evidence_status="advisor_verified")
         
     # Projects for Aqeel Ahamad
     db.add_student_project(
@@ -113,7 +113,8 @@ def seed_database():
         description="Engineered an end-to-end predictive customer retention model utilizing Scikit-learn, Pandas, and interactive Plotly dashboards.",
         technologies="Python, Scikit-learn, Pandas, NumPy, Plotly",
         github_url="https://github.com/aqeel-ahamad/customer-churn-ml",
-        demonstrated_skills="Python Data Stack (Pandas/NumPy), Statistical Analysis, Machine Learning & Modeling"
+        demonstrated_skills="Python Data Stack (Pandas/NumPy), Statistical Analysis, Machine Learning & Modeling",
+        verification_status="advisor_verified"
     )
     db.add_student_project(
         user_id=student1_id,
@@ -121,29 +122,34 @@ def seed_database():
         description="Developed interactive business analytics portal for forecasting multi-store inventory demand using time-series decomposition.",
         technologies="Python, Streamlit, Statsmodels, SQLite, Seaborn",
         github_url="https://github.com/aqeel-ahamad/retail-sales-analytics",
-        demonstrated_skills="SQL & Data Querying, Data Visualization, Python Data Stack (Pandas/NumPy)"
+        demonstrated_skills="SQL & Data Querying, Data Visualization, Python Data Stack (Pandas/NumPy)",
+        verification_status="advisor_verified"
     )
     
     # Documents for Demonstration Student
-    db.add_student_document(student1_id, "CV", "Demo_Student_CV.pdf", {"pages": 2, "verified_skills": ["Python", "SQL", "Pandas", "Scikit-learn", "Git"]})
-    db.add_student_document(student1_id, "Transcript", "Demo_Transcript_Year2.pdf", {"gpa": 3.40, "credits_earned": 64})
-    db.add_student_document(student1_id, "Certificate", "IBM_Data_Science_Professional_Certificate.pdf", {"issuer": "IBM Coursera", "date": "2025-10-14"})
-    db.add_student_document(student1_id, "Certificate", "DeepLearning_AI_Machine_Learning_Specialization.pdf", {"issuer": "DeepLearning.AI", "date": "2025-07-22"})
+    db.add_student_document(student1_id, "CV", "Demo_Student_CV.pdf", {"pages": 2, "claimed_skills": ["Python", "SQL", "Pandas", "Scikit-learn", "Git"]}, verification_status="advisor_verified")
+    db.add_student_document(student1_id, "Transcript", "Demo_Transcript_Year2.pdf", {"gpa": 3.40, "credits_earned": 64}, verification_status="advisor_verified")
+    db.add_student_document(student1_id, "Certificate", "IBM_Data_Science_Professional_Certificate.pdf", {"issuer": "IBM Coursera", "date": "2025-10-14"}, verification_status="advisor_verified")
+    db.add_student_document(student1_id, "Certificate", "DeepLearning_AI_Machine_Learning_Specialization.pdf", {"issuer": "DeepLearning.AI", "date": "2025-07-22"}, verification_status="advisor_verified")
     
     # A* Optimized Roadmap for Demo Student (Data Science / AI)
     example_roadmap = [
-        {"activity_id": "ACT_DS_02", "activity_title": "Exploratory Data Analysis & Visualization", "activity_type": "Project", "week_number": 1, "estimated_hours": 14, "main_skill": "Data Visualization", "status": "In-Progress"},
-        {"activity_id": "ACT_DS_04", "activity_title": "Supervised & Unsupervised Machine Learning", "activity_type": "Course", "week_number": 3, "estimated_hours": 18, "main_skill": "Machine Learning & Modeling", "status": "Planned"},
-        {"activity_id": "ACT_DS_05", "activity_title": "End-to-End Predictive Machine Learning Project", "activity_type": "Project", "week_number": 5, "estimated_hours": 22, "main_skill": "Machine Learning & Modeling", "status": "Planned"}
+        {"activity_id": "ACT_DS_02", "activity_title": "Exploratory Data Analysis & Visualization", "activity_type": "Project", "week_number": 1, "estimated_hours": 14, "main_skill": "Data Visualization", "skill_level_gain": "Intermediate", "status": "In-Progress"},
+        {"activity_id": "ACT_DS_04", "activity_title": "Supervised & Unsupervised Machine Learning", "activity_type": "Course", "week_number": 3, "estimated_hours": 18, "main_skill": "Machine Learning & Modeling", "skill_level_gain": "Intermediate", "status": "Planned"},
+        {"activity_id": "ACT_DS_05", "activity_title": "End-to-End Predictive Machine Learning Project", "activity_type": "Project", "week_number": 5, "estimated_hours": 22, "main_skill": "Machine Learning & Modeling", "skill_level_gain": "Advanced", "status": "Planned"}
     ]
     db.save_roadmap(student1_id, "Data Science / AI", example_roadmap)
     
+    db.assign_advisor(advisor_id, student1_id)
+
     # Advisor note for Demo Student
     db.add_advisor_note(
         student_id=student1_id,
         advisor_name="Dr. Nihal Fernando",
-        feedback="Student demonstrates strong quantitative foundations in Data Science and Business Analytics. Advised to complete an end-to-end ML deployment pipeline to achieve full industry readiness.",
-        action_items="Complete Machine Learning project integration; containerize predictive service by end of Semester 2."
+        feedback="The available evidence shows strong quantitative foundations in Data Science and Business Analytics. An end-to-end deployment exercise would strengthen the portfolio.",
+        action_items="Complete the machine-learning project integration and containerize the predictive service by the end of Semester 2.",
+        actor_user_id=advisor_id,
+        actor_role="advisor"
     )
     
     print("Database seeding completed successfully for synthetic demonstration profile!")

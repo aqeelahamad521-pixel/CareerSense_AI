@@ -1,79 +1,79 @@
 {
   "knn": {
-    "accuracy": 88.82,
-    "precision": 89.74,
-    "recall": 88.82,
-    "f1_score": 88.87,
-    "precision_macro": 91.59,
-    "recall_macro": 88.18,
-    "f1_score_macro": 89.49,
+    "accuracy": 44.71,
+    "precision": 45.45,
+    "recall": 44.71,
+    "f1_score": 44.72,
+    "precision_macro": 45.45,
+    "recall_macro": 44.4,
+    "f1_score_macro": 44.57,
     "confusion_matrix": [
       [
-        47,
-        1,
-        1,
-        1,
-        0
-      ],
-      [
-        4,
-        29,
-        0,
-        0,
-        0
-      ],
-      [
-        4,
-        0,
-        23,
+        21,
+        7,
+        9,
         3,
-        0
+        1
       ],
       [
+        5,
+        13,
+        4,
+        7,
+        6
+      ],
+      [
+        6,
+        6,
+        15,
         2,
+        3
+      ],
+      [
+        8,
         1,
-        0,
-        32,
-        0
+        9,
+        16,
+        2
       ],
       [
+        8,
         2,
-        0,
-        0,
-        0,
-        20
+        3,
+        2,
+        11
       ]
     ],
     "per_class": {
       "Software Engineering": {
-        "precision": 79.66,
-        "recall": 94.0,
-        "f1_score": 86.24,
-        "support": 50
+        "precision": 43.75,
+        "recall": 51.22,
+        "f1_score": 47.19,
+        "support": 41
       },
       "Data Science / AI": {
-        "precision": 93.55,
-        "recall": 87.88,
-        "f1_score": 90.62,
-        "support": 33
-      },
-      "Cybersecurity": {
-        "precision": 95.83,
-        "recall": 76.67,
-        "f1_score": 85.19,
-        "support": 30
-      },
-      "Cloud / DevOps": {
-        "precision": 88.89,
-        "recall": 91.43,
-        "f1_score": 90.14,
+        "precision": 44.83,
+        "recall": 37.14,
+        "f1_score": 40.62,
         "support": 35
       },
+      "Cybersecurity": {
+        "precision": 37.5,
+        "recall": 46.88,
+        "f1_score": 41.67,
+        "support": 32
+      },
+      "Cloud / DevOps": {
+        "precision": 53.33,
+        "recall": 44.44,
+        "f1_score": 48.48,
+        "support": 36
+      },
       "UI/UX Design": {
-        "precision": 100.0,
-        "recall": 90.91,
-        "f1_score": 95.24,
-        "support": 22
+        "precision": 47.83,
+        "recall": 42.31,
+        "f1_score": 44.9,
+        "support": 26
       }
     },
     "labels": [
@@ -84,91 +84,91 @@
       "UI/UX Design"
     ],
     "name": "K-Nearest Neighbors (Primary Model)",
-    "cv_accuracy_mean": 89.56,
-    "cv_accuracy_std": 2.48,
+    "cv_accuracy_mean": 45.44,
+    "cv_accuracy_std": 6.76,
     "cv_fold_scores": [
-      91.18,
-      88.97,
-      85.29,
-      92.65,
-      89.71
+      47.79,
+      38.24,
+      57.35,
+      40.44,
+      43.38
     ]
   },
   "decision_tree": {
-    "accuracy": 60.0,
-    "precision": 64.16,
-    "recall": 60.0,
-    "f1_score": 60.39,
-    "precision_macro": 65.41,
-    "recall_macro": 58.63,
-    "f1_score_macro": 59.72,
+    "accuracy": 33.53,
+    "precision": 34.35,
+    "recall": 33.53,
+    "f1_score": 32.56,
+    "precision_macro": 33.79,
+    "recall_macro": 33.21,
+    "f1_score_macro": 32.05,
     "confusion_matrix": [
       [
-        33,
-        2,
+        17,
         7,
-        7,
+        12,
+        4,
         1
       ],
       [
-        11,
-        18,
         4,
-        0,
-        0
-      ],
-      [
-        2,
-        2,
-        21,
-        5,
-        0
-      ],
-      [
-        0,
-        2,
-        13,
-        20,
-        0
-      ],
-      [
-        4,
+        10,
+        14,
         3,
-        4,
-        1,
-        10
+        4
+      ],
+      [
+        3,
+        3,
+        18,
+        5,
+        3
+      ],
+      [
+        7,
+        6,
+        13,
+        6,
+        4
+      ],
+      [
+        5,
+        6,
+        6,
+        3,
+        6
       ]
     ],
     "per_class": {
       "Software Engineering": {
-        "precision": 66.0,
-        "recall": 66.0,
-        "f1_score": 66.0,
-        "support": 50
+        "precision": 47.22,
+        "recall": 41.46,
+        "f1_score": 44.16,
+        "support": 41
       },
       "Data Science / AI": {
-        "precision": 66.67,
-        "recall": 54.55,
-        "f1_score": 60.0,
-        "support": 33
-      },
-      "Cybersecurity": {
-        "precision": 42.86,
-        "recall": 70.0,
-        "f1_score": 53.16,
-        "support": 30
-      },
-      "Cloud / DevOps": {
-        "precision": 60.61,
-        "recall": 57.14,
-        "f1_score": 58.82,
+        "precision": 31.25,
+        "recall": 28.57,
+        "f1_score": 29.85,
         "support": 35
       },
+      "Cybersecurity": {
+        "precision": 28.57,
+        "recall": 56.25,
+        "f1_score": 37.89,
+        "support": 32
+      },
+      "Cloud / DevOps": {
+        "precision": 28.57,
+        "recall": 16.67,
+        "f1_score": 21.05,
+        "support": 36
+      },
       "UI/UX Design": {
-        "precision": 90.91,
-        "recall": 45.45,
-        "f1_score": 60.61,
-        "support": 22
+        "precision": 33.33,
+        "recall": 23.08,
+        "f1_score": 27.27,
+        "support": 26
       }
     },
     "labels": [
@@ -179,114 +179,244 @@
       "UI/UX Design"
     ],
     "name": "Decision Tree Classifier (Baseline Model)",
-    "cv_accuracy_mean": 63.53,
-    "cv_accuracy_std": 4.5,
+    "cv_accuracy_mean": 29.41,
+    "cv_accuracy_std": 4.21,
     "cv_fold_scores": [
-      67.65,
-      67.65,
-      66.18,
-      57.35,
-      58.82
+      37.5,
+      29.41,
+      27.21,
+      27.21,
+      25.74
     ],
     "top_features": [
       [
-        "interest_security",
-        0.1481
+        "skill_ml",
+        0.0983
       ],
       [
-        "interest_design",
-        0.1216
+        "grade_design",
+        0.0834
       ],
       [
-        "interest_software",
-        0.1113
+        "skill_monitoring",
+        0.0789
       ],
       [
-        "interest_data",
-        0.1094
+        "skill_vuln_assess",
+        0.0724
       ],
       [
-        "interest_cloud",
-        0.0962
+        "skill_network_sec",
+        0.072
+      ],
+      [
+        "skill_testing",
+        0.0701
       ],
       [
         "skill_dsa",
-        0.0697
+        0.0507
       ],
       [
-        "skill_web_api",
-        0.0637
-      ],
-      [
-        "skill_ml",
-        0.0624
+        "skill_frontend",
+        0.05
       ]
     ]
+  },
+  "production_composite": {
+    "accuracy": 43.53,
+    "precision": 45.28,
+    "recall": 43.53,
+    "f1_score": 43.72,
+    "precision_macro": 46.1,
+    "recall_macro": 43.34,
+    "f1_score_macro": 43.98,
+    "confusion_matrix": [
+      [
+        20,
+        7,
+        9,
+        4,
+        1
+      ],
+      [
+        7,
+        12,
+        5,
+        8,
+        3
+      ],
+      [
+        7,
+        6,
+        15,
+        2,
+        2
+      ],
+      [
+        8,
+        1,
+        10,
+        16,
+        1
+      ],
+      [
+        9,
+        2,
+        3,
+        1,
+        11
+      ]
+    ],
+    "per_class": {
+      "Software Engineering": {
+        "precision": 39.22,
+        "recall": 48.78,
+        "f1_score": 43.48,
+        "support": 41
+      },
+      "Data Science / AI": {
+        "precision": 42.86,
+        "recall": 34.29,
+        "f1_score": 38.1,
+        "support": 35
+      },
+      "Cybersecurity": {
+        "precision": 35.71,
+        "recall": 46.88,
+        "f1_score": 40.54,
+        "support": 32
+      },
+      "Cloud / DevOps": {
+        "precision": 51.61,
+        "recall": 44.44,
+        "f1_score": 47.76,
+        "support": 36
+      },
+      "UI/UX Design": {
+        "precision": 61.11,
+        "recall": 42.31,
+        "f1_score": 50.0,
+        "support": 26
+      }
+    },
+    "labels": [
+      "Software Engineering",
+      "Data Science / AI",
+      "Cybersecurity",
+      "Cloud / DevOps",
+      "UI/UX Design"
+    ],
+    "name": "Production advisory composite (synthetic holdout)",
+    "formula": "70% K-NN competency + 20% stated interests + 10% degree alignment",
+    "limitations": "Evaluated only against synthetic generator labels; this does not validate career outcomes, fairness, employability, or causal recommendations.",
+    "synthetic_subgroup_diagnostic": {
+      "attribute": "degree_programme",
+      "groups": {
+        "BSc (Hons) in Computer Engineering": {
+          "sample_count": 21,
+          "accuracy": 57.14,
+          "f1_macro": 47.74,
+          "accuracy_delta_from_overall": 13.61
+        },
+        "BSc (Hons) in Computer Science": {
+          "sample_count": 30,
+          "accuracy": 36.67,
+          "f1_macro": 38.0,
+          "accuracy_delta_from_overall": -6.86
+        },
+        "BSc (Hons) in Data Science & Business Analytics": {
+          "sample_count": 28,
+          "accuracy": 50.0,
+          "f1_macro": 47.22,
+          "accuracy_delta_from_overall": 6.47
+        },
+        "BSc (Hons) in Information Systems": {
+          "sample_count": 21,
+          "accuracy": 38.1,
+          "f1_macro": 31.44,
+          "accuracy_delta_from_overall": -5.43
+        },
+        "BSc (Hons) in Information Technology": {
+          "sample_count": 29,
+          "accuracy": 48.28,
+          "f1_macro": 40.95,
+          "accuracy_delta_from_overall": 4.75
+        },
+        "BSc (Hons) in Software Engineering": {
+          "sample_count": 41,
+          "accuracy": 36.59,
+          "f1_macro": 32.61,
+          "accuracy_delta_from_overall": -6.94
+        }
+      },
+      "limitations": "A diagnostic on synthetic labels only. It can reveal simulated performance gaps, but it is not a real-world fairness audit and excludes protected attributes."
+    }
   },
   "model_comparison": [
     {
       "model": "Zero-Rule (Dummy Baseline)",
       "type": "Baseline",
-      "cv_accuracy": 29.56,
-      "accuracy": 29.41,
-      "f1_macro": 9.09,
-      "f1_weighted": 13.37,
+      "cv_accuracy": 23.68,
+      "accuracy": 24.12,
+      "f1_macro": 7.77,
+      "f1_weighted": 9.37,
       "rationale": "Majority-class baseline confirming non-trivial learning"
     },
     {
       "model": "Decision Tree Classifier",
       "type": "Interpretable Baseline",
-      "cv_accuracy": 63.53,
-      "accuracy": 60.0,
-      "f1_macro": 59.72,
-      "f1_weighted": 60.39,
+      "cv_accuracy": 29.41,
+      "accuracy": 33.53,
+      "f1_macro": 32.05,
+      "f1_weighted": 32.56,
       "rationale": "White-box rule-interpretable tree benchmark (max depth 6)"
     },
     {
       "model": "Random Forest Classifier",
       "type": "Ensemble Benchmark",
-      "cv_accuracy": 87.21,
-      "accuracy": 82.94,
-      "f1_macro": 83.13,
-      "f1_weighted": 82.84,
+      "cv_accuracy": 46.03,
+      "accuracy": 48.82,
+      "f1_macro": 47.08,
+      "f1_weighted": 48.11,
       "rationale": "Ensemble benchmark evaluating non-linear feature interactions"
     },
     {
       "model": "Multinomial Logistic Regression",
       "type": "Linear Benchmark",
-      "cv_accuracy": 88.53,
-      "accuracy": 88.82,
-      "f1_macro": 89.45,
-      "f1_weighted": 88.83,
+      "cv_accuracy": 51.47,
+      "accuracy": 49.41,
+      "f1_macro": 48.76,
+      "f1_weighted": 49.31,
       "rationale": "L2-regularized linear decision boundary benchmark"
     },
     {
       "model": "K-Nearest Neighbors (k=7, distance)",
       "type": "Primary Selected Model",
-      "cv_accuracy": 89.56,
-      "accuracy": 88.82,
-      "f1_macro": 89.49,
-      "f1_weighted": 88.87,
+      "cv_accuracy": 45.44,
+      "accuracy": 44.71,
+      "f1_macro": 44.57,
+      "f1_weighted": 44.72,
       "rationale": "Selected non-parametric model reflecting peer cohort proximity"
     }
   ],
   "provenance": {
-    "evaluation_timestamp": "2026-10-12T05:44:55.869098+00:00",
-    "training_timestamp_utc": "2026-10-12T05:44:55.869098+00:00",
-    "dataset_hash_sha256": "87371f6919a197f5a098b7f10317ea9049841649275143c4a9a066d780975b34",
-    "dataset_sha256": "87371f6919a197f5a098b7f10317ea9049841649275143c4a9a066d780975b34",
+    "evaluation_timestamp": "2026-10-15T12:29:13.568728+00:00",
+    "training_timestamp_utc": "2026-10-15T12:29:13.568728+00:00",
+    "dataset_hash_sha256": "75550d364a8cf9f5ada96983cf9e04c04be7af8374b088ddee068a616193f4c0",
+    "dataset_sha256": "75550d364a8cf9f5ada96983cf9e04c04be7af8374b088ddee068a616193f4c0",
     "random_seed": 42,
-    "python_version": "3.14.5",
+    "python_version": "3.11.17",
     "dependencies": {
-      "scikit-learn": "1.9.1",
-      "numpy": "2.4.6",
-      "pandas": "3.0.3"
+      "scikit-learn": "1.6.1",
+      "numpy": "2.0.2",
+      "pandas": "2.3.3"
     },
     "environment_versions": {
-      "scikit_learn": "1.9.1",
-      "numpy": "2.4.6",
-      "pandas": "3.0.3",
-      "python": "3.14.5"
+      "scikit_learn": "1.6.1",
+      "numpy": "2.0.2",
+      "pandas": "2.3.3",
+      "python": "3.11.17"
     },
     "evaluation_protocol": "Stratified 80/20 held-out split with 5-fold CV",
     "preprocessing_isolation": "Pipeline(StandardScaler(), Estimator()) per fold to prevent CV data leakage",
@@ -295,19 +425,88 @@
       "cross_validation": "5-Fold StratifiedKFold (random_state=42, shuffle=True) on training split only",
       "preprocessing_isolation": "Pipeline(StandardScaler(), Estimator()) per fold to prevent CV data leakage",
       "held_out_test_role": "Strictly held-out; used only for final benchmark comparison, not hyperparameter tuning"
-    }
+    },
+    "artifact_schema_version": 2,
+    "feature_columns": [
+      "grade_programming",
+      "grade_math",
+      "grade_database",
+      "grade_networking",
+      "grade_systems",
+      "grade_design",
+      "skill_oop",
+      "skill_dsa",
+      "skill_web_api",
+      "skill_testing",
+      "skill_git",
+      "skill_python_data",
+      "skill_ml",
+      "skill_visualization",
+      "skill_sql",
+      "skill_statistics",
+      "skill_network_sec",
+      "skill_cryptography",
+      "skill_linux",
+      "skill_vuln_assess",
+      "skill_secure_code",
+      "skill_docker",
+      "skill_cicd",
+      "skill_cloud_infra",
+      "skill_iac",
+      "skill_monitoring",
+      "skill_user_research",
+      "skill_figma",
+      "skill_design_principles",
+      "skill_frontend",
+      "skill_design_systems"
+    ],
+    "data_scope": "Synthetic student profiles generated from hand-authored career rules",
+    "external_validation": "Not performed"
   },
   "dataset_info": {
     "total_samples": 850,
     "training_samples": 680,
     "testing_samples": 170,
-    "features_count": 36,
+    "features_count": 31,
     "class_distribution": {
-      "Software Engineering": 251,
-      "Data Science / AI": 165,
-      "Cybersecurity": 148,
-      "Cloud / DevOps": 178,
-      "UI/UX Design": 108
+      "Software Engineering": 202,
+      "Data Science / AI": 177,
+      "Cybersecurity": 162,
+      "Cloud / DevOps": 179,
+      "UI/UX Design": 130
+    },
+    "feature_defaults": {
+      "grade_programming": 2.99,
+      "grade_math": 2.985,
+      "grade_database": 3.06,
+      "grade_networking": 2.99,
+      "grade_systems": 3.02,
+      "grade_design": 3.01,
+      "skill_oop": 1.0,
+      "skill_dsa": 1.0,
+      "skill_web_api": 1.0,
+      "skill_testing": 1.0,
+      "skill_git": 1.0,
+      "skill_python_data": 1.0,
+      "skill_ml": 1.0,
+      "skill_visualization": 1.0,
+      "skill_sql": 1.0,
+      "skill_statistics": 1.0,
+      "skill_network_sec": 1.0,
+      "skill_cryptography": 1.0,
+      "skill_linux": 1.0,
+      "skill_vuln_assess": 1.0,
+      "skill_secure_code": 1.0,
+      "skill_docker": 1.0,
+      "skill_cicd": 1.0,
+      "skill_cloud_infra": 1.0,
+      "skill_iac": 1.0,
+      "skill_monitoring": 1.0,
+      "skill_user_research": 1.0,
+      "skill_figma": 1.0,
+      "skill_design_principles": 1.0,
+      "skill_frontend": 1.0,
+      "skill_design_systems": 1.0
     }
   }
 }

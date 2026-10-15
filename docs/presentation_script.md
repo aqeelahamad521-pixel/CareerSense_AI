@@ -2,6 +2,8 @@
 ## Essentials of Artificial Intelligence — Group 19
 ### Faculty of Computing, General Sir John Kotelawala Defence University
 
+> **Presenter update:** Replace the original model claims with the current implementation: 31 competency features (6 grades + 25 skills), an exact 70/20/10 target-independent affinity composite, synthetic-only validation, and low-evidence abstention.
+
 ---
 
 ## Presentation Slide Outline & Speaker Roles
@@ -38,7 +40,7 @@
 ---
 
 ### Slide 4: AI Layer 1 — ML Modeling & Benchmarks (Speaker: SGT Tharumila - 2 mins)
-- **Feature Vector**: 36 normalized inputs (6 academic subject grades, 5 domain interest ratings, 25 technical skill proficiencies).
+- **Feature Vector**: 31 normalized competency inputs (6 academic subject grades and 25 technical skill proficiencies). Interest ratings are kept outside the model and counted once.
 - **Dataset**: 850 synthetic undergraduate computing profiles across KDU degree programmes.
 - **Evaluation Methodology**: Stratified 80/20 train/test split; 5-fold cross-validation with isolated StandardScaler pipelines (zero preprocessing leakage).
 - **Evaluation Results**:

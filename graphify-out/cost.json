@@ -1,0 +1,13 @@
+{
+  "runs": [
+    {
+      "date": "2026-10-15T06:37:19.161175+00:00",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "files": 30,
+      "note": "host-agent token usage unavailable; numeric zeros are placeholders"
+    }
+  ],
+  "total_input_tokens": 0,
+  "total_output_tokens": 0
+}

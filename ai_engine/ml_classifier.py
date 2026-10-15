@@ -14,6 +14,7 @@ import sys
 import pickle
 import json
 import hashlib
+import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, List, Tuple, Any
@@ -25,9 +26,27 @@ sys.path.append(str(BASE_DIR))
 
 from config import (
     DATASET_PATH, MODELS_DIR, CAREER_TRACKS,
-    ML_FEATURE_COLUMNS, GRADE_POINTS, SKILL_LEVELS,
+    ML_FEATURE_COLUMNS, INTEREST_FEATURE_COLUMNS, GRADE_POINTS, SKILL_LEVELS,
     DEGREE_CAREER_ALIGNMENT
 )
+
+ARTIFACT_SCHEMA_VERSION = 2
+
+INTEREST_TO_TRACK = {
+    "interest_software": "Software Engineering",
+    "interest_data": "Data Science / AI",
+    "interest_security": "Cybersecurity",
+    "interest_cloud": "Cloud / DevOps",
+    "interest_design": "UI/UX Design",
+}
+
+RUNTIME_INTEREST_TO_TRACK = {
+    "Software Development & Systems": "Software Engineering",
+    "Data Analysis & AI Research": "Data Science / AI",
+    "Cybersecurity & Threat Defense": "Cybersecurity",
+    "Cloud Infrastructure & Automation": "Cloud / DevOps",
+    "UI/UX Design & User Experience": "UI/UX Design",
+}
 
 def compute_multiclass_metrics(y_true, y_pred, labels):
     """
@@ -147,17 +166,19 @@ class CareerClassifier:
         self.dt_path = MODELS_DIR / "dt_model.pkl"
         self.scaler_path = MODELS_DIR / "scaler.pkl"
         self.metrics_path = MODELS_DIR / "evaluation_metrics.json"
+        self.compatibility_status = "not_checked"
+        self.compatibility_reason = ""
         self.load_models()
 
     def extract_features(self, academic_records: list, interests: dict, skills: dict) -> np.ndarray:
         """Transforms raw student attributes into a feature vector matching ML_FEATURE_COLUMNS."""
         grade_map = {
-            "grade_programming": 2.5,
-            "grade_math": 2.5,
-            "grade_database": 2.5,
-            "grade_networking": 2.5,
-            "grade_systems": 2.5,
-            "grade_design": 2.5
+            "grade_programming": 0.0,
+            "grade_math": 0.0,
+            "grade_database": 0.0,
+            "grade_networking": 0.0,
+            "grade_systems": 0.0,
+            "grade_design": 0.0
         }
         subj_to_key = {
             "Programming": "grade_programming",
@@ -172,15 +193,6 @@ class CareerClassifier:
             if s_name in subj_to_key:
                 k = subj_to_key[s_name]
                 grade_map[k] = max(grade_map[k], rec.get("grade_points", GRADE_POINTS.get(rec.get("grade", "C"), 2.0)))
-
-        default_int = 1.0 if interests else 2.0
-        interest_map = {
-            "interest_software": float(interests.get("Software Development & Systems", default_int)),
-            "interest_data": float(interests.get("Data Analysis & AI Research", default_int)),
-            "interest_security": float(interests.get("Cybersecurity & Threat Defense", default_int)),
-            "interest_cloud": float(interests.get("Cloud Infrastructure & Automation", default_int)),
-            "interest_design": float(interests.get("UI/UX Design & User Experience", default_int))
-        }
 
         # Harmonize skills with completed academic modules
         combined_skills = dict(skills) if skills else {}
@@ -256,8 +268,6 @@ class CareerClassifier:
         for col in ML_FEATURE_COLUMNS:
             if col in grade_map:
                 vec.append(float(grade_map[col]))
-            elif col in interest_map:
-                vec.append(float(interest_map[col]))
             elif col in skill_attr_map:
                 lvl_val = SKILL_LEVELS.get(skill_attr_map[col], 0)
                 vec.append(float(lvl_val))
@@ -265,6 +275,18 @@ class CareerClassifier:
                 vec.append(0.0)
 
         return np.array(vec, dtype=np.float64).reshape(1, -1)
+
+    def _composite_distribution(self, competency_dist: dict, interest_dist: dict, degree: str = None) -> dict:
+        """Exact production advisory composite. The selected target is never an input."""
+        degree_dist = DEGREE_CAREER_ALIGNMENT.get(degree, {track: 0.20 for track in self.classes_})
+        raw = {
+            track: (0.70 * competency_dist.get(track, 0.0))
+            + (0.20 * interest_dist.get(track, 0.20))
+            + (0.10 * degree_dist.get(track, 0.20))
+            for track in self.classes_
+        }
+        total = sum(raw.values()) or 1.0
+        return {track: value / total for track, value in raw.items()}
 
     def train_models(self, dataset_path=DATASET_PATH) -> dict:
         """
@@ -315,7 +337,7 @@ class CareerClassifier:
 
         knn_pipe = Pipeline([
             ("scaler", StandardScaler()),
-            ("knn", KNeighborsClassifier(n_neighbors=7, weights="distance"))
+            ("knn", KNeighborsClassifier(n_neighbors=7, weights="distance", n_jobs=1))
         ])
         knn_cv_scores = cross_val_score(knn_pipe, X_train, y_train, cv=cv, scoring="accuracy")
 
@@ -339,7 +361,7 @@ class CareerClassifier:
         X_train_scaled = self.scaler.fit_transform(X_train)
         X_test_scaled = self.scaler.transform(X_test)
 
-        self.knn_model = KNeighborsClassifier(n_neighbors=7, weights="distance")
+        self.knn_model = KNeighborsClassifier(n_neighbors=7, weights="distance", n_jobs=1)
         self.knn_model.fit(X_train_scaled, y_train)
 
         self.dt_model = DecisionTreeClassifier(max_depth=6, min_samples_leaf=3, random_state=42)
@@ -368,6 +390,65 @@ class CareerClassifier:
         dt_importances = dict(zip(ML_FEATURE_COLUMNS, importances))
         top_features = sorted(dt_importances.items(), key=lambda x: -x[1])[:8]
         dt_metrics["top_features"] = top_features
+
+        # Evaluate the exact composite exposed by the product on the held-out
+        # synthetic split. This is still a simulation benchmark, not evidence of
+        # employment outcomes, but it prevents the UI from advertising a metric
+        # for a different scoring function.
+        composite_preds = []
+        # train_test_split is repeated on row indices with the same seed so the
+        # auxiliary degree/interest fields align exactly with X_test/y_test.
+        row_indices = np.arange(len(df))
+        _, test_indices = train_test_split(
+            row_indices, test_size=0.20, random_state=42, stratify=y
+        )
+        knn_test_probs = self.knn_model.predict_proba(X_test_scaled)
+        for row_idx, prob_row in zip(test_indices, knn_test_probs):
+            competency = {
+                track: float(prob_row[list(self.knn_model.classes_).index(track)])
+                if track in self.knn_model.classes_ else 0.0
+                for track in self.classes_
+            }
+            interest_raw = {
+                track: float(df.iloc[row_idx][feature])
+                for feature, track in INTEREST_TO_TRACK.items()
+            }
+            interest_total = sum(interest_raw.values()) or 1.0
+            interest_dist = {track: value / interest_total for track, value in interest_raw.items()}
+            composite = self._composite_distribution(
+                competency, interest_dist, str(df.iloc[row_idx]["degree"])
+            )
+            composite_preds.append(max(composite, key=composite.get))
+        composite_metrics = compute_multiclass_metrics(y_test, composite_preds, labels)
+        composite_metrics["name"] = "Production advisory composite (synthetic holdout)"
+        composite_metrics["formula"] = "70% K-NN competency + 20% stated interests + 10% degree alignment"
+        composite_metrics["limitations"] = (
+            "Evaluated only against synthetic generator labels; this does not validate career outcomes, "
+            "fairness, employability, or causal recommendations."
+        )
+        subgroup_diagnostics = {}
+        test_degrees = [str(df.iloc[row_idx]["degree"]) for row_idx in test_indices]
+        for degree_name in sorted(set(test_degrees)):
+            positions = [i for i, value in enumerate(test_degrees) if value == degree_name]
+            degree_true = [y_test.iloc[i] if hasattr(y_test, "iloc") else y_test[i] for i in positions]
+            degree_pred = [composite_preds[i] for i in positions]
+            degree_metrics = compute_multiclass_metrics(degree_true, degree_pred, labels)
+            subgroup_diagnostics[degree_name] = {
+                "sample_count": len(positions),
+                "accuracy": degree_metrics["accuracy"],
+                "f1_macro": degree_metrics["f1_score_macro"],
+                "accuracy_delta_from_overall": round(
+                    degree_metrics["accuracy"] - composite_metrics["accuracy"], 2
+                ),
+            }
+        composite_metrics["synthetic_subgroup_diagnostic"] = {
+            "attribute": "degree_programme",
+            "groups": subgroup_diagnostics,
+            "limitations": (
+                "A diagnostic on synthetic labels only. It can reveal simulated performance gaps, "
+                "but it is not a real-world fairness audit and excludes protected attributes."
+            ),
+        }
 
         dummy_preds = final_dummy.predict(X_test)
         dummy_metrics = compute_multiclass_metrics(y_test, dummy_preds, labels)
@@ -452,12 +533,17 @@ class CareerClassifier:
                 "cross_validation": "5-Fold StratifiedKFold (random_state=42, shuffle=True) on training split only",
                 "preprocessing_isolation": "Pipeline(StandardScaler(), Estimator()) per fold to prevent CV data leakage",
                 "held_out_test_role": "Strictly held-out; used only for final benchmark comparison, not hyperparameter tuning"
-            }
+            },
+            "artifact_schema_version": ARTIFACT_SCHEMA_VERSION,
+            "feature_columns": list(ML_FEATURE_COLUMNS),
+            "data_scope": "Synthetic student profiles generated from hand-authored career rules",
+            "external_validation": "Not performed"
         }
 
         self.metrics = {
             "knn": knn_metrics,
             "decision_tree": dt_metrics,
+            "production_composite": composite_metrics,
             "model_comparison": model_comparison,
             "provenance": provenance,
             "dataset_info": {
@@ -465,46 +551,84 @@ class CareerClassifier:
                 "training_samples": len(X_train),
                 "testing_samples": len(X_test),
                 "features_count": len(ML_FEATURE_COLUMNS),
-                "class_distribution": class_dist
+                "class_distribution": class_dist,
+                "feature_defaults": {
+                    column: round(float(df[column].median()), 4) for column in ML_FEATURE_COLUMNS
+                }
             }
         }
 
-        # Save artifacts atomically
+        # Save artifacts atomically so an interrupted retrain never leaves a
+        # partially written pickle that the next process attempts to load.
         MODELS_DIR.mkdir(parents=True, exist_ok=True)
-        with open(self.knn_path, "wb") as f:
-            pickle.dump(self.knn_model, f)
-        with open(self.dt_path, "wb") as f:
-            pickle.dump(self.dt_model, f)
-        with open(self.scaler_path, "wb") as f:
-            pickle.dump(self.scaler, f)
-        with open(self.metrics_path, "w", encoding="utf-8") as f:
-            json.dump(self.metrics, f, indent=2)
+        for destination, value in (
+            (self.knn_path, self.knn_model),
+            (self.dt_path, self.dt_model),
+            (self.scaler_path, self.scaler),
+        ):
+            with tempfile.NamedTemporaryFile("wb", dir=MODELS_DIR, delete=False) as tmp:
+                pickle.dump(value, tmp)
+                tmp.flush()
+                os.fsync(tmp.fileno())
+                temp_path = tmp.name
+            os.replace(temp_path, destination)
+        with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=MODELS_DIR, delete=False) as tmp:
+            json.dump(self.metrics, tmp, indent=2)
+            tmp.flush()
+            os.fsync(tmp.fileno())
+            temp_metrics_path = tmp.name
+        os.replace(temp_metrics_path, self.metrics_path)
 
         self.is_trained = True
         return self.metrics
 
     def load_models(self):
-        """Loads trained models and saved metrics. Returns True if successful, False otherwise."""
-        if self.knn_path.exists() and self.dt_path.exists() and self.scaler_path.exists():
+        """Load artifacts only after their provenance matches this runtime."""
+        required = (self.knn_path, self.dt_path, self.scaler_path, self.metrics_path)
+        if all(path.exists() for path in required):
             try:
+                import sklearn
+                with open(self.metrics_path, "r", encoding="utf-8") as f:
+                    metrics = json.load(f)
+                provenance = metrics.get("provenance", {})
+                saved_versions = provenance.get("dependencies", {})
+                checks = {
+                    "artifact schema": provenance.get("artifact_schema_version") == ARTIFACT_SCHEMA_VERSION,
+                    "feature schema": provenance.get("feature_columns") == list(ML_FEATURE_COLUMNS),
+                    "scikit-learn": saved_versions.get("scikit-learn") == sklearn.__version__,
+                    "numpy": saved_versions.get("numpy") == np.__version__,
+                    "pandas": saved_versions.get("pandas") == pd.__version__,
+                    "Python major/minor": ".".join(str(provenance.get("python_version", "")).split(".")[:2])
+                    == ".".join(sys.version.split()[0].split(".")[:2]),
+                }
+                failed = [name for name, ok in checks.items() if not ok]
+                if failed:
+                    self.compatibility_status = "incompatible"
+                    self.compatibility_reason = "Artifact mismatch: " + ", ".join(failed)
+                    self.metrics = metrics
+                    self.is_trained = False
+                    return False
                 with open(self.knn_path, "rb") as f:
                     self.knn_model = pickle.load(f)
                 with open(self.dt_path, "rb") as f:
                     self.dt_model = pickle.load(f)
                 with open(self.scaler_path, "rb") as f:
                     self.scaler = pickle.load(f)
-                if self.metrics_path.exists():
-                    with open(self.metrics_path, "r", encoding="utf-8") as f:
-                        self.metrics = json.load(f)
+                self.metrics = metrics
                 self.is_trained = True
+                self.compatibility_status = "compatible"
+                self.compatibility_reason = "Saved artifacts match the active feature and dependency schema."
                 return True
             except Exception as e:
                 self.is_trained = False
-                self.metrics = {}
+                self.compatibility_status = "error"
+                self.compatibility_reason = f"Artifacts could not be loaded: {type(e).__name__}"
                 return False
         else:
             self.is_trained = False
             self.metrics = {}
+            self.compatibility_status = "missing"
+            self.compatibility_reason = "One or more model artifacts are missing."
             return False
 
     def predict_career_matches(self, academic_records: list, interests: dict, skills: dict, degree: str = None, target_career: str = None) -> dict:
@@ -513,11 +637,11 @@ class CareerClassifier:
 
         Score Semantics & Disambiguation:
         - match_score / affinity_score (0-100%): An uncalibrated composite advisory affinity index
-          combining pure ML technical competency (40-65%), domain interest (15-20%), degree curriculum alignment
-          (15-25%), and student aspirational target preference (0-30%). Normalized to sum to 100% across the 5 tracks.
+          combining K-NN competency (70%), stated interest (20%), and degree curriculum alignment (10%).
+          The selected target is highlighted but never changes the ranking.
           IT IS NOT AN EMPIRICAL OR BAYESIAN PROBABILITY OF POST-GRADUATE EMPLOYMENT.
         - ml_competency_score / competency_prob (0-100%): Pure technical alignment predicted solely from verified
-          academic module grades and technical skills (70% K-NN + 30% Decision Tree), completely independent of student aspirations.
+          academic module grades and technical skills (K-NN), completely independent of stated interests and aspirations.
         - knn_neighbor_score / knn_prob (0-100%): Inverse-distance weighted neighborhood class proportions from the K-NN model.
         - dt_leaf_score / dt_prob (0-100%): Training-sample class frequency distribution in the Decision Tree leaf node.
         - probability: Retained strictly for backward compatibility with legacy API callers and UI components; mirrors match_score.
@@ -537,56 +661,34 @@ class CareerClassifier:
         # Degree Alignment Prior
         prior = DEGREE_CAREER_ALIGNMENT.get(degree, {t: 0.20 for t in self.classes_})
 
-        # Map domain interests to career tracks
-        category_to_track = {
-            "Software Development & Systems": "Software Engineering",
-            "Data Analysis & AI Research": "Data Science / AI",
-            "Cybersecurity & Threat Defense": "Cybersecurity",
-            "Cloud Infrastructure & Automation": "Cloud / DevOps",
-            "UI/UX Design & User Experience": "UI/UX Design"
-        }
         default_int = 1.0 if interests else 2.0
         interest_scores = {}
-        for cat, trk in category_to_track.items():
+        for cat, trk in RUNTIME_INTEREST_TO_TRACK.items():
             interest_scores[trk] = float(interests.get(cat, default_int)) if interests else 2.0
         sum_int = sum(interest_scores.values()) or 1.0
         interest_dist = {trk: val / sum_int for trk, val in interest_scores.items()}
 
-        # Assess profile completeness and balance weights
-        has_academic_data = len(academic_records) > 0
-        has_skill_data = any(lvl != "None" and lvl != 0 for lvl in skills.values()) if skills else False
+        nonzero_skills = sum(1 for lvl in (skills or {}).values() if SKILL_LEVELS.get(str(lvl), 0) > 0)
+        evidence_count = len(academic_records) + nonzero_skills
+        is_actionable = evidence_count >= 2
 
-        if target_career and target_career in self.classes_:
-            if has_academic_data:
-                # 40% Current Academic/Skill Competency, 30% Target Aspiration, 15% Domain Interest, 15% Degree Prior
-                w_ml, w_target, w_interest, w_prior = 0.40, 0.30, 0.15, 0.15
-            elif has_skill_data:
-                w_ml, w_target, w_interest, w_prior = 0.35, 0.35, 0.15, 0.15
-            else:
-                # Cold start: high weight on target aspiration and domain interest
-                w_ml, w_target, w_interest, w_prior = 0.15, 0.45, 0.20, 0.20
-            target_dist = {t: (1.0 if t == target_career else 0.0) for t in self.classes_}
-        else:
-            w_target = 0.0
-            target_dist = {t: 0.0 for t in self.classes_}
-            if has_academic_data:
-                w_ml, w_interest, w_prior = 0.65, 0.15, 0.20
-            elif has_skill_data:
-                w_ml, w_interest, w_prior = 0.55, 0.20, 0.25
-            else:
-                w_ml, w_interest, w_prior = 0.20, 0.30, 0.50
-
-        ranked = []
+        competency_dist = {}
+        diagnostics = {}
         for track in self.classes_:
             knn_p = knn_probs[knn_classes.index(track)] if track in knn_classes else 0.0
             dt_p = dt_probs[dt_classes.index(track)] if track in dt_classes else 0.0
-            ml_p = (0.70 * knn_p) + (0.30 * dt_p)
-            tgt_p = target_dist.get(track, 0.0)
+            competency_dist[track] = float(knn_p)
+            diagnostics[track] = float(dt_p)
+        composite_dist = self._composite_distribution(competency_dist, interest_dist, degree)
+
+        ranked = []
+        for track in self.classes_:
+            knn_p = competency_dist.get(track, 0.0)
+            dt_p = diagnostics.get(track, 0.0)
+            ml_p = knn_p
             int_p = interest_dist.get(track, 0.20)
             pri_p = prior.get(track, 0.20)
-
-            combined_p = (w_ml * ml_p) + (w_target * tgt_p) + (w_interest * int_p) + (w_prior * pri_p)
-            raw_match_pct = round(float(combined_p) * 100, 1)
+            raw_match_pct = round(float(composite_dist.get(track, 0.0)) * 100, 1)
 
             ranked.append({
                 "track": track,
@@ -606,7 +708,7 @@ class CareerClassifier:
                 "is_target": (track == target_career)
             })
 
-        # Normalize so affinity percentages sum to 100%
+        # Correct rounding drift so displayed shares remain a coherent distribution.
         total_p = sum(r["match_score"] for r in ranked)
         if total_p > 0:
             for r in ranked:
@@ -616,6 +718,10 @@ class CareerClassifier:
                 r["affinity_score"] = norm_val
 
         ranked.sort(key=lambda x: -x["match_score"])
+        score_margin = round(
+            ranked[0]["match_score"] - ranked[1]["match_score"], 1
+        ) if len(ranked) > 1 else 100.0
+        recommendation_available = is_actionable and score_margin >= 5.0
 
         # Determine pure ML top prediction from academic coursework and skills
         ml_sorted = sorted(ranked, key=lambda x: -x["ml_competency_score"])
@@ -623,15 +729,28 @@ class CareerClassifier:
 
         distances, indices = self.knn_model.kneighbors(X_scaled, n_neighbors=5)
         
-        weights_desc = f"ML Competency ({int(w_ml*100)}%)"
-        if w_target > 0:
-            weights_desc += f" + Target Aspiration ({int(w_target*100)}%)"
-        weights_desc += f" + Interests ({int(w_interest*100)}%) + Degree Prior ({int(w_prior*100)}%)"
-
         return {
             "ranked_matches": ranked,
-            "top_track": ranked[0]["track"] if ranked else "Software Engineering",
+            "top_track": ranked[0]["track"] if ranked and recommendation_available else None,
             "ml_predicted_track": ml_predicted_track,
-            "model_used": weights_desc,
-            "nearest_neighbor_distances": [round(float(d), 3) for d in distances[0]]
+            "model_used": "70% K-NN competency + 20% stated interests + 10% degree alignment",
+            "nearest_neighbor_distances": [round(float(d), 3) for d in distances[0]],
+            "is_actionable": is_actionable,
+            "recommendation_available": recommendation_available,
+            "score_margin": score_margin,
+            "evidence_count": evidence_count,
+            "evidence_status": (
+                "sufficient_for_exploration" if recommendation_available
+                else "ambiguous" if is_actionable
+                else "insufficient"
+            ),
+            "evidence_message": (
+                "This exploratory ranking has enough profile evidence and separation to discuss with an advisor."
+                if recommendation_available else
+                f"The leading pathways are separated by only {score_margin:.1f} points, so no single pathway recommendation is made. Review the full ranking with an advisor."
+                if is_actionable else
+                "Add at least two academic results or demonstrated skills before using the ranking. "
+                "Interests and degree context alone are not enough for a recommendation."
+            ),
+            "limitations": "Synthetic-rule benchmark only; not a prediction of employment or career success."
         }

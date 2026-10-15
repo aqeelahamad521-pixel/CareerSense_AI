@@ -1,191 +1,96 @@
-# 🎓 CareerSense AI
-### An Explainable AI-Powered Career Development and Skill-Roadmap Platform for Undergraduate Computing Students
+# CareerSense
 
-**General Sir John Kotelawala Defence University (KDU)**  
-**Faculty of Computing — Intake 41/42**  
-**Module:** Essentials of Artificial Intelligence (Group 19)
+CareerSense is an academic career-exploration prototype for undergraduate computing students. It combines a competency model, explicit prerequisite rules, and a dependency-aware learning planner. It is designed to support discussion and planning—not to predict employment, certify readiness, or make placement decisions.
 
----
+## What it does
 
-## 👤 Author & Academic Attribution
+- Compares five computing pathways using recorded coursework and self-assessed skills.
+- Keeps competency signals separate from stated interests.
+- Produces an uncalibrated advisory distribution using:
+  - 70% K-NN competency alignment;
+  - 20% stated domain interests;
+  - 10% degree alignment.
+- Highlights the selected target without using it as a scoring input.
+- Abstains from a top recommendation when fewer than two academic or skill evidence items exist.
+- Applies transparent academic-prerequisite and skill-dependency rules.
+- Builds a learning sequence with A* search, minimizing declared activity hours before scheduling the result to a weekly study budget.
+- Distinguishes self-reported/submitted evidence from advisor-reviewed evidence.
+- Gives advisors access only to assigned students and gives coordinators anonymized aggregate data.
 
-| Field | Details |
-|---|---|
-| **Student Author** | **MFA Ahamad (Aqeel Ahamad)** |
-| **Degree Programme** | **BSc (Hons) in Data Science & Business Analytics** |
-| **Academic Level** | **Undergraduate (Intake 41/42)** |
-| **Faculty & Department** | **Faculty of Computing, General Sir John Kotelawala Defence University (KDU)** |
-| **Module** | **Essentials of Artificial Intelligence (Group 19)** |
+## Critical limitations
 
----
+The 850-profile dataset is synthetic. Its labels and features are generated from hand-authored assumptions, so model metrics measure recovery of those assumptions. They do not establish real-world career suitability, fairness, employability, or outcome accuracy.
 
-## 🌟 Key Features & AI Innovation
+The “Prototype readiness index” is a profile and benchmark coverage indicator. It is not a hiring or internship-readiness score. Documents are not retained or parsed: the prototype stores sanitized metadata and a SHA-256 fingerprint only.
 
-CareerSense AI solves the problem of generic, non-personalized career guidance by combining **three complementary AI paradigms**:
+See [docs/project_audit_report.md](docs/project_audit_report.md) for the baseline audit and [docs/remediation_report.md](docs/remediation_report.md) for the completed work and remaining deployment prerequisites.
 
-1. **AI Layer 1 — Machine Learning Classification**:
-   - **K-Nearest Neighbors (K-NN)** as primary model with neighbor distance confidence.
-   - **Decision Tree Classifier** as interpretable baseline providing decision paths and feature importances.
-   - Classifies student profiles across 5 core computing tracks:
-     * *Software Engineering*
-     * *Data Science / AI*
-     * *Cybersecurity*
-     * *Cloud / DevOps*
-     * *UI/UX Design*
-2. **AI Layer 2 — Rule-Based Expert System**:
-   - Explicit forward-chaining IF-THEN rules for academic course prerequisites.
-   - Computes competency gap sizes (0 to 3 levels) and priority (High, Medium, Satisfied).
-   - Validates inter-skill dependencies (e.g. Automated Testing requires OOP).
-   - Generates human-readable, transparent diagnostic explanations.
-3. **AI Layer 3 — A\* Search Algorithm for Roadmap Optimization**:
-   - Formulates upskilling as a state-space graph search over a curated activity DAG (courses, projects, certifications).
-   - Cost function $g(n) = \text{accumulated study hours}$ with consistent duration normalization supporting positive integer and fractional hours.
-   - Comprehensive activity filtering incorporating primary and secondary skill contributions alongside full recursive prerequisite closure.
-   - Mathematically proven admissible heuristic $h(n) \le h^*(n)$ (using bottleneck lower bound $h(n) = \max_{s \in U} \min_{a \in \text{Cand}(s)} c(a)$ when multi-skill activities exist, and sum of minimums over disjoint candidate sets).
-   - Maps the learning path into week-by-week milestones strictly constrained by the student's declared study budget (e.g., 8 hrs/week) without overfilling multi-week spans, backed by a topological sort fallback (explicitly flagged as `is_optimal: False`) if graph activities cannot fully cover the target competencies.
-4. **Interactive Multi-Role Web Platform**:
-   - **Student Portal**: Profile, academic grades, skill management, document uploads, radar chart comparison, A* roadmap task tracking, and downloadable career reports.
-   - **Academic Advisor Portal**: Advisee search, AI explanation review, prerequisite audit, and feedback note submission.
-   - **Programme Coordinator Portal**: Anonymized cohort-level interest distribution, skill deficiency heatmaps, and curriculum insights.
-   - **Administrator / Model Explorer**: Real-time confusion matrices, benchmark metrics, rule base inspector, and model re-training.
+## Architecture
 
----
-
-## 📂 Project Structure
-
-```
-CareerSense_AI/
-├── app.py                          # Streamlit application entry point & role dispatcher
-├── config.py                       # Global settings, constants, and feature definitions
-├── requirements.txt                # Python package dependencies
-├── README.md                       # Comprehensive documentation
-│
-├── data/
-│   ├── students_dataset.csv        # 850 synthetic undergraduate computing student records
-│   ├── career_definitions.json     # Benchmark competencies and requirements for the 5 tracks
-│   ├── rules_knowledge_base.json   # Expert system IF-THEN rules
-│   └── learning_graph.json         # Curated learning activity DAG for A* search
-│
-├── ai_engine/
-│   ├── ml_classifier.py            # AI Layer 1: K-NN and Decision Tree models
-│   ├── rule_engine.py              # AI Layer 2: Rule-Based Expert System
-│   ├── a_star_roadmap.py           # AI Layer 3: A* Roadmap Search Optimizer
-│   └── explainability.py           # Multi-model reasoning and radar visualization engine
-│
-├── database/
-│   ├── db_manager.py               # SQLite relational database manager
-│   └── seed_data.py                # Pre-populated demo personas and scenario student
-│
-├── modules/
-│   ├── auth.py                     # Session auth and login/registration component
-│   ├── student_view.py             # Student dashboard, radar charts, roadmap tracker
-│   ├── advisor_view.py             # Academic advisor decision-support portal
-│   ├── coordinator_view.py         # Programme coordinator cohort analytics
-│   ├── admin_view.py               # Admin portal & AI model benchmarking
-│   └── report_generator.py         # Personalized career report generator (HTML/Print)
-│
-├── scripts/
-│   ├── generate_dataset.py         # Generates the 850 student profile dataset
-│   └── train_models.py             # Trains models and computes evaluation benchmarks
-│
-├── tests/
-│   └── test_all.py                 # Comprehensive unit and integration test suite
-│
-└── docs/
-    ├── final_report.md             # Complete Academic Final Report (Stage 3 structure)
-    └── presentation_script.md      # Presentation slide outline and speaker notes
+```text
+Streamlit workspaces
+├── Student: pathway review, plan, evidence, academics, report
+├── Advisor: assigned students, evidence review, guidance
+├── Coordinator: anonymized aggregates with small-cohort suppression
+└── Administrator: model/rule/graph diagnostics and maintenance
+        │
+        ├── K-NN competency model + Decision Tree diagnostic baseline
+        ├── Rule-based prerequisites and competency gaps
+        ├── A* minimum-declared-hours learning sequence
+        └── SQLite with foreign keys and role-aware access methods
 ```
 
----
+The competency model uses 31 features: six academic subject summaries and 25 skill levels. Interests are deliberately excluded from this feature vector and included once in the transparent advisory composite.
 
-## 🚀 Getting Started
+## Run locally
 
-### 1. Prerequisites
-Ensure **Python 3.10+** is installed on your system.
+Python 3.11 is the supported artifact runtime. Exact dependency versions are pinned so saved scikit-learn artifacts fail closed when the runtime is incompatible.
 
-### 2. Install Dependencies
 ```bash
-pip install -r requirements.txt
-```
-
-### 3. Generate Dataset & Train AI Models (Optional - auto-initialized on first run)
-```bash
-python scripts/generate_dataset.py
+python3.11 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
 python scripts/train_models.py
-```
-
-### 4. Run Unit Tests
-```bash
-python -m unittest tests/test_all.py
-```
-
-### 5. Launch the Streamlit Web Application
-```bash
+python -m unittest discover -s tests -p "test_*.py"
 streamlit run app.py
 ```
-Open your browser and navigate to `http://localhost:8501`.
 
-### 6. Resetting the Demonstration Database (Optional)
-The local SQLite database (`data/careersense.db`) is pre-populated with sandbox demonstration accounts. If you wish to reset it to its initial clean state:
-- To preserve any custom student accounts registered during testing, backup the database first: `cp data/careersense.db data/careersense.db.bak`
-- Re-seed default demonstration accounts using salted PBKDF2 hashes:
-  ```bash
-  python database/seed_data.py
-  ```
-  This safely resets tables and seeds demo accounts without touching project models or datasets.
+Open `http://localhost:8501`.
 
----
+### One-click startup
 
-## 🔑 Demo Personas & Credentials
+- **macOS:** double-click `Start-CareerSense.command`. If macOS blocks the first launch, Control-click the file, choose **Open**, and confirm once.
+- **Windows:** double-click `Start-CareerSense.bat`.
 
-> ⚠️ **DEMONSTRATION & SANDBOX CREDENTIALS**: All credentials listed below are provided strictly for local sandbox demonstration of this academic prototype. They connect exclusively to an isolated local SQLite database (`data/careersense.db`) populated with synthetic demonstration records and have no access to external or personal systems. Never commit or use real personal passwords.
+The launcher creates a private platform-specific environment, installs the exact dependencies on the first run or after `requirements.txt` changes, opens the app in the default browser, and keeps a diagnostic window visible if startup fails. Python 3.11 must already be installed.
 
-You can click any of the **Quick Demo Access** buttons on the login screen or log in using:
+## Demo accounts
 
-| Persona / Role | Username | Password | Notes |
-|---|---|---|---|
-| **Student Persona** | `student_demo` | `student123` | Demo Student Persona (Undergraduate Computing Student) |
-| **Academic Advisor** | `advisor` | `advisor123` | Dr. Nihal Fernando (Review advisees & log feedback) |
-| **Programme Coordinator** | `coordinator` | `coordinator123` | Prof. K. Jayasinghe (Anonymized cohort analytics) |
-| **System Administrator** | `admin` | `admin123` | Model explorer, confusion matrices, rule inspector |
+These local-only accounts use synthetic data:
 
----
-
-## 📊 AI Model Evaluation Benchmarks
-
-Evaluated on 170 holdout test samples (80/20 train/test split of 850 undergraduate profiles with 5-Fold Stratified Cross-Validation on the training set):
-
-| Metric | K-Nearest Neighbors (Primary Model) | Decision Tree (Baseline Model) |
+| Role | Username | Password |
 |---|---|---|
-| **5-Fold CV Accuracy (Train Set)** | **89.56% (±2.48%)** *(Pipeline Isolation)* | **63.53% (±4.50%)** |
-| **Held-Out Test Accuracy** | **88.82%** | **60.00%** |
-| **Precision (Weighted)** | **89.74%** | **64.16%** |
-| **Recall (Weighted)** | **88.82%** | **60.00%** |
-| **F1-Score (Weighted)** | **88.87%** | **60.39%** |
-| **Macro F1-Score (Unweighted)** | **89.49%** | **59.72%** |
+| Student | `student_demo` | `student123` |
+| Advisor | `advisor` | `advisor123` |
+| Coordinator | `coordinator` | `coordinator123` |
+| Administrator | `admin` | `admin123` |
 
-#### Multi-Model Benchmark Suite (Held-Out Test Set):
-- **Zero-Rule (Dummy Baseline)**: 29.41% Accuracy | 9.09% Macro F1
-- **Decision Tree (max depth 6)**: 60.00% Accuracy | 59.72% Macro F1
-- **Random Forest (100 trees)**: 82.94% Accuracy | 83.13% Macro F1
-- **Multinomial Logistic Regression**: 88.82% Accuracy | 89.45% Macro F1
-- **K-Nearest Neighbors ($k=7$, distance)**: **88.82% Accuracy** | **89.49% Macro F1** (Selected Primary Model)
+Do not reuse these credentials outside the local prototype.
 
-### 🛡️ Evaluation Methodology & Synthetic Dataset Transparency
-- **Preprocessing Leakage Remediation**: K-NN cross-validation is evaluated strictly through a scikit-learn `Pipeline([('scaler', StandardScaler()), ('knn', KNeighborsClassifier(...))])` executed on the training split, ensuring that scaling parameters are computed independently within each fold. The held-out test split (20%, $N=170$) is strictly isolated for final testing.
-- **Prediction Score Semantics**: User-facing "Match Scores" represent an uncalibrated composite advisory affinity index (combining academic coursework, technical skills, domain interests, and career aspirations). They are normalized for ranking and should not be interpreted as calibrated Bayesian probabilities of post-graduate employment. The pure ML track prediction (`ml_predicted_track`) evaluates coursework and skills independently from student aspirations.
-- **A\* Search Optimality & Bounds**: The heuristic $h(n)$ uses a proven admissible lower bound $h(n) \le h^*(n)$ across all graph topologies. For multi-skill activities that advance multiple competencies simultaneously, it computes the bottleneck lower bound $\max_{s \in U} \min_{a \in \text{Cand}(s)} c(a)$, which is mathematically guaranteed never to overestimate the true minimum remaining cost $h^*(n)$. When candidate sets are disjoint, it sums the minimal costs. Activity filtering incorporates primary and secondary skill contributions as well as full recursive prerequisite chains. Activity durations and path costs are consistently normalized across search, scheduling, and reporting. Full optimality ($g(n) = g^*(n)$) is verified against exhaustive Dijkstra references; incomplete coverage or topological fallbacks are strictly demarcated with `is_optimal: False` and distinct status codes (`goal_unreachable`, `search_limit_reached`, or `partial_coverage`).
-- **Dataset Context & Ethical Limitations**: The student cohort (`data/students_dataset.csv`, 850 records) is an educational synthetic demonstration reflecting real computing curricula. While engineered with realistic latent skills, prerequisite rules, and overlapping interests, it is explicitly labelled as synthetic and should not be treated as empirical graduate employment data.
+## Verification
 
----
+The test suite covers metric mathematics, exact composite behavior, target independence, low-evidence abstention, A* coverage and cost properties, readiness edge cases, report escaping, foreign-key enforcement, owner-scoped roadmap updates, advisor assignment boundaries, evidence states, and password migration.
 
-## 📑 Deliverables Included
-- ✅ Complete working Streamlit prototype with multi-role dashboards
-- ✅ AI Layer 1 (K-NN & Decision Tree ML Classifier with persistence)
-- ✅ AI Layer 2 (Rule-Based Expert System with prerequisite validation)
-- ✅ AI Layer 3 (A\* Search Roadmap Optimizer with weekly time constraint)
-- ✅ Complete dataset generation script (`scripts/generate_dataset.py`)
-- ✅ Automated unit and integration test suite (`tests/test_all.py`, 74 passing tests)
-- ✅ Automated downloadable personalized Career Advisory Reports
-- ✅ Complete Academic Final Report (`docs/final_report.md`)
-- ✅ Group Presentation & Video Outline Script (`docs/presentation_script.md`)
+Model evaluation metadata is stored in `ai_engine/saved_models/evaluation_metrics.json`, including the feature schema, exact dependency versions, dataset hash, synthetic-data disclosure, and the held-out evaluation of the production composite.
+
+## Project layout
+
+```text
+ai_engine/      Models, rules, explainability, and A* planner
+database/       SQLite manager and synthetic demo seed
+data/           Synthetic dataset and curated JSON knowledge bases
+modules/        Streamlit role workspaces and report generator
+scripts/        Dataset generation and model training
+tests/          Unit and integration regression suite
+docs/           Audit and academic project documentation
+```

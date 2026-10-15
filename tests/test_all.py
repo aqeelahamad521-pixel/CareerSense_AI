@@ -21,6 +21,7 @@ import unittest
 import sys
 from pathlib import Path
 import json
+import tempfile
 import pandas as pd
 import numpy as np
 
@@ -33,6 +34,8 @@ from ai_engine.rule_engine import RuleBasedExpertSystem
 from ai_engine.a_star_roadmap import AStarRoadmapOptimizer
 from ai_engine.explainability import ExplainabilityEngine
 from ai_engine.ml_classifier import CareerClassifier, compute_multiclass_metrics
+from modules.report_generator import CareerReportGenerator
+from modules.coordinator_view import build_cohort_insights
 
 class TestRuleEngine(unittest.TestCase):
     def setUp(self):
@@ -78,6 +81,13 @@ class TestRuleEngine(unittest.TestCase):
         self.assertIn("readiness_tier", res)
         self.assertIn("breakdown", res)
 
+    def test_legacy_cv_filename_does_not_create_negative_document_points(self):
+        res = self.engine.calculate_career_readiness(
+            "Software Engineering", {"gpa": 0.0, "weekly_hours": 8, "cv_filename": "legacy.pdf"}, [], {}, [], []
+        )
+        self.assertEqual(res["breakdown"]["document_score"], 0.0)
+        self.assertGreaterEqual(res["total_readiness_score"], 0.0)
+
 class TestAStarRoadmap(unittest.TestCase):
     def setUp(self):
         self.optimizer = AStarRoadmapOptimizer()
@@ -98,6 +108,12 @@ class TestAStarRoadmap(unittest.TestCase):
         res_20hrs = self.optimizer.generate_optimal_roadmap("Software Engineering", skills, weekly_hours=20)
         # Higher study hours should result in shorter or equal total weeks
         self.assertLessEqual(res_20hrs["total_weeks"], res_8hrs["total_weeks"])
+
+    def test_every_pathway_has_full_activity_coverage(self):
+        for track in CAREER_TRACKS:
+            result = self.optimizer.generate_optimal_roadmap(track, {}, weekly_hours=8)
+            self.assertEqual(result["uncovered_gaps"], [], track)
+            self.assertNotEqual(result["status"], "partial_coverage", track)
 
     def test_heuristic_admissibility_and_non_negativity(self):
         """Verifies that h(goal) = 0, h(n) >= 0, and h(n) does not overestimate the true cost for single gaps."""
@@ -133,6 +149,9 @@ class TestMLClassifier(unittest.TestCase):
         vec = self.classifier.extract_features(records, interests, skills)
         self.assertEqual(vec.shape, (1, len(ML_FEATURE_COLUMNS)))
 
+    def test_competency_feature_schema_excludes_interests(self):
+        self.assertFalse(any(column.startswith("interest_") for column in ML_FEATURE_COLUMNS))
+
     def test_prediction_output_structure(self):
         records = [{"subject_area": "Programming", "grade": "A", "grade_points": 4.0}]
         interests = {"Software Development & Systems": 5}
@@ -142,7 +161,7 @@ class TestMLClassifier(unittest.TestCase):
         self.assertIn("top_track", res)
         self.assertIn("ml_predicted_track", res)
         self.assertEqual(len(res["ranked_matches"]), len(CAREER_TRACKS))
-        self.assertEqual(res["top_track"], "Software Engineering")
+        self.assertEqual(res["top_track"], res["ranked_matches"][0]["track"])
 
     def test_prediction_output_components_and_target_separation(self):
         """Verifies prediction components, probability normalization, and target aspiration separation."""
@@ -1294,12 +1313,63 @@ class TestCareerPredictionScoreSemantics(unittest.TestCase):
 
         # The pure ML objective classification must be identical regardless of declared target aspiration
         self.assertEqual(res_target_se["ml_predicted_track"], res_target_ui["ml_predicted_track"])
+        self.assertEqual(
+            [(item["track"], item["match_score"]) for item in res_target_se["ranked_matches"]],
+            [(item["track"], item["match_score"]) for item in res_target_ui["ranked_matches"]],
+        )
+
+    def test_low_evidence_abstains(self):
+        result = self.classifier.predict_career_matches([], {"Software Development & Systems": 5}, {}, target_career="Software Engineering")
+        self.assertFalse(result["is_actionable"])
+        self.assertIsNone(result["top_track"])
+
+    def test_close_ranking_abstains_from_single_pathway(self):
+        class IdentityScaler:
+            def transform(self, values):
+                return values
+
+        class UniformModel:
+            classes_ = np.array(CAREER_TRACKS)
+
+            def predict_proba(self, values):
+                return np.array([[0.2] * len(CAREER_TRACKS)])
+
+            def kneighbors(self, values, n_neighbors=5):
+                return np.zeros((1, n_neighbors)), np.zeros((1, n_neighbors), dtype=int)
+
+        self.classifier.scaler = IdentityScaler()
+        self.classifier.knn_model = UniformModel()
+        self.classifier.dt_model = UniformModel()
+        result = self.classifier.predict_career_matches(
+            [{"subject_area": "Programming", "grade_points": 3.0}],
+            {},
+            {"Git & Version Control": "Beginner"},
+        )
+        self.assertTrue(result["is_actionable"])
+        self.assertFalse(result["recommendation_available"])
+        self.assertEqual(result["evidence_status"], "ambiguous")
+        self.assertIsNone(result["top_track"])
 
 
 class TestSecurityAndRoleIsolation(unittest.TestCase):
     """Verifies that security invariants, salted PBKDF2 password hashing, legacy migration, and user isolation hold."""
     def setUp(self):
-        self.db = DatabaseManager()
+        self.temp_dir = tempfile.TemporaryDirectory()
+        self.db = DatabaseManager(Path(self.temp_dir.name) / "test.db")
+        self.admin_id = self.db.create_user("admin", "admin123", "admin", "Administrator")
+        self.advisor_id = self.db.create_user("advisor", "advisor123", "advisor", "Advisor")
+        self.db.create_user("coordinator", "coordinator123", "coordinator", "Coordinator")
+        self.student_id = self.db.create_user("student_demo", "student123", "student", "Demo Student")
+        self.db.save_student_profile(self.student_id, "BSc (Hons) in Computer Science", 2, 3.0, "Software Engineering", 8)
+        self.db.assign_advisor(self.advisor_id, self.student_id)
+
+    def tearDown(self):
+        self.temp_dir.cleanup()
+
+    def _new_student(self, username):
+        user_id = self.db.create_user(username, "student123", "student", username.replace("_", " ").title())
+        self.db.save_student_profile(user_id, "BSc (Hons) in Computer Science", 1, 0.0, "Software Engineering", 8)
+        return user_id
 
     def test_salted_password_hashing_unique_salts(self):
         """Verifies PBKDF2-HMAC-SHA256 password hashing generates unique random salts per call."""
@@ -1446,7 +1516,7 @@ class TestSecurityAndRoleIsolation(unittest.TestCase):
 
     def test_student_profile_isolation(self):
         """Verifies student profile data is isolated by user_id without cross-student data leakage."""
-        students = self.db.get_all_students_summary()
+        students = self.db.get_all_students_summary("admin", include_identifiers=True)
         self.assertGreater(len(students), 0)
         for s in students:
             profile = self.db.get_student_profile(s["id"])
@@ -1532,7 +1602,7 @@ class TestSecurityAndRoleIsolation(unittest.TestCase):
 
     def test_document_upload_filename_traversal_and_type_validation(self):
         """Verifies document upload sanitizes filenames to prevent directory traversal and checks document types."""
-        test_uid = 99991
+        test_uid = self._new_student("doc_test_student")
         # Traversal filename '../../secret.pdf' must be stored as 'secret.pdf'
         self.db.add_student_document(test_uid, "Certificate", "../../etc/passwd.pdf", {"size": 1024})
         docs = self.db.get_student_documents(test_uid)
@@ -1541,11 +1611,9 @@ class TestSecurityAndRoleIsolation(unittest.TestCase):
             self.assertEqual(docs[0]["filename"], "passwd.pdf")
             self.assertEqual(docs[0]["doc_type"], "Certificate")
 
-            # Invalid document type falls back to 'Other'
-            self.db.add_student_document(test_uid, "MaliciousType", "test.txt")
-            docs_updated = self.db.get_student_documents(test_uid)
-            self.assertEqual(len(docs_updated), 2)
-            self.assertEqual({d["doc_type"] for d in docs_updated}, {"Certificate", "Other"})
+            # Invalid document types fail closed.
+            with self.assertRaises(ValueError):
+                self.db.add_student_document(test_uid, "MaliciousType", "test.txt")
 
             # Empty or dot filenames raise ValueError
             with self.assertRaises(ValueError):
@@ -1557,7 +1625,7 @@ class TestSecurityAndRoleIsolation(unittest.TestCase):
 
     def test_roadmap_status_transition_validation(self):
         """Verifies activity status updates enforce valid lifecycle transitions."""
-        test_uid = 99992
+        test_uid = self._new_student("roadmap_test_student")
         self.db.save_roadmap(test_uid, "Software Engineering", [{
             "activity_id": "TEST_ACT_1",
             "activity_title": "Test Activity",
@@ -1573,18 +1641,18 @@ class TestSecurityAndRoleIsolation(unittest.TestCase):
             item_id = roadmap[0]["id"]
 
             # Valid transitions
-            self.db.update_roadmap_activity_status(item_id, "In Progress")
+            self.db.update_roadmap_activity_status(item_id, test_uid, "In Progress")
             updated = self.db.get_roadmap(test_uid, "Software Engineering")[0]
             self.assertIn(updated["status"], ["In Progress", "In-Progress"])
 
-            self.db.update_roadmap_activity_status(item_id, "Completed")
+            self.db.update_roadmap_activity_status(item_id, test_uid, "Completed")
             completed = self.db.get_roadmap(test_uid, "Software Engineering")[0]
             self.assertEqual(completed["status"], "Completed")
             self.assertIsNotNone(completed["completion_date"])
 
             # Invalid status raises ValueError
             with self.assertRaises(ValueError):
-                self.db.update_roadmap_activity_status(item_id, "HACKED_STATUS")
+                self.db.update_roadmap_activity_status(item_id, test_uid, "HACKED_STATUS")
         finally:
             with self.db.get_connection() as conn:
                 conn.cursor().execute("DELETE FROM roadmaps WHERE user_id = ?", (test_uid,))
@@ -1592,8 +1660,8 @@ class TestSecurityAndRoleIsolation(unittest.TestCase):
 
     def test_multi_user_document_and_roadmap_isolation(self):
         """Verifies student A cannot view or retrieve student B's uploaded documents, roadmaps, or projects."""
-        uid_a = 99993
-        uid_b = 99994
+        uid_a = self._new_student("isolation_student_a")
+        uid_b = self._new_student("isolation_student_b")
         try:
             self.db.add_student_document(uid_a, "CV", "student_a_cv.pdf")
             self.db.add_student_project(uid_a, "Project Alpha", "Description", "Python", "https://github.com/test/alpha", "Python, Testing")
@@ -1611,6 +1679,10 @@ class TestSecurityAndRoleIsolation(unittest.TestCase):
             self.assertEqual(self.db.get_student_documents(uid_b), [])
             self.assertEqual(self.db.get_student_projects(uid_b), [])
             self.assertEqual(self.db.get_roadmap(uid_b), [])
+
+            item_id = self.db.get_roadmap(uid_a)[0]["id"]
+            self.assertFalse(self.db.update_roadmap_activity_status(item_id, uid_b, "Completed"))
+            self.assertEqual(self.db.get_roadmap(uid_a)[0]["status"], "Planned")
         finally:
             with self.db.get_connection() as conn:
                 cursor = conn.cursor()
@@ -1618,6 +1690,49 @@ class TestSecurityAndRoleIsolation(unittest.TestCase):
                 cursor.execute("DELETE FROM student_projects WHERE user_id IN (?, ?)", (uid_a, uid_b))
                 cursor.execute("DELETE FROM roadmaps WHERE user_id IN (?, ?)", (uid_a, uid_b))
                 conn.commit()
+
+    def test_foreign_keys_are_enabled(self):
+        with self.db.get_connection() as conn:
+            self.assertEqual(conn.execute("PRAGMA foreign_keys").fetchone()[0], 1)
+
+    def test_advisor_cannot_access_unassigned_student(self):
+        other_student = self._new_student("unassigned_student")
+        project_id = None
+        self.db.add_student_project(other_student, "Project", "", "", "", "")
+        project_id = self.db.get_student_projects(other_student)[0]["id"]
+        with self.assertRaises(PermissionError):
+            self.db.verify_student_project(project_id, other_student, self.advisor_id, "advisor")
+
+    def test_coordinator_summary_removes_direct_identifiers(self):
+        summary = self.db.get_all_students_summary("coordinator")
+        self.assertGreater(len(summary), 0)
+        for row in summary:
+            self.assertNotIn("id", row)
+            self.assertNotIn("full_name", row)
+            self.assertNotIn("reg_no", row)
+            self.assertIn("student_key", row)
+
+
+class TestAuditRegressionCoverage(unittest.TestCase):
+    def test_saved_composite_includes_limited_subgroup_diagnostic(self):
+        metrics = json.loads((MODELS_DIR / "evaluation_metrics.json").read_text(encoding="utf-8"))
+        diagnostic = metrics["production_composite"]["synthetic_subgroup_diagnostic"]
+        self.assertEqual(diagnostic["attribute"], "degree_programme")
+        self.assertTrue(diagnostic["groups"])
+        self.assertIn("not a real-world fairness audit", diagnostic["limitations"])
+
+    def test_report_escapes_dynamic_html(self):
+        report = CareerReportGenerator.generate_html_report(
+            {}, {"full_name": "<script>alert(1)</script>", "reg_no": "X"},
+            {"target_track": "Software Engineering", "ranked_matches": [], "skill_gaps": []},
+            {"total_readiness_score": 0, "readiness_tier": "Insufficient", "breakdown": {}}, [],
+        )
+        self.assertNotIn("<script>alert(1)</script>", report)
+        self.assertIn("&lt;script&gt;alert(1)&lt;/script&gt;", report)
+
+    def test_small_cohort_insights_are_suppressed(self):
+        insights = build_cohort_insights([{"target_career": "Software Engineering"}], [], minimum_cohort=5)
+        self.assertTrue(insights["suppressed"])
 
 
 if __name__ == "__main__":

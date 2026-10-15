@@ -3,8 +3,10 @@ Authentication & Role-Based Access Control Module for CareerSense AI.
 Handles user sign-in, registration, session persistence, and role guards.
 """
 import streamlit as st
+import sqlite3
 from database.db_manager import DatabaseManager
 from config import CAREER_TRACKS, DEGREE_PROGRAMMES, DEGREE_MODULE_CATALOG
+from modules.ui import page_header
 
 def init_auth_session():
     """Ensures authentication keys are present in st.session_state."""
@@ -38,18 +40,19 @@ def logout_user():
 
 def render_login_and_registration(db: DatabaseManager):
     """Renders the combined Sign-in / Sign-up dialog."""
-    st.markdown("### 🎓 Welcome to CareerSense AI")
-    st.markdown(
-        "An Explainable AI-Powered Career Development & Skill-Roadmap Platform for Undergraduate Students."
+    page_header(
+        "KDU Faculty of Computing",
+        "Build a career plan from the evidence you have",
+        "Compare computing pathways, inspect the reasoning, and turn skill gaps into a practical weekly plan. This academic prototype does not predict employment outcomes.",
     )
-    
-    tab_login, tab_register, tab_demo = st.tabs(["🔐 Sign In", "📝 Create Account", "⚡ Quick Demo Access"])
+
+    tab_login, tab_register, tab_demo = st.tabs(["Sign in", "Create account", "Explore demo"])
     
     with tab_login:
         with st.form("login_form"):
             username = st.text_input("Username")
             password = st.text_input("Password", type="password")
-            submit = st.form_submit_button("Sign In", use_container_width=True)
+            submit = st.form_submit_button("Sign in", type="primary", width="stretch")
             
             if submit:
                 if not username or not password:
@@ -64,28 +67,28 @@ def render_login_and_registration(db: DatabaseManager):
                         st.error("Invalid username or password.")
 
     with tab_register:
-        st.markdown("#### 📝 Student Registration")
-        st.caption("Tell us about your degree and select the grades you have achieved so far. CareerSense AI never assumes your grades!")
+        st.markdown("#### Create a student workspace")
+        st.caption("Record only completed coursework. You can add interests, skills, and evidence after registration.")
 
         col_reg1, col_reg2 = st.columns(2)
         with col_reg1:
-            r_fullname = st.text_input("Full Name *", key="reg_fn")
-            r_username = st.text_input("Desired Username *", key="reg_un")
-            r_password = st.text_input("Password *", type="password", key="reg_pw")
-            r_email = st.text_input("University Email", key="reg_em")
+            r_fullname = st.text_input("Full name", key="reg_fn")
+            r_username = st.text_input("Username", key="reg_un")
+            r_password = st.text_input("Password", type="password", help="Use at least 8 characters.", key="reg_pw")
+            r_email = st.text_input("University email", key="reg_em")
         with col_reg2:
-            r_regno = st.text_input("Registration Number (e.g. D/BCS/27/0052)", key="reg_rn")
-            r_degree = st.selectbox("Undergraduate Degree Programme *", DEGREE_PROGRAMMES, key="reg_deg")
-            r_year = st.selectbox("Academic Year", [1, 2, 3, 4], index=1, key="reg_yr")
-            r_target = st.selectbox("Initial Target Career Aspiration *", CAREER_TRACKS, key="reg_tgt")
-            r_hours = st.slider("Available Study Hours per Week", 4, 30, 8, key="reg_hrs")
+            r_regno = st.text_input("Registration number", placeholder="D/BCS/27/0052", key="reg_rn")
+            r_degree = st.selectbox("Degree programme", DEGREE_PROGRAMMES, key="reg_deg")
+            r_year = st.selectbox("Academic year", [1, 2, 3, 4], index=1, key="reg_yr")
+            r_target = st.selectbox("Pathway to explore first", CAREER_TRACKS, key="reg_tgt")
+            r_hours = st.slider("Study hours available each week", 4, 30, 8, key="reg_hrs")
 
         st.divider()
-        st.markdown(f"#### 📚 Relevant Coursework & Grades for: **{r_degree}**")
-        st.caption("Select the letter grade you achieved for each module in your degree. If you have not completed a module yet, leave it as **Not Taken Yet**.")
+        st.markdown(f"#### Completed coursework for {r_degree}")
+        st.caption("Leave modules you have not completed as ‘Not taken yet’.")
 
         curriculum = DEGREE_MODULE_CATALOG.get(r_degree, [])
-        grade_options = ["Not Taken Yet", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"]
+        grade_options = ["Not taken yet", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"]
         
         selected_grades = {}
         col_m_left, col_m_right = st.columns(2)
@@ -93,16 +96,17 @@ def render_login_and_registration(db: DatabaseManager):
             target_col = col_m_left if i % 2 == 0 else col_m_right
             with target_col:
                 selected_grades[mod["code"]] = st.selectbox(
-                    f"**[{mod['code']}]** {mod['name']} *({mod['credits']} cr - {mod['subject']})*",
+                    f"{mod['code']} · {mod['name']} ({mod['credits']} credits)",
                     options=grade_options,
                     index=0,
                     key=f"reg_mod_{r_degree}_{mod['code']}"
                 )
 
-        st.markdown("---")
-        if st.button("🚀 Register & View AI Career Assessment", type="primary", use_container_width=True):
+        if st.button("Create student workspace", type="primary", width="stretch"):
             if not r_fullname or not r_username or not r_password:
-                st.error("Please fill in all mandatory fields (Full Name, Username, and Password).")
+                st.error("Enter your full name, username, and password.")
+            elif len(r_password) < 8:
+                st.error("Use a password with at least 8 characters.")
             else:
                 try:
                     uid = db.create_user(
@@ -118,8 +122,8 @@ def render_login_and_registration(db: DatabaseManager):
                     completed_records = []
                     from config import GRADE_POINTS
                     for mod in curriculum:
-                        grade_val = selected_grades.get(mod["code"], "Not Taken Yet")
-                        if grade_val != "Not Taken Yet":
+                        grade_val = selected_grades.get(mod["code"], "Not taken yet")
+                        if grade_val != "Not taken yet":
                             completed_records.append({
                                 "subject_area": mod["subject"],
                                 "module_code": mod["code"],
@@ -154,53 +158,48 @@ def render_login_and_registration(db: DatabaseManager):
                         "Cloud Infrastructure & Automation": 3,
                         "UI/UX Design & User Experience": 3
                     }
-                    target_to_interest = {
-                        "Software Engineering": "Software Development & Systems",
-                        "Data Science / AI": "Data Analysis & AI Research",
-                        "Cybersecurity": "Cybersecurity & Threat Defense",
-                        "Cloud / DevOps": "Cloud Infrastructure & Automation",
-                        "UI/UX Design": "UI/UX Design & User Experience"
-                    }
-                    if r_target in target_to_interest:
-                        initial_interests[target_to_interest[r_target]] = 5
-
                     db.set_student_interests(uid, initial_interests)
 
                     # Auto login newly registered student
                     user_dict = db.get_user_by_id(uid)
                     if user_dict:
                         login_user(user_dict)
-                        st.success(f"🎉 Welcome {r_fullname}! Your account has been initialized with your actual grades.")
+                        st.success(f"Welcome, {r_fullname}. Your workspace is ready.")
                         st.rerun()
                     else:
                         st.success("Account created successfully! Please sign in using your credentials.")
-                except Exception as e:
-                    st.error(f"Error registering account: {str(e)}")
+                except sqlite3.IntegrityError:
+                    st.error("That username is already in use. Choose another one.")
+                except ValueError as exc:
+                    st.error(str(exc))
+                except Exception:
+                    st.error("The account could not be created. Try again or contact the administrator.")
 
     with tab_demo:
-        st.info("Select a persona to sign in immediately (Demonstration Sandbox Student: **Aqeel Ahamad (Demo Student)** - Year 2 Data Science & Business Analytics):")
-        col1, col2, col3, col4 = st.columns(4)
+        st.info("Use a synthetic persona to inspect each workspace. Demo data must not be treated as a real student record.")
+        col1, col2 = st.columns(2)
         with col1:
-            if st.button("🧑‍🎓 Student Persona", use_container_width=True):
+            if st.button("Open student demo", width="stretch"):
                 user = db.authenticate_user("student_demo", "student123")
                 if user:
                     login_user(user, is_demo=True)
                     st.rerun()
 
         with col2:
-            if st.button("👨‍🏫 Academic Advisor", use_container_width=True):
+            if st.button("Open advisor demo", width="stretch"):
                 user = db.authenticate_user("advisor", "advisor123")
                 if user:
                     login_user(user, is_demo=True)
                     st.rerun()
+        col3, col4 = st.columns(2)
         with col3:
-            if st.button("📊 Coordinator", use_container_width=True):
+            if st.button("Open coordinator demo", width="stretch"):
                 user = db.authenticate_user("coordinator", "coordinator123")
                 if user:
                     login_user(user, is_demo=True)
                     st.rerun()
         with col4:
-            if st.button("⚙️ Administrator", use_container_width=True):
+            if st.button("Open administrator demo", width="stretch"):
                 user = db.authenticate_user("admin", "admin123")
                 if user:
                     login_user(user, is_demo=True)

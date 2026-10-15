@@ -3,10 +3,11 @@ Dataset Generation Script for CareerSense AI.
 Synthesizes a realistic dataset of 850 undergraduate computing students
 from KDU Faculty of Computing (SE, CS, IT, IS, CE, DBA) with correlated
 grades, multi-domain interest profiles, technical skill proficiencies,
-and ground-truth career labels.
+and simulated pathway labels.
 
-Designed with authentic probabilistic correlations and latent aptitudes,
-preventing target leakage and reflecting realistic educational variance.
+The generator is for software testing only. Independent latent aptitudes drive
+both noisy observations and a noisy label; the label is never chosen first and
+then copied into every feature.
 """
 import sys
 from pathlib import Path
@@ -43,8 +44,8 @@ def generate_student_dataset(n_samples=850, random_state=42):
     - 5 domain interest ratings (1 to 5 Likert scale)
     - 25 technical skill proficiencies (0: None, 1: Beginner, 2: Intermediate, 3: Advanced)
     
-    Ground-truth career tracks are derived from realistic multi-criteria composite
-    evaluations with natural boundary ambiguity, avoiding single-feature target leakage.
+    Simulated career-track labels are derived from latent aptitudes plus
+    independent noise. They are not observed outcomes or ground truth.
     """
     np.random.seed(random_state)
     
@@ -79,73 +80,79 @@ def generate_student_dataset(n_samples=850, random_state=42):
         batch_year = 25 - year
         reg_no = f"D/{deg_code}/{batch_year:02d}/{student_id_counter:04d}"
         
-        # Determine latent primary orientation based on degree prior probabilities
+        # Create continuous latent aptitudes before any label. Degree alignment
+        # contributes a modest shift rather than choosing a class directly.
         track_priors = DEGREE_CAREER_ALIGNMENT[degree]
-        tracks = list(track_priors.keys())
-        priors = list(track_priors.values())
-        true_track = np.random.choice(tracks, p=priors)
+        latent = {
+            track: float(np.random.normal(0.0, 0.85) + (track_priors[track] - 0.20) * 1.5)
+            for track in CAREER_TRACKS
+        }
         
         # Base student academic caliber (latent ability)
         base_gpa = np.clip(np.random.normal(3.0, 0.42), 1.8, 3.9)
         
-        # Subject grades: correlated with base academic caliber and track orientation
-        g_prog = np.clip(np.random.normal(base_gpa + (0.35 if true_track in ["Software Engineering", "Data Science / AI"] else -0.15), 0.40), 1.0, 4.0)
-        g_math = np.clip(np.random.normal(base_gpa + (0.35 if true_track == "Data Science / AI" else (0.10 if true_track == "Software Engineering" else -0.20)), 0.45), 1.0, 4.0)
-        g_db   = np.clip(np.random.normal(base_gpa + (0.25 if true_track in ["Software Engineering", "Data Science / AI"] else 0.0), 0.40), 1.0, 4.0)
-        g_net  = np.clip(np.random.normal(base_gpa + (0.40 if true_track in ["Cybersecurity", "Cloud / DevOps"] else -0.20), 0.40), 1.0, 4.0)
-        g_sys  = np.clip(np.random.normal(base_gpa + (0.35 if true_track in ["Cloud / DevOps", "Cybersecurity"] else -0.15), 0.40), 1.0, 4.0)
-        g_des  = np.clip(np.random.normal(base_gpa + (0.45 if true_track == "UI/UX Design" else -0.25), 0.40), 1.0, 4.0)
+        # Subject grades are noisy manifestations of several latent aptitudes.
+        g_prog = np.clip(np.random.normal(base_gpa + .16 * latent["Software Engineering"] + .10 * latent["Data Science / AI"], .42), 1.0, 4.0)
+        g_math = np.clip(np.random.normal(base_gpa + .20 * latent["Data Science / AI"] + .05 * latent["Software Engineering"], .46), 1.0, 4.0)
+        g_db = np.clip(np.random.normal(base_gpa + .12 * latent["Software Engineering"] + .12 * latent["Data Science / AI"], .42), 1.0, 4.0)
+        g_net = np.clip(np.random.normal(base_gpa + .16 * latent["Cybersecurity"] + .14 * latent["Cloud / DevOps"], .42), 1.0, 4.0)
+        g_sys = np.clip(np.random.normal(base_gpa + .16 * latent["Cloud / DevOps"] + .12 * latent["Cybersecurity"], .42), 1.0, 4.0)
+        g_des = np.clip(np.random.normal(base_gpa + .22 * latent["UI/UX Design"], .42), 1.0, 4.0)
         
         # Multi-domain interests (1 to 5 scale).
         # Students have multi-faceted interests: primary track has higher mean,
         # but secondary related fields are also explored, avoiding target leakage.
-        int_se  = int(np.clip(np.round(np.random.normal(4.0 if true_track == "Software Engineering" else (3.1 if true_track in ["Cloud / DevOps", "Data Science / AI"] else 2.2), 0.95)), 1, 5))
-        int_ds  = int(np.clip(np.round(np.random.normal(4.1 if true_track == "Data Science / AI" else (2.9 if true_track == "Software Engineering" else 2.1), 0.95)), 1, 5))
-        int_sec = int(np.clip(np.round(np.random.normal(4.1 if true_track == "Cybersecurity" else (3.1 if true_track == "Cloud / DevOps" else 2.1), 0.95)), 1, 5))
-        int_cld = int(np.clip(np.round(np.random.normal(4.1 if true_track == "Cloud / DevOps" else (3.1 if true_track in ["Software Engineering", "Cybersecurity"] else 2.1), 0.95)), 1, 5))
-        int_ui  = int(np.clip(np.round(np.random.normal(4.2 if true_track == "UI/UX Design" else (2.5 if true_track == "Software Engineering" else 1.9), 0.90)), 1, 5))
+        def sample_interest(track):
+            return int(np.clip(np.round(np.random.normal(3.0 + .72 * latent[track], .85)), 1, 5))
+
+        int_se = sample_interest("Software Engineering")
+        int_ds = sample_interest("Data Science / AI")
+        int_sec = sample_interest("Cybersecurity")
+        int_cld = sample_interest("Cloud / DevOps")
+        int_ui = sample_interest("UI/UX Design")
         
         # Technical skills (0 to 3 scale)
-        def sample_skill(domain_match, general=False):
-            if domain_match:
-                p = [0.08, 0.24, 0.42, 0.26] if year >= 3 else [0.20, 0.45, 0.25, 0.10]
-            elif general:
-                p = [0.25, 0.40, 0.25, 0.10]
-            else:
-                p = [0.52, 0.32, 0.13, 0.03]
-            return int(np.random.choice([0, 1, 2, 3], p=p))
+        def sample_skill(track, general=False):
+            expected = .35 + .30 * (year - 1) + .55 * latent[track] + (.35 if general else 0.0)
+            return int(np.clip(np.round(np.random.normal(expected, .70)), 0, 3))
         
         skills = {
-            "skill_oop": sample_skill(true_track in ["Software Engineering", "Data Science / AI"], general=True),
-            "skill_dsa": sample_skill(true_track == "Software Engineering"),
-            "skill_web_api": sample_skill(true_track in ["Software Engineering", "Cloud / DevOps"]),
-            "skill_testing": sample_skill(true_track == "Software Engineering"),
-            "skill_git": sample_skill(True, general=True),
+            "skill_oop": sample_skill("Software Engineering", general=True),
+            "skill_dsa": sample_skill("Software Engineering"),
+            "skill_web_api": sample_skill("Software Engineering"),
+            "skill_testing": sample_skill("Software Engineering"),
+            "skill_git": sample_skill("Software Engineering", general=True),
             
-            "skill_python_data": sample_skill(true_track == "Data Science / AI"),
-            "skill_ml": sample_skill(true_track == "Data Science / AI"),
-            "skill_visualization": sample_skill(true_track in ["Data Science / AI", "UI/UX Design"]),
-            "skill_sql": sample_skill(true_track in ["Data Science / AI", "Software Engineering"], general=True),
-            "skill_statistics": sample_skill(true_track == "Data Science / AI"),
+            "skill_python_data": sample_skill("Data Science / AI"),
+            "skill_ml": sample_skill("Data Science / AI"),
+            "skill_visualization": sample_skill("Data Science / AI"),
+            "skill_sql": sample_skill("Data Science / AI", general=True),
+            "skill_statistics": sample_skill("Data Science / AI"),
             
-            "skill_network_sec": sample_skill(true_track == "Cybersecurity"),
-            "skill_cryptography": sample_skill(true_track == "Cybersecurity"),
-            "skill_linux": sample_skill(true_track in ["Cybersecurity", "Cloud / DevOps"], general=True),
-            "skill_vuln_assess": sample_skill(true_track == "Cybersecurity"),
-            "skill_secure_code": sample_skill(true_track in ["Cybersecurity", "Software Engineering"]),
+            "skill_network_sec": sample_skill("Cybersecurity"),
+            "skill_cryptography": sample_skill("Cybersecurity"),
+            "skill_linux": sample_skill("Cybersecurity", general=True),
+            "skill_vuln_assess": sample_skill("Cybersecurity"),
+            "skill_secure_code": sample_skill("Cybersecurity"),
             
-            "skill_docker": sample_skill(true_track == "Cloud / DevOps"),
-            "skill_cicd": sample_skill(true_track == "Cloud / DevOps"),
-            "skill_cloud_infra": sample_skill(true_track == "Cloud / DevOps"),
-            "skill_iac": sample_skill(true_track == "Cloud / DevOps"),
-            "skill_monitoring": sample_skill(true_track == "Cloud / DevOps"),
+            "skill_docker": sample_skill("Cloud / DevOps"),
+            "skill_cicd": sample_skill("Cloud / DevOps"),
+            "skill_cloud_infra": sample_skill("Cloud / DevOps"),
+            "skill_iac": sample_skill("Cloud / DevOps"),
+            "skill_monitoring": sample_skill("Cloud / DevOps"),
             
-            "skill_user_research": sample_skill(true_track == "UI/UX Design"),
-            "skill_figma": sample_skill(true_track == "UI/UX Design"),
-            "skill_design_principles": sample_skill(true_track == "UI/UX Design"),
-            "skill_frontend": sample_skill(true_track in ["UI/UX Design", "Software Engineering"]),
-            "skill_design_systems": sample_skill(true_track == "UI/UX Design"),
+            "skill_user_research": sample_skill("UI/UX Design"),
+            "skill_figma": sample_skill("UI/UX Design"),
+            "skill_design_principles": sample_skill("UI/UX Design"),
+            "skill_frontend": sample_skill("UI/UX Design"),
+            "skill_design_systems": sample_skill("UI/UX Design"),
         }
+
+        # Simulated label uses the latent aptitudes plus independent outcome
+        # noise. It is deliberately generated after the evidence and should
+        # never be described as an observed career outcome.
+        label_scores = {track: latent[track] + float(np.random.normal(0.0, .50)) for track in CAREER_TRACKS}
+        true_track = max(label_scores, key=label_scores.get)
         
         gpa = round(float(np.mean([g_prog, g_math, g_db, g_net, g_sys, g_des])), 2)
         

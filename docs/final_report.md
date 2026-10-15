@@ -7,6 +7,8 @@
 # FINAL PROJECT REPORT
 # CareerSense AI: An Explainable AI-Powered Career Development and Skill-Roadmap Platform for Undergraduate Students
 
+> **Implementation update (October 2026):** This report describes the original prototype and is retained as a historical submission artifact. The remediated application now uses a 31-feature competency model (grades + skills only), a target-independent 70/20/10 advisory composite, low-evidence abstention, explicit evidence states, assigned-advisor access, anonymized cohort reporting, and a narrowly labelled prototype readiness index. Current runtime metrics and provenance live in `ai_engine/saved_models/evaluation_metrics.json`; the figures below are synthetic diagnostics, not real-world outcome validation.
+
 ### Project Author & Academic Attribution:
 | Field | Details |
 |---|---|
@@ -124,9 +126,9 @@ The platform follows a modular, five-tier layered architecture:
 ## 7. Implementation Details
 
 ### 7.1 Feature Engineering for Classification
-Student profiles are mapped into a 36-dimensional standardized feature vector $\vec{x}$:
+The current implementation maps student profiles into a 31-dimensional standardized competency vector $\vec{x}$:
 - **Academic Grades (6 features)**: Normalized Grade Points (0.0–4.0) in Programming, Mathematics & Statistics, Databases, Networking, Operating Systems & Architecture, and HCI/Design.
-- **Domain Interests (5 features)**: Integer ratings (1–5) reflecting student enthusiasm in Software, Data/AI, Security, Cloud, and UI/UX.
+- **Domain Interests**: Kept outside the competency model and counted once in the transparent advisory composite.
 - **Technical Skills (25 features)**: Discrete proficiency levels mapped to integer weights ($\text{None}=0$, $\text{Beginner}=1$, $\text{Intermediate}=2$, $\text{Advanced}=3$).
 
 Features are normalized using `StandardScaler` prior to K-NN distance computation:
@@ -244,7 +246,7 @@ Actual: UI (n=22)            4          3          4          1         10      
 - **Independent Precision, Recall, and F1 Values**: In multiclass evaluation with non-trivial misclassifications, class-specific False Positives and False Negatives diverge, guaranteeing that Precision ($TP / (TP + FP)$), Recall ($TP / (TP + FN)$), and F1-score are mathematically independent and non-identical.
 - **Model Selection Justification**: K-NN ($k=7$, distance-weighted) was selected over Logistic Regression despite identical accuracy because K-NN's instance-based reasoning naturally maps to student peer mentoring ('students with nearest academic and skill backgrounds followed this trajectory'), providing accessible neighbor distance metrics. The Decision Tree was retained as the white-box interpretable baseline to extract Gini feature importances (`interest_security`: 0.1481, `interest_design`: 0.1216, `interest_software`: 0.1113, `skill_dsa`: 0.0697, `skill_web_api`: 0.0637).
 - **A\* Heuristic Admissibility, Search Bounds & Weekly Scheduling**: The heuristic $h(n)$ uses a mathematically proven lower bound guaranteeing $h(n) \le h^*(n)$ across all graph topologies. For multi-skill activities advancing multiple competencies, it computes the bottleneck lower bound $\max_{s \in U} \min_{a \in \text{Cand}(s)} c(a)$, which can never overestimate optimal remaining cost $h^*(n)$. For strictly disjoint activities, it sums the minimal costs. State exploration is pruned using optimal cost-so-far tracking ($g(n)$). If a target competency is an academic course outside the extracurricular activity graph or if the search limit is reached, a deterministic topological fallback is generated, and the plan is strictly flagged as `is_optimal: False` with distinct status reporting (`goal_unreachable`, `search_limit_reached`, or `partial_coverage`). The weekly scheduler allocates activities against the student's study budget ($W_{\text{hours}}$), properly spanning multi-week activities across multiple weeks without overfilling subsequent weeks.
-- **Decomposed Advisory Score Semantics**: User-facing "Match Scores" represent an uncalibrated composite advisory affinity index (0–100%) synthesizing ML coursework competency (40–65%), domain interest (15–20%), degree alignment (15–25%), and target aspiration preference (0–30%). They are normalized across tracks and explicitly qualified as non-probabilistic advisory rankings. The pure ML track prediction (`ml_predicted_track` and `ml_competency_score`, derived 70% from K-NN neighborhood proximity and 30% from Decision Tree leaf frequencies) is evaluated independently of student target aspirations.
+- **Current Advisory Score Semantics**: User-facing affinity shares use exactly 70% K-NN competency, 20% stated domain interest, and 10% degree alignment. Target aspiration is a display selection only and never changes the ranking. Decision Tree output is diagnostic rather than blended into the production score. The index is uncalibrated and is not an employment probability.
 
 ### 8.2 Unit, Integration & Mathematical Correctness Testing
 Automated test suite (`tests/test_all.py`, 74 passing tests) validated:
@@ -277,7 +279,7 @@ The system was verified against the exact benchmark scenario:
 ---
 
 ## 9. Limitations & Discussion
-1. **Self-Reported Skill Ratings**: Initial skills rely partially on student self-assessment, which may suffer from the Dunning-Kruger effect or subjective bias. This is mitigated in CareerSense AI by incorporating academic module grades and verified project repositories into the readiness score.
+1. **Self-Reported Skill Ratings**: Initial skills rely on student self-assessment, which may suffer from subjective bias. The remediated UI labels these records explicitly and distinguishes them from advisor-reviewed evidence; this reduces ambiguity but does not validate proficiency.
 2. **Dynamic Industry Demand**: Technology requirements evolve rapidly. The current system addresses this by decoupling career definitions and rules into editable JSON schemas, allowing faculty administrators to update competency benchmarks without altering application code.
 3. **Document Extraction Depth**: The prototype utilizes structured document metadata extraction rather than full computer vision or NLP PDF parsing. Future revisions could integrate OCR and LLM-based CV parsing.
 4. **Advisory Role**: CareerSense AI is explicitly designed as a **decision-support tool** to empower students and faculty mentors; it does not replace human career counselors or guarantee employment.

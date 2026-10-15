@@ -6,6 +6,8 @@ __pycache__/
 # Environments
 .env
 .venv
+.venv-mac/
+.venv-windows/
 env/
 venv/
 ENV/
@@ -23,3 +25,4 @@ $RECYCLE.BIN/
 # SQLite temporary journal files
 *.db-journal
 *.sqlite3-journal
+/graphify-out/cache

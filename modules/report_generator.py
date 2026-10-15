@@ -5,6 +5,7 @@ summarizing student profile, AI career match probabilities, rule-based
 gap analysis, readiness breakdown, and weekly A* learning roadmap.
 """
 from datetime import datetime
+from html import escape
 
 class CareerReportGenerator:
     @staticmethod
@@ -15,21 +16,25 @@ class CareerReportGenerator:
         readiness_data = readiness_data or {}
         roadmap_data = roadmap_data or []
 
-        name = user_info.get("full_name") or "Aqeel Ahamad (Demo Student)"
+        name = escape(str(user_info.get("full_name") or "Student"))
         raw_reg = user_info.get("reg_no")
-        reg_no = str(raw_reg) if raw_reg else "STU-DEMO-01"
-        ref_code = reg_no.replace("/", "").replace(" ", "").replace("-", "")
-        degree = student_profile.get("degree") or "BSc (Hons) in Data Science & Business Analytics"
-        year = student_profile.get("year", 2)
+        raw_reg_text = str(raw_reg) if raw_reg else "Not provided"
+        reg_no = escape(raw_reg_text)
+        ref_code = "".join(char for char in raw_reg_text if char.isalnum())[:32] or "STUDENT"
+        degree = escape(str(student_profile.get("degree") or "Not provided"))
+        year = escape(str(student_profile.get("year", 1)))
         try:
             gpa = float(student_profile.get("gpa", 3.50))
         except (ValueError, TypeError):
             gpa = 3.50
-        target_track = explanation_data.get("target_track", "Data Science / AI")
+        target_track = escape(str(explanation_data.get("target_track", "Not selected")))
         date_str = datetime.now().strftime("%B %d, %Y")
         
-        readiness_score = readiness_data.get("total_readiness_score", 0.0)
-        tier = readiness_data.get("readiness_tier", "Foundational")
+        try:
+            readiness_score = min(100.0, max(0.0, float(readiness_data.get("total_readiness_score", 0.0))))
+        except (TypeError, ValueError):
+            readiness_score = 0.0
+        tier = escape(str(readiness_data.get("readiness_tier", "Insufficient recorded evidence")))
         breakdown = readiness_data.get("breakdown", {})
 
         # Build gaps table rows
@@ -38,11 +43,11 @@ class CareerReportGenerator:
             p_color = "#e53e3e" if g["priority"] == "High" else ("#dd6b20" if g["priority"] == "Medium" else "#38a169")
             gaps_html += f"""
             <tr>
-                <td><strong>{g['skill']}</strong></td>
-                <td><span style="background:#edf2f7; padding:2px 8px; border-radius:4px;">{g['current_level']}</span></td>
-                <td><span style="background:#e2e8f0; padding:2px 8px; border-radius:4px; font-weight:bold;">{g['required_level']}</span></td>
-                <td><span style="color:{p_color}; font-weight:bold;">{g['priority']}</span></td>
-                <td>{g['reason']}</td>
+                <td><strong>{escape(str(g.get('skill', '')))}</strong></td>
+                <td><span style="background:#edf2f7; padding:2px 8px; border-radius:4px;">{escape(str(g.get('current_level', '')))}</span></td>
+                <td><span style="background:#e2e8f0; padding:2px 8px; border-radius:4px; font-weight:bold;">{escape(str(g.get('required_level', '')))}</span></td>
+                <td><span style="color:{p_color}; font-weight:bold;">{escape(str(g.get('priority', '')))}</span></td>
+                <td>{escape(str(g.get('reason', '')))}</td>
             </tr>
             """
 
@@ -51,27 +56,31 @@ class CareerReportGenerator:
         for act in roadmap_data:
             roadmap_html += f"""
             <tr>
-                <td style="text-align:center; font-weight:bold;">Week {act.get('week_number', 1)}</td>
-                <td><strong>{act.get('activity_title', '')}</strong></td>
-                <td><span style="background:#e6fffa; color:#234e52; padding:2px 6px; border-radius:4px;">{act.get('activity_type', '')}</span></td>
-                <td>{act.get('estimated_hours', 0)} hrs</td>
-                <td>{act.get('main_skill', '')}</td>
-                <td><span style="font-weight:bold;">{act.get('status', 'Planned')}</span></td>
+                <td style="text-align:center; font-weight:bold;">Week {escape(str(act.get('week_number', 1)))}</td>
+                <td><strong>{escape(str(act.get('activity_title', '')))}</strong></td>
+                <td><span style="background:#e6fffa; color:#234e52; padding:2px 6px; border-radius:4px;">{escape(str(act.get('activity_type', '')))}</span></td>
+                <td>{escape(str(act.get('estimated_hours', 0)))} hrs</td>
+                <td>{escape(str(act.get('main_skill', '')))}</td>
+                <td><span style="font-weight:bold;">{escape(str(act.get('status', 'Planned')))}</span></td>
             </tr>
             """
 
         # Build ranked career matches
         matches_html = ""
         for m in explanation_data.get("ranked_matches", [])[:4]:
-            score_val = m.get("match_score", m.get("probability", 0.0))
+            try:
+                score_val = min(100.0, max(0.0, float(m.get("match_score", m.get("probability", 0.0)))))
+            except (TypeError, ValueError):
+                score_val = 0.0
+            track_name = escape(str(m.get("track", "Unknown")))
             matches_html += f"""
             <div style="margin-bottom: 8px;">
                 <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
-                    <span><strong>{m['track']}</strong></span>
-                    <span>{score_val}%</span>
+                    <span><strong>{track_name}</strong></span>
+                    <span>{score_val:.1f}%</span>
                 </div>
                 <div style="background:#edf2f7; height:8px; border-radius:4px; overflow:hidden;">
-                    <div style="background:#3182ce; height:8px; width:{score_val}%;"></div>
+                    <div style="background:#3182ce; height:8px; width:{score_val:.1f}%;"></div>
                 </div>
             </div>
             """
@@ -125,8 +134,8 @@ class CareerReportGenerator:
         </div>
 
         <div class="card">
-            <h3>AI Career Readiness Assessment</h3>
-            <div class="score-pill">{readiness_score}%</div>
+            <h3>Prototype Readiness Index</h3>
+            <div class="score-pill">{readiness_score:.1f}/100</div>
             <p style="margin:0 0 10px 0; font-weight:600; color:#4a5568;">Status: {tier}</p>
             <p style="font-size:12px; margin:2px 0;">Competency Alignment: {breakdown.get('competency_score', 0)} / 50 pts</p>
             <p style="font-size:12px; margin:2px 0;">Academic Prerequisites: {breakdown.get('academic_score', 0)} / 25 pts</p>
@@ -138,7 +147,7 @@ class CareerReportGenerator:
     <div class="card" style="margin-bottom: 25px;">
         <h3>Advisory Career Track Affinity Scores</h3>
         <p style="font-size:12px; color:#718096; margin-top:-4px;">
-            Uncalibrated multi-criteria composite affinity scores based on machine learning competency (K-NN & Decision Tree), domain interest, and curriculum alignment.
+            Uncalibrated planning shares: 70% K-NN competency, 20% stated interest, and 10% curriculum alignment. Synthetic benchmark only; not an employment probability.
         </p>
         {matches_html}
     </div>
@@ -162,9 +171,9 @@ class CareerReportGenerator:
     </div>
 
     <div class="card" style="margin-bottom: 25px;">
-        <h3>Personalized A* Optimized Learning Roadmap</h3>
+        <h3>Dependency-Aware Learning Roadmap</h3>
         <p style="font-size:12px; color:#718096; margin-top:-4px;">
-            Constructed using state-space search exploring activity DAG, respecting student weekly availability.
+            Minimum declared activity hours are selected by A*; weekly scheduling is applied after path selection.
         </p>
         <table>
             <thead>
@@ -184,7 +193,7 @@ class CareerReportGenerator:
     </div>
 
     <div class="footer">
-        <p>CareerSense AI Decision Support System &bull; Generated for Academic Advising & Career Development &bull; KDU Faculty of Computing</p>
+        <p>CareerSense academic prototype &bull; Planning aid only &bull; Not a prediction of employment, eligibility, or career success</p>
     </div>
 </body>
 </html>

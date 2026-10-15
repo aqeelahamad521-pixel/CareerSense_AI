@@ -63,6 +63,12 @@ class ExplainabilityEngine:
             "dependency_alerts": dep_alerts,
             "radar_comparison": radar_data,
             "nearest_neighbor_distances": ml_results.get("nearest_neighbor_distances", []),
+            "is_actionable": ml_results.get("is_actionable", bool(academic_records or student_skills)),
+            "recommendation_available": ml_results.get("recommendation_available", False),
+            "score_margin": ml_results.get("score_margin"),
+            "evidence_status": ml_results.get("evidence_status", "fallback"),
+            "evidence_message": ml_results.get("evidence_message", "The model is unavailable; review the rule-based gaps only."),
+            "limitations": ml_results.get("limitations", "This is an exploratory planning aid, not an employment prediction."),
             "explainability_summary": self._synthesize_summary(chosen_track, ml_results, prereq_eval, skill_gaps)
         }
 
@@ -96,7 +102,12 @@ class ExplainabilityEngine:
             "ranked_matches": matches,
             "top_track": matches[0]["track"] if matches else "Software Engineering",
             "ml_predicted_track": matches[0]["track"] if matches else "Software Engineering",
-            "model_used": "Knowledge-Based Heuristic"
+            "model_used": "Knowledge-based fallback",
+            "is_actionable": False,
+            "recommendation_available": False,
+            "evidence_status": "model_unavailable",
+            "evidence_message": "The trained model is unavailable. No pathway recommendation is being made.",
+            "limitations": "Rule-only fallback; not a validated career outcome model."
         }
 
     def _extract_influential_factors(self, track: str, academics: list, interests: dict, skills: dict, skill_gaps: list = None) -> dict:
@@ -136,7 +147,7 @@ class ExplainabilityEngine:
         # Analyze core demonstrated skills
         advanced_skills = [k for k, v in skills.items() if v in ("Intermediate", "Advanced")]
         if advanced_skills:
-            positive_drivers.append(f"Demonstrated technical proficiency in: {', '.join(advanced_skills[:4])}.")
+            positive_drivers.append(f"Intermediate-or-higher self-assessments recorded in: {', '.join(advanced_skills[:4])}.")
 
         # Analyze critical skill gaps for target track
         if skill_gaps:
@@ -182,4 +193,4 @@ class ExplainabilityEngine:
         
         gap_text = f"Top priority skill gaps identified: {', '.join(high_gaps)}." if high_gaps else "All core competencies currently meet or exceed the benchmark levels."
         
-        return f"{track} is evaluated as a suitable career pathway. {prereq_status} {gap_text}"
+        return f"{track} is the pathway currently being explored. {prereq_status} {gap_text}"

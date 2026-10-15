@@ -108,7 +108,9 @@ INTEREST_CATEGORIES = [
     "UI/UX Design & User Experience"
 ]
 
-# ML Feature Columns definition
+# ML feature columns intentionally exclude stated interests.  Interests are a
+# separate, transparent input to the advisory composite; including them here as
+# well would count the same preference twice.
 ML_FEATURE_COLUMNS = [
     # Grades (0.0 to 4.0)
     "grade_programming",
@@ -117,12 +119,6 @@ ML_FEATURE_COLUMNS = [
     "grade_networking",
     "grade_systems",
     "grade_design",
-    # Interests (1 to 5)
-    "interest_software",
-    "interest_data",
-    "interest_security",
-    "interest_cloud",
-    "interest_design",
     # Skill ratings (0 to 3)
     "skill_oop",
     "skill_dsa",
@@ -149,6 +145,14 @@ ML_FEATURE_COLUMNS = [
     "skill_design_principles",
     "skill_frontend",
     "skill_design_systems"
+]
+
+INTEREST_FEATURE_COLUMNS = [
+    "interest_software",
+    "interest_data",
+    "interest_security",
+    "interest_cloud",
+    "interest_design",
 ]
 
 # User Roles

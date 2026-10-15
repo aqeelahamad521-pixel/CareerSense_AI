@@ -237,7 +237,9 @@ class AStarRoadmapOptimizer:
                 "roadmap": [],
                 "algorithm": "A* Search with Admissible Skill-Distance Heuristic",
                 "is_optimal": True,
-                "status": "already_satisfied"
+                "status": "already_satisfied",
+                "uncovered_gaps": [],
+                "optimization_scope": "Minimum declared activity hours; weekly scheduling is applied after path selection."
             }
 
         # Filter activities relevant to this track, identified gaps, and their prerequisite chains
@@ -302,7 +304,7 @@ class AStarRoadmapOptimizer:
                     best_cost = g
                     if not uncovered_gaps:
                         status = "optimal_solution_found"
-                        status_message = "Optimal A* learning sequence found satisfying all target competencies."
+                        status_message = "Minimum-declared-hours A* sequence found for all represented target competencies."
                     else:
                         status = "partial_coverage"
                         status_message = (
@@ -433,7 +435,9 @@ class AStarRoadmapOptimizer:
             "algorithm": algo_name,
             "is_optimal": a_star_optimal,
             "status": status,
-            "message": status_message
+            "message": status_message,
+            "uncovered_gaps": uncovered_gaps,
+            "optimization_scope": "Minimum declared activity hours; weekly scheduling is applied after path selection and is not part of the A* objective."
         }
 
     def _topological_fallback(self, activities: List[dict], active_gaps: Dict[str, int]) -> List[dict]:
