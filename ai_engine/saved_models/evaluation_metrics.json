@@ -375,10 +375,10 @@
     {
       "model": "Random Forest Classifier",
       "type": "Ensemble Benchmark",
-      "cv_accuracy": 46.03,
-      "accuracy": 48.82,
-      "f1_macro": 47.08,
-      "f1_weighted": 48.11,
+      "cv_accuracy": 46.32,
+      "accuracy": 50.0,
+      "f1_macro": 48.18,
+      "f1_weighted": 49.25,
       "rationale": "Ensemble benchmark evaluating non-linear feature interactions"
     },
     {
@@ -401,22 +401,22 @@
     }
   ],
   "provenance": {
-    "evaluation_timestamp": "2026-10-15T12:29:13.568728+00:00",
-    "training_timestamp_utc": "2026-10-15T12:29:13.568728+00:00",
-    "dataset_hash_sha256": "75550d364a8cf9f5ada96983cf9e04c04be7af8374b088ddee068a616193f4c0",
-    "dataset_sha256": "75550d364a8cf9f5ada96983cf9e04c04be7af8374b088ddee068a616193f4c0",
+    "evaluation_timestamp": "2026-10-17T12:27:50.837146+00:00",
+    "training_timestamp_utc": "2026-10-17T12:27:50.837146+00:00",
+    "dataset_hash_sha256": "b65c4bffb1e6ce22b3a78873ee5318d27aa96d550a751667b1d92e7439e84439",
+    "dataset_sha256": "b65c4bffb1e6ce22b3a78873ee5318d27aa96d550a751667b1d92e7439e84439",
     "random_seed": 42,
-    "python_version": "3.11.17",
+    "python_version": "3.13.15",
     "dependencies": {
-      "scikit-learn": "1.6.1",
-      "numpy": "2.0.2",
-      "pandas": "2.3.3"
+      "scikit-learn": "1.9.0",
+      "numpy": "2.5.2",
+      "pandas": "3.0.5"
     },
     "environment_versions": {
-      "scikit_learn": "1.6.1",
-      "numpy": "2.0.2",
-      "pandas": "2.3.3",
-      "python": "3.11.17"
+      "scikit_learn": "1.9.0",
+      "numpy": "2.5.2",
+      "pandas": "3.0.5",
+      "python": "3.13.15"
     },
     "evaluation_protocol": "Stratified 80/20 held-out split with 5-fold CV",
     "preprocessing_isolation": "Pipeline(StandardScaler(), Estimator()) per fold to prevent CV data leakage",

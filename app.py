@@ -22,6 +22,7 @@ from modules.student_view import render_student_view
 from modules.advisor_view import render_advisor_view
 from modules.coordinator_view import render_coordinator_view
 from modules.admin_view import render_admin_view
+from modules.ai_guide_view import render_ai_career_guide
 from modules.ui import apply_theme
 
 # Streamlit Page Config
@@ -81,6 +82,14 @@ def main():
             st.caption(st.session_state.reg_no)
 
         st.divider()
+        nav_selection = st.radio(
+            "Navigation",
+            options=["📊 Dashboard", "🤖 AI Career Guide"],
+            index=0,
+            help="Switch between workspace dashboard and AI Career Guide"
+        )
+
+        st.divider()
         if st.button("Sign out", width="stretch"):
             logout_user()
 
@@ -88,19 +97,22 @@ def main():
         st.caption("Academic prototype")
         st.caption("Synthetic benchmarks are for product testing, not career outcome prediction.")
 
-
-    # Dispatch to appropriate role dashboard with server-side authorization check
-    current_role = st.session_state.role
-    if current_role == "student":
-        render_student_view(db, rule_engine, a_star, ml_classifier, explainability)
-    elif current_role == "advisor":
-        render_advisor_view(db, rule_engine, a_star, ml_classifier, explainability)
-    elif current_role == "coordinator":
-        render_coordinator_view(db, rule_engine)
-    elif current_role == "admin":
-        render_admin_view(db, rule_engine, a_star, ml_classifier)
+    # View Routing: AI Career Guide or Role Dashboard
+    if nav_selection == "🤖 AI Career Guide":
+        render_ai_career_guide()
     else:
-        st.error("Unknown user role.")
+        # Dispatch to appropriate role dashboard with server-side authorization check
+        current_role = st.session_state.role
+        if current_role == "student":
+            render_student_view(db, rule_engine, a_star, ml_classifier, explainability)
+        elif current_role == "advisor":
+            render_advisor_view(db, rule_engine, a_star, ml_classifier, explainability)
+        elif current_role == "coordinator":
+            render_coordinator_view(db, rule_engine)
+        elif current_role == "admin":
+            render_admin_view(db, rule_engine, a_star, ml_classifier)
+        else:
+            st.error("Unknown user role.")
 
 if __name__ == "__main__":
     main()

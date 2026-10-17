@@ -24,6 +24,7 @@ class DatabaseManager:
 
     def __init__(self, db_path=DATABASE_PATH):
         self.db_path = str(db_path)
+        self._active_connections = []
         self.init_db()
 
     def get_connection(self):
@@ -31,7 +32,20 @@ class DatabaseManager:
         conn.row_factory = sqlite3.Row
         conn.execute("PRAGMA foreign_keys = ON")
         conn.execute("PRAGMA busy_timeout = 5000")
+        if not hasattr(self, "_active_connections"):
+            self._active_connections = []
+        self._active_connections.append(conn)
         return conn
+
+    def close(self):
+        """Explicitly closes all active database connections opened by this manager."""
+        if hasattr(self, "_active_connections"):
+            while self._active_connections:
+                conn = self._active_connections.pop()
+                try:
+                    conn.close()
+                except Exception:
+                    pass
 
     @staticmethod
     def _ensure_column(cursor, table: str, column: str, definition: str):
