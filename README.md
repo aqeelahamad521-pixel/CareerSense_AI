@@ -57,6 +57,8 @@ streamlit run app.py
 
 Open `http://localhost:8501`.
 
+Note: Local Model Installation - The application requires an initial internet connection to download the base Qwen weights from HuggingFace. Once downloaded, the chatbot operates completely offline.
+
 ### One-click startup
 
 - **macOS:** double-click `Start-CareerSense.command`. If macOS blocks the first launch, Control-click the file, choose **Open**, and confirm once.

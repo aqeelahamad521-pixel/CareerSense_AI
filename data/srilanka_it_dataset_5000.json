@@ -1500,11 +1500,6 @@
         "response": "Send a polite thank-you email to the HR coordinator or interviewer within 24 to 48 hours, expressing your continued interest in the role and the company."
     },
     {
-        "instruction": "What is the typical duration of a software engineering internship in Colombo IT companies?",
-        "context": "Colombo IT Internships",
-        "response": "Most software engineering internships in Colombo last between 6 months to 1 year, as this is a standard requirement for undergraduate degrees from universities like University of Moratuwa, UCSC, and SLIIT."
-    },
-    {
         "instruction": "What is the average monthly stipend for an IT intern in Colombo?",
         "context": "Colombo IT Internships",
         "response": "The monthly stipend for IT interns in Colombo typically ranges from LKR 25,000 to LKR 60,000, depending on the company size, multinational presence, and the intern's technical skills."
@@ -3499,11 +3494,6 @@
         "response": "While all three roles require teamwork, BAs need exceptional negotiation, conflict resolution, and presentation skills because they directly interact with international business stakeholders and non-technical clients."
     },
     {
-        "instruction": "What is the typical monthly salary or allowance for a Software Engineering Intern in Sri Lanka?",
-        "context": "Sri Lanka IT Salaries - Intern Level",
-        "response": "A Software Engineering Intern in Sri Lanka typically earns a monthly allowance ranging from LKR 20,000 to LKR 50,000, depending on the company size and whether it is a multinational or local firm."
-    },
-    {
         "instruction": "How much does a Software Engineering Intern at a multinational company like WSO2 or Sysco LABS in Sri Lanka usually make?",
         "context": "Sri Lanka IT Salaries - Multinational Internships",
         "response": "At top-tier multinational companies in Sri Lanka such as WSO2, Sysco LABS, or IFS, Software Engineering interns can receive a higher monthly allowance ranging from LKR 40,000 to LKR 75,000."
@@ -3527,11 +3517,6 @@
         "instruction": "How much does a Software Engineer with 3 years of experience earn at Virtusa Sri Lanka?",
         "context": "Sri Lanka IT Salaries - Mid Level at Virtusa",
         "response": "At Virtusa Sri Lanka, a Software Engineer with around 3 years of experience generally commands a monthly salary between LKR 180,000 and LKR 280,000."
-    },
-    {
-        "instruction": "What is the average monthly salary of a Senior Software Engineer in Sri Lanka?",
-        "context": "Sri Lanka IT Salaries - Senior Level",
-        "response": "A Senior Software Engineer (usually 5+ years of experience) in Sri Lanka earns a monthly salary ranging from LKR 300,000 to LKR 600,000."
     },
     {
         "instruction": "Can Senior Software Engineers in Sri Lanka earn upwards of LKR 600,000 per month?",
@@ -5499,11 +5484,6 @@
         "response": "They offer globally competitive compensation packages, hybrid work policies, fast-track career progression, clear stock option schemes or performance bonuses, and continuous upskilling opportunities."
     },
     {
-        "instruction": "What is the primary government institution renowned for IT education under the University of Colombo?",
-        "context": "Sri Lankan IT Universities",
-        "response": "The University of Colombo School of Computing (UCSC) is the premier government institution for IT and computing education under the University of Colombo."
-    },
-    {
         "instruction": "Which state university in Sri Lanka is most famous for its Department of Computer Science and Engineering?",
         "context": "Sri Lankan IT Universities",
         "response": "The University of Moratuwa (UoM) is widely recognized as the top state university for Computer Science and Engineering in Sri Lanka."
@@ -6122,11 +6102,6 @@
         "instruction": "What are the key performance indicators (KPIs) for an SE, QA, and BA in Sri Lanka?",
         "context": "Sri Lanka IT Performance Metrics",
         "response": "For SEs, KPIs include code quality and velocity. For QAs, they include defect leakage rate and test coverage. For BAs, KPIs focus on requirement clarity, low rework rates, and stakeholder satisfaction."
-    },
-    {
-        "instruction": "What is the typical monthly stipend range for a Software Engineering Intern in Sri Lanka?",
-        "context": "Sri Lanka IT Salaries - Intern Level",
-        "response": "A Software Engineering Intern in Sri Lanka typically earns a monthly allowance ranging from LKR 20,000 to LKR 60,000, depending on the company size and whether it is a multinational or local firm."
     },
     {
         "instruction": "How much do interns at large multinational companies like WSO2 or Sysco LABS Sri Lanka usually get paid?",
@@ -7622,11 +7597,6 @@
         "instruction": "What advice do hiring managers give to fresh graduates facing tech interviews in Sri Lanka?",
         "context": "Sri Lanka Software Engineering Interviews",
         "response": "Managers advise fresh graduates to focus on mastering core computer science fundamentals (like OOP and data structures) rather than just memorizing syntax, and to practice clear communication of their thought process during problem-solving."
-    },
-    {
-        "instruction": "What is the typical duration of a software engineering internship in Colombo IT companies?",
-        "context": "Colombo IT Internships",
-        "response": "Most software engineering internships in Colombo last between 6 months to 1 year, aligning with the industrial training requirements of local universities like University of Moratuwa, UCSC, and SLIIT."
     },
     {
         "instruction": "What is the average monthly stipend for an IT intern in Colombo?",
@@ -10249,11 +10219,6 @@
         "response": "Review the four pillars of OOP (Inheritance, Polymorphism, Encapsulation, Abstraction), SOLID design principles, and common design patterns like Singleton, Factory, and Observer."
     },
     {
-        "instruction": "What is the typical duration of a software engineering internship in Colombo IT companies?",
-        "context": "Colombo IT Internships",
-        "response": "Most software engineering internships in Colombo last between 6 months to 1 year, as this is a standard requirement for undergraduate degree programs at universities like UOM, UCSC, and SLIIT."
-    },
-    {
         "instruction": "What is the average monthly stipend for an IT intern in Colombo?",
         "context": "Colombo IT Internships",
         "response": "IT interns in Colombo typically receive a monthly stipend ranging from LKR 25,000 to LKR 60,000, depending on the company size, with multinational corporations and top local firms paying on the higher end."
@@ -10372,11 +10337,6 @@
         "instruction": "What is the most effective way to follow up after applying for an internship in Colombo?",
         "context": "Colombo IT Internships",
         "response": "Following up via LinkedIn with the company’s technical recruiter or talent acquisition lead 1 to 2 weeks after application submission is considered a professional and effective approach."
-    },
-    {
-        "instruction": "What is the primary role of a Software Engineer (SE) in the Sri Lankan IT industry?",
-        "context": "SE Role in Sri Lanka",
-        "response": "A Software Engineer in Sri Lanka is primarily responsible for designing, developing, testing, and maintaining software applications using modern programming languages and frameworks."
     },
     {
         "instruction": "What does a Quality Assurance (QA) engineer do in Sri Lankan software companies like Virtusa or WSO2?",
@@ -10749,11 +10709,6 @@
         "response": "Captive centers like LSEG own the intellectual property and build core proprietary products directly for their parent global enterprise, rather than developing custom software for third-party clients like typical outsourcing companies."
     },
     {
-        "instruction": "What is UCSC and where is it located?",
-        "context": "Government IT Universities in Sri Lanka",
-        "response": "UCSC stands for the University of Colombo School of Computing. It is a premier higher education institute for computing in Sri Lanka, located in Colombo 07."
-    },
-    {
         "instruction": "What is the primary computer science degree offered by the University of Moratuwa?",
         "context": "Government IT Universities in Sri Lanka",
         "response": "The University of Moratuwa offers the Bachelor of Science Honours in Computer Science & Engineering through its Faculty of Engineering, as well as a Bachelor of Science Honours in Information Technology."
@@ -10872,11 +10827,6 @@
         "instruction": "How does the Sri Lankan IT industry view graduates from state universities vs private universities?",
         "context": "Government IT Universities in Sri Lanka",
         "response": "Graduates from both state universities (like Moratuwa and UCSC) and reputable private institutions (like SLIIT, IIT, and NSBM) are highly sought after by the Sri Lankan IT industry, known for their strong technical competencies and adaptability."
-    },
-    {
-        "instruction": "What are the most in-demand programming languages in the Sri Lankan IT industry?",
-        "context": "Sri Lanka IT Tech Stacks",
-        "response": "Java, JavaScript/TypeScript, Python, and C# are currently the most in-demand programming languages across software development companies in Sri Lanka."
     },
     {
         "instruction": "Is JavaScript widely used by software companies in Colombo?",
@@ -11749,11 +11699,6 @@
         "response": "Many institutions, such as SLIIT (SLIIT Incubation Center) and IIT, feature dedicated business incubators and accelerators to help students commercialize their final year software projects and tech startups."
     },
     {
-        "instruction": "What are the most in-demand programming languages in the Sri Lankan IT industry?",
-        "context": "Sri Lanka IT Tech Stacks",
-        "response": "Java, JavaScript/TypeScript, Python, and C# are currently the most in-demand programming languages across software development companies in Sri Lanka."
-    },
-    {
         "instruction": "Is JavaScript widely used for backend development in Sri Lanka?",
         "context": "Sri Lanka IT Tech Stacks",
         "response": "Yes, Node.js and Express.js are extensively used by both startups and established IT firms like WSO2 and IFS for backend development."
@@ -12247,11 +12192,6 @@
         "instruction": "Can a person work remotely as an SE, QA, or BA from Sri Lanka for international companies?",
         "context": "Remote Work in Sri Lanka",
         "response": "Yes, many Sri Lankan professionals work remotely as SEs, QAs, or BAs for foreign companies via local remote-hiring entities or direct freelance arrangements, earning competitive USD-pegged salaries."
-    },
-    {
-        "instruction": "What is the typical monthly salary or allowance for a Software Engineering Intern in Sri Lanka?",
-        "context": "Sri Lanka IT Salaries - Intern Level",
-        "response": "A Software Engineering Intern in Sri Lanka typically earns a monthly allowance ranging from LKR 20,000 to LKR 50,000, depending on the company size and whether it is a multinational or local firm."
     },
     {
         "instruction": "How much do interns at large multinational companies like WSO2 or Sysco LABS Sri Lanka usually get paid?",
@@ -12875,11 +12815,6 @@
         "response": "Expect questions on architectural decision-making, code review standards, mentoring junior developers, managing client expectations, estimating project timelines, and handling technical debt."
     },
     {
-        "instruction": "What is the typical duration of a software engineering internship in Colombo IT companies?",
-        "context": "Colombo IT Internships",
-        "response": "Most software engineering internships in Colombo last between 6 months to 1 year, as this is a standard requirement for undergraduate degrees from universities like University of Moratuwa, UCSC, and SLIIT."
-    },
-    {
         "instruction": "What is the average monthly stipend for an IT intern in Colombo?",
         "context": "Colombo IT Internships",
         "response": "The monthly stipend for an IT intern in Colombo generally ranges from LKR 25,000 to LKR 60,000, depending on the company size, multinational presence, and the intern's technical skills."
@@ -13373,11 +13308,6 @@
         "instruction": "Are remote work policies common among top IT companies in Sri Lanka?",
         "context": "Top IT Companies in Sri Lanka",
         "response": "Yes, post-pandemic, most top IT companies in Sri Lanka such as 99x, WSO2, and Sysco LABS have adopted hybrid work models, typically requiring 2 to 3 days of office attendance per week."
-    },
-    {
-        "instruction": "What is UCSC and where is it located?",
-        "context": "Government IT Universities in Sri Lanka",
-        "response": "UCSC stands for the University of Colombo School of Computing. It is a premier higher education institute for computing in Sri Lanka, located in Colombo 07, affiliated with the University of Colombo."
     },
     {
         "instruction": "Which faculty at the University of Moratuwa offers main IT degrees?",
@@ -14250,11 +14180,6 @@
         "response": "Interns who successfully complete their probationary/internship period are usually promoted to Associate Software Engineers, progressing to Software Engineers within 1 to 2 years."
     },
     {
-        "instruction": "What is UCSC and where is it located?",
-        "context": "Government IT Universities in Sri Lanka",
-        "response": "UCSC stands for the University of Colombo School of Computing. It is a premier government higher education institute for computing in Sri Lanka, located in Colombo 07."
-    },
-    {
         "instruction": "Which government university in Sri Lanka is famous for its Department of Computer Science and Engineering?",
         "context": "Government IT Universities in Sri Lanka",
         "response": "The University of Moratuwa (UoM) is widely recognized as the top government institution in Sri Lanka for Computer Science and Engineering."
@@ -14625,11 +14550,6 @@
         "response": "Maintain a professional demeanor, thank the HR recruiter for their time, and politely ask for feedback on your technical performance to identify areas for improvement in future applications."
     },
     {
-        "instruction": "What is the typical duration of a software engineering internship in Colombo IT companies?",
-        "context": "Colombo IT Internships",
-        "response": "Most software engineering internships in Colombo last between 6 months to 1 year, as this is a standard requirement for undergraduate degrees from universities like University of Moratuwa, UCSC, and SLIIT."
-    },
-    {
         "instruction": "What is the average monthly stipend for an IT intern in Colombo?",
         "context": "Colombo IT Internships",
         "response": "The monthly stipend for IT interns in Colombo typically ranges from LKR 25,000 to LKR 60,000 per month, depending on the company size and the candidate's technical skills."
@@ -14873,11 +14793,6 @@
         "instruction": "Which of the three roles (SE, QA, BA) has the highest demand in the Sri Lankan job market?",
         "context": "Sri Lanka IT Job Market Demand",
         "response": "Software Engineers (SE) consistently have the highest volume of openings in Sri Lanka, followed closely by Quality Assurance (QA) engineers, with Business Analysts being fewer in number but commanding high strategic value."
-    },
-    {
-        "instruction": "What is the typical monthly salary or allowance for a Software Engineering Intern in Sri Lanka?",
-        "context": "Sri Lanka IT Salaries - Intern Level",
-        "response": "A Software Engineering Intern in Sri Lanka typically earns a monthly allowance ranging from LKR 25,000 to LKR 60,000, depending on the company size and whether it is a multinational corporation or a local software firm."
     },
     {
         "instruction": "How much do top-tier multinational companies like WSO2 or Sysco LABS pay Software Engineering Interns?",
@@ -15500,11 +15415,6 @@
         "response": "Do not panic or stay silent. Communicate your thought process out loud, explain your initial brute-force approach, ask clarifying questions to the interviewer, and iteratively optimize your solution based on any hints provided."
     },
     {
-        "instruction": "What is the typical duration of a software engineering internship in Colombo IT companies?",
-        "context": "Colombo IT Internships",
-        "response": "Most software engineering internships in Colombo last between 6 months to 1 year, as this is a standard requirement for degree programs at local universities like UCSC, SLIIT, and Moratuwa."
-    },
-    {
         "instruction": "What is the average monthly stipend for an IT intern in Colombo?",
         "context": "Colombo IT Internships",
         "response": "The average monthly stipend for an IT intern in Colombo ranges from LKR 25,000 to LKR 60,000, depending on the company size, multinational presence, and the candidate's skill set."
@@ -16123,11 +16033,6 @@
         "instruction": "Do private IT universities in Sri Lanka offer financial assistance or scholarships?",
         "context": "Private IT Universities in Sri Lanka",
         "response": "Yes, institutes like SLIIT, IIT, and NSBM offer merit-based scholarships, academic tuition waivers, and partner with banks to provide student loans with concessionary interest rates."
-    },
-    {
-        "instruction": "What are the most in-demand programming languages in the Sri Lankan IT industry?",
-        "context": "Sri Lanka IT Tech Stacks",
-        "response": "Java, JavaScript/TypeScript, Python, and C# are currently the most in-demand programming languages across software development companies in Sri Lanka."
     },
     {
         "instruction": "Is Java still relevant in the Sri Lankan software industry?",
@@ -16750,11 +16655,6 @@
         "response": "Software engineering salaries for regional tech hubs in Kandy or Jaffna are often slightly lower than Colombo rates, but many companies offering remote or hybrid models now pay standardized island-wide salaries to prevent talent drain."
     },
     {
-        "instruction": "What is WSO2 primarily known for in the Sri Lankan IT industry?",
-        "context": "Top IT Companies in Sri Lanka",
-        "response": "WSO2 is a leading open-source technology provider specializing in integration, API management, and identity and access management, with its largest engineering and R&D center located in Colombo, Sri Lanka."
-    },
-    {
         "instruction": "Which global food service giant operates its primary technology and engineering center in Colombo under the name Sysco LABS?",
         "context": "Top IT Companies in Sri Lanka",
         "response": "Sysco LABS is the innovation and captive technology center for Sysco Corporation, the global leader in foodservice distribution, operating extensively from Colombo and Malabe."
@@ -16908,11 +16808,6 @@
         "instruction": "What degrees are typically offered by the University of Colombo School of Computing (UCSC)?",
         "context": "Government IT Universities in Sri Lanka",
         "response": "UCSC offers a Bachelor of Science (BSc) in Computer Science and a Bachelor of Science (BSc) in Information Systems."
-    },
-    {
-        "instruction": "Is SLIIT a government or private institute?",
-        "context": "Private IT Universities in Sri Lanka",
-        "response": "SLIIT is a private, non-state degree-awarding institute recognized by the University Grants Commission (UGC) of Sri Lanka."
     },
     {
         "instruction": "What is the significance of the 1-year industrial placement mandatory in IIT's degree programs?",
@@ -17498,11 +17393,6 @@
         "instruction": "Which of the three roles (SE, QA, BA) is experiencing the highest demand in the Sri Lankan job market?",
         "context": "Sri Lankan Job Market Trends",
         "response": "Software Engineers consistently experience the highest volume of openings in Sri Lanka, followed closely by Automation QA Engineers and specialized Business or Product Analysts."
-    },
-    {
-        "instruction": "What is the typical monthly stipend range for a Software Engineering Intern in Sri Lanka?",
-        "context": "Sri Lanka IT Salaries - Intern Level",
-        "response": "A Software Engineering Intern in Sri Lanka typically earns a monthly allowance ranging from LKR 20,000 to LKR 60,000, depending on the company size and whether it is a multinational or local firm."
     },
     {
         "instruction": "How much do interns at large multinational companies like WSO2 or Sysco LABS Sri Lanka usually get paid?",
@@ -18375,11 +18265,6 @@
         "response": "Certifications such as ISTQB (International Software Testing Qualifications Board) Foundation Level and Agile Tester are highly recognized and often required by QA employers in Sri Lanka."
     },
     {
-        "instruction": "What is the typical monthly salary range for a Software Engineering Intern in Sri Lanka?",
-        "context": "Sri Lanka IT Salaries",
-        "response": "A Software Engineering Intern in Sri Lanka typically earns a monthly allowance ranging from LKR 25,000 to LKR 60,000, depending on the company size and whether it is a multinational or local firm."
-    },
-    {
         "instruction": "How much does an intern at Virtusa or WSO2 in Sri Lanka usually make?",
         "context": "Sri Lanka IT Salaries",
         "response": "At top-tier tier-1 companies like Virtusa or WSO2, Software Engineering interns generally receive a higher stipend ranging between LKR 40,000 and LKR 75,000 per month."
@@ -19250,11 +19135,6 @@
         "response": "An SE Tech Lead guides the architectural and coding standards of the software, whereas a QA Lead defines the testing strategy, manages test automation frameworks, and oversees overall product quality governance."
     },
     {
-        "instruction": "What is the typical monthly salary or stipend for a Software Engineering Intern in Sri Lanka?",
-        "context": "Sri Lanka IT Salaries - Intern Level",
-        "response": "A Software Engineering Intern in Sri Lanka typically earns a monthly allowance ranging from LKR 20,000 to LKR 50,000, depending on the company size and whether it is a multinational or local firm."
-    },
-    {
         "instruction": "How much does a multinational company like WSO2 or Sysco LABS pay a Software Engineering Intern in Sri Lanka?",
         "context": "Sri Lanka IT Salaries - Multinational Internships",
         "response": "Top-tier multinational companies and large-scale tech firms in Sri Lanka usually pay software engineering interns between LKR 40,000 and LKR 75,000 per month."
@@ -19501,11 +19381,6 @@
         "response": "Vega Innovations, which is a subsidiary of CodeGen International, designed and built the Vega electric supercar in Sri Lanka."
     },
     {
-        "instruction": "What is UCSC and where is it located?",
-        "context": "Government IT Universities in Sri Lanka",
-        "response": "UCSC stands for the University of Colombo School of Computing. It is a premier higher education institute for computing in Sri Lanka, located in Colombo 07."
-    },
-    {
         "instruction": "Which government university in Sri Lanka is best known for its Department of Computer Science and Engineering?",
         "context": "Government IT Universities in Sri Lanka",
         "response": "The University of Moratuwa (UoM) is widely recognized as the top institution for engineering and computer science degrees in Sri Lanka."
@@ -19624,11 +19499,6 @@
         "instruction": "How does UCSC contribute to the Sri Lankan ICT ecosystem besides undergraduate education?",
         "context": "Government IT Universities Industry Impact",
         "response": "UCSC hosts the LK Domain Registry, produces national ICT workforce surveys, runs specialized professional training centers, and conducts extensive computing research."
-    },
-    {
-        "instruction": "What are the most in-demand programming languages in the Sri Lankan IT industry?",
-        "context": "Sri Lanka IT Tech Stacks",
-        "response": "Java, JavaScript/TypeScript, Python, and C# are currently the most in-demand programming languages across software development companies in Sri Lanka."
     },
     {
         "instruction": "Is Java still relevant for enterprise software development in Sri Lanka?",
@@ -19874,11 +19744,6 @@
         "instruction": "How can junior developers prepare for cloud computing questions in interviews with Sri Lankan enterprises?",
         "context": "Sri Lanka Software Engineering Interviews",
         "response": "Juniors should understand basic cloud concepts such as the difference between IaaS, PaaS, and SaaS, basic AWS/Azure services like S3, EC2, or relational databases, and how containerization using Docker works."
-    },
-    {
-        "instruction": "What is the typical duration of a software engineering internship in Colombo IT companies?",
-        "context": "Colombo IT Internships",
-        "response": "Most software engineering internships in Colombo last between 6 months to 1 year, as this is a standard requirement for undergraduate degrees from universities like University of Moratuwa, UCSC, and SLIIT."
     },
     {
         "instruction": "What is the average monthly stipend for an IT intern in Colombo?",
@@ -20251,11 +20116,6 @@
         "response": "Salary transparency is generally low in Sri Lanka; companies rarely publish salary ranges in job advertisements, and compensation discussions typically happen during the final interview stages or via recruitment agencies."
     },
     {
-        "instruction": "What is WSO2 primarily known for in the Sri Lankan IT industry?",
-        "context": "Top IT Companies in Sri Lanka",
-        "response": "WSO2 is a prominent Sri Lankan-founded open-source technology provider specializing in enterprise integration, API management, and identity and access management."
-    },
-    {
         "instruction": "Where is the global headquarters of WSO2 located?",
         "context": "Top IT Companies in Sri Lanka",
         "response": "While WSO2 has its primary research and development center and a massive employee base in Colombo, Sri Lanka, its global headquarters is located in Mountain View, California, USA."
@@ -20374,11 +20234,6 @@
         "instruction": "What is the average tenure-based salary expectation for a Senior Software Engineer at a premier Sri Lankan IT firm?",
         "context": "Top IT Companies in Sri Lanka",
         "response": "A Senior Software Engineer at a premier firm in Sri Lanka typically commands a monthly salary ranging from LKR 350,000 to over LKR 700,000."
-    },
-    {
-        "instruction": "What does UCSC stand for and what is its affiliation?",
-        "context": "Sri Lankan IT Universities",
-        "response": "UCSC stands for the University of Colombo School of Computing. It is an independent institution affiliated with the University of Colombo, established in 2002."
     },
     {
         "instruction": "Which state university is most famous for its Computer Science and Engineering degrees in Sri Lanka?",
@@ -20751,11 +20606,6 @@
         "response": "Send a polite thank-you email to the HR coordinator or interviewer within 24 hours, expressing appreciation for their time and reiterating your enthusiasm for the role."
     },
     {
-        "instruction": "What is the typical duration of a software engineering internship in Colombo IT companies?",
-        "context": "Colombo IT Internships",
-        "response": "Most software engineering internships in Colombo last between 6 months to 1 year, aligning with the industrial training requirements of local universities like University of Moratuwa and SLIIT."
-    },
-    {
         "instruction": "What is the average monthly stipend for an IT intern in Colombo?",
         "context": "Colombo IT Internships",
         "response": "IT interns in Colombo typically receive a monthly stipend ranging from LKR 25,000 to LKR 60,000, depending on the company size, with multinational corporations paying on the higher end."
@@ -21124,11 +20974,6 @@
         "instruction": "Have software engineering salaries in Sri Lanka increased significantly over the last few years?",
         "context": "Sri Lanka IT Salaries",
         "response": "Yes, due to inflation, currency depreciation, and high demand for offshore development talent, IT salaries in Sri Lanka saw substantial upward revisions across all levels (Intern to Tech Lead) between 2022 and 2024."
-    },
-    {
-        "instruction": "What is WSO2 primarily known for in the Sri Lankan IT industry?",
-        "context": "Top IT Companies in Sri Lanka",
-        "response": "WSO2 is a leading open-source technology provider specializing in integration, API management, and identity and access management, with its largest engineering and R&D center located in Colombo, Sri Lanka."
     },
     {
         "instruction": "Which global food service corporation is Sysco LABS Sri Lanka the captive innovation center for?",
@@ -22251,11 +22096,6 @@
         "response": "UCSC offers postgraduate programs such as the Master of Computer Science (MCS), Master of Science (MSc) in Information Security, and Master of Information Technology (MIT)."
     },
     {
-        "instruction": "What are the most in-demand programming languages in the Sri Lankan IT industry?",
-        "context": "Sri Lanka IT Tech Stacks",
-        "response": "The most in-demand programming languages in Sri Lanka include Java, JavaScript/TypeScript, Python, C#, and PHP."
-    },
-    {
         "instruction": "Is Java still relevant in the Sri Lankan software industry?",
         "context": "Sri Lanka IT Tech Stacks",
         "response": "Yes, Java remains highly relevant in Sri Lanka, particularly for enterprise applications, banking systems, and large-scale enterprise services utilized by firms like WSO2, Virtusa, and Dialog Axiata."
@@ -22626,11 +22466,6 @@
         "response": "Interns should focus on setting up their local development environments, reading technical documentation, understanding the company's code review practices, and building rapport with their assigned mentor."
     },
     {
-        "instruction": "What is the primary role of a Software Engineer (SE) in the Sri Lankan IT industry?",
-        "context": "SE Role in Sri Lanka",
-        "response": "A Software Engineer in Sri Lanka is primarily responsible for designing, developing, testing, and maintaining software applications using modern programming languages and frameworks."
-    },
-    {
         "instruction": "How does a Quality Assurance (QA) engineer differ from a Software Engineer in Sri Lankan companies like WSO2 or IFS?",
         "context": "QA vs SE in Sri Lanka",
         "response": "While an SE writes the code to build the software, a QA engineer focuses on finding defects, writing automated and manual test scripts, and ensuring the product meets quality standards before deployment."
@@ -22749,11 +22584,6 @@
         "instruction": "What language proficiency is most critical for BAs operating in the Sri Lankan IT sector?",
         "context": "Language Skills for BAs",
         "response": "Fluency in English is mandatory for dealing with international clients, but proficiency in Sinhala or Tamil is also valuable when gathering requirements from local Sri Lankan enterprises or government bodies."
-    },
-    {
-        "instruction": "What is the typical monthly stipend range for a Software Engineering Intern in Sri Lanka?",
-        "context": "Sri Lanka IT Salaries - Intern Level",
-        "response": "A Software Engineering Intern in Sri Lanka typically earns a monthly allowance ranging from LKR 20,000 to LKR 50,000, depending on the company size and whether it is a multinational corporation (MNC) or a local software firm."
     },
     {
         "instruction": "How much do top-tier multinational companies like WSO2 or Sysco LABS pay Software Engineering Interns?",
@@ -22999,11 +22829,6 @@
         "instruction": "What is the significance of the SLASSCOM organization regarding these top IT companies?",
         "context": "Top IT Companies in Sri Lanka",
         "response": "SLASSCOM (Sri Lanka Association for Software and Services Companies) acts as the national chamber for the IT/BPM industry, representing top companies like WSO2, 99x, and IFS to drive policy, talent development, and global branding."
-    },
-    {
-        "instruction": "What is UCSC and where is it located?",
-        "context": "Government IT Universities in Sri Lanka",
-        "response": "UCSC stands for the University of Colombo School of Computing. It is a premier higher education institute for computing in Sri Lanka, located in Colombo 07."
     },
     {
         "instruction": "What is the primary computer science degree offered by the University of Moratuwa?",
@@ -23376,11 +23201,6 @@
         "response": "Yes, post-pandemic, most companies conduct initial screening and technical rounds via Zoom, Microsoft Teams, or Google Meet, with final rounds sometimes conducted on-site."
     },
     {
-        "instruction": "What is the typical duration of a software engineering internship in Colombo IT companies?",
-        "context": "Colombo IT Internships",
-        "response": "Most software engineering internships in Colombo last between 6 months to 1 year, as this is a mandatory requirement for undergraduate degrees from universities like University of Moratuwa, UCSC, and SLIIT."
-    },
-    {
         "instruction": "What is the average monthly stipend for an IT intern in Colombo?",
         "context": "Colombo IT Internships",
         "response": "Internship allowances in Colombo generally range from LKR 25,000 to LKR 60,000 per month, depending on the company size, with multinational corporations (MNCs) and large local firms paying on the higher end."
@@ -23499,11 +23319,6 @@
         "instruction": "What should an intern do if they face technical blockers during their Colombo internship?",
         "context": "Colombo IT Internships",
         "response": "Interns are expected to attempt self-troubleshooting using documentation and StackOverflow before escalating the issue to their assigned mentor or tech lead during daily standups."
-    },
-    {
-        "instruction": "What is the primary responsibility of a Software Engineer (SE) in the Sri Lankan IT industry?",
-        "context": "Sri Lanka IT Career Roles",
-        "response": "A Software Engineer in Sri Lanka is primarily responsible for designing, coding, testing, and maintaining software applications using technologies like Java, JavaScript, Python, or C# to meet client requirements."
     },
     {
         "instruction": "What does a Quality Assurance (QA) engineer do in a typical Sri Lankan software company like WSO2 or Virtusa?",
@@ -23626,11 +23441,6 @@
         "response": "BAs in Sri Lankan offshore centers are crucial because they bridge the communication gap between local technical teams and overseas clients, minimizing misunderstandings and project scope creep."
     },
     {
-        "instruction": "What is the typical monthly salary or stipend for a Software Engineering Intern in Sri Lanka?",
-        "context": "Sri Lanka IT Salaries - Intern Level",
-        "response": "A Software Engineering Intern in Sri Lanka typically earns a monthly allowance ranging from LKR 20,000 to LKR 50,000, depending on the company size and whether it is a multinational or local firm."
-    },
-    {
         "instruction": "How much does a multinational company like WSO2 or IFS pay Software Engineering Interns?",
         "context": "Sri Lanka IT Salaries - Multinational Internships",
         "response": "Large multinational companies and top-tier product firms in Sri Lanka like WSO2, IFS, and Sysco LABS generally pay Software Engineering interns a higher stipend ranging between LKR 40,000 and LKR 75,000 per month."
@@ -23751,11 +23561,6 @@
         "response": "Cloud certifications (AWS/Azure Solutions Architect), modern JavaScript frameworks (React, Next.js), backend technologies (Java Spring Boot, Node.js), and specialized AI/Data Engineering stacks command the highest salary premiums in the Sri Lankan market."
     },
     {
-        "instruction": "What is WSO2 primarily known for in the Sri Lankan IT industry?",
-        "context": "Top IT Companies in Sri Lanka",
-        "response": "WSO2 is a leading open-source technology provider in Sri Lanka, globally recognized for its enterprise integration, API management, and identity and access management solutions."
-    },
-    {
         "instruction": "Where is the main research and development (R&D) center of WSO2 located?",
         "context": "Top IT Companies in Sri Lanka",
         "response": "WSO2's primary R&D center is located in Colombo, Sri Lanka, employing a large pool of talented software engineers."
@@ -23874,11 +23679,6 @@
         "instruction": "What is the significance of Orion City and Trace Expert City for top IT companies in Sri Lanka?",
         "context": "Top IT Companies in Sri Lanka",
         "response": "Orion City and Trace Expert City are major tech parks in Colombo that house the offices of numerous top multinational and local IT companies, fostering a collaborative tech startup and enterprise ecosystem."
-    },
-    {
-        "instruction": "What is the primary government institution renowned for IT education under the University of Colombo?",
-        "context": "Sri Lankan IT Universities",
-        "response": "The University of Colombo School of Computing (UCSC) is the premier government institution for computing and IT education in Sri Lanka."
     },
     {
         "instruction": "Which engineering faculty in Sri Lanka is most famous for producing top-tier software engineers and IT professionals?",

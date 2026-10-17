@@ -202,7 +202,7 @@ def render_ai_career_guide():
 
                 # Show explainable context expander if RAG retrieved relevant snippets
                 if result.get("context") and result.get("similarity", 0) >= 0.20:
-                    with st.expander("🔍 Verified Knowledge Base Evidence", expanded=False):
+                    with st.expander("🔍 Knowledge Base Context", expanded=False):
                         st.caption(f"Semantic match score: {result['similarity']:.3f} | Source: {result['source']}")
                         st.markdown(result["context"])
 
