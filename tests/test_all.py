@@ -1354,7 +1354,10 @@ class TestCareerPredictionScoreSemantics(unittest.TestCase):
 class TestSecurityAndRoleIsolation(unittest.TestCase):
     """Verifies that security invariants, salted PBKDF2 password hashing, legacy migration, and user isolation hold."""
     def setUp(self):
-        self.temp_dir = tempfile.TemporaryDirectory()
+        try:
+            self.temp_dir = tempfile.TemporaryDirectory(ignore_cleanup_errors=True)
+        except TypeError:
+            self.temp_dir = tempfile.TemporaryDirectory()
         self.db = DatabaseManager(Path(self.temp_dir.name) / "test.db")
         self.admin_id = self.db.create_user("admin", "admin123", "admin", "Administrator")
         self.advisor_id = self.db.create_user("advisor", "advisor123", "advisor", "Advisor")
@@ -1364,7 +1367,16 @@ class TestSecurityAndRoleIsolation(unittest.TestCase):
         self.db.assign_advisor(self.advisor_id, self.student_id)
 
     def tearDown(self):
-        self.temp_dir.cleanup()
+        if hasattr(self, "db") and self.db is not None:
+            if hasattr(self.db, "close"):
+                self.db.close()
+            del self.db
+        import gc
+        gc.collect()
+        try:
+            self.temp_dir.cleanup()
+        except Exception:
+            pass
 
     def _new_student(self, username):
         user_id = self.db.create_user(username, "student123", "student", username.replace("_", " ").title())
